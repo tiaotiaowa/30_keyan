@@ -1,0 +1,7 @@
+# Qwen2.5模型下载所需依赖
+torch>=2.0.0
+transformers>=4.37.0
+huggingface-hub>=0.20.0
+tqdm>=4.66.0
+safetensors>=0.4.0
+accelerate>=0.25.0

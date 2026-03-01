@@ -1,0 +1,76 @@
+{
+  "benchmark": "GeoSR-Bench v1.0",
+  "description": "地理空间关系推理基准测试集",
+  "questions": [
+    {
+      "id": "bench_001",
+      "question": "故宫位于北京市内吗？",
+      "type": "within",
+      "entities": [
+        "故宫",
+        "北京市"
+      ],
+      "answer": "yes",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bench_002",
+      "question": "长城和颐和园哪个更靠北？",
+      "type": "north_of",
+      "entities": [
+        "长城",
+        "颐和园"
+      ],
+      "answer": "长城",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bench_003",
+      "question": "从天安门广场到王府井大街的距离是多少？",
+      "type": "near",
+      "entities": [
+        "天安门广场",
+        "王府井大街"
+      ],
+      "answer": "约1.5公里",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bench_004",
+      "question": "北京市包含多少个世界文化遗产？",
+      "type": "contains",
+      "entities": [
+        "北京市",
+        "世界文化遗产"
+      ],
+      "answer": "7",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bench_005",
+      "question": "长安街与中轴线在哪里相交？",
+      "type": "intersects",
+      "entities": [
+        "长安街",
+        "中轴线"
+      ],
+      "answer": "天安门广场",
+      "difficulty": "easy"
+    }
+  ],
+  "metadata": {
+    "total_questions": 5,
+    "difficulty_distribution": {
+      "easy": 2,
+      "medium": 2,
+      "hard": 1
+    },
+    "relation_types": [
+      "within",
+      "north_of",
+      "near",
+      "contains",
+      "intersects"
+    ]
+  }
+}

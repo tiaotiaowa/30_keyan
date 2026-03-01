@@ -1,0 +1,55 @@
+# GeoKD-SR 数据配置文件
+data:
+  base_dir: "data"
+  geosr_chain: "data/geosr_chain"
+  geosr_bench: "data/geosr_bench"
+
+datasets:
+  # 实体数据库
+  entity_database: "data/geosr_chain/entity_database.json"
+
+  # 训练数据
+  train_data: "data/geosr_chain/geosr_chain_v1.jsonl"
+
+  # 基准测试数据
+  benchmark: "data/geosr_bench/geosr_bench_v1.json"
+
+# 数据验证规则
+validation:
+  required_fields:
+    - "id"
+    - "spatial_relation"
+    - "entities"
+
+  entity_required_fields:
+    - "id"
+    - "name"
+    - "type"
+    - "geometry"
+
+  spatial_relations:
+    - "within"
+    - "contains"
+    - "intersects"
+    - "overlaps"
+    - "touches"
+    - "crosses"
+    - "disjoint"
+    - "near"
+    - "adjacent"
+    - "north_of"
+    - "south_of"
+    - "east_of"
+    - "west_of"
+
+# 缓存配置
+cache:
+  enabled: true
+  cache_dir: ".cache/data_manager"
+  max_size_mb: 1000
+
+# 统计配置
+statistics:
+  output_dir: "outputs/statistics"
+  visualize: true
+  save_report: true

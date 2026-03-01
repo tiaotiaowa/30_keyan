@@ -1,0 +1,28 @@
+{
+  "file_path": "data\\geosr_chain\\train.jsonl",
+  "total_records": 5,
+  "spatial_relations": {
+    "within": 1,
+    "near": 1,
+    "north_of": 1,
+    "contains": 1,
+    "intersects": 1
+  },
+  "entity_types": {
+    "POI": 3,
+    "City": 3,
+    "Street": 2,
+    "Landmark": 1,
+    "Line": 1
+  },
+  "entity_count_distribution": {
+    "2": 5
+  },
+  "data_quality": {
+    "missing_id": 0,
+    "missing_relation": 0,
+    "missing_entities": 0,
+    "empty_entities": 0
+  },
+  "generated_at": "2026-03-01 14:41:09"
+}
