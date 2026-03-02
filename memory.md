@@ -21,7 +21,7 @@
 
 **Git配置**: 设置用户名 nihao, 邮箱 nihao@example.com
 
-**状态**: 本地领先origin/master 1个提交，需要push到远程
+**状态**: 已推送到远程仓库 https://github.com/tiaotiaowa/30_keyan.git
 
 ---
 
