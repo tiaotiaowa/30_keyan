@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-03-06 19:11:27",
+  "total_files": 1,
+  "results": [
+    {
+      "file_path": "data\\geosr_chain\\test.jsonl",
+      "start_time": "2026-03-06 19:11:27",
+      "end_time": "2026-03-06 19:11:27",
+      "duration_seconds": 0.0,
+      "total_records": 1,
+      "total_valid": 0,
+      "total_invalid": 1,
+      "overall_pass_rate": 0.0,
+      "is_valid": false,
+      "levels": {
+        "L1": {
+          "level": "L1",
+          "name": "格式验证",
+          "total_records": 1,
+          "passed_records": 0,
+          "failed_records": 1,
+          "pass_rate": 0.0,
+          "error_count": 3,
+          "errors": [
+            {
+              "level": "L1",
+              "record_id": "train_001",
+              "field": "reasoning_chain",
+              "message": "缺少必需字段: reasoning_chain",
+              "severity": "error"
+            },
+            {
+              "level": "L1",
+              "record_id": "train_001",
+              "field": "spatial_tokens",
+              "message": "缺少必需字段: spatial_tokens",
+              "severity": "error"
+            },
+            {
+              "level": "L1",
+              "record_id": "train_001",
+              "field": "entity_to_token",
+              "message": "缺少必需字段: entity_to_token",
+              "severity": "error"
+            }
+          ]
+        },
+        "L2": {
+          "level": "L2",
+          "name": "语义验证",
+          "total_records": 1,
+          "passed_records": 1,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        },
+        "L3": {
+          "level": "L3",
+          "name": "空间关系验证",
+          "total_records": 1,
+          "passed_records": 1,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        },
+        "L4": {
+          "level": "L4",
+          "name": "坐标验证",
+          "total_records": 1,
+          "passed_records": 1,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        },
+        "L5": {
+          "level": "L5",
+          "name": "推理链验证",
+          "total_records": 1,
+          "passed_records": 1,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        },
+        "L6": {
+          "level": "L6",
+          "name": "去重验证",
+          "total_records": 1,
+          "passed_records": 1,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        }
+      }
+    }
+  ]
+}

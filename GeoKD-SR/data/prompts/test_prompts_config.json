@@ -1,0 +1,303 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_at": "2026-03-06T17:50:31.422156",
+    "total_count": 10,
+    "train_count": 4,
+    "dev_count": 3,
+    "test_count": 3,
+    "target_distribution": {
+      "directional": 0.25,
+      "topological": 0.275,
+      "metric": 0.275,
+      "composite": 0.2
+    }
+  },
+  "validation_report": {
+    "passed": false,
+    "checks": {
+      "relation_distribution": {
+        "passed": false,
+        "max_deviation": 0.25
+      },
+      "difficulty_distribution": {
+        "passed": false,
+        "max_deviation": 0.2
+      },
+      "topology_subtype_distribution": {
+        "passed": false,
+        "max_deviation": 0.3
+      },
+      "entity_pair_uniqueness": {
+        "passed": true,
+        "duplicate_rate": 0.0
+      },
+      "coordinate_ranges": {
+        "passed": true,
+        "out_of_bounds_count": 0
+      }
+    }
+  },
+  "prompts": [
+    {
+      "id": "prompt_0001",
+      "split": "train",
+      "relation_type": "topological",
+      "difficulty": "easy",
+      "topology_subtype": "adjacent",
+      "entity1": {
+        "name": "陕西省",
+        "type": "province",
+        "coords": [
+          108.9398,
+          34.3416
+        ]
+      },
+      "entity2": {
+        "name": "延安",
+        "type": "city",
+        "coords": [
+          109.4898,
+          36.5853
+        ]
+      },
+      "prompt_text": "请生成一个关于\"陕西省\"和\"延安\"之间拓扑关系的地理问题。\n\n已知信息：\n- 陕西省：province类型\n- 延安：city类型\n- 拓扑关系：陕西省包含延安\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_topological_prompt_0001_8051\",\n  \"spatial_relation_type\": \"topological\",\n  \"question\": \"问题文本（关于包含、相邻等拓扑关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"陕西省\", \"延安\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"topological\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"陕西省\": [108.9398, 34.3416], \"延安\": [109.4898, 36.5853]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"determine_topology\", \"content\": \"判断拓扑关系...\", \"calculation_result\": \"陕西省包含延安\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"陕西省包含延安\"}\n  ],\n  \"entities\": [\n    {\"name\": \"陕西省\", \"type\": \"province\", \"coords\": [108.9398, 34.3416]},\n    {\"name\": \"延安\", \"type\": \"city\", \"coords\": [109.4898, 36.5853]}\n  ],\n  \"spatial_tokens\": [\"陕西省\", \"延安\", \"包含\", \"位于\", \"内部\", \"边界\"],\n  \"difficulty\": \"easy\",\n  \"topology_subtype\": \"adjacent\"\n}\n\n注意：\n1. question应该关于包含、相邻、相离等拓扑关系\n2. answer应该准确描述拓扑关系\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成简单直观的问题。",
+      "expected_direction": "南方向",
+      "expected_distance": 254.4
+    },
+    {
+      "id": "prompt_0002",
+      "split": "train",
+      "relation_type": "directional",
+      "difficulty": "medium",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "渭南",
+        "type": "city",
+        "coords": [
+          109.5099,
+          34.5024
+        ]
+      },
+      "entity2": {
+        "name": "松原",
+        "type": "city",
+        "coords": [
+          124.825,
+          45.1411
+        ]
+      },
+      "prompt_text": "请生成一个关于\"渭南\"和\"松原\"之间方向关系的地理问题。\n\n已知信息：\n- 渭南：纬度34.5024°N，经度109.5099°E\n- 松原：纬度45.1411°N，经度124.825°E\n- 方向关系：松原在渭南的东南方向\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_directional_prompt_0002_3958\",\n  \"spatial_relation_type\": \"directional\",\n  \"question\": \"问题文本（关于方向关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"渭南\", \"松原\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"directional\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"渭南\": [109.5099, 34.5024], \"松原\": [124.825, 45.1411]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_direction\", \"content\": \"计算方向关系...\", \"calculation_result\": \"东南方向\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"松原在渭南的东南方向\"}\n  ],\n  \"entities\": [\n    {\"name\": \"渭南\", \"type\": \"city\", \"coords\": [109.5099, 34.5024]},\n    {\"name\": \"松原\", \"type\": \"city\", \"coords\": [124.825, 45.1411]}\n  ],\n  \"spatial_tokens\": [\"渭南\", \"松原\", \"东南\", \"方向\", \"位置\"],\n  \"difficulty\": \"medium\"\n}\n\n注意：\n1. question应该是一个自然的方向关系问题\n2. answer应该直接回答方向问题\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "东南方向",
+      "expected_distance": 1758.1
+    },
+    {
+      "id": "prompt_0003",
+      "split": "train",
+      "relation_type": "composite",
+      "difficulty": "easy",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "贵港",
+        "type": "city",
+        "coords": [
+          109.5986,
+          23.1036
+        ]
+      },
+      "entity2": {
+        "name": "贺州",
+        "type": "city",
+        "coords": [
+          111.5526,
+          24.4032
+        ]
+      },
+      "prompt_text": "请生成一个关于\"贵港\"和\"贺州\"之间复合空间关系的地理问题。\n\n已知信息：\n- 贵港：纬度23.1036°N，经度109.5986°E\n- 贺州：纬度24.4032°N，经度111.5526°E\n- 方向：东南方向\n- 距离：约245.8公里\n\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_composite_prompt_0003_2063\",\n  \"spatial_relation_type\": \"composite\",\n  \"question\": \"问题文本（涉及多种空间关系的组合）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"贵港\", \"贺州\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"composite\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"贵港\": [109.5986, 23.1036], \"贺州\": [111.5526, 24.4032]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_composite\", \"content\": \"计算方向和距离...\", \"calculation_result\": \"东南方向，245.8公里\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"东南方向，距离约245.8公里\"}\n  ],\n  \"entities\": [{\"name\": \"贵港\", \"type\": \"city\", \"coords\": [109.5986, 23.1036]}, {\"name\": \"贺州\", \"type\": \"city\", \"coords\": [111.5526, 24.4032]}],\n  \"spatial_tokens\": [\"贵港\", \"贺州\", \"东南\", \"距离\", \"方向\", \"位置\"],\n  \"difficulty\": \"easy\"\n}\n\n注意：\n1. question应该涉及方向和距离的组合，或多个实体之间的关系\n2. answer应该综合考虑多种空间关系\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成简单直观的问题。",
+      "expected_direction": "东南方向",
+      "expected_distance": 245.8
+    },
+    {
+      "id": "prompt_0004",
+      "split": "train",
+      "relation_type": "directional",
+      "difficulty": "easy",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "南京",
+        "type": "city",
+        "coords": [
+          118.7969,
+          32.0603
+        ]
+      },
+      "entity2": {
+        "name": "常州",
+        "type": "city",
+        "coords": [
+          119.9741,
+          31.8106
+        ]
+      },
+      "prompt_text": "请生成一个关于\"南京\"和\"常州\"之间方向关系的地理问题。\n\n已知信息：\n- 南京：纬度32.0603°N，经度118.7969°E\n- 常州：纬度31.8106°N，经度119.9741°E\n- 方向关系：常州在南京的东方向\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_directional_prompt_0004_1382\",\n  \"spatial_relation_type\": \"directional\",\n  \"question\": \"问题文本（关于方向关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"南京\", \"常州\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"directional\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"南京\": [118.7969, 32.0603], \"常州\": [119.9741, 31.8106]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_direction\", \"content\": \"计算方向关系...\", \"calculation_result\": \"东方向\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"常州在南京的东方向\"}\n  ],\n  \"entities\": [\n    {\"name\": \"南京\", \"type\": \"city\", \"coords\": [118.7969, 32.0603]},\n    {\"name\": \"常州\", \"type\": \"city\", \"coords\": [119.9741, 31.8106]}\n  ],\n  \"spatial_tokens\": [\"南京\", \"常州\", \"东\", \"方向\", \"位置\"],\n  \"difficulty\": \"easy\"\n}\n\n注意：\n1. question应该是一个自然的方向关系问题\n2. answer应该直接回答方向问题\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成简单直观的问题。",
+      "expected_direction": "东方向",
+      "expected_distance": 114.5
+    },
+    {
+      "id": "prompt_0005",
+      "split": "dev",
+      "relation_type": "metric",
+      "difficulty": "medium",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "娄底",
+        "type": "city",
+        "coords": [
+          111.9939,
+          27.7001
+        ]
+      },
+      "entity2": {
+        "name": "大庆",
+        "type": "city",
+        "coords": [
+          125.1033,
+          46.5879
+        ]
+      },
+      "prompt_text": "请生成一个关于\"娄底\"和\"大庆\"之间距离关系的地理问题。\n\n已知信息：\n- 娄底：纬度27.7001°N，经度111.9939°E\n- 大庆：纬度46.5879°N，经度125.1033°E\n- 直线距离：约2392.8公里\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_metric_prompt_0005_8655\",\n  \"spatial_relation_type\": \"metric\",\n  \"question\": \"问题文本（关于距离远近）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"娄底\", \"大庆\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"metric\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"娄底\": [111.9939, 27.7001], \"大庆\": [125.1033, 46.5879]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_distance\", \"content\": \"计算直线距离...\", \"calculation_result\": \"2392.8公里\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"两地直线距离约2392.8公里\"}\n  ],\n  \"entities\": [\n    {\"name\": \"娄底\", \"type\": \"city\", \"coords\": [111.9939, 27.7001]},\n    {\"name\": \"大庆\", \"type\": \"city\", \"coords\": [125.1033, 46.5879]}\n  ],\n  \"spatial_tokens\": [\"娄底\", \"大庆\", \"距离\", \"公里\", \"远\", \"近\"],\n  \"difficulty\": \"medium\"\n}\n\n注意：\n1. question应该关于距离、远近比较\n2. answer应该给出距离或远近判断\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "东南方向",
+      "expected_distance": 2392.8
+    },
+    {
+      "id": "prompt_0006",
+      "split": "dev",
+      "relation_type": "topological",
+      "difficulty": "medium",
+      "topology_subtype": "within",
+      "entity1": {
+        "name": "香港特别行政区",
+        "type": "sar",
+        "coords": [
+          114.1694,
+          22.3193
+        ]
+      },
+      "entity2": {
+        "name": "江西省",
+        "type": "province",
+        "coords": [
+          115.9099,
+          28.6769
+        ]
+      },
+      "prompt_text": "请生成一个关于\"香港特别行政区\"和\"江西省\"之间拓扑关系的地理问题。\n\n已知信息：\n- 香港特别行政区：sar类型\n- 江西省：province类型\n- 拓扑关系：A在B内部\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_topological_prompt_0006_2353\",\n  \"spatial_relation_type\": \"topological\",\n  \"question\": \"问题文本（关于包含、相邻等拓扑关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"香港特别行政区\", \"江西省\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"topological\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"香港特别行政区\": [114.1694, 22.3193], \"江西省\": [115.9099, 28.6769]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"determine_topology\", \"content\": \"判断拓扑关系...\", \"calculation_result\": \"A在B内部\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"A在B内部\"}\n  ],\n  \"entities\": [\n    {\"name\": \"香港特别行政区\", \"type\": \"sar\", \"coords\": [114.1694, 22.3193]},\n    {\"name\": \"江西省\", \"type\": \"province\", \"coords\": [115.9099, 28.6769]}\n  ],\n  \"spatial_tokens\": [\"香港特别行政区\", \"江西省\", \"包含\", \"位于\", \"内部\", \"边界\"],\n  \"difficulty\": \"medium\",\n  \"topology_subtype\": \"within\"\n}\n\n注意：\n1. question应该关于包含、相邻、相离等拓扑关系\n2. answer应该准确描述拓扑关系\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "南方向",
+      "expected_distance": 728.2
+    },
+    {
+      "id": "prompt_0007",
+      "split": "dev",
+      "relation_type": "directional",
+      "difficulty": "easy",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "钦州",
+        "type": "city",
+        "coords": [
+          108.6542,
+          21.9731
+        ]
+      },
+      "entity2": {
+        "name": "来宾",
+        "type": "city",
+        "coords": [
+          109.2218,
+          23.752
+        ]
+      },
+      "prompt_text": "请生成一个关于\"钦州\"和\"来宾\"之间方向关系的地理问题。\n\n已知信息：\n- 钦州：纬度21.9731°N，经度108.6542°E\n- 来宾：纬度23.752°N，经度109.2218°E\n- 方向关系：来宾在钦州的南方向\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_directional_prompt_0007_2360\",\n  \"spatial_relation_type\": \"directional\",\n  \"question\": \"问题文本（关于方向关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"钦州\", \"来宾\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"directional\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"钦州\": [108.6542, 21.9731], \"来宾\": [109.2218, 23.752]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_direction\", \"content\": \"计算方向关系...\", \"calculation_result\": \"南方向\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"来宾在钦州的南方向\"}\n  ],\n  \"entities\": [\n    {\"name\": \"钦州\", \"type\": \"city\", \"coords\": [108.6542, 21.9731]},\n    {\"name\": \"来宾\", \"type\": \"city\", \"coords\": [109.2218, 23.752]}\n  ],\n  \"spatial_tokens\": [\"钦州\", \"来宾\", \"南\", \"方向\", \"位置\"],\n  \"difficulty\": \"easy\"\n}\n\n注意：\n1. question应该是一个自然的方向关系问题\n2. answer应该直接回答方向问题\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成简单直观的问题。",
+      "expected_direction": "南方向",
+      "expected_distance": 206.2
+    },
+    {
+      "id": "prompt_0008",
+      "split": "test",
+      "relation_type": "directional",
+      "difficulty": "medium",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "滨州",
+        "type": "city",
+        "coords": [
+          117.9708,
+          37.3835
+        ]
+      },
+      "entity2": {
+        "name": "阜新",
+        "type": "city",
+        "coords": [
+          121.6709,
+          42.0215
+        ]
+      },
+      "prompt_text": "请生成一个关于\"滨州\"和\"阜新\"之间方向关系的地理问题。\n\n已知信息：\n- 滨州：纬度37.3835°N，经度117.9708°E\n- 阜新：纬度42.0215°N，经度121.6709°E\n- 方向关系：阜新在滨州的东南方向\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_directional_prompt_0008_2549\",\n  \"spatial_relation_type\": \"directional\",\n  \"question\": \"问题文本（关于方向关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"滨州\", \"阜新\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"directional\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"滨州\": [117.9708, 37.3835], \"阜新\": [121.6709, 42.0215]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_direction\", \"content\": \"计算方向关系...\", \"calculation_result\": \"东南方向\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"阜新在滨州的东南方向\"}\n  ],\n  \"entities\": [\n    {\"name\": \"滨州\", \"type\": \"city\", \"coords\": [117.9708, 37.3835]},\n    {\"name\": \"阜新\", \"type\": \"city\", \"coords\": [121.6709, 42.0215]}\n  ],\n  \"spatial_tokens\": [\"滨州\", \"阜新\", \"东南\", \"方向\", \"位置\"],\n  \"difficulty\": \"medium\"\n}\n\n注意：\n1. question应该是一个自然的方向关系问题\n2. answer应该直接回答方向问题\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "东南方向",
+      "expected_distance": 605.0
+    },
+    {
+      "id": "prompt_0009",
+      "split": "test",
+      "relation_type": "directional",
+      "difficulty": "medium",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "武汉",
+        "type": "city",
+        "coords": [
+          114.3055,
+          30.5928
+        ]
+      },
+      "entity2": {
+        "name": "广州",
+        "type": "city",
+        "coords": [
+          113.2644,
+          23.1291
+        ]
+      },
+      "prompt_text": "请生成一个关于\"武汉\"和\"广州\"之间方向关系的地理问题。\n\n已知信息：\n- 武汉：纬度30.5928°N，经度114.3055°E\n- 广州：纬度23.1291°N，经度113.2644°E\n- 方向关系：广州在武汉的西北方向\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_directional_prompt_0009_3133\",\n  \"spatial_relation_type\": \"directional\",\n  \"question\": \"问题文本（关于方向关系）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"武汉\", \"广州\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"directional\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"武汉\": [114.3055, 30.5928], \"广州\": [113.2644, 23.1291]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_direction\", \"content\": \"计算方向关系...\", \"calculation_result\": \"西北方向\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"广州在武汉的西北方向\"}\n  ],\n  \"entities\": [\n    {\"name\": \"武汉\", \"type\": \"city\", \"coords\": [114.3055, 30.5928]},\n    {\"name\": \"广州\", \"type\": \"city\", \"coords\": [113.2644, 23.1291]}\n  ],\n  \"spatial_tokens\": [\"武汉\", \"广州\", \"西北\", \"方向\", \"位置\"],\n  \"difficulty\": \"medium\"\n}\n\n注意：\n1. question应该是一个自然的方向关系问题\n2. answer应该直接回答方向问题\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "西北方向",
+      "expected_distance": 836.3
+    },
+    {
+      "id": "prompt_0010",
+      "split": "test",
+      "relation_type": "composite",
+      "difficulty": "medium",
+      "topology_subtype": null,
+      "entity1": {
+        "name": "柳州",
+        "type": "city",
+        "coords": [
+          109.4281,
+          24.3264
+        ]
+      },
+      "entity2": {
+        "name": "通辽",
+        "type": "city",
+        "coords": [
+          122.2432,
+          43.6174
+        ]
+      },
+      "prompt_text": "请生成一个关于\"柳州\"和\"通辽\"之间复合空间关系的地理问题。\n\n已知信息：\n- 柳州：纬度24.3264°N，经度109.4281°E\n- 通辽：纬度43.6174°N，经度122.2432°E\n- 方向：东南方向\n- 距离：约2442.3公里\n\n\n请按照以下JSON格式返回，**reasoning_chain必须包含严格的5步推理**：\n{\n  \"id\": \"geosr_composite_prompt_0010_2040\",\n  \"spatial_relation_type\": \"composite\",\n  \"question\": \"问题文本（涉及多种空间关系的组合）\",\n  \"answer\": \"答案文本\",\n  \"reasoning_chain\": [\n    {\"step\": 1, \"name\": \"entity_identification\", \"action\": \"extract_entities\", \"content\": \"识别问题中的地理实体...\", \"entities_involved\": [\"柳州\", \"通辽\"]},\n    {\"step\": 2, \"name\": \"spatial_relation_extraction\", \"action\": \"classify_relation\", \"content\": \"识别空间关系类型...\", \"relation_type\": \"composite\"},\n    {\"step\": 3, \"name\": \"coordinate_retrieval\", \"action\": \"infer_entity_to_token\", \"content\": \"获取实体坐标信息...\", \"coordinates\": {\"柳州\": [109.4281, 24.3264], \"通辽\": [122.2432, 43.6174]}},\n    {\"step\": 4, \"name\": \"spatial_calculation\", \"action\": \"calculate_composite\", \"content\": \"计算方向和距离...\", \"calculation_result\": \"东南方向，2442.3公里\"},\n    {\"step\": 5, \"name\": \"answer_generation\", \"action\": \"generate_answer\", \"content\": \"生成最终答案...\", \"final_answer\": \"东南方向，距离约2442.3公里\"}\n  ],\n  \"entities\": [{\"name\": \"柳州\", \"type\": \"city\", \"coords\": [109.4281, 24.3264]}, {\"name\": \"通辽\", \"type\": \"city\", \"coords\": [122.2432, 43.6174]}],\n  \"spatial_tokens\": [\"柳州\", \"通辽\", \"东南\", \"距离\", \"方向\", \"位置\"],\n  \"difficulty\": \"medium\"\n}\n\n注意：\n1. question应该涉及方向和距离的组合，或多个实体之间的关系\n2. answer应该综合考虑多种空间关系\n3. **reasoning_chain必须严格包含5步推理**，每步必须包含step, name, action, content字段\n4. entities中每个实体必须包含coords字段（[经度, 纬度]格式）\n5. spatial_tokens应包含4-8个与空间关系相关的关键词\n请生成中等难度的问题，需要一定的空间推理。",
+      "expected_direction": "东南方向",
+      "expected_distance": 2442.3
+    }
+  ]
+}

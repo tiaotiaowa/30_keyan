@@ -1,0 +1,1220 @@
+{
+  "rivers": [
+    {
+      "name": "长江",
+      "length": 6300,
+      "origin": "青藏高原",
+      "mouth": "东海",
+      "lat": 30.5844,
+      "lon": 114.2734,
+      "provinces": ["青海省", "西藏自治区", "四川省", "云南省", "重庆市", "湖北省", "湖南省", "江西省", "安徽省", "江苏省", "上海市"],
+      "major_cities": ["重庆", "武汉", "南京", "上海"],
+      "description": "中国第一长河，世界第三长河，发源于青藏高原，流经11个省市，注入东海"
+    },
+    {
+      "name": "黄河",
+      "length": 5464,
+      "origin": "巴颜喀拉山",
+      "mouth": "渤海",
+      "lat": 37.7683,
+      "lon": 108.8773,
+      "provinces": ["青海省", "四川省", "甘肃省", "宁夏回族自治区", "内蒙古自治区", "陕西省", "山西省", "河南省", "山东省"],
+      "major_cities": ["兰州", "郑州", "济南"],
+      "description": "中国第二长河，被誉为母亲河，发源于巴颜喀拉山，注入渤海"
+    },
+    {
+      "name": "珠江",
+      "length": 2400,
+      "origin": "云南省",
+      "mouth": "南海",
+      "lat": 23.1167,
+      "lon": 113.4333,
+      "provinces": ["云南省", "贵州省", "广西壮族自治区", "广东省"],
+      "major_cities": ["广州", "深圳"],
+      "description": "中国南方最大河系，流量仅次于长江，流经华南地区"
+    },
+    {
+      "name": "淮河",
+      "length": 1000,
+      "origin": "河南省",
+      "mouth": "长江",
+      "lat": 33.0000,
+      "lon": 117.0000,
+      "provinces": ["河南省", "安徽省", "江苏省"],
+      "major_cities": [],
+      "description": "中国南北地理分界线之一，流经河南、安徽、江苏三省"
+    },
+    {
+      "name": "海河",
+      "length": 1050,
+      "origin": "山西省",
+      "mouth": "渤海",
+      "lat": 39.1000,
+      "lon": 117.2000,
+      "provinces": ["山西省", "河北省", "北京市", "天津市"],
+      "major_cities": ["北京", "天津"],
+      "description": "华北地区最大水系，流经北京、天津等重要城市"
+    },
+    {
+      "name": "辽河",
+      "length": 1430,
+      "origin": "河北省",
+      "mouth": "渤海",
+      "lat": 41.2500,
+      "lon": 122.5000,
+      "provinces": ["河北省", "内蒙古自治区", "吉林省", "辽宁省"],
+      "major_cities": ["沈阳"],
+      "description": "东北地区重要河流，流辽宁全境"
+    },
+    {
+      "name": "松花江",
+      "length": 1925,
+      "origin": "长白山",
+      "mouth": "黑龙江",
+      "lat": 46.8000,
+      "lon": 126.6000,
+      "provinces": ["吉林省", "黑龙江省"],
+      "major_cities": ["哈尔滨"],
+      "description": "黑龙江最大支流，东北重要水运通道"
+    },
+    {
+      "name": "雅鲁藏布江",
+      "length": 2057,
+      "origin": "喜马拉雅山",
+      "mouth": "孟加拉湾",
+      "lat": 29.0000,
+      "lon": 91.0000,
+      "provinces": ["西藏自治区"],
+      "major_cities": [],
+      "description": "西藏最大河流，世界海拔最高的大河之一"
+    },
+    {
+      "name": "澜沧江",
+      "length": 4900,
+      "origin": "青海省",
+      "mouth": "南海",
+      "lat": 22.0000,
+      "lon": 105.0000,
+      "provinces": ["青海省", "西藏自治区", "云南省"],
+      "major_cities": [],
+      "description": "东南亚重要河流湄公河上游，流经青海、西藏、云南"
+    },
+    {
+      "name": "怒江",
+      "length": 2013,
+      "origin": "西藏自治区",
+      "mouth": "安达曼海",
+      "lat": 25.5000,
+      "lon": 98.5000,
+      "provinces": ["西藏自治区", "云南省"],
+      "major_cities": [],
+      "description": "东南亚萨尔温江上游，流经藏东南高山峡谷"
+    },
+    {
+      "name": "闽江",
+      "length": 577,
+      "origin": "福建省",
+      "mouth": "东海",
+      "lat": 26.0500,
+      "lon": 119.3000,
+      "provinces": ["福建省"],
+      "major_cities": ["福州"],
+      "description": "福建省最大河流，流经福建中部"
+    },
+    {
+      "name": "钱塘江",
+      "length": 605,
+      "origin": "安徽省",
+      "mouth": "杭州湾",
+      "lat": 30.2500,
+      "lon": 120.5500,
+      "provinces": ["安徽省", "浙江省"],
+      "major_cities": ["杭州"],
+      "description": "浙江省最大河流，以钱塘江潮闻名"
+    },
+    {
+      "name": "汉江",
+      "length": 1577,
+      "origin": "陕西省",
+      "mouth": "长江",
+      "lat": 30.7000,
+      "lon": 114.3000,
+      "provinces": ["陕西省", "湖北省"],
+      "major_cities": ["武汉"],
+      "description": "长江最长支流，流经陕西、湖北两省"
+    },
+    {
+      "name": "赣江",
+      "length": 991,
+      "origin": "江西省",
+      "mouth": "鄱阳湖",
+      "lat": 28.6000,
+      "lon": 115.9000,
+      "provinces": ["江西省"],
+      "major_cities": ["南昌"],
+      "description": "江西省最大河流，鄱阳湖水系主干"
+    },
+    {
+      "name": "湘江",
+      "length": 844,
+      "origin": "广西壮族自治区",
+      "mouth": "洞庭湖",
+      "lat": 28.2000,
+      "lon": 112.9500,
+      "provinces": ["广西壮族自治区", "湖南省"],
+      "major_cities": ["长沙"],
+      "description": "湖南省最大河流，流经长沙等重要城市"
+    },
+    {
+      "name": "嘉陵江",
+      "length": 1120,
+      "origin": "陕西省",
+      "mouth": "长江",
+      "lat": 29.8000,
+      "lon": 106.1000,
+      "provinces": ["陕西省", "甘肃省", "四川省", "重庆市"],
+      "major_cities": ["重庆"],
+      "description": "长江上游最大支流，流经川渝地区"
+    },
+    {
+      "name": "岷江",
+      "length": 735,
+      "origin": "四川省",
+      "mouth": "长江",
+      "lat": 29.5000,
+      "lon": 103.8000,
+      "provinces": ["四川省"],
+      "major_cities": ["成都"],
+      "description": "长江重要支流，成都平原主要水源"
+    },
+    {
+      "name": "大渡河",
+      "length": 1062,
+      "origin": "青海省",
+      "mouth": "岷江",
+      "lat": 29.5000,
+      "lon": 102.5000,
+      "provinces": ["青海省", "四川省"],
+      "major_cities": [],
+      "description": "岷江最大支流，流经川西高原"
+    },
+    {
+      "name": "塔里木河",
+      "length": 2179,
+      "origin": "天山",
+      "mouth": "台特马湖",
+      "lat": 40.5000,
+      "lon": 87.0000,
+      "provinces": ["新疆维吾尔自治区"],
+      "major_cities": [],
+      "description": "中国最长内流河，环绕塔克拉玛干沙漠"
+    },
+    {
+      "name": "黑龙江",
+      "length": 4444,
+      "origin": "蒙古国",
+      "mouth": "鞑靼海峡",
+      "lat": 49.5000,
+      "lon": 127.0000,
+      "provinces": ["黑龙江省"],
+      "major_cities": ["哈尔滨"],
+      "description": "中俄界河，中国东北北部重要水系"
+    }
+  ],
+  "mountains": [
+    {
+      "name": "喜马拉雅山脉",
+      "peak": "珠穆朗玛峰",
+      "height": 8848.86,
+      "location": "西藏自治区",
+      "lat": 27.9881,
+      "lon": 86.9250,
+      "description": "世界最高山脉，拥有多座8000米以上高峰"
+    },
+    {
+      "name": "昆仑山脉",
+      "peak": "公格尔山",
+      "height": 7649,
+      "location": "新疆维吾尔自治区",
+      "lat": 35.6167,
+      "lon": 94.1833,
+      "description": "亚洲中部大山系，被称为万山之祖"
+    },
+    {
+      "name": "天山山脉",
+      "peak": "托木尔峰",
+      "height": 7443,
+      "location": "新疆维吾尔自治区",
+      "lat": 42.0333,
+      "lon": 80.1167,
+      "description": "新疆地理分界线，分隔南北疆"
+    },
+    {
+      "name": "秦岭",
+      "peak": "太白山",
+      "height": 3771,
+      "location": "陕西省",
+      "lat": 33.9667,
+      "lon": 107.7667,
+      "description": "中国南北地理分界线，阻挡南北气流"
+    },
+    {
+      "name": "大兴安岭",
+      "peak": "黄岗梁",
+      "height": 2029,
+      "location": "内蒙古自治区",
+      "lat": 50.9167,
+      "lon": 121.4333,
+      "description": "东北重要山脉，中国地理第二阶梯分界线"
+    },
+    {
+      "name": "太行山脉",
+      "peak": "小五台山",
+      "height": 2882,
+      "location": "河北省",
+      "lat": 39.9667,
+      "lon": 115.0333,
+      "description": "黄土高原与华北平原分界线"
+    },
+    {
+      "name": "武夷山脉",
+      "peak": "黄岗山",
+      "height": 2158,
+      "location": "福建省",
+      "lat": 27.8167,
+      "lon": 117.6833,
+      "description": "闽赣界山，东南沿海重要山脉"
+    },
+    {
+      "name": "南岭",
+      "peak": "猫儿山",
+      "height": 2142,
+      "location": "广西壮族自治区",
+      "lat": 25.0667,
+      "lon": 110.4333,
+      "description": "华中与华南地理分界线"
+    },
+    {
+      "name": "横断山脉",
+      "peak": "贡嘎山",
+      "height": 7556,
+      "location": "四川省",
+      "lat": 29.5833,
+      "lon": 101.8833,
+      "description": "川西高原东部山脉，南北走向"
+    },
+    {
+      "name": "长白山脉",
+      "peak": "长白山",
+      "height": 2691,
+      "location": "吉林省",
+      "lat": 41.9333,
+      "lon": 128.0667,
+      "description": "东北东部山脉，中朝界山"
+    },
+    {
+      "name": "祁连山脉",
+      "peak": "团结峰",
+      "height": 5808,
+      "location": "青海省",
+      "lat": 39.5000,
+      "lon": 98.5000,
+      "description": "青藏高原北缘，河西走廊南侧"
+    },
+    {
+      "name": "阿尔泰山脉",
+      "peak": "友谊峰",
+      "height": 4374,
+      "location": "新疆维吾尔自治区",
+      "lat": 49.0000,
+      "lon": 87.5000,
+      "description": "新疆北部山脉，中俄蒙界山"
+    },
+    {
+      "name": "阴山山脉",
+      "peak": "呼和巴什格",
+      "height": 2364,
+      "location": "内蒙古自治区",
+      "lat": 40.8000,
+      "lon": 110.0000,
+      "description": "内蒙古中部山脉，黄河几字弯北界"
+    },
+    {
+      "name": "燕山山脉",
+      "peak": "雾灵山",
+      "height": 2118,
+      "location": "河北省",
+      "lat": 40.6000,
+      "lon": 117.5000,
+      "description": "华北北部山脉，长城重要关隘所在"
+    },
+    {
+      "name": "大巴山脉",
+      "peak": "神农顶",
+      "height": 3105,
+      "location": "湖北省",
+      "lat": 31.7000,
+      "lon": 110.5000,
+      "description": "川陕鄂界山，长江上游屏障"
+    },
+    {
+      "name": "武陵山脉",
+      "peak": "梵净山",
+      "height": 2572,
+      "location": "贵州省",
+      "lat": 27.9000,
+      "lon": 108.5000,
+      "description": "湘西黔东山脉，喀斯特地貌发育"
+    },
+    {
+      "name": "雪峰山脉",
+      "peak": "苏宝顶",
+      "height": 1934,
+      "location": "湖南省",
+      "lat": 27.5000,
+      "lon": 110.5000,
+      "description": "湖南省西部山脉，资江沅江分水岭"
+    },
+    {
+      "name": "罗霄山脉",
+      "peak": "南风面",
+      "height": 2120,
+      "location": "江西省",
+      "lat": 26.5000,
+      "lon": 114.0000,
+      "description": "湘赣界山，井冈山所在山脉"
+    },
+    {
+      "name": "六盘山",
+      "peak": "米缸山",
+      "height": 2942,
+      "location": "宁夏回族自治区",
+      "lat": 35.7000,
+      "lon": 106.2000,
+      "description": "宁夏南部山脉，红军长征翻越地"
+    },
+    {
+      "name": "贺兰山",
+      "peak": "敖包疙瘩",
+      "height": 3556,
+      "location": "宁夏回族自治区",
+      "lat": 38.7000,
+      "lon": 105.9000,
+      "description": "宁夏西北部山脉，阻挡风沙东移"
+    },
+    {
+      "name": "吕梁山脉",
+      "peak": "南阳山",
+      "height": 2831,
+      "location": "山西省",
+      "lat": 37.5000,
+      "lon": 111.0000,
+      "description": "山西省西部山脉，黄河东岸"
+    },
+    {
+      "name": "大别山脉",
+      "peak": "白马尖",
+      "height": 1777,
+      "location": "安徽省",
+      "lat": 31.0000,
+      "lon": 116.0000,
+      "description": "鄂豫皖界山，长江淮河分水岭"
+    },
+    {
+      "name": "井冈山",
+      "peak": "五指峰",
+      "height": 1438,
+      "location": "江西省",
+      "lat": 26.5000,
+      "lon": 114.1000,
+      "description": "革命圣地，罗霄山脉中段"
+    },
+    {
+      "name": "雁荡山",
+      "peak": "百岗尖",
+      "height": 1150,
+      "location": "浙江省",
+      "lat": 28.3000,
+      "lon": 120.9000,
+      "description": "浙江东南部名山，火山地貌典型"
+    },
+    {
+      "name": "峨眉山",
+      "peak": "金顶",
+      "height": 3099,
+      "location": "四川省",
+      "lat": 29.5500,
+      "lon": 103.4833,
+      "description": "中国四大佛教名山之一，四川盆地西部"
+    }
+  ],
+  "lakes": [
+    {
+      "name": "鄱阳湖",
+      "area": 4415,
+      "depth": 16,
+      "location": "江西省",
+      "lat": 29.1000,
+      "lon": 116.2000,
+      "description": "中国最大淡水湖，长江中游重要湿地"
+    },
+    {
+      "name": "洞庭湖",
+      "area": 2625,
+      "depth": 30,
+      "location": "湖南省",
+      "lat": 29.4000,
+      "lon": 112.9000,
+      "description": "中国第二大淡水湖，长江中游湖泊"
+    },
+    {
+      "name": "太湖",
+      "area": 2425,
+      "depth": 2,
+      "location": "江苏省",
+      "lat": 31.2000,
+      "lon": 120.1000,
+      "description": "中国第三大淡水湖，江南水乡代表"
+    },
+    {
+      "name": "洪泽湖",
+      "area": 2069,
+      "depth": 5,
+      "location": "江苏省",
+      "lat": 33.3000,
+      "lon": 118.8000,
+      "description": "中国第四大淡水湖，人工湖典型"
+    },
+    {
+      "name": "巢湖",
+      "area": 760,
+      "depth": 5,
+      "location": "安徽省",
+      "lat": 31.6000,
+      "lon": 117.5000,
+      "description": "中国第五大淡水湖，合肥市郊"
+    },
+    {
+      "name": "青海湖",
+      "area": 4500,
+      "depth": 32,
+      "location": "青海省",
+      "lat": 36.9000,
+      "lon": 100.1000,
+      "description": "中国最大咸水湖，青藏高原明珠"
+    },
+    {
+      "name": "纳木错",
+      "area": 1920,
+      "depth": 120,
+      "location": "西藏自治区",
+      "lat": 30.7000,
+      "lon": 90.6000,
+      "description": "西藏三大圣湖之一，世界最高大湖"
+    },
+    {
+      "name": "色林错",
+      "area": 2389,
+      "depth": 60,
+      "location": "西藏自治区",
+      "lat": 31.8000,
+      "lon": 88.9000,
+      "description": "西藏第一大湖，藏北高原"
+    },
+    {
+      "name": "滇池",
+      "area": 330,
+      "depth": 8,
+      "location": "云南省",
+      "lat": 24.8000,
+      "lon": 102.7000,
+      "description": "云南最大淡水湖，昆明著名景点"
+    },
+    {
+      "name": "洱海",
+      "area": 251,
+      "depth": 20,
+      "location": "云南省",
+      "lat": 25.8000,
+      "lon": 100.2000,
+      "description": "云南著名高原湖泊，大理风光代表"
+    },
+    {
+      "name": "西湖",
+      "area": 6.4,
+      "depth": 3,
+      "location": "浙江省",
+      "lat": 30.2444,
+      "lon": 120.1378,
+      "description": "杭州著名风景区，世界文化遗产"
+    },
+    {
+      "name": "千岛湖",
+      "area": 580,
+      "depth": 108,
+      "location": "浙江省",
+      "lat": 29.6000,
+      "lon": 119.0000,
+      "description": "人工湖，新安江水库"
+    },
+    {
+      "name": "呼伦湖",
+      "area": 2315,
+      "depth": 8,
+      "location": "内蒙古自治区",
+      "lat": 48.9000,
+      "lon": 117.4000,
+      "description": "内蒙古最大湖泊，北方草原明珠"
+    },
+    {
+      "name": "博斯腾湖",
+      "area": 1646,
+      "depth": 17,
+      "location": "新疆维吾尔自治区",
+      "lat": 41.9000,
+      "lon": 86.8000,
+      "description": "新疆最大淡水湖，天山南麓"
+    },
+    {
+      "name": "南四湖",
+      "area": 1266,
+      "depth": 6,
+      "location": "山东省",
+      "lat": 34.7000,
+      "lon": 116.9000,
+      "description": "山东南部湖泊群，微山湖最大"
+    }
+  ],
+  "landmarks": [
+    {
+      "name": "故宫",
+      "city": "北京",
+      "type": "historical",
+      "lat": 39.9163,
+      "lon": 116.3972,
+      "description": "明清两代皇宫，世界文化遗产"
+    },
+    {
+      "name": "长城",
+      "city": "北京",
+      "type": "historical",
+      "lat": 40.4319,
+      "lon": 116.5704,
+      "description": "中国古代军事防御工程，世界七大奇迹"
+    },
+    {
+      "name": "兵马俑",
+      "city": "西安",
+      "type": "historical",
+      "lat": 34.3841,
+      "lon": 109.2785,
+      "description": "秦始皇陵陪葬坑，世界文化遗产"
+    },
+    {
+      "name": "莫高窟",
+      "city": "敦煌",
+      "type": "historical",
+      "lat": 40.0349,
+      "lon": 94.7869,
+      "description": "佛教艺术宝库，世界文化遗产"
+    },
+    {
+      "name": "布达拉宫",
+      "city": "拉萨",
+      "type": "historical",
+      "lat": 29.6579,
+      "lon": 91.1173,
+      "description": "藏传佛教圣地，世界文化遗产"
+    },
+    {
+      "name": "乐山大佛",
+      "city": "乐山",
+      "type": "historical",
+      "lat": 29.5436,
+      "lon": 103.7674,
+      "description": "世界最大石刻佛像，世界文化遗产"
+    },
+    {
+      "name": "龙门石窟",
+      "city": "洛阳",
+      "type": "historical",
+      "lat": 34.5556,
+      "lon": 112.4767,
+      "description": "佛教石窟艺术，世界文化遗产"
+    },
+    {
+      "name": "云冈石窟",
+      "city": "大同",
+      "type": "historical",
+      "lat": 40.1106,
+      "lon": 113.1206,
+      "description": "北魏石窟艺术，世界文化遗产"
+    },
+    {
+      "name": "承德避暑山庄",
+      "city": "承德",
+      "type": "historical",
+      "lat": 40.9683,
+      "lon": 117.9486,
+      "description": "清代皇家园林，世界文化遗产"
+    },
+    {
+      "name": "曲阜孔庙",
+      "city": "曲阜",
+      "type": "historical",
+      "lat": 35.5958,
+      "lon": 116.9869,
+      "description": "祭祀孔子的庙宇，世界文化遗产"
+    },
+    {
+      "name": "平遥古城",
+      "city": "平遥",
+      "type": "historical",
+      "lat": 37.1894,
+      "lon": 112.1853,
+      "description": "明清古城，世界文化遗产"
+    },
+    {
+      "name": "丽江古城",
+      "city": "丽江",
+      "type": "historical",
+      "lat": 26.8727,
+      "lon": 100.2339,
+      "description": "纳西族古城，世界文化遗产"
+    },
+    {
+      "name": "凤凰古城",
+      "city": "凤凰",
+      "type": "historical",
+      "lat": 27.9472,
+      "lon": 109.6022,
+      "description": "湘西古镇，苗族文化代表"
+    },
+    {
+      "name": "苏州园林",
+      "city": "苏州",
+      "type": "scenic",
+      "lat": 31.2989,
+      "lon": 120.5853,
+      "description": "古典园林代表，世界文化遗产"
+    },
+    {
+      "name": "拙政园",
+      "city": "苏州",
+      "type": "scenic",
+      "lat": 31.3180,
+      "lon": 120.6180,
+      "description": "苏州四大名园之首，世界文化遗产"
+    },
+    {
+      "name": "留园",
+      "city": "苏州",
+      "type": "scenic",
+      "lat": 31.2906,
+      "lon": 120.6139,
+      "description": "苏州四大名园之一，世界文化遗产"
+    },
+    {
+      "name": "颐和园",
+      "city": "北京",
+      "type": "scenic",
+      "lat": 39.9998,
+      "lon": 116.2754,
+      "description": "清代皇家园林，世界文化遗产"
+    },
+    {
+      "name": "圆明园",
+      "city": "北京",
+      "type": "historical",
+      "lat": 40.0039,
+      "lon": 116.2975,
+      "description": "清代皇家园林遗址"
+    },
+    {
+      "name": "黄鹤楼",
+      "city": "武汉",
+      "type": "historical",
+      "lat": 30.5436,
+      "lon": 114.2967,
+      "description": "江南三大名楼之一"
+    },
+    {
+      "name": "岳阳楼",
+      "city": "岳阳",
+      "type": "historical",
+      "lat": 29.3728,
+      "lon": 113.0958,
+      "description": "江南三大名楼之一"
+    },
+    {
+      "name": "滕王阁",
+      "city": "南昌",
+      "type": "historical",
+      "lat": 28.6820,
+      "lon": 115.8817,
+      "description": "江南三大名楼之一"
+    },
+    {
+      "name": "蓬莱阁",
+      "city": "蓬莱",
+      "type": "historical",
+      "lat": 37.8272,
+      "lon": 120.8383,
+      "description": "中国古代四大名楼之一"
+    },
+    {
+      "name": "钟鼓楼",
+      "city": "北京",
+      "type": "historical",
+      "lat": 39.9425,
+      "lon": 116.4067,
+      "description": "明清报时建筑"
+    },
+    {
+      "name": "大雁塔",
+      "city": "西安",
+      "type": "historical",
+      "lat": 34.2173,
+      "lon": 108.9647,
+      "description": "唐代佛塔，玄奘译经地"
+    },
+    {
+      "name": "小雁塔",
+      "city": "西安",
+      "type": "historical",
+      "lat": 34.2494,
+      "lon": 108.9319,
+      "description": "唐代佛塔，世界文化遗产"
+    },
+    {
+      "name": "都江堰",
+      "city": "都江堰",
+      "type": "historical",
+      "lat": 31.0215,
+      "lon": 103.6076,
+      "description": "古代水利工程，世界文化遗产"
+    },
+    {
+      "name": "青城山",
+      "city": "都江堰",
+      "type": "scenic",
+      "lat": 30.9000,
+      "lon": 103.5667,
+      "description": "道教名山，世界文化遗产"
+    },
+    {
+      "name": "峨眉山",
+      "city": "峨眉山",
+      "type": "scenic",
+      "lat": 29.5500,
+      "lon": 103.4833,
+      "description": "佛教名山，世界文化遗产"
+    },
+    {
+      "name": "庐山",
+      "city": "九江",
+      "type": "scenic",
+      "lat": 29.5686,
+      "lon": 115.9928,
+      "description": "世界文化遗产，避暑胜地"
+    },
+    {
+      "name": "武当山",
+      "city": "十堰",
+      "type": "scenic",
+      "lat": 32.4000,
+      "lon": 111.0000,
+      "description": "道教名山，世界文化遗产"
+    },
+    {
+      "name": "西湖",
+      "city": "杭州",
+      "type": "scenic",
+      "lat": 30.2444,
+      "lon": 120.1378,
+      "description": "杭州著名景点，世界文化遗产"
+    },
+    {
+      "name": "黄山",
+      "city": "黄山",
+      "type": "scenic",
+      "lat": 30.1314,
+      "lon": 118.1692,
+      "description": "世界文化与自然双遗产"
+    },
+    {
+      "name": "泰山",
+      "city": "泰安",
+      "type": "scenic",
+      "lat": 36.2586,
+      "lon": 117.1011,
+      "description": "五岳之首，世界文化遗产"
+    },
+    {
+      "name": "华山",
+      "city": "华阴",
+      "type": "scenic",
+      "lat": 34.4886,
+      "lon": 110.0886,
+      "description": "五岳西岳，险峻著称"
+    },
+    {
+      "name": "张家界",
+      "city": "张家界",
+      "type": "scenic",
+      "lat": 29.1251,
+      "lon": 110.4793,
+      "description": "世界地质公园，石英砂岩峰林"
+    },
+    {
+      "name": "九寨沟",
+      "city": "阿坝",
+      "type": "scenic",
+      "lat": 33.1575,
+      "lon": 103.9147,
+      "description": "世界自然遗产，童话世界"
+    },
+    {
+      "name": "天坛",
+      "city": "北京",
+      "type": "historical",
+      "lat": 39.8822,
+      "lon": 116.4066,
+      "description": "明清祭天建筑，世界文化遗产"
+    },
+    {
+      "name": "外滩",
+      "city": "上海",
+      "type": "scenic",
+      "lat": 31.2403,
+      "lon": 121.4906,
+      "description": "上海标志性景观"
+    },
+    {
+      "name": "东方明珠",
+      "city": "上海",
+      "type": "landmark",
+      "lat": 31.2397,
+      "lon": 121.4997,
+      "description": "上海标志性建筑"
+    },
+    {
+      "name": "武侯祠",
+      "city": "成都",
+      "type": "historical",
+      "lat": 30.6472,
+      "lon": 104.0436,
+      "description": "纪念诸葛亮的祠庙"
+    },
+    {
+      "name": "大熊猫基地",
+      "city": "成都",
+      "type": "scenic",
+      "lat": 30.7327,
+      "lon": 104.1469,
+      "description": "熊猫保护研究基地"
+    },
+    {
+      "name": "鼓浪屿",
+      "city": "厦门",
+      "type": "scenic",
+      "lat": 24.4464,
+      "lon": 118.0666,
+      "description": "世界文化遗产，海上花园"
+    },
+    {
+      "name": "漓江",
+      "city": "桂林",
+      "type": "scenic",
+      "lat": 25.2742,
+      "lon": 110.2900,
+      "description": "桂林山水甲天下"
+    },
+    {
+      "name": "日月潭",
+      "city": "台湾",
+      "type": "scenic",
+      "lat": 23.8594,
+      "lon": 120.9122,
+      "description": "台湾著名风景区"
+    },
+    {
+      "name": "广州塔",
+      "city": "广州",
+      "type": "landmark",
+      "lat": 23.1084,
+      "lon": 113.3194,
+      "description": "广州标志性建筑"
+    },
+    {
+      "name": "深圳湾大桥",
+      "city": "深圳",
+      "type": "landmark",
+      "lat": 22.4778,
+      "lon": 113.9447,
+      "description": "深港跨海大桥"
+    },
+    {
+      "name": "苏州博物馆",
+      "city": "苏州",
+      "type": "historical",
+      "lat": 31.3128,
+      "lon": 120.6219,
+      "description": "贝聿铭设计作品"
+    },
+    {
+      "name": "南京中山陵",
+      "city": "南京",
+      "type": "historical",
+      "lat": 32.0697,
+      "lon": 118.8439,
+      "description": "孙中山先生陵墓"
+    },
+    {
+      "name": "武汉长江大桥",
+      "city": "武汉",
+      "type": "landmark",
+      "lat": 30.5786,
+      "lon": 114.2636,
+      "description": "万里长江第一桥"
+    },
+    {
+      "name": "成都宽窄巷子",
+      "city": "成都",
+      "type": "historical",
+      "lat": 30.6656,
+      "lon": 104.0617,
+      "description": "清代古街区"
+    },
+    {
+      "name": "重庆洪崖洞",
+      "city": "重庆",
+      "type": "landmark",
+      "lat": 29.5647,
+      "lon": 106.5781,
+      "description": "重庆特色民俗区"
+    },
+    {
+      "name": "天津之眼",
+      "city": "天津",
+      "type": "landmark",
+      "lat": 39.1444,
+      "lon": 117.1947,
+      "description": "海河永乐桥摩天轮"
+    },
+    {
+      "name": "西安城墙",
+      "city": "西安",
+      "type": "historical",
+      "lat": 34.2586,
+      "lon": 108.9472,
+      "description": "明代古城墙"
+    },
+    {
+      "name": "鼓浪屿郑成功纪念馆",
+      "city": "厦门",
+      "type": "historical",
+      "lat": 24.4511,
+      "lon": 118.0694,
+      "description": "纪念民族英雄"
+    },
+    {
+      "name": "哈尔滨中央大街",
+      "city": "哈尔滨",
+      "type": "historical",
+      "lat": 45.8038,
+      "lon": 126.6219,
+      "description": "百年老街，欧式建筑"
+    },
+    {
+      "name": "青岛栈桥",
+      "city": "青岛",
+      "type": "landmark",
+      "lat": 36.0556,
+      "lon": 120.3189,
+      "description": "青岛标志性景观"
+    }
+  ],
+  "regions": [
+    {
+      "name": "长三角",
+      "type": "economic_zone",
+      "center": "上海",
+      "lat": 31.2304,
+      "lon": 121.4737,
+      "area": 210700,
+      "description": "长江三角洲区域一体化发展示范区，中国经济最发达区域"
+    },
+    {
+      "name": "珠三角",
+      "type": "economic_zone",
+      "center": "广州",
+      "lat": 23.1291,
+      "lon": 113.2644,
+      "area": 54800,
+      "description": "珠江三角洲经济区，改革开放先行区"
+    },
+    {
+      "name": "京津冀",
+      "type": "urban_agglomeration",
+      "center": "北京",
+      "lat": 39.9042,
+      "lon": 116.4074,
+      "area": 216000,
+      "description": "京津冀协同发展区，首都经济圈"
+    },
+    {
+      "name": "环渤海",
+      "type": "economic_zone",
+      "center": "天津",
+      "lat": 39.0842,
+      "lon": 117.2009,
+      "area": 112000,
+      "description": "环渤海经济圈，北方重要经济区"
+    },
+    {
+      "name": "粤港澳大湾区",
+      "type": "special_zone",
+      "center": "广州",
+      "lat": 23.1291,
+      "lon": 113.2644,
+      "area": 56000,
+      "description": "国家级战略区域，一国两制实践示范区"
+    },
+    {
+      "name": "长江中游城市群",
+      "type": "urban_agglomeration",
+      "center": "武汉",
+      "lat": 30.5928,
+      "lon": 114.3055,
+      "area": 326000,
+      "description": "长江经济带中部支撑，中三角"
+    },
+    {
+      "name": "成渝城市群",
+      "type": "urban_agglomeration",
+      "center": "重庆",
+      "lat": 29.4316,
+      "lon": 106.9123,
+      "area": 240000,
+      "description": "西部开发重要增长极，双核驱动"
+    },
+    {
+      "name": "中原城市群",
+      "type": "urban_agglomeration",
+      "center": "郑州",
+      "lat": 34.7466,
+      "lon": 113.6253,
+      "area": 287000,
+      "description": "中部地区重要城市群，华夏文明发祥地"
+    },
+    {
+      "name": "海峡西岸",
+      "type": "economic_zone",
+      "center": "福州",
+      "lat": 26.0745,
+      "lon": 119.2965,
+      "area": 270000,
+      "description": "福建沿海经济区，两岸合作前沿"
+    },
+    {
+      "name": "北部湾",
+      "type": "economic_zone",
+      "center": "南宁",
+      "lat": 22.8170,
+      "lon": 108.3665,
+      "area": 74000,
+      "description": "南海沿岸经济区，东盟合作桥头堡"
+    },
+    {
+      "name": "关中平原",
+      "type": "urban_agglomeration",
+      "center": "西安",
+      "lat": 34.3416,
+      "lon": 108.9398,
+      "area": 100000,
+      "description": "陕西中部城市群，丝绸之路起点"
+    },
+    {
+      "name": "哈长城市群",
+      "type": "urban_agglomeration",
+      "center": "哈尔滨",
+      "lat": 45.8038,
+      "lon": 126.5350,
+      "area": 260000,
+      "description": "黑龙江与吉林中部城市群，东北振兴"
+    },
+    {
+      "name": "辽中南",
+      "type": "urban_agglomeration",
+      "center": "沈阳",
+      "lat": 41.8057,
+      "lon": 123.4315,
+      "area": 100000,
+      "description": "辽宁中南部城市群，东北老工业基地"
+    },
+    {
+      "name": "山东半岛",
+      "type": "urban_agglomeration",
+      "center": "济南",
+      "lat": 36.6512,
+      "lon": 117.1201,
+      "area": 153000,
+      "description": "山东沿海城市群，蓝色经济区"
+    },
+    {
+      "name": "皖江城市带",
+      "type": "urban_agglomeration",
+      "center": "合肥",
+      "lat": 31.8206,
+      "lon": 117.2272,
+      "area": 76000,
+      "description": "安徽沿江城市群，承接产业转移示范区"
+    },
+    {
+      "name": "长株潭",
+      "type": "urban_agglomeration",
+      "center": "长沙",
+      "lat": 28.2282,
+      "lon": 112.9388,
+      "area": 28000,
+      "description": "长沙株洲潭城市群，两型社会试验区"
+    },
+    {
+      "name": "武汉城市圈",
+      "type": "urban_agglomeration",
+      "center": "武汉",
+      "lat": 30.5928,
+      "lon": 114.3055,
+      "area": 58000,
+      "description": "以武汉为核心的1+8城市圈"
+    },
+    {
+      "name": "鄱阳湖生态经济区",
+      "type": "special_zone",
+      "center": "南昌",
+      "lat": 28.6820,
+      "lon": 115.8579,
+      "area": 51000,
+      "description": "江西生态经济区，生态与经济协调发展"
+    },
+    {
+      "name": "太原都市圈",
+      "type": "urban_agglomeration",
+      "center": "太原",
+      "lat": 37.8706,
+      "lon": 112.5489,
+      "area": 60000,
+      "description": "以太原为核心的山西中部城市群"
+    },
+    {
+      "name": "乌鲁木齐都市圈",
+      "type": "urban_agglomeration",
+      "center": "乌鲁木齐",
+      "lat": 43.8256,
+      "lon": 87.6168,
+      "area": 20000,
+      "description": "新疆核心经济区，丝绸之路经济带中心"
+    }
+  ]
+}

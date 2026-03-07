@@ -1,0 +1,188 @@
+================================================================================
+GeoKD-SR Environment Check Report
+================================================================================
+Check Time: 2026-03-06
+Working Directory: D:/30_keyan/GeoKD-SR
+
+================================================================================
+1. Environment Check
+================================================================================
+
+1.1 Python Environment:
+  - Version: Python 3.12.7
+  - Path: D:\anaconda\python.exe
+  - Status: PASS
+
+1.2 Key Dependencies:
+  - torch: v2.10.0+cpu [OK]
+  - transformers: v5.0.0 [OK]
+  - datasets: v3.3.2 [OK]
+  - numpy: v1.26.4 [OK]
+  - pandas: v2.3.3 [OK]
+  - tqdm: v4.66.5 [OK]
+  - yaml: v6.0.1 [OK]
+  - Status: PASS
+
+================================================================================
+2. Directory Structure Check
+================================================================================
+
+2.1 Key Directories:
+  - models/          [EXISTS]
+  - data/            [EXISTS]
+  - scripts/         [EXISTS]
+  - outputs/         [EXISTS]
+  - utils/           [EXISTS]
+  - experiments/     [EXISTS]
+  - tests/           [EXISTS]
+  - configs/         [EXISTS]
+  - Status: PASS
+
+2.2 Data Subdirectories:
+  - geosr_chain/     [EXISTS]
+  - prompts/         [EXISTS]
+  - geosr_bench/     [EXISTS]
+  - Status: PASS
+
+2.3 Models Subdirectories:
+  - Qwen2.5-1.5B-Instruct/  [EXISTS]
+  - Qwen2.5-7B-Instruct/    [EXISTS]
+  - losses/                 [EXISTS]
+  - data/                   [EXISTS]
+  - utils/                  [EXISTS]
+
+2.4 Outputs Subdirectories:
+  - metrics/         [EXISTS]
+  - statistics/      [EXISTS]
+
+================================================================================
+3. Data Files Check
+================================================================================
+
+3.1 Entity Database:
+  - entity_database_expanded.json    [OK] 97.88 KB (2 keys)
+  - entity_database.json             [OK] 17.01 KB
+  - geo_entities_extended.json       [OK] 32.23 KB
+  - Status: PASS
+
+3.2 GeoSR Chain Data:
+  - train.jsonl                      [OK] 7.04 KB (4 lines)
+  - test.jsonl                       [OK] 0.58 KB (1 line)
+  - dev.jsonl                        [WARNING] 0.00 KB (empty)
+  - entity_database.jsonl            [OK] 1 line
+  - Status: PARTIAL PASS
+
+3.3 Prompts Configuration:
+  - prompts_config_full.json         [OK] 32.02 MB
+  - prompts_config.json              [OK]
+  - test_prompts_config.json         [OK]
+  - Status: PASS
+
+3.4 Configuration Files:
+  - configs/data.yaml                [EXISTS]
+  - requirements.txt                 [EXISTS] (21 dependencies)
+
+================================================================================
+4. Model Files Check
+================================================================================
+
+4.1 Qwen2.5-1.5B-Instruct:
+  - config.json                   [OK]
+  - model.safetensors             [OK]
+  - tokenizer.json                [OK]
+  - tokenizer_config.json         [OK]
+  - Status: PASS
+
+4.2 Qwen2.5-7B-Instruct:
+  - config.json                   [OK]
+  - model-00001-of-00004.safetensors  [OK]
+  - tokenizer.json                [OK]
+  - tokenizer_config.json         [OK]
+  - Status: PASS
+
+================================================================================
+5. Scripts Check
+================================================================================
+
+Key Scripts Status:
+  - generate_data.py               [EXISTS]
+  - generate_data_glm5.py          [EXISTS]
+  - generate_reasoning_chain.py    [EXISTS]
+  - generate_prompts.py            [EXISTS]
+  - validate_data.py               [EXISTS]
+  - run_pipeline.py                [EXISTS]
+  - split_dataset.py               [EXISTS]
+  - data_manager.py                [EXISTS]
+  - Status: PASS
+
+5.1 Scripts Directory Contents:
+  - auto_download.py
+  - check_experiment_compatibility.py
+  - create_sample_data.py
+  - data_manager.py
+  - download_models.py
+  - download_with_hf.py
+  - generate_data.py
+  - generate_data_glm5.py
+  - generate_entity_mapping.py
+  - generate_prompts.py
+  - generate_reasoning_chain.py
+  - merge_entity_databases.py
+  - run_pipeline.py
+  - split_dataset.py
+  - test_data_manager.py
+  - test_download.py
+  - test_pipeline_offline.py
+  - test_student_model.py
+  - validate_data.py
+  - validate_data_quality.py
+  - validate_entity_database.py
+  - validate_entity_separation.py
+  - verify_entities.py
+  - verify_lora_config.py
+
+================================================================================
+6. Utils and Experiments Check
+================================================================================
+
+6.1 Utils Directory:
+  - __init__.py
+  - entity_split_manager.py
+
+6.2 Experiments Directory:
+  - evaluate_glm5.py
+  - generate_benchmark.py
+  - statistical_analysis.py
+  - metrics/ (subdirectory with __init__.py, geo_metrics.py)
+
+6.3 Tests Directory:
+  - test_entity_token_mapper.py
+
+================================================================================
+7. Disk Space Check
+================================================================================
+
+  - Total:     312.50 GB
+  - Used:      259.88 GB (83.2%)
+  - Free:      52.62 GB
+  - Status: WARNING (High disk usage)
+
+================================================================================
+8. Summary
+================================================================================
+
+Check Statistics:
+  - Total Items:    40
+  - Passed:         38
+  - Failed:         0
+  - Warnings:       2
+
+Warning Items:
+  1. dev.jsonl is empty (0 data lines)
+  2. High disk usage (83.2%)
+
+Overall Assessment: PASS - Environment ready for experiments
+
+================================================================================
+End of Report
+================================================================================

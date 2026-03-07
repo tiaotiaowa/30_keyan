@@ -1,8 +1,10 @@
 """
 地理实体库
 包含中国主要地理实体的坐标和属性信息
+支持加载扩展实体库（510实体）
 """
 import json
+from pathlib import Path
 from typing import List, Dict, Any
 
 
@@ -312,29 +314,48 @@ MOUNTAINS = [
 
 # 主要湖泊（15+）
 LAKES = [
-    {"name": "青海湖", "type": "lake", "area": 4583, "province": "青海省", "elevation": 3196},
-    {"name": "鄱阳湖", "type": "lake", "area": 3150, "province": "江西省", "elevation": 12},
-    {"name": "洞庭湖", "type": "lake", "area": 2625, "province": "湖南省", "elevation": 33},
-    {"name": "太湖", "type": "lake", "area": 2250, "province": "江苏省", "elevation": 3},
-    {"name": "呼伦湖", "type": "lake", "area": 2339, "province": "内蒙古自治区", "elevation": 545},
-    {"name": "纳木错", "type": "lake", "area": 1920, "province": "西藏自治区", "elevation": 4718},
-    {"name": "色林错", "type": "lake", "area": 1640, "province": "西藏自治区", "elevation": 4530},
-    {"name": "博斯腾湖", "type": "lake", "area": 1019, "province": "新疆维吾尔自治区", "elevation": 1048},
-    {"name": "洪泽湖", "type": "lake", "area": 1851, "province": "江苏省", "elevation": 12},
-    {"name": "巢湖", "type": "lake", "area": 770, "province": "安徽省", "elevation": 8},
-    {"name": "微山湖", "type": "lake", "area": 664, "province": "山东省", "elevation": 34},
-    {"name": "滇池", "type": "lake", "area": 330, "province": "云南省", "elevation": 1886},
-    {"name": "洱海", "type": "lake", "area": 256, "province": "云南省", "elevation": 1972},
-    {"name": "抚仙湖", "type": "lake", "area": 217, "province": "云南省", "elevation": 1721},
-    {"name": "西湖", "type": "lake", "area": 6.5, "province": "浙江省", "elevation": 4},
+    {"name": "青海湖", "type": "lake", "area": 4583, "province": "青海省", "elevation": 3196, "lat": 36.6, "lon": 100.4},
+    {"name": "鄱阳湖", "type": "lake", "area": 3150, "province": "江西省", "elevation": 12, "lat": 29.1, "lon": 116.2},
+    {"name": "洞庭湖", "type": "lake", "area": 2625, "province": "湖南省", "elevation": 33, "lat": 29.4, "lon": 112.9},
+    {"name": "太湖", "type": "lake", "area": 2250, "province": "江苏省", "elevation": 3, "lat": 31.2, "lon": 120.1},
+    {"name": "呼伦湖", "type": "lake", "area": 2339, "province": "内蒙古自治区", "elevation": 545, "lat": 48.9, "lon": 117.3},
+    {"name": "纳木错", "type": "lake", "area": 1920, "province": "西藏自治区", "elevation": 4718, "lat": 30.7, "lon": 90.6},
+    {"name": "色林错", "type": "lake", "area": 1640, "province": "西藏自治区", "elevation": 4530, "lat": 31.8, "lon": 88.7},
+    {"name": "博斯腾湖", "type": "lake", "area": 1019, "province": "新疆维吾尔自治区", "elevation": 1048, "lat": 41.9, "lon": 86.9},
+    {"name": "洪泽湖", "type": "lake", "area": 1851, "province": "江苏省", "elevation": 12, "lat": 33.3, "lon": 118.7},
+    {"name": "巢湖", "type": "lake", "area": 770, "province": "安徽省", "elevation": 8, "lat": 31.6, "lon": 117.5},
+    {"name": "微山湖", "type": "lake", "area": 664, "province": "山东省", "elevation": 34, "lat": 34.6, "lon": 117.1},
+    {"name": "滇池", "type": "lake", "area": 330, "province": "云南省", "elevation": 1886, "lat": 24.8, "lon": 102.7},
+    {"name": "洱海", "type": "lake", "area": 256, "province": "云南省", "elevation": 1972, "lat": 25.8, "lon": 100.2},
+    {"name": "抚仙湖", "type": "lake", "area": 217, "province": "云南省", "elevation": 1721, "lat": 24.5, "lon": 102.9},
+    {"name": "西湖", "type": "lake", "area": 6.5, "province": "浙江省", "elevation": 4, "lat": 30.25, "lon": 120.15},
 ]
 
 
 class EntityDatabase:
     """地理实体数据库"""
 
-    def __init__(self):
-        """初始化实体数据库"""
+    def __init__(self, use_expanded: bool = True):
+        """
+        初始化实体数据库
+
+        Args:
+            use_expanded: 是否尝试加载扩展实体库（510实体），默认为True
+        """
+        self.entities = None
+
+        if use_expanded:
+            # 尝试加载扩展实体库
+            expanded_path = Path(__file__).parent / "entity_database_expanded.json"
+            if expanded_path.exists():
+                try:
+                    self._load_expanded_database(expanded_path)
+                    print(f"[OK] 加载扩展实体库成功: 510实体")
+                    return
+                except Exception as e:
+                    print(f"[WARN] 加载扩展实体库失败: {e}，使用默认实体库")
+
+        # 使用默认硬编码实体（300实体）
         self.entities = {
             "provinces": PROVINCES,
             "cities": CITIES,
@@ -342,6 +363,36 @@ class EntityDatabase:
             "mountains": MOUNTAINS,
             "lakes": LAKES
         }
+
+    def _load_expanded_database(self, path: Path):
+        """加载扩展实体数据库（510实体）"""
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        raw_entities = data.get("entities", {})
+
+        # 转换实体格式：扩展库使用coords[lon, lat]，需要转换为lat/lon字段
+        self.entities = {}
+
+        for entity_type, entities in raw_entities.items():
+            converted = []
+            for entity in entities:
+                converted_entity = dict(entity)
+
+                # 处理坐标格式转换
+                if "coords" in entity and isinstance(entity["coords"], list) and len(entity["coords"]) == 2:
+                    # coords格式: [lon, lat] -> lat/lon字段
+                    converted_entity["lon"] = entity["coords"][0]
+                    converted_entity["lat"] = entity["coords"][1]
+                    del converted_entity["coords"]
+
+                # 确保type字段存在
+                if "type" not in converted_entity:
+                    converted_entity["type"] = entity_type.rstrip("s")  # provinces -> province
+
+                converted.append(converted_entity)
+
+            self.entities[entity_type] = converted
 
     def get_all_entities(self) -> List[Dict[str, Any]]:
         """获取所有实体"""
@@ -359,8 +410,11 @@ class EntityDatabase:
     def get_entities_with_coords(self) -> List[Dict[str, Any]]:
         """获取有坐标的实体（用于生成方向/度量关系）"""
         entities_with_coords = []
-        for entity_type in ["provinces", "cities"]:
-            entities_with_coords.extend(self.entities[entity_type])
+        # 包含所有可能有坐标的实体类型
+        coord_types = ["provinces", "cities", "landmarks", "regions"]
+        for entity_type in coord_types:
+            if entity_type in self.entities:
+                entities_with_coords.extend(self.entities[entity_type])
         return entities_with_coords
 
     def get_entity_by_name(self, name: str) -> Dict[str, Any]:

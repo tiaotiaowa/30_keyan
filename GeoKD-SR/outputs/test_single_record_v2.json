@@ -1,0 +1,82 @@
+{
+  "id": "geosr_metric_001",
+  "spatial_relation_type": "metric",
+  "question": "沧州与珠海之间的直线距离约为多少公里？",
+  "answer": "沧州与珠海之间的直线距离约为1809公里。",
+  "reasoning_chain": [
+    {
+      "step": 1,
+      "name": "entity_identification",
+      "action": "extract_entities",
+      "content": "识别问题中的地理实体为沧州和珠海。",
+      "entities_involved": [
+        "沧州",
+        "珠海"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "spatial_relation_extraction",
+      "action": "classify_relation",
+      "content": "判定问题询问的是两地之间的距离数值，属于度量空间关系。",
+      "relation_type": "metric"
+    },
+    {
+      "step": 3,
+      "name": "coordinate_retrieval",
+      "action": "infer_entity_to_token",
+      "content": "获取沧州和珠海的地理坐标信息。",
+      "coordinates": {
+        "沧州": [
+          116.8388,
+          38.3037
+        ],
+        "珠海": [
+          113.5678,
+          22.2769
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "name": "spatial_calculation",
+      "action": "calculate_distance",
+      "content": "根据坐标计算两地的大圆距离。",
+      "calculation_result": "约1809公里"
+    },
+    {
+      "step": 5,
+      "name": "answer_generation",
+      "action": "generate_answer",
+      "content": "结合计算结果生成最终的距离描述。",
+      "final_answer": "约1809公里"
+    }
+  ],
+  "entities": [
+    {
+      "name": "沧州",
+      "type": "city",
+      "coords": [
+        116.8388,
+        38.3037
+      ]
+    },
+    {
+      "name": "珠海",
+      "type": "city",
+      "coords": [
+        113.5678,
+        22.2769
+      ]
+    }
+  ],
+  "spatial_tokens": [
+    "沧州",
+    "珠海",
+    "距离",
+    "公里",
+    "远",
+    "近"
+  ],
+  "difficulty": "easy"
+}

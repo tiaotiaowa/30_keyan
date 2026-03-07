@@ -1,0 +1,4840 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "GeoKD-SR 扩展地理实体数据库",
+    "created": "2026-03-05",
+    "total_entities": 507
+  },
+  "entities": {
+    "provinces": [
+      {
+        "name": "北京市",
+        "type": "province",
+        "coords": [
+          116.4074,
+          39.9042
+        ]
+      },
+      {
+        "name": "天津市",
+        "type": "province",
+        "coords": [
+          117.201,
+          39.0842
+        ]
+      },
+      {
+        "name": "河北省",
+        "type": "province",
+        "coords": [
+          114.5149,
+          38.0428
+        ]
+      },
+      {
+        "name": "山西省",
+        "type": "province",
+        "coords": [
+          111.8499,
+          37.5707
+        ]
+      },
+      {
+        "name": "内蒙古自治区",
+        "type": "province",
+        "coords": [
+          111.7519,
+          40.8414
+        ]
+      },
+      {
+        "name": "辽宁省",
+        "type": "province",
+        "coords": [
+          123.4315,
+          41.2956
+        ]
+      },
+      {
+        "name": "吉林省",
+        "type": "province",
+        "coords": [
+          125.3245,
+          43.8868
+        ]
+      },
+      {
+        "name": "黑龙江省",
+        "type": "province",
+        "coords": [
+          126.6499,
+          45.7732
+        ]
+      },
+      {
+        "name": "上海市",
+        "type": "province",
+        "coords": [
+          121.4737,
+          31.2304
+        ]
+      },
+      {
+        "name": "江苏省",
+        "type": "province",
+        "coords": [
+          118.7969,
+          32.0603
+        ]
+      },
+      {
+        "name": "浙江省",
+        "type": "province",
+        "coords": [
+          120.1551,
+          30.2741
+        ]
+      },
+      {
+        "name": "安徽省",
+        "type": "province",
+        "coords": [
+          117.2272,
+          31.8612
+        ]
+      },
+      {
+        "name": "福建省",
+        "type": "province",
+        "coords": [
+          119.2965,
+          26.0745
+        ]
+      },
+      {
+        "name": "江西省",
+        "type": "province",
+        "coords": [
+          115.9099,
+          28.6769
+        ]
+      },
+      {
+        "name": "山东省",
+        "type": "province",
+        "coords": [
+          117.0204,
+          36.6683
+        ]
+      },
+      {
+        "name": "河南省",
+        "type": "province",
+        "coords": [
+          113.6253,
+          34.7466
+        ]
+      },
+      {
+        "name": "湖北省",
+        "type": "province",
+        "coords": [
+          114.3055,
+          30.5928
+        ]
+      },
+      {
+        "name": "湖南省",
+        "type": "province",
+        "coords": [
+          112.9388,
+          28.2282
+        ]
+      },
+      {
+        "name": "广东省",
+        "type": "province",
+        "coords": [
+          116.6832,
+          23.379
+        ]
+      },
+      {
+        "name": "广西壮族自治区",
+        "type": "province",
+        "coords": [
+          108.3275,
+          22.8155
+        ]
+      },
+      {
+        "name": "海南省",
+        "type": "province",
+        "coords": [
+          110.3492,
+          20.0174
+        ]
+      },
+      {
+        "name": "重庆市",
+        "type": "province",
+        "coords": [
+          106.9123,
+          29.4316
+        ]
+      },
+      {
+        "name": "四川省",
+        "type": "province",
+        "coords": [
+          104.0648,
+          30.6171
+        ]
+      },
+      {
+        "name": "贵州省",
+        "type": "province",
+        "coords": [
+          106.7135,
+          26.5783
+        ]
+      },
+      {
+        "name": "云南省",
+        "type": "province",
+        "coords": [
+          102.7046,
+          25.0443
+        ]
+      },
+      {
+        "name": "西藏自治区",
+        "type": "province",
+        "coords": [
+          91.1721,
+          29.6524
+        ]
+      },
+      {
+        "name": "陕西省",
+        "type": "province",
+        "coords": [
+          108.9398,
+          34.3416
+        ]
+      },
+      {
+        "name": "甘肃省",
+        "type": "province",
+        "coords": [
+          103.8343,
+          36.0611
+        ]
+      },
+      {
+        "name": "青海省",
+        "type": "province",
+        "coords": [
+          101.7782,
+          36.6171
+        ]
+      },
+      {
+        "name": "宁夏回族自治区",
+        "type": "province",
+        "coords": [
+          106.2731,
+          38.4681
+        ]
+      },
+      {
+        "name": "新疆维吾尔自治区",
+        "type": "province",
+        "coords": [
+          87.6177,
+          43.793
+        ]
+      },
+      {
+        "name": "香港特别行政区",
+        "type": "province",
+        "coords": [
+          114.1694,
+          22.3193
+        ]
+      },
+      {
+        "name": "澳门特别行政区",
+        "type": "province",
+        "coords": [
+          113.5439,
+          22.1987
+        ]
+      },
+      {
+        "name": "台湾省",
+        "type": "province",
+        "coords": [
+          121.5654,
+          25.033
+        ]
+      }
+    ],
+    "cities": [
+      {
+        "name": "石家庄",
+        "type": "city",
+        "coords": [
+          114.5149,
+          38.0428
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "太原",
+        "type": "city",
+        "coords": [
+          112.5489,
+          37.8706
+        ],
+        "province": "山西省"
+      },
+      {
+        "name": "呼和浩特",
+        "type": "city",
+        "coords": [
+          111.7519,
+          40.8414
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "沈阳",
+        "type": "city",
+        "coords": [
+          123.4315,
+          41.8057
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "长春",
+        "type": "city",
+        "coords": [
+          125.3245,
+          43.8868
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "哈尔滨",
+        "type": "city",
+        "coords": [
+          126.534,
+          45.8038
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "南京",
+        "type": "city",
+        "coords": [
+          118.7969,
+          32.0603
+        ],
+        "province": "江苏省"
+      },
+      {
+        "name": "杭州",
+        "type": "city",
+        "coords": [
+          120.1551,
+          30.2741
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "合肥",
+        "type": "city",
+        "coords": [
+          117.2272,
+          31.8206
+        ],
+        "province": "安徽省"
+      },
+      {
+        "name": "福州",
+        "type": "city",
+        "coords": [
+          119.2965,
+          26.0745
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "南昌",
+        "type": "city",
+        "coords": [
+          115.9099,
+          28.6769
+        ],
+        "province": "江西省"
+      },
+      {
+        "name": "济南",
+        "type": "city",
+        "coords": [
+          117.1205,
+          36.6512
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "郑州",
+        "type": "city",
+        "coords": [
+          113.6253,
+          34.7466
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "武汉",
+        "type": "city",
+        "coords": [
+          114.3055,
+          30.5928
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "长沙",
+        "type": "city",
+        "coords": [
+          112.9388,
+          28.2282
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "广州",
+        "type": "city",
+        "coords": [
+          113.2644,
+          23.1291
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "南宁",
+        "type": "city",
+        "coords": [
+          108.3665,
+          22.817
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "海口",
+        "type": "city",
+        "coords": [
+          110.1999,
+          20.044
+        ],
+        "province": "海南省"
+      },
+      {
+        "name": "成都",
+        "type": "city",
+        "coords": [
+          104.0668,
+          30.5728
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "贵阳",
+        "type": "city",
+        "coords": [
+          106.6302,
+          26.647
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "昆明",
+        "type": "city",
+        "coords": [
+          102.7046,
+          25.0443
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "拉萨",
+        "type": "city",
+        "coords": [
+          91.1721,
+          29.6524
+        ],
+        "province": "西藏自治区"
+      },
+      {
+        "name": "西安",
+        "type": "city",
+        "coords": [
+          108.9398,
+          34.3416
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "兰州",
+        "type": "city",
+        "coords": [
+          103.8343,
+          36.0611
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "西宁",
+        "type": "city",
+        "coords": [
+          101.7782,
+          36.6171
+        ],
+        "province": "青海省"
+      },
+      {
+        "name": "银川",
+        "type": "city",
+        "coords": [
+          106.2731,
+          38.4681
+        ],
+        "province": "宁夏回族自治区"
+      },
+      {
+        "name": "乌鲁木齐",
+        "type": "city",
+        "coords": [
+          87.6168,
+          43.8256
+        ],
+        "province": "新疆维吾尔自治区"
+      },
+      {
+        "name": "深圳",
+        "type": "city",
+        "coords": [
+          114.0579,
+          22.5431
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "珠海",
+        "type": "city",
+        "coords": [
+          113.5678,
+          22.2769
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "汕头",
+        "type": "city",
+        "coords": [
+          116.682,
+          23.354
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "佛山",
+        "type": "city",
+        "coords": [
+          113.1219,
+          23.0218
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "东莞",
+        "type": "city",
+        "coords": [
+          113.7518,
+          23.0205
+        ],
+        "province": "广东省"
+      },
+      {
+        "name": "苏州",
+        "type": "city",
+        "coords": [
+          120.5853,
+          31.2989
+        ],
+        "province": "江苏省"
+      },
+      {
+        "name": "无锡",
+        "type": "city",
+        "coords": [
+          120.3119,
+          31.4912
+        ],
+        "province": "江苏省"
+      },
+      {
+        "name": "常州",
+        "type": "city",
+        "coords": [
+          119.9741,
+          31.8106
+        ],
+        "province": "江苏省"
+      },
+      {
+        "name": "宁波",
+        "type": "city",
+        "coords": [
+          121.544,
+          29.8683
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "温州",
+        "type": "city",
+        "coords": [
+          120.6667,
+          28.0
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "嘉兴",
+        "type": "city",
+        "coords": [
+          120.7549,
+          30.7528
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "湖州",
+        "type": "city",
+        "coords": [
+          120.0867,
+          30.8941
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "绍兴",
+        "type": "city",
+        "coords": [
+          120.582,
+          30.0319
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "金华",
+        "type": "city",
+        "coords": [
+          119.6479,
+          29.0787
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "台州",
+        "type": "city",
+        "coords": [
+          121.4287,
+          28.6563
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "丽水",
+        "type": "city",
+        "coords": [
+          119.9229,
+          28.4689
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "衢州",
+        "type": "city",
+        "coords": [
+          118.8597,
+          28.9358
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "舟山",
+        "type": "city",
+        "coords": [
+          122.1064,
+          30.036
+        ],
+        "province": "浙江省"
+      },
+      {
+        "name": "厦门",
+        "type": "city",
+        "coords": [
+          118.0894,
+          24.4798
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "泉州",
+        "type": "city",
+        "coords": [
+          118.6757,
+          24.8741
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "漳州",
+        "type": "city",
+        "coords": [
+          117.6471,
+          24.513
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "莆田",
+        "type": "city",
+        "coords": [
+          119.0078,
+          25.4541
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "三明",
+        "type": "city",
+        "coords": [
+          117.6389,
+          26.2634
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "南平",
+        "type": "city",
+        "coords": [
+          118.1777,
+          26.6418
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "龙岩",
+        "type": "city",
+        "coords": [
+          117.0176,
+          25.0616
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "宁德",
+        "type": "city",
+        "coords": [
+          119.5477,
+          26.6617
+        ],
+        "province": "福建省"
+      },
+      {
+        "name": "青岛",
+        "type": "city",
+        "coords": [
+          120.3826,
+          36.0671
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "烟台",
+        "type": "city",
+        "coords": [
+          121.4479,
+          37.4637
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "潍坊",
+        "type": "city",
+        "coords": [
+          119.1619,
+          36.7069
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "淄博",
+        "type": "city",
+        "coords": [
+          118.0548,
+          36.8131
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "威海",
+        "type": "city",
+        "coords": [
+          122.1202,
+          37.5131
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "日照",
+        "type": "city",
+        "coords": [
+          119.5269,
+          35.4164
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "临沂",
+        "type": "city",
+        "coords": [
+          118.3561,
+          35.1041
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "东营",
+        "type": "city",
+        "coords": [
+          118.6752,
+          37.4347
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "德州",
+        "type": "city",
+        "coords": [
+          116.3575,
+          37.4355
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "聊城",
+        "type": "city",
+        "coords": [
+          115.9853,
+          36.4559
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "滨州",
+        "type": "city",
+        "coords": [
+          117.9708,
+          37.3835
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "菏泽",
+        "type": "city",
+        "coords": [
+          115.4807,
+          35.2339
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "枣庄",
+        "type": "city",
+        "coords": [
+          117.3237,
+          34.8107
+        ],
+        "province": "山东省"
+      },
+      {
+        "name": "大连",
+        "type": "city",
+        "coords": [
+          121.6147,
+          38.914
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "鞍山",
+        "type": "city",
+        "coords": [
+          122.9956,
+          41.1087
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "抚顺",
+        "type": "city",
+        "coords": [
+          123.9573,
+          41.8773
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "本溪",
+        "type": "city",
+        "coords": [
+          123.7674,
+          41.2978
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "丹东",
+        "type": "city",
+        "coords": [
+          124.3854,
+          40.129
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "锦州",
+        "type": "city",
+        "coords": [
+          121.1269,
+          41.0956
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "营口",
+        "type": "city",
+        "coords": [
+          122.235,
+          40.6678
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "阜新",
+        "type": "city",
+        "coords": [
+          121.6709,
+          42.0215
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "辽阳",
+        "type": "city",
+        "coords": [
+          123.2403,
+          41.2698
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "盘锦",
+        "type": "city",
+        "coords": [
+          122.0707,
+          41.1198
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "铁岭",
+        "type": "city",
+        "coords": [
+          123.8416,
+          42.2906
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "朝阳",
+        "type": "city",
+        "coords": [
+          120.4508,
+          41.5757
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "葫芦岛",
+        "type": "city",
+        "coords": [
+          120.8375,
+          40.743
+        ],
+        "province": "辽宁省"
+      },
+      {
+        "name": "吉林",
+        "type": "city",
+        "coords": [
+          126.5496,
+          43.8378
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "四平",
+        "type": "city",
+        "coords": [
+          124.3506,
+          43.1701
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "辽源",
+        "type": "city",
+        "coords": [
+          125.1434,
+          42.9024
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "通化",
+        "type": "city",
+        "coords": [
+          125.9395,
+          41.7285
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "白山",
+        "type": "city",
+        "coords": [
+          126.4146,
+          41.9374
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "松原",
+        "type": "city",
+        "coords": [
+          124.825,
+          45.1411
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "白城",
+        "type": "city",
+        "coords": [
+          122.8389,
+          45.6197
+        ],
+        "province": "吉林省"
+      },
+      {
+        "name": "齐齐哈尔",
+        "type": "city",
+        "coords": [
+          123.918,
+          47.354
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "鸡西",
+        "type": "city",
+        "coords": [
+          130.9697,
+          45.2956
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "鹤岗",
+        "type": "city",
+        "coords": [
+          130.2979,
+          47.35
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "双鸭山",
+        "type": "city",
+        "coords": [
+          131.159,
+          46.6463
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "大庆",
+        "type": "city",
+        "coords": [
+          125.1033,
+          46.5879
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "伊春",
+        "type": "city",
+        "coords": [
+          128.899,
+          47.7273
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "佳木斯",
+        "type": "city",
+        "coords": [
+          130.3187,
+          46.7995
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "七台河",
+        "type": "city",
+        "coords": [
+          131.0031,
+          45.771
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "牡丹江",
+        "type": "city",
+        "coords": [
+          129.6333,
+          44.5526
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "黑河",
+        "type": "city",
+        "coords": [
+          127.5289,
+          50.2456
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "绥化",
+        "type": "city",
+        "coords": [
+          126.9695,
+          46.6374
+        ],
+        "province": "黑龙江省"
+      },
+      {
+        "name": "包头",
+        "type": "city",
+        "coords": [
+          109.8403,
+          40.6574
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "乌海",
+        "type": "city",
+        "coords": [
+          106.8254,
+          39.6542
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "赤峰",
+        "type": "city",
+        "coords": [
+          118.8869,
+          42.2573
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "通辽",
+        "type": "city",
+        "coords": [
+          122.2432,
+          43.6174
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "鄂尔多斯",
+        "type": "city",
+        "coords": [
+          109.7816,
+          39.6086
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "呼伦贝尔",
+        "type": "city",
+        "coords": [
+          119.7659,
+          49.2122
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "巴彦淖尔",
+        "type": "city",
+        "coords": [
+          107.3879,
+          40.7431
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "乌兰察布",
+        "type": "city",
+        "coords": [
+          113.1327,
+          40.9944
+        ],
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "桂林",
+        "type": "city",
+        "coords": [
+          110.29,
+          25.2736
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "柳州",
+        "type": "city",
+        "coords": [
+          109.4281,
+          24.3264
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "梧州",
+        "type": "city",
+        "coords": [
+          111.279,
+          23.4768
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "北海",
+        "type": "city",
+        "coords": [
+          109.1198,
+          21.4733
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "防城港",
+        "type": "city",
+        "coords": [
+          108.3547,
+          21.6145
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "钦州",
+        "type": "city",
+        "coords": [
+          108.6542,
+          21.9731
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "贵港",
+        "type": "city",
+        "coords": [
+          109.5986,
+          23.1036
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "玉林",
+        "type": "city",
+        "coords": [
+          110.1808,
+          22.654
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "百色",
+        "type": "city",
+        "coords": [
+          106.6182,
+          23.9025
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "贺州",
+        "type": "city",
+        "coords": [
+          111.5526,
+          24.4032
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "河池",
+        "type": "city",
+        "coords": [
+          108.0854,
+          24.6929
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "来宾",
+        "type": "city",
+        "coords": [
+          109.2218,
+          23.752
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "崇左",
+        "type": "city",
+        "coords": [
+          107.3646,
+          22.3769
+        ],
+        "province": "广西壮族自治区"
+      },
+      {
+        "name": "绵阳",
+        "type": "city",
+        "coords": [
+          104.6794,
+          31.4678
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "自贡",
+        "type": "city",
+        "coords": [
+          104.7784,
+          29.3393
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "攀枝花",
+        "type": "city",
+        "coords": [
+          101.7188,
+          26.5804
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "泸州",
+        "type": "city",
+        "coords": [
+          105.442,
+          28.8719
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "德阳",
+        "type": "city",
+        "coords": [
+          104.398,
+          31.127
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "广元",
+        "type": "city",
+        "coords": [
+          105.8431,
+          32.4354
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "遂宁",
+        "type": "city",
+        "coords": [
+          105.5929,
+          30.5134
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "内江",
+        "type": "city",
+        "coords": [
+          105.0583,
+          29.5834
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "乐山",
+        "type": "city",
+        "coords": [
+          103.7656,
+          29.552
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "南充",
+        "type": "city",
+        "coords": [
+          106.1106,
+          30.8373
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "眉山",
+        "type": "city",
+        "coords": [
+          103.8484,
+          30.0492
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "宜宾",
+        "type": "city",
+        "coords": [
+          104.643,
+          28.7696
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "广安",
+        "type": "city",
+        "coords": [
+          106.6333,
+          30.4564
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "达州",
+        "type": "city",
+        "coords": [
+          107.468,
+          31.209
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "雅安",
+        "type": "city",
+        "coords": [
+          103.0134,
+          29.9806
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "巴中",
+        "type": "city",
+        "coords": [
+          106.7478,
+          31.8691
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "资阳",
+        "type": "city",
+        "coords": [
+          104.6278,
+          30.1288
+        ],
+        "province": "四川省"
+      },
+      {
+        "name": "六盘水",
+        "type": "city",
+        "coords": [
+          104.8305,
+          26.5933
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "遵义",
+        "type": "city",
+        "coords": [
+          106.9273,
+          27.7257
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "安顺",
+        "type": "city",
+        "coords": [
+          105.9323,
+          26.2455
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "毕节",
+        "type": "city",
+        "coords": [
+          105.2841,
+          27.302
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "铜仁",
+        "type": "city",
+        "coords": [
+          109.1896,
+          27.7312
+        ],
+        "province": "贵州省"
+      },
+      {
+        "name": "曲靖",
+        "type": "city",
+        "coords": [
+          103.7961,
+          25.4895
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "玉溪",
+        "type": "city",
+        "coords": [
+          102.5467,
+          24.352
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "保山",
+        "type": "city",
+        "coords": [
+          99.1619,
+          25.1205
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "昭通",
+        "type": "city",
+        "coords": [
+          103.7173,
+          27.338
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "丽江",
+        "type": "city",
+        "coords": [
+          100.227,
+          26.8558
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "普洱",
+        "type": "city",
+        "coords": [
+          100.966,
+          22.825
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "临沧",
+        "type": "city",
+        "coords": [
+          100.0927,
+          23.8864
+        ],
+        "province": "云南省"
+      },
+      {
+        "name": "宝鸡",
+        "type": "city",
+        "coords": [
+          107.2379,
+          34.3616
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "咸阳",
+        "type": "city",
+        "coords": [
+          108.7091,
+          34.3456
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "铜川",
+        "type": "city",
+        "coords": [
+          108.9454,
+          34.8965
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "渭南",
+        "type": "city",
+        "coords": [
+          109.5099,
+          34.5024
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "延安",
+        "type": "city",
+        "coords": [
+          109.4898,
+          36.5853
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "汉中",
+        "type": "city",
+        "coords": [
+          107.023,
+          33.0674
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "榆林",
+        "type": "city",
+        "coords": [
+          109.7341,
+          38.2679
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "安康",
+        "type": "city",
+        "coords": [
+          109.0293,
+          32.685
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "商洛",
+        "type": "city",
+        "coords": [
+          109.9402,
+          33.868
+        ],
+        "province": "陕西省"
+      },
+      {
+        "name": "嘉峪关",
+        "type": "city",
+        "coords": [
+          98.2873,
+          39.7725
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "金昌",
+        "type": "city",
+        "coords": [
+          102.1879,
+          38.5205
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "白银",
+        "type": "city",
+        "coords": [
+          104.1389,
+          36.5448
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "天水",
+        "type": "city",
+        "coords": [
+          105.7244,
+          34.5808
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "武威",
+        "type": "city",
+        "coords": [
+          102.6371,
+          37.9283
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "张掖",
+        "type": "city",
+        "coords": [
+          100.4496,
+          38.9259
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "平凉",
+        "type": "city",
+        "coords": [
+          106.6654,
+          35.543
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "酒泉",
+        "type": "city",
+        "coords": [
+          98.4941,
+          39.7238
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "庆阳",
+        "type": "city",
+        "coords": [
+          107.6432,
+          35.7094
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "定西",
+        "type": "city",
+        "coords": [
+          104.5861,
+          35.5806
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "陇南",
+        "type": "city",
+        "coords": [
+          104.9211,
+          33.4007
+        ],
+        "province": "甘肃省"
+      },
+      {
+        "name": "唐山",
+        "type": "city",
+        "coords": [
+          118.1802,
+          39.6291
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "秦皇岛",
+        "type": "city",
+        "coords": [
+          119.5996,
+          39.9354
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "邯郸",
+        "type": "city",
+        "coords": [
+          114.5391,
+          36.6256
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "保定",
+        "type": "city",
+        "coords": [
+          115.4648,
+          38.8738
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "张家口",
+        "type": "city",
+        "coords": [
+          114.8869,
+          40.7677
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "承德",
+        "type": "city",
+        "coords": [
+          117.9636,
+          40.9511
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "廊坊",
+        "type": "city",
+        "coords": [
+          116.6831,
+          39.538
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "衡水",
+        "type": "city",
+        "coords": [
+          115.67,
+          37.7348
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "沧州",
+        "type": "city",
+        "coords": [
+          116.8388,
+          38.3037
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "邢台",
+        "type": "city",
+        "coords": [
+          114.5042,
+          37.0682
+        ],
+        "province": "河北省"
+      },
+      {
+        "name": "洛阳",
+        "type": "city",
+        "coords": [
+          112.454,
+          34.6197
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "开封",
+        "type": "city",
+        "coords": [
+          114.3075,
+          34.7971
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "南阳",
+        "type": "city",
+        "coords": [
+          112.5286,
+          33.0039
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "安阳",
+        "type": "city",
+        "coords": [
+          114.3927,
+          36.0979
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "新乡",
+        "type": "city",
+        "coords": [
+          113.9268,
+          35.3029
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "焦作",
+        "type": "city",
+        "coords": [
+          113.242,
+          35.2159
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "濮阳",
+        "type": "city",
+        "coords": [
+          115.0296,
+          35.7625
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "许昌",
+        "type": "city",
+        "coords": [
+          113.8523,
+          34.0357
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "漯河",
+        "type": "city",
+        "coords": [
+          114.0167,
+          33.5818
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "三门峡",
+        "type": "city",
+        "coords": [
+          111.1941,
+          34.7733
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "商丘",
+        "type": "city",
+        "coords": [
+          115.6506,
+          34.4144
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "周口",
+        "type": "city",
+        "coords": [
+          114.6965,
+          33.6264
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "驻马店",
+        "type": "city",
+        "coords": [
+          114.0222,
+          33.0114
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "信阳",
+        "type": "city",
+        "coords": [
+          114.0913,
+          32.1285
+        ],
+        "province": "河南省"
+      },
+      {
+        "name": "宜昌",
+        "type": "city",
+        "coords": [
+          111.2867,
+          30.6918
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "襄阳",
+        "type": "city",
+        "coords": [
+          112.1222,
+          32.009
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "荆州",
+        "type": "city",
+        "coords": [
+          112.241,
+          30.3352
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "黄冈",
+        "type": "city",
+        "coords": [
+          114.872,
+          30.4461
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "孝感",
+        "type": "city",
+        "coords": [
+          113.9169,
+          30.9243
+        ],
+        "province": "湖北省"
+      },
+      {
+        "name": "株洲",
+        "type": "city",
+        "coords": [
+          113.1337,
+          27.8274
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "湘潭",
+        "type": "city",
+        "coords": [
+          112.9447,
+          27.8298
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "衡阳",
+        "type": "city",
+        "coords": [
+          112.5717,
+          26.8968
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "邵阳",
+        "type": "city",
+        "coords": [
+          111.4672,
+          27.2368
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "岳阳",
+        "type": "city",
+        "coords": [
+          113.0963,
+          29.3572
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "常德",
+        "type": "city",
+        "coords": [
+          111.6983,
+          29.0318
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "张家界",
+        "type": "city",
+        "coords": [
+          110.4793,
+          29.117
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "益阳",
+        "type": "city",
+        "coords": [
+          112.355,
+          28.5539
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "郴州",
+        "type": "city",
+        "coords": [
+          113.0149,
+          25.7705
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "永州",
+        "type": "city",
+        "coords": [
+          111.6132,
+          26.4205
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "怀化",
+        "type": "city",
+        "coords": [
+          109.9981,
+          27.55
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "娄底",
+        "type": "city",
+        "coords": [
+          111.9939,
+          27.7001
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "湘西",
+        "type": "city",
+        "coords": [
+          109.7399,
+          28.3117
+        ],
+        "province": "湖南省"
+      },
+      {
+        "name": "任丘",
+        "coords": [
+          116.0933,
+          38.7111
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "泊头",
+        "coords": [
+          116.5667,
+          38.0833
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "定州",
+        "coords": [
+          114.9903,
+          38.5164
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "霸州",
+        "coords": [
+          116.3914,
+          39.1194
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "三河",
+        "coords": [
+          117.0783,
+          39.9817
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "高碑店",
+        "coords": [
+          115.8739,
+          39.3264
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "涿州",
+        "coords": [
+          115.9806,
+          39.4864
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "迁安",
+        "coords": [
+          118.7008,
+          40.0017
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "遵化",
+        "coords": [
+          117.9644,
+          40.1892
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "辛集",
+        "coords": [
+          115.2181,
+          37.9433
+        ],
+        "type": "city",
+        "province": "河北省"
+      },
+      {
+        "name": "古交",
+        "coords": [
+          112.1689,
+          37.9061
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "大同",
+        "coords": [
+          113.3006,
+          40.0894
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "阳泉",
+        "coords": [
+          113.5833,
+          37.8667
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "长治",
+        "coords": [
+          113.1161,
+          36.1953
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "晋城",
+        "coords": [
+          112.8514,
+          35.4975
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "朔州",
+        "coords": [
+          112.4333,
+          39.3333
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "晋中",
+        "coords": [
+          112.7525,
+          37.6872
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "运城",
+        "coords": [
+          111.0067,
+          35.0267
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "忻州",
+        "coords": [
+          112.7333,
+          38.4167
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "临汾",
+        "coords": [
+          111.5186,
+          36.0842
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "吕梁",
+        "coords": [
+          111.1347,
+          37.5183
+        ],
+        "type": "city",
+        "province": "山西省"
+      },
+      {
+        "name": "满洲里",
+        "coords": [
+          117.4789,
+          49.5978
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "扎兰屯",
+        "coords": [
+          122.7375,
+          48.0067
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "牙克石",
+        "coords": [
+          120.7117,
+          49.2856
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "根河",
+        "coords": [
+          121.5217,
+          50.7803
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "额尔古纳",
+        "coords": [
+          120.1808,
+          50.2431
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "乌兰浩特",
+        "coords": [
+          122.0639,
+          46.0725
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "阿尔山",
+        "coords": [
+          119.9475,
+          47.1772
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "霍林郭勒",
+        "coords": [
+          119.6642,
+          45.5339
+        ],
+        "type": "city",
+        "province": "内蒙古自治区"
+      },
+      {
+        "name": "新民",
+        "coords": [
+          122.8289,
+          41.9983
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "瓦房店",
+        "coords": [
+          121.9811,
+          39.6281
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "普兰店",
+        "coords": [
+          121.9383,
+          39.3917
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "庄河",
+        "coords": [
+          122.9714,
+          39.6808
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "海城",
+        "coords": [
+          122.6853,
+          40.8814
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "东港",
+        "coords": [
+          124.1522,
+          39.8617
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "凌海",
+        "coords": [
+          121.3572,
+          41.1739
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "北镇",
+        "coords": [
+          121.7833,
+          41.5833
+        ],
+        "type": "city",
+        "province": "辽宁省"
+      },
+      {
+        "name": "榆树",
+        "coords": [
+          126.5569,
+          44.8397
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "德惠",
+        "coords": [
+          125.7042,
+          44.5319
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "蛟河",
+        "coords": [
+          127.3444,
+          43.7236
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "桦甸",
+        "coords": [
+          126.7464,
+          42.9722
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "舒兰",
+        "coords": [
+          126.9658,
+          44.4061
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "磐石",
+        "coords": [
+          126.0603,
+          42.9422
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "公主岭",
+        "coords": [
+          124.8225,
+          43.5047
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "双辽",
+        "coords": [
+          123.5031,
+          43.5181
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "梅河口",
+        "coords": [
+          125.7108,
+          42.5383
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "集安",
+        "coords": [
+          126.1944,
+          41.1258
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "洮南",
+        "coords": [
+          122.7878,
+          45.3353
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "大安",
+        "coords": [
+          124.2919,
+          45.5083
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "临江",
+        "coords": [
+          126.9181,
+          41.8111
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "和龙",
+        "coords": [
+          129.0103,
+          42.5464
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "敦化",
+        "coords": [
+          128.2322,
+          43.3725
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "珲春",
+        "coords": [
+          130.3583,
+          42.8694
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "图们",
+        "coords": [
+          129.8439,
+          42.9681
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "延吉",
+        "coords": [
+          129.5089,
+          42.9075
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "龙井",
+        "coords": [
+          129.4272,
+          42.7711
+        ],
+        "type": "city",
+        "province": "吉林省"
+      },
+      {
+        "name": "阿城",
+        "coords": [
+          126.9581,
+          45.5481
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "双城",
+        "coords": [
+          126.3117,
+          45.3833
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "尚志",
+        "coords": [
+          127.9617,
+          45.2111
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "五常",
+        "coords": [
+          127.1567,
+          44.9117
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "讷河",
+        "coords": [
+          124.8772,
+          48.4842
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "虎林",
+        "coords": [
+          132.9717,
+          45.7647
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "密山",
+        "coords": [
+          131.8464,
+          45.5294
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "铁力",
+        "coords": [
+          128.0322,
+          46.9867
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "绥芬河",
+        "coords": [
+          131.1517,
+          44.4125
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "宁安",
+        "coords": [
+          129.4833,
+          44.35
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "海林",
+        "coords": [
+          129.3803,
+          44.5633
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "穆棱",
+        "coords": [
+          130.5244,
+          44.9186
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "同江",
+        "coords": [
+          132.5108,
+          47.6458
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "富锦",
+        "coords": [
+          132.0372,
+          47.2467
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "北安",
+        "coords": [
+          126.4911,
+          48.2411
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "五大连池",
+        "coords": [
+          126.2022,
+          48.5156
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "肇东",
+        "coords": [
+          125.9617,
+          46.0511
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "安达",
+        "coords": [
+          125.5533,
+          46.4233
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "海伦",
+        "coords": [
+          126.9697,
+          47.4631
+        ],
+        "type": "city",
+        "province": "黑龙江省"
+      },
+      {
+        "name": "江阴",
+        "coords": [
+          120.2858,
+          31.9197
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "宜兴",
+        "coords": [
+          119.8233,
+          31.3397
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "溧阳",
+        "coords": [
+          119.4836,
+          31.4314
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "金坛",
+        "coords": [
+          119.5919,
+          31.7408
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "常熟",
+        "coords": [
+          120.7525,
+          31.6547
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "张家港",
+        "coords": [
+          120.5533,
+          31.8753
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "昆山",
+        "coords": [
+          120.9803,
+          31.3853
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "太仓",
+        "coords": [
+          121.1292,
+          31.4594
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "启东",
+        "coords": [
+          121.6597,
+          31.8081
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "如皋",
+        "coords": [
+          120.5733,
+          32.3833
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "通州",
+        "coords": [
+          121.0719,
+          32.0672
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "海门",
+        "coords": [
+          121.1817,
+          31.8717
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "东台",
+        "coords": [
+          120.32,
+          32.8517
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "大丰",
+        "coords": [
+          120.5006,
+          33.1989
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "仪征",
+        "coords": [
+          119.1842,
+          32.2719
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "高邮",
+        "coords": [
+          119.4592,
+          32.7814
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "丹阳",
+        "coords": [
+          119.6064,
+          32.0103
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "扬中",
+        "coords": [
+          119.8236,
+          32.2361
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "句容",
+        "coords": [
+          119.1689,
+          31.9556
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "兴化",
+        "coords": [
+          119.8525,
+          32.9103
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "靖江",
+        "coords": [
+          120.2728,
+          32.0158
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "泰兴",
+        "coords": [
+          120.02,
+          32.1717
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "姜堰",
+        "coords": [
+          120.1281,
+          32.5086
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "新沂",
+        "coords": [
+          118.3544,
+          34.3694
+        ],
+        "type": "city",
+        "province": "江苏省"
+      },
+      {
+        "name": "邳州",
+        "coords": [
+          118.0,
+          34.3167
+        ],
+        "type": "city",
+        "province": "江苏省"
+      }
+    ],
+    "landmarks": [
+      {
+        "name": "故宫",
+        "type": "landmark",
+        "coords": [
+          116.3972,
+          39.9163
+        ],
+        "description": "明清两代皇宫，世界文化遗产",
+        "city": "北京"
+      },
+      {
+        "name": "长城",
+        "type": "landmark",
+        "coords": [
+          116.5704,
+          40.4319
+        ],
+        "description": "中国古代军事防御工程，世界七大奇迹",
+        "city": "北京"
+      },
+      {
+        "name": "兵马俑",
+        "type": "landmark",
+        "coords": [
+          109.2785,
+          34.3841
+        ],
+        "description": "秦始皇陵陪葬坑，世界文化遗产",
+        "city": "西安"
+      },
+      {
+        "name": "莫高窟",
+        "type": "landmark",
+        "coords": [
+          94.7869,
+          40.0349
+        ],
+        "description": "佛教艺术宝库，世界文化遗产",
+        "city": "敦煌"
+      },
+      {
+        "name": "布达拉宫",
+        "type": "landmark",
+        "coords": [
+          91.1173,
+          29.6579
+        ],
+        "description": "藏传佛教圣地，世界文化遗产",
+        "city": "拉萨"
+      },
+      {
+        "name": "乐山大佛",
+        "type": "landmark",
+        "coords": [
+          103.7674,
+          29.5436
+        ],
+        "description": "世界最大石刻佛像，世界文化遗产",
+        "city": "乐山"
+      },
+      {
+        "name": "龙门石窟",
+        "type": "landmark",
+        "coords": [
+          112.4767,
+          34.5556
+        ],
+        "description": "佛教石窟艺术，世界文化遗产",
+        "city": "洛阳"
+      },
+      {
+        "name": "云冈石窟",
+        "type": "landmark",
+        "coords": [
+          113.1206,
+          40.1106
+        ],
+        "description": "北魏石窟艺术，世界文化遗产",
+        "city": "大同"
+      },
+      {
+        "name": "承德避暑山庄",
+        "type": "landmark",
+        "coords": [
+          117.9486,
+          40.9683
+        ],
+        "description": "清代皇家园林，世界文化遗产",
+        "city": "承德"
+      },
+      {
+        "name": "曲阜孔庙",
+        "type": "landmark",
+        "coords": [
+          116.9869,
+          35.5958
+        ],
+        "description": "祭祀孔子的庙宇，世界文化遗产",
+        "city": "曲阜"
+      },
+      {
+        "name": "平遥古城",
+        "type": "landmark",
+        "coords": [
+          112.1853,
+          37.1894
+        ],
+        "description": "明清古城，世界文化遗产",
+        "city": "平遥"
+      },
+      {
+        "name": "丽江古城",
+        "type": "landmark",
+        "coords": [
+          100.2339,
+          26.8727
+        ],
+        "description": "纳西族古城，世界文化遗产",
+        "city": "丽江"
+      },
+      {
+        "name": "凤凰古城",
+        "type": "landmark",
+        "coords": [
+          109.6022,
+          27.9472
+        ],
+        "description": "湘西古镇，苗族文化代表",
+        "city": "凤凰"
+      },
+      {
+        "name": "苏州园林",
+        "type": "landmark",
+        "coords": [
+          120.5853,
+          31.2989
+        ],
+        "description": "古典园林代表，世界文化遗产",
+        "city": "苏州"
+      },
+      {
+        "name": "拙政园",
+        "type": "landmark",
+        "coords": [
+          120.618,
+          31.318
+        ],
+        "description": "苏州四大名园之首，世界文化遗产",
+        "city": "苏州"
+      },
+      {
+        "name": "留园",
+        "type": "landmark",
+        "coords": [
+          120.6139,
+          31.2906
+        ],
+        "description": "苏州四大名园之一，世界文化遗产",
+        "city": "苏州"
+      },
+      {
+        "name": "颐和园",
+        "type": "landmark",
+        "coords": [
+          116.2754,
+          39.9998
+        ],
+        "description": "清代皇家园林，世界文化遗产",
+        "city": "北京"
+      },
+      {
+        "name": "圆明园",
+        "type": "landmark",
+        "coords": [
+          116.2975,
+          40.0039
+        ],
+        "description": "清代皇家园林遗址",
+        "city": "北京"
+      },
+      {
+        "name": "黄鹤楼",
+        "type": "landmark",
+        "coords": [
+          114.2967,
+          30.5436
+        ],
+        "description": "江南三大名楼之一",
+        "city": "武汉"
+      },
+      {
+        "name": "岳阳楼",
+        "type": "landmark",
+        "coords": [
+          113.0958,
+          29.3728
+        ],
+        "description": "江南三大名楼之一",
+        "city": "岳阳"
+      },
+      {
+        "name": "滕王阁",
+        "type": "landmark",
+        "coords": [
+          115.8817,
+          28.682
+        ],
+        "description": "江南三大名楼之一",
+        "city": "南昌"
+      },
+      {
+        "name": "蓬莱阁",
+        "type": "landmark",
+        "coords": [
+          120.8383,
+          37.8272
+        ],
+        "description": "中国古代四大名楼之一",
+        "city": "蓬莱"
+      },
+      {
+        "name": "钟鼓楼",
+        "type": "landmark",
+        "coords": [
+          116.4067,
+          39.9425
+        ],
+        "description": "明清报时建筑",
+        "city": "北京"
+      },
+      {
+        "name": "大雁塔",
+        "type": "landmark",
+        "coords": [
+          108.9647,
+          34.2173
+        ],
+        "description": "唐代佛塔，玄奘译经地",
+        "city": "西安"
+      },
+      {
+        "name": "小雁塔",
+        "type": "landmark",
+        "coords": [
+          108.9319,
+          34.2494
+        ],
+        "description": "唐代佛塔，世界文化遗产",
+        "city": "西安"
+      },
+      {
+        "name": "都江堰",
+        "type": "landmark",
+        "coords": [
+          103.6076,
+          31.0215
+        ],
+        "description": "古代水利工程，世界文化遗产",
+        "city": "都江堰"
+      },
+      {
+        "name": "青城山",
+        "type": "landmark",
+        "coords": [
+          103.5667,
+          30.9
+        ],
+        "description": "道教名山，世界文化遗产",
+        "city": "都江堰"
+      },
+      {
+        "name": "庐山",
+        "type": "landmark",
+        "coords": [
+          115.9928,
+          29.5686
+        ],
+        "description": "世界文化遗产，避暑胜地",
+        "city": "九江"
+      },
+      {
+        "name": "武当山",
+        "type": "landmark",
+        "coords": [
+          111.0,
+          32.4
+        ],
+        "description": "道教名山，世界文化遗产",
+        "city": "十堰"
+      },
+      {
+        "name": "黄山",
+        "type": "landmark",
+        "coords": [
+          118.1692,
+          30.1314
+        ],
+        "description": "世界文化与自然双遗产",
+        "city": "黄山"
+      },
+      {
+        "name": "泰山",
+        "type": "landmark",
+        "coords": [
+          117.1011,
+          36.2586
+        ],
+        "description": "五岳之首，世界文化遗产",
+        "city": "泰安"
+      },
+      {
+        "name": "华山",
+        "type": "landmark",
+        "coords": [
+          110.0886,
+          34.4886
+        ],
+        "description": "五岳西岳，险峻著称",
+        "city": "华阴"
+      },
+      {
+        "name": "九寨沟",
+        "type": "landmark",
+        "coords": [
+          103.9147,
+          33.1575
+        ],
+        "description": "世界自然遗产，童话世界",
+        "city": "阿坝"
+      },
+      {
+        "name": "天坛",
+        "type": "landmark",
+        "coords": [
+          116.4066,
+          39.8822
+        ],
+        "description": "明清祭天建筑，世界文化遗产",
+        "city": "北京"
+      },
+      {
+        "name": "外滩",
+        "type": "landmark",
+        "coords": [
+          121.4906,
+          31.2403
+        ],
+        "description": "上海标志性景观",
+        "city": "上海"
+      },
+      {
+        "name": "东方明珠",
+        "type": "landmark",
+        "coords": [
+          121.4997,
+          31.2397
+        ],
+        "description": "上海标志性建筑",
+        "city": "上海"
+      },
+      {
+        "name": "武侯祠",
+        "type": "landmark",
+        "coords": [
+          104.0436,
+          30.6472
+        ],
+        "description": "纪念诸葛亮的祠庙",
+        "city": "成都"
+      },
+      {
+        "name": "大熊猫基地",
+        "type": "landmark",
+        "coords": [
+          104.1469,
+          30.7327
+        ],
+        "description": "熊猫保护研究基地",
+        "city": "成都"
+      },
+      {
+        "name": "鼓浪屿",
+        "type": "landmark",
+        "coords": [
+          118.0666,
+          24.4464
+        ],
+        "description": "世界文化遗产，海上花园",
+        "city": "厦门"
+      },
+      {
+        "name": "漓江",
+        "type": "landmark",
+        "coords": [
+          110.29,
+          25.2742
+        ],
+        "description": "桂林山水甲天下",
+        "city": "桂林"
+      },
+      {
+        "name": "日月潭",
+        "type": "landmark",
+        "coords": [
+          120.9122,
+          23.8594
+        ],
+        "description": "台湾著名风景区",
+        "city": "台湾"
+      },
+      {
+        "name": "广州塔",
+        "type": "landmark",
+        "coords": [
+          113.3194,
+          23.1084
+        ],
+        "description": "广州标志性建筑",
+        "city": "广州"
+      },
+      {
+        "name": "深圳湾大桥",
+        "type": "landmark",
+        "coords": [
+          113.9447,
+          22.4778
+        ],
+        "description": "深港跨海大桥",
+        "city": "深圳"
+      },
+      {
+        "name": "苏州博物馆",
+        "type": "landmark",
+        "coords": [
+          120.6219,
+          31.3128
+        ],
+        "description": "贝聿铭设计作品",
+        "city": "苏州"
+      },
+      {
+        "name": "南京中山陵",
+        "type": "landmark",
+        "coords": [
+          118.8439,
+          32.0697
+        ],
+        "description": "孙中山先生陵墓",
+        "city": "南京"
+      },
+      {
+        "name": "武汉长江大桥",
+        "type": "landmark",
+        "coords": [
+          114.2636,
+          30.5786
+        ],
+        "description": "万里长江第一桥",
+        "city": "武汉"
+      },
+      {
+        "name": "成都宽窄巷子",
+        "type": "landmark",
+        "coords": [
+          104.0617,
+          30.6656
+        ],
+        "description": "清代古街区",
+        "city": "成都"
+      },
+      {
+        "name": "重庆洪崖洞",
+        "type": "landmark",
+        "coords": [
+          106.5781,
+          29.5647
+        ],
+        "description": "重庆特色民俗区",
+        "city": "重庆"
+      },
+      {
+        "name": "天津之眼",
+        "type": "landmark",
+        "coords": [
+          117.1947,
+          39.1444
+        ],
+        "description": "海河永乐桥摩天轮",
+        "city": "天津"
+      },
+      {
+        "name": "西安城墙",
+        "type": "landmark",
+        "coords": [
+          108.9472,
+          34.2586
+        ],
+        "description": "明代古城墙",
+        "city": "西安"
+      },
+      {
+        "name": "鼓浪屿郑成功纪念馆",
+        "type": "landmark",
+        "coords": [
+          118.0694,
+          24.4511
+        ],
+        "description": "纪念民族英雄",
+        "city": "厦门"
+      },
+      {
+        "name": "哈尔滨中央大街",
+        "type": "landmark",
+        "coords": [
+          126.6219,
+          45.8038
+        ],
+        "description": "百年老街，欧式建筑",
+        "city": "哈尔滨"
+      },
+      {
+        "name": "青岛栈桥",
+        "type": "landmark",
+        "coords": [
+          120.3189,
+          36.0556
+        ],
+        "description": "青岛标志性景观",
+        "city": "青岛"
+      },
+      {
+        "name": "清明上河园",
+        "city": "开封",
+        "coords": [
+          114.3564,
+          34.7989
+        ],
+        "type": "scenic",
+        "description": "宋代主题公园"
+      },
+      {
+        "name": "少林寺",
+        "city": "登封",
+        "coords": [
+          112.9447,
+          34.5078
+        ],
+        "type": "historical",
+        "description": "禅宗祖庭，少林武术发源地"
+      },
+      {
+        "name": "龙门大桥",
+        "city": "洛阳",
+        "coords": [
+          112.4767,
+          34.5556
+        ],
+        "type": "landmark",
+        "description": "洛阳标志性建筑"
+      },
+      {
+        "name": "白马寺",
+        "city": "洛阳",
+        "coords": [
+          112.5933,
+          34.7303
+        ],
+        "type": "historical",
+        "description": "中国第一古刹"
+      },
+      {
+        "name": "北海公园",
+        "city": "北京",
+        "coords": [
+          116.3742,
+          39.9261
+        ],
+        "type": "scenic",
+        "description": "皇家园林"
+      }
+    ],
+    "rivers": [
+      {
+        "name": "长江",
+        "type": "river",
+        "length": 6300,
+        "origin": "青藏高原",
+        "mouth": "东海",
+        "coords": [
+          122.5,
+          41.0
+        ]
+      },
+      {
+        "name": "黄河",
+        "type": "river",
+        "length": 5464,
+        "origin": "巴颜喀拉山",
+        "mouth": "渤海",
+        "coords": [
+          119.5,
+          50.5
+        ]
+      },
+      {
+        "name": "珠江",
+        "type": "river",
+        "length": 2320,
+        "origin": "云贵高原",
+        "mouth": "南海",
+        "coords": [
+          126.5,
+          41.0
+        ]
+      },
+      {
+        "name": "淮河",
+        "type": "river",
+        "length": 1000,
+        "origin": "河南桐柏山",
+        "mouth": "洪泽湖",
+        "coords": [
+          117.5,
+          33.0
+        ]
+      },
+      {
+        "name": "海河",
+        "type": "river",
+        "length": 1050,
+        "origin": "太行山",
+        "mouth": "渤海",
+        "coords": [
+          116.5,
+          39.0
+        ]
+      },
+      {
+        "name": "辽河",
+        "type": "river",
+        "length": 1430,
+        "origin": "河北",
+        "mouth": "渤海",
+        "coords": [
+          123.4,
+          41.2
+        ]
+      },
+      {
+        "name": "松花江",
+        "type": "river",
+        "length": 1927,
+        "origin": "长白山",
+        "mouth": "黑龙江",
+        "coords": [
+          98.0,
+          28.0
+        ]
+      },
+      {
+        "name": "雅鲁藏布江",
+        "type": "river",
+        "length": 2057,
+        "origin": "喜马拉雅山",
+        "mouth": "孟加拉湾",
+        "coords": [
+          91.0,
+          29.6
+        ]
+      },
+      {
+        "name": "怒江",
+        "type": "river",
+        "length": 2013,
+        "origin": "青藏高原",
+        "mouth": "安达曼海",
+        "coords": [
+          98.9,
+          25.5
+        ]
+      },
+      {
+        "name": "澜沧江",
+        "type": "river",
+        "length": 4900,
+        "origin": "青藏高原",
+        "mouth": "南海",
+        "coords": [
+          99.0,
+          25.5
+        ]
+      },
+      {
+        "name": "汉江",
+        "type": "river",
+        "length": 1577,
+        "origin": "陕西",
+        "mouth": "长江",
+        "coords": [
+          112.5,
+          31.5
+        ]
+      },
+      {
+        "name": "湘江",
+        "type": "river",
+        "length": 844,
+        "origin": "广西",
+        "mouth": "洞庭湖",
+        "coords": [
+          112.9,
+          28.2
+        ]
+      },
+      {
+        "name": "赣江",
+        "type": "river",
+        "length": 991,
+        "origin": "江西",
+        "mouth": "鄱阳湖",
+        "coords": [
+          115.9,
+          28.7
+        ]
+      },
+      {
+        "name": "嘉陵江",
+        "type": "river",
+        "length": 1120,
+        "origin": "陕西",
+        "mouth": "长江",
+        "coords": [
+          106.5,
+          30.0
+        ]
+      },
+      {
+        "name": "乌江",
+        "type": "river",
+        "length": 1030,
+        "origin": "贵州",
+        "mouth": "长江",
+        "coords": [
+          108.0,
+          29.0
+        ]
+      },
+      {
+        "name": "岷江",
+        "type": "river",
+        "length": 735,
+        "origin": "四川",
+        "mouth": "长江",
+        "coords": [
+          103.8,
+          30.5
+        ]
+      },
+      {
+        "name": "闽江",
+        "type": "river",
+        "length": 577,
+        "origin": "福建",
+        "mouth": "东海",
+        "coords": [
+          119.3,
+          26.0
+        ]
+      },
+      {
+        "name": "韩江",
+        "type": "river",
+        "length": 470,
+        "origin": "广东",
+        "mouth": "南海",
+        "coords": [
+          99.0,
+          25.5
+        ]
+      },
+      {
+        "name": "钱塘江",
+        "type": "river",
+        "length": 605,
+        "origin": "安徽",
+        "mouth": "杭州湾",
+        "coords": [
+          120.5,
+          30.0
+        ]
+      },
+      {
+        "name": "鸭绿江",
+        "type": "river",
+        "length": 795,
+        "origin": "长白山",
+        "mouth": "黄海",
+        "coords": [
+          126.0,
+          41.8
+        ]
+      },
+      {
+        "name": "图们江",
+        "type": "river",
+        "length": 505,
+        "origin": "长白山",
+        "mouth": "日本海",
+        "coords": [
+          129.8,
+          42.9
+        ]
+      },
+      {
+        "name": "乌苏里江",
+        "type": "river",
+        "length": 890,
+        "origin": "俄罗斯",
+        "mouth": "黑龙江",
+        "coords": [
+          134.0,
+          46.5
+        ]
+      },
+      {
+        "name": "额尔古纳河",
+        "type": "river",
+        "length": 1620,
+        "origin": "内蒙古",
+        "mouth": "黑龙江",
+        "coords": [
+          119.5,
+          50.5
+        ]
+      },
+      {
+        "name": "嫩江",
+        "type": "river",
+        "length": 1370,
+        "origin": "内蒙古",
+        "mouth": "松花江",
+        "coords": [
+          91.0,
+          29.0
+        ]
+      },
+      {
+        "name": "沅江",
+        "type": "river",
+        "length": 1033,
+        "origin": "贵州",
+        "mouth": "洞庭湖",
+        "coords": [
+          111.4,
+          28.4
+        ]
+      },
+      {
+        "name": "资水",
+        "type": "river",
+        "length": 653,
+        "origin": "广西",
+        "mouth": "洞庭湖",
+        "coords": [
+          111.5,
+          27.8
+        ]
+      },
+      {
+        "name": "澧水",
+        "type": "river",
+        "length": 388,
+        "origin": "湖南",
+        "mouth": "洞庭湖",
+        "coords": [
+          111.3,
+          29.6
+        ]
+      },
+      {
+        "name": "大渡河",
+        "type": "river",
+        "coords": [
+          102.5,
+          29.5
+        ],
+        "length": 1062,
+        "origin": "青海省",
+        "mouth": "岷江",
+        "description": "岷江最大支流，流经川西高原",
+        "provinces": [
+          "青海省",
+          "四川省"
+        ],
+        "major_cities": []
+      },
+      {
+        "name": "塔里木河",
+        "type": "river",
+        "coords": [
+          87.0,
+          40.5
+        ],
+        "length": 2179,
+        "origin": "天山",
+        "mouth": "台特马湖",
+        "description": "中国最长内流河，环绕塔克拉玛干沙漠",
+        "provinces": [
+          "新疆维吾尔自治区"
+        ],
+        "major_cities": []
+      },
+      {
+        "name": "黑龙江",
+        "type": "river",
+        "coords": [
+          127.0,
+          49.5
+        ],
+        "length": 4444,
+        "origin": "蒙古国",
+        "mouth": "鞑靼海峡",
+        "description": "中俄界河，中国东北北部重要水系",
+        "provinces": [
+          "黑龙江省"
+        ],
+        "major_cities": [
+          "哈尔滨"
+        ]
+      }
+    ],
+    "mountains": [
+      {
+        "name": "喜马拉雅山脉",
+        "type": "mountain",
+        "highest_peak": "珠穆朗玛峰",
+        "elevation": 8848,
+        "coords": [
+          85.0,
+          28.0
+        ]
+      },
+      {
+        "name": "昆仑山脉",
+        "type": "mountain",
+        "highest_peak": "公格尔山",
+        "elevation": 7649,
+        "coords": [
+          85.0,
+          36.0
+        ]
+      },
+      {
+        "name": "天山山脉",
+        "type": "mountain",
+        "highest_peak": "托木尔峰",
+        "elevation": 7443,
+        "coords": [
+          82.0,
+          43.0
+        ]
+      },
+      {
+        "name": "秦岭",
+        "type": "mountain",
+        "highest_peak": "太白山",
+        "elevation": 3771,
+        "coords": [
+          107.0,
+          33.5
+        ]
+      },
+      {
+        "name": "大兴安岭",
+        "type": "mountain",
+        "highest_peak": "黄岗梁",
+        "elevation": 2029,
+        "coords": [
+          86.0,
+          27.5
+        ]
+      },
+      {
+        "name": "太行山脉",
+        "type": "mountain",
+        "highest_peak": "小五台山",
+        "elevation": 2882,
+        "coords": [
+          113.5,
+          37.0
+        ]
+      },
+      {
+        "name": "武夷山脉",
+        "type": "mountain",
+        "highest_peak": "黄岗山",
+        "elevation": 2158,
+        "coords": [
+          85.0,
+          36.0
+        ]
+      },
+      {
+        "name": "南岭",
+        "type": "mountain",
+        "highest_peak": "猫儿山",
+        "elevation": 2142,
+        "coords": [
+          111.5,
+          25.0
+        ]
+      },
+      {
+        "name": "横断山脉",
+        "type": "mountain",
+        "highest_peak": "贡嘎山",
+        "elevation": 7556,
+        "coords": [
+          100.0,
+          28.0
+        ]
+      },
+      {
+        "name": "阿尔泰山脉",
+        "type": "mountain",
+        "highest_peak": "友谊峰",
+        "elevation": 4374,
+        "coords": [
+          88.0,
+          48.0
+        ]
+      },
+      {
+        "name": "祁连山脉",
+        "type": "mountain",
+        "highest_peak": "团结峰",
+        "elevation": 5808,
+        "coords": [
+          99.0,
+          38.5
+        ]
+      },
+      {
+        "name": "阴山山脉",
+        "type": "mountain",
+        "highest_peak": "呼和巴什格",
+        "elevation": 2364,
+        "coords": [
+          111.0,
+          41.5
+        ]
+      },
+      {
+        "name": "长白山脉",
+        "type": "mountain",
+        "highest_peak": "白头山",
+        "elevation": 2691,
+        "coords": [
+          128.0,
+          42.0
+        ]
+      },
+      {
+        "name": "云岭",
+        "type": "mountain",
+        "highest_peak": "玉龙雪山",
+        "elevation": 5596,
+        "coords": [
+          108.0,
+          33.5
+        ]
+      },
+      {
+        "name": "雪峰山",
+        "type": "mountain",
+        "highest_peak": "苏宝顶",
+        "elevation": 1934,
+        "coords": [
+          110.5,
+          27.5
+        ]
+      },
+      {
+        "name": "燕山山脉",
+        "type": "mountain",
+        "coords": [
+          117.5,
+          40.6
+        ],
+        "description": "华北北部山脉，长城重要关隘所在",
+        "peak": "雾灵山",
+        "height": 2118,
+        "location": "河北省"
+      },
+      {
+        "name": "大巴山脉",
+        "type": "mountain",
+        "coords": [
+          108.5,
+          32.5
+        ],
+        "description": "川陕鄂界山，长江上游屏障",
+        "peak": "神农顶",
+        "height": 3105,
+        "location": "湖北省"
+      },
+      {
+        "name": "武陵山脉",
+        "type": "mountain",
+        "coords": [
+          108.5,
+          27.9
+        ],
+        "description": "湘西黔东山脉，喀斯特地貌发育",
+        "peak": "梵净山",
+        "height": 2572,
+        "location": "贵州省"
+      },
+      {
+        "name": "雪峰山脉",
+        "type": "mountain",
+        "coords": [
+          110.5,
+          27.5
+        ],
+        "description": "湖南省西部山脉，资江沅江分水岭",
+        "peak": "苏宝顶",
+        "height": 1934,
+        "location": "湖南省"
+      },
+      {
+        "name": "罗霄山脉",
+        "type": "mountain",
+        "coords": [
+          114.0,
+          26.5
+        ],
+        "description": "湘赣界山，井冈山所在山脉",
+        "peak": "南风面",
+        "height": 2120,
+        "location": "江西省"
+      },
+      {
+        "name": "六盘山",
+        "type": "mountain",
+        "coords": [
+          106.2,
+          35.7
+        ],
+        "description": "宁夏南部山脉，红军长征翻越地",
+        "peak": "米缸山",
+        "height": 2942,
+        "location": "宁夏回族自治区"
+      },
+      {
+        "name": "贺兰山",
+        "type": "mountain",
+        "coords": [
+          105.9,
+          38.7
+        ],
+        "description": "宁夏西北部山脉，阻挡风沙东移",
+        "peak": "敖包疙瘩",
+        "height": 3556,
+        "location": "宁夏回族自治区"
+      },
+      {
+        "name": "吕梁山脉",
+        "type": "mountain",
+        "coords": [
+          111.0,
+          37.5
+        ],
+        "description": "山西省西部山脉，黄河东岸",
+        "peak": "南阳山",
+        "height": 2831,
+        "location": "山西省"
+      },
+      {
+        "name": "大别山脉",
+        "type": "mountain",
+        "coords": [
+          116.0,
+          31.0
+        ],
+        "description": "鄂豫皖界山，长江淮河分水岭",
+        "peak": "白马尖",
+        "height": 1777,
+        "location": "安徽省"
+      },
+      {
+        "name": "井冈山",
+        "type": "mountain",
+        "coords": [
+          114.1,
+          26.5
+        ],
+        "description": "革命圣地，罗霄山脉中段",
+        "peak": "五指峰",
+        "height": 1438,
+        "location": "江西省"
+      },
+      {
+        "name": "雁荡山",
+        "type": "mountain",
+        "coords": [
+          120.9,
+          28.3
+        ],
+        "description": "浙江东南部名山，火山地貌典型",
+        "peak": "百岗尖",
+        "height": 1150,
+        "location": "浙江省"
+      },
+      {
+        "name": "峨眉山",
+        "type": "mountain",
+        "coords": [
+          103.4833,
+          29.55
+        ],
+        "description": "中国四大佛教名山之一，四川盆地西部",
+        "peak": "金顶",
+        "height": 3099,
+        "location": "四川省"
+      },
+      {
+        "name": "五台山",
+        "coords": [
+          113.5833,
+          39.0333
+        ],
+        "type": "mountain",
+        "height": 3061,
+        "location": "山西省",
+        "description": "佛教四大名山之首"
+      },
+      {
+        "name": "普陀山",
+        "coords": [
+          122.3833,
+          30.0
+        ],
+        "type": "mountain",
+        "height": 288,
+        "location": "浙江省",
+        "description": "佛教四大名山之一"
+      },
+      {
+        "name": "九华山",
+        "coords": [
+          117.8,
+          30.4833
+        ],
+        "type": "mountain",
+        "height": 1342,
+        "location": "安徽省",
+        "description": "佛教四大名山之一"
+      },
+      {
+        "name": "三清山",
+        "coords": [
+          117.9667,
+          28.9
+        ],
+        "type": "mountain",
+        "height": 1819,
+        "location": "江西省",
+        "description": "道教名山，世界自然遗产"
+      },
+      {
+        "name": "龙虎山",
+        "coords": [
+          116.9667,
+          28.0333
+        ],
+        "type": "mountain",
+        "height": 247,
+        "location": "江西省",
+        "description": "道教名山"
+      },
+      {
+        "name": "齐云山",
+        "coords": [
+          118.05,
+          29.8
+        ],
+        "type": "mountain",
+        "height": 585,
+        "location": "安徽省",
+        "description": "道教四大名山之一"
+      },
+      {
+        "name": "崂山",
+        "coords": [
+          120.65,
+          36.2
+        ],
+        "type": "mountain",
+        "height": 1133,
+        "location": "山东省",
+        "description": "海上名山第一"
+      },
+      {
+        "name": "武夷山",
+        "coords": [
+          117.5,
+          27.5
+        ],
+        "type": "mountain",
+        "height": 2158,
+        "location": "福建省",
+        "description": "世界文化与自然双遗产"
+      },
+      {
+        "name": "衡山",
+        "coords": [
+          112.7333,
+          27.25
+        ],
+        "type": "mountain",
+        "height": 1300,
+        "location": "湖南省",
+        "description": "五岳南岳"
+      },
+      {
+        "name": "嵩山",
+        "coords": [
+          113.05,
+          34.45
+        ],
+        "type": "mountain",
+        "height": 1512,
+        "location": "河南省",
+        "description": "五岳中岳"
+      },
+      {
+        "name": "恒山",
+        "coords": [
+          117.0,
+          39.6833
+        ],
+        "type": "mountain",
+        "height": 2016,
+        "location": "山西省",
+        "description": "五岳北岳"
+      }
+    ],
+    "lakes": [
+      {
+        "name": "青海湖",
+        "type": "lake",
+        "province": "青海省",
+        "elevation": 3196,
+        "area": 4583,
+        "coords": [
+          100.2,
+          36.9
+        ]
+      },
+      {
+        "name": "鄱阳湖",
+        "type": "lake",
+        "province": "江西省",
+        "elevation": 12,
+        "area": 3150,
+        "coords": [
+          116.2,
+          29.1
+        ]
+      },
+      {
+        "name": "洞庭湖",
+        "type": "lake",
+        "province": "湖南省",
+        "elevation": 33,
+        "area": 2625,
+        "coords": [
+          112.9,
+          29.4
+        ]
+      },
+      {
+        "name": "太湖",
+        "type": "lake",
+        "province": "江苏省",
+        "elevation": 3,
+        "area": 2250,
+        "coords": [
+          120.1,
+          31.2
+        ]
+      },
+      {
+        "name": "呼伦湖",
+        "type": "lake",
+        "province": "内蒙古自治区",
+        "elevation": 545,
+        "area": 2339,
+        "coords": [
+          117.3,
+          48.9
+        ]
+      },
+      {
+        "name": "纳木错",
+        "type": "lake",
+        "province": "西藏自治区",
+        "elevation": 4718,
+        "area": 1920,
+        "coords": [
+          90.6,
+          30.7
+        ]
+      },
+      {
+        "name": "色林错",
+        "type": "lake",
+        "province": "西藏自治区",
+        "elevation": 4530,
+        "area": 1640,
+        "coords": [
+          88.7,
+          31.8
+        ]
+      },
+      {
+        "name": "博斯腾湖",
+        "type": "lake",
+        "province": "新疆维吾尔自治区",
+        "elevation": 1048,
+        "area": 1019,
+        "coords": [
+          86.9,
+          41.9
+        ]
+      },
+      {
+        "name": "洪泽湖",
+        "type": "lake",
+        "province": "江苏省",
+        "elevation": 12,
+        "area": 1851,
+        "coords": [
+          118.7,
+          33.3
+        ]
+      },
+      {
+        "name": "巢湖",
+        "type": "lake",
+        "province": "安徽省",
+        "elevation": 8,
+        "area": 770,
+        "coords": [
+          117.5,
+          31.6
+        ]
+      },
+      {
+        "name": "微山湖",
+        "type": "lake",
+        "province": "山东省",
+        "elevation": 34,
+        "area": 664,
+        "coords": [
+          117.1,
+          34.6
+        ]
+      },
+      {
+        "name": "滇池",
+        "type": "lake",
+        "province": "云南省",
+        "elevation": 1886,
+        "area": 330,
+        "coords": [
+          102.7,
+          24.8
+        ]
+      },
+      {
+        "name": "洱海",
+        "type": "lake",
+        "province": "云南省",
+        "elevation": 1972,
+        "area": 256,
+        "coords": [
+          100.2,
+          25.8
+        ]
+      },
+      {
+        "name": "抚仙湖",
+        "type": "lake",
+        "province": "云南省",
+        "elevation": 1721,
+        "area": 217,
+        "coords": [
+          102.9,
+          24.5
+        ]
+      },
+      {
+        "name": "西湖",
+        "type": "lake",
+        "province": "浙江省",
+        "elevation": 4,
+        "area": 6.5,
+        "coords": [
+          120.15,
+          30.25
+        ]
+      },
+      {
+        "name": "千岛湖",
+        "type": "lake",
+        "coords": [
+          119.0,
+          29.6
+        ],
+        "area": 580,
+        "description": "人工湖，新安江水库",
+        "location": "浙江省",
+        "depth": 108
+      },
+      {
+        "name": "南四湖",
+        "type": "lake",
+        "coords": [
+          116.9,
+          34.7
+        ],
+        "area": 1266,
+        "description": "山东南部湖泊群，微山湖最大",
+        "location": "山东省",
+        "depth": 6
+      },
+      {
+        "name": "察尔汗盐湖",
+        "coords": [
+          95.3,
+          36.9
+        ],
+        "type": "lake",
+        "area": 5856,
+        "location": "青海省",
+        "description": "中国最大盐湖"
+      }
+    ],
+    "regions": [
+      {
+        "name": "长三角",
+        "type": "region",
+        "coords": [
+          121.4737,
+          31.2304
+        ],
+        "area": 210700,
+        "description": "长江三角洲区域一体化发展示范区，中国经济最发达区域",
+        "center": "上海"
+      },
+      {
+        "name": "珠三角",
+        "type": "region",
+        "coords": [
+          113.2644,
+          23.1291
+        ],
+        "area": 54800,
+        "description": "珠江三角洲经济区，改革开放先行区",
+        "center": "广州"
+      },
+      {
+        "name": "京津冀",
+        "type": "region",
+        "coords": [
+          116.4074,
+          39.9042
+        ],
+        "area": 216000,
+        "description": "京津冀协同发展区，首都经济圈",
+        "center": "北京"
+      },
+      {
+        "name": "环渤海",
+        "type": "region",
+        "coords": [
+          117.2009,
+          39.0842
+        ],
+        "area": 112000,
+        "description": "环渤海经济圈，北方重要经济区",
+        "center": "天津"
+      },
+      {
+        "name": "粤港澳大湾区",
+        "type": "region",
+        "coords": [
+          113.2644,
+          23.1291
+        ],
+        "area": 56000,
+        "description": "国家级战略区域，一国两制实践示范区",
+        "center": "广州"
+      },
+      {
+        "name": "长江中游城市群",
+        "type": "region",
+        "coords": [
+          114.3055,
+          30.5928
+        ],
+        "area": 326000,
+        "description": "长江经济带中部支撑，中三角",
+        "center": "武汉"
+      },
+      {
+        "name": "成渝城市群",
+        "type": "region",
+        "coords": [
+          106.9123,
+          29.4316
+        ],
+        "area": 240000,
+        "description": "西部开发重要增长极，双核驱动",
+        "center": "重庆"
+      },
+      {
+        "name": "中原城市群",
+        "type": "region",
+        "coords": [
+          113.6253,
+          34.7466
+        ],
+        "area": 287000,
+        "description": "中部地区重要城市群，华夏文明发祥地",
+        "center": "郑州"
+      },
+      {
+        "name": "海峡西岸",
+        "type": "region",
+        "coords": [
+          119.2965,
+          26.0745
+        ],
+        "area": 270000,
+        "description": "福建沿海经济区，两岸合作前沿",
+        "center": "福州"
+      },
+      {
+        "name": "北部湾",
+        "type": "region",
+        "coords": [
+          108.3665,
+          22.817
+        ],
+        "area": 74000,
+        "description": "南海沿岸经济区，东盟合作桥头堡",
+        "center": "南宁"
+      },
+      {
+        "name": "关中平原",
+        "type": "region",
+        "coords": [
+          108.9398,
+          34.3416
+        ],
+        "area": 100000,
+        "description": "陕西中部城市群，丝绸之路起点",
+        "center": "西安"
+      },
+      {
+        "name": "哈长城市群",
+        "type": "region",
+        "coords": [
+          126.535,
+          45.8038
+        ],
+        "area": 260000,
+        "description": "黑龙江与吉林中部城市群，东北振兴",
+        "center": "哈尔滨"
+      },
+      {
+        "name": "辽中南",
+        "type": "region",
+        "coords": [
+          123.4315,
+          41.8057
+        ],
+        "area": 100000,
+        "description": "辽宁中南部城市群，东北老工业基地",
+        "center": "沈阳"
+      },
+      {
+        "name": "山东半岛",
+        "type": "region",
+        "coords": [
+          117.1201,
+          36.6512
+        ],
+        "area": 153000,
+        "description": "山东沿海城市群，蓝色经济区",
+        "center": "济南"
+      },
+      {
+        "name": "皖江城市带",
+        "type": "region",
+        "coords": [
+          117.2272,
+          31.8206
+        ],
+        "area": 76000,
+        "description": "安徽沿江城市群，承接产业转移示范区",
+        "center": "合肥"
+      },
+      {
+        "name": "长株潭",
+        "type": "region",
+        "coords": [
+          112.9388,
+          28.2282
+        ],
+        "area": 28000,
+        "description": "长沙株洲潭城市群，两型社会试验区",
+        "center": "长沙"
+      },
+      {
+        "name": "武汉城市圈",
+        "type": "region",
+        "coords": [
+          114.3055,
+          30.5928
+        ],
+        "area": 58000,
+        "description": "以武汉为核心的1+8城市圈",
+        "center": "武汉"
+      },
+      {
+        "name": "鄱阳湖生态经济区",
+        "type": "region",
+        "coords": [
+          115.8579,
+          28.682
+        ],
+        "area": 51000,
+        "description": "江西生态经济区，生态与经济协调发展",
+        "center": "南昌"
+      },
+      {
+        "name": "太原都市圈",
+        "type": "region",
+        "coords": [
+          112.5489,
+          37.8706
+        ],
+        "area": 60000,
+        "description": "以太原为核心的山西中部城市群",
+        "center": "太原"
+      },
+      {
+        "name": "乌鲁木齐都市圈",
+        "type": "region",
+        "coords": [
+          87.6168,
+          43.8256
+        ],
+        "area": 20000,
+        "description": "新疆核心经济区，丝绸之路经济带中心",
+        "center": "乌鲁木齐"
+      }
+    ]
+  }
+}

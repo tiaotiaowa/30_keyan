@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-03-06 19:11:29",
+  "total_files": 1,
+  "results": [
+    {
+      "file_path": "data\\geosr_chain\\dev.jsonl",
+      "start_time": "2026-03-06 19:11:29",
+      "end_time": "2026-03-06 19:11:29",
+      "duration_seconds": 0.0,
+      "total_records": 0,
+      "total_valid": 0,
+      "total_invalid": 0,
+      "overall_pass_rate": 0.0,
+      "is_valid": false,
+      "levels": {}
+    }
+  ]
+}

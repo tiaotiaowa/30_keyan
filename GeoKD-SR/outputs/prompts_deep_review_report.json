@@ -1,0 +1,134 @@
+{
+  "report_info": {
+    "title": "GeoKD-SR 数据深度审查报告",
+    "version": "2.0",
+    "generated_at": "2026-03-06T21:57:00",
+    "data_source": "data/prompts/prompts_config_full.json"
+  },
+  "summary": {
+    "total_count": 11800,
+    "train_count": 8000,
+    "dev_count": 800,
+    "test_count": 3000,
+    "passed_count": 11516,
+    "failed_count": 284,
+    "pass_rate": 97.59
+  },
+  "validation_results": {
+    "L1_format": {
+      "name": "格式验证",
+      "status": "PASSED",
+      "pass_rate": 100.0,
+      "error_count": 0,
+      "description": "所有必需字段存在，JSON格式正确"
+    },
+    "L2_enumeration": {
+      "name": "枚举值验证",
+      "status": "PASSED",
+      "pass_rate": 100.0,
+      "error_count": 0,
+      "description": "所有枚举值在有效范围内"
+    },
+    "L3_spatial_relation": {
+      "name": "空间关系验证",
+      "status": "PASSED",
+      "pass_rate": 100.0,
+      "error_count": 0,
+      "description": "空间关系类型正确"
+    },
+    "L4_coordinates": {
+      "name": "坐标范围验证",
+      "status": "WARNING",
+      "pass_rate": 99.32,
+      "error_count": 80,
+      "description": "40条记录的坐标越界（西湖、呼伦湖、抚仙湖）",
+      "affected_entities": ["西湖", "呼伦湖", "抚仙湖"]
+    },
+    "L5_reasoning_chain": {
+      "name": "推理链结构验证",
+      "status": "PASSED",
+      "pass_rate": 100.0,
+      "error_count": 0,
+      "description": "prompt_text包含5步推理要求"
+    },
+    "L6_distribution": {
+      "name": "分布验证",
+      "status": "PASSED",
+      "pass_rate": 100.0,
+      "error_count": 0,
+      "description": "所有分布符合设计目标"
+    }
+  },
+  "topology_semantic_validation": {
+    "status": "ERROR",
+    "error_count": 284,
+    "description": "省份-城市包含关系错误",
+    "sample_errors": [
+      {"province": "陕西省", "city": "长沙", "actual_province": "湖南省"},
+      {"province": "浙江省", "city": "黑河", "actual_province": "黑龙江省"},
+      {"province": "安徽省", "city": "丹东", "actual_province": "辽宁省"},
+      {"province": "吉林省", "city": "苏州", "actual_province": "江苏省"},
+      {"province": "上海市", "city": "平凉", "actual_province": "甘肃省"}
+    ],
+    "unknown_cities": ["扎兰屯", "延吉", "高碑店"],
+    "root_cause": "数据生成时随机配对省份和城市，未验证包含关系"
+  },
+  "experiment_compatibility": {
+    "status": "INFO",
+    "description": "prompts配置文件不包含生成字段(question/answer/reasoning_chain等)",
+    "note": "这是预期行为，生成字段将在LLM推理时添加",
+    "incompatible_experiments": ["Exp1_Baseline", "Exp2_CoT", "Exp3_FewShot", "Exp4_Zeroshot", "Exp6_MetricEval", "Exp7_Difficulty", "Exp10_FullChain"],
+    "compatible_experiments": ["Exp5_EntitySplit", "Exp8_Topology", "Exp9_Composite"]
+  },
+  "distribution_statistics": {
+    "relation_type": {
+      "directional": {"actual": 24.88, "target": 25.0, "deviation": 0.12, "status": "PASS"},
+      "topological": {"actual": 27.90, "target": 27.5, "deviation": 0.40, "status": "PASS"},
+      "metric": {"actual": 27.05, "target": 27.5, "deviation": 0.45, "status": "PASS"},
+      "composite": {"actual": 20.17, "target": 20.0, "deviation": 0.17, "status": "PASS"}
+    },
+    "difficulty": {
+      "easy": {"actual": 29.45, "target": 30.0, "deviation": 0.55, "status": "PASS"},
+      "medium": {"actual": 51.08, "target": 50.0, "deviation": 1.08, "status": "PASS"},
+      "hard": {"actual": 19.47, "target": 20.0, "deviation": 0.53, "status": "PASS"}
+    },
+    "topology_subtype": {
+      "contains": {"actual": 20.41, "status": "PASS"},
+      "adjacent": {"actual": 20.17, "status": "PASS"},
+      "disjoint": {"actual": 21.20, "status": "PASS"},
+      "overlap": {"actual": 19.20, "status": "PASS"},
+      "within": {"actual": 19.02, "status": "PASS"}
+    }
+  },
+  "fix_recommendations": {
+    "priority_high": [
+      {
+        "issue": "拓扑语义错误",
+        "count": 284,
+        "action": "修正省份-城市映射关系，重新生成contains类型的prompts",
+        "script": "需要创建修复脚本，验证并修正entity配对"
+      }
+    ],
+    "priority_medium": [
+      {
+        "issue": "坐标越界",
+        "count": 80,
+        "action": "更新湖泊实体的坐标数据",
+        "affected_entities": ["西湖", "呼伦湖", "抚仙湖"],
+        "correct_coords": {
+          "西湖": [120.15, 30.25],
+          "呼伦湖": [117.3, 48.9],
+          "抚仙湖": [102.9, 24.5]
+        }
+      }
+    ],
+    "priority_low": []
+  },
+  "conclusion": {
+    "overall_status": "NEEDS_FIX",
+    "pass_rate": 97.59,
+    "critical_issues": 284,
+    "warnings": 80,
+    "recommendation": "建议修复拓扑语义错误后再进行实验，以确保数据质量"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "validation_summary": {
+    "topo_total": 3292,
+    "contains_count": 672,
+    "correct_contains": 105,
+    "error_count": 187,
+    "pass_rate": 94.32,
+    "description": "拓扑语义验证结果"
+  },
+  "key_findings": [
+    "数据中存在大量省份-城市映射错误",
+    "contains关系总数672条，其中187条存在省份-城市不匹配",
+    "整体拓扑验证通过率94.32%（相对于所有拓扑关系）",
+    "contains关系正确率仅15.6%（105/672）"
+  ],
+  "error_categories": [
+    {
+      "category": "province_city_mismatch",
+      "count": 187,
+      "description": "省份与城市不匹配"
+    }
+  ],
+  "sample_errors": [
+    {"id": "prompt_0001", "issue": "三亚映射到海南省而不是海南省"},
+    {"id": "prompt_0007", "issue": "宁波映射到浙江省而不是浙江省"},
+    {"id": "prompt_0016", "issue": "新余映射到江西省而不是江西省"},
+    {"id": "prompt_0086", "issue": "赣州映射到江西省而不是江西省"},
+    {"id": "prompt_0147", "issue": "萍乡映射到江西省而不是上海市"},
+    {"id": "prompt_0172", "issue": "朝阳映射到辽宁省而不是辽宁省"},
+    {"id": "prompt_0189", "issue": "太原映射到山西省而不是河北省"},
+    {"id": "prompt_0215", "issue": "通辽映射到内蒙古自治区而不是内蒙古自治区"},
+    {"id": "prompt_0250", "issue": "温州映射到浙江省而不是河北省"},
+    {"id": "prompt_0353", "issue": "武汉映射到湖北省而不是湖北省直管市"}
+  ]
+}

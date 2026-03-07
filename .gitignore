@@ -1,60 +1,19 @@
-# 模型文件（太大不提交）
-GeoKD-SR/models/Qwen2.5-1.5B-Instruct/
-GeoKD-SR/models/Qwen2.5-7B-Instruct/
-*.bin
-*.safetensors
-*.pth
-*.pt
+# Environment files
+.env
+*.env.local
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# 虚拟环境
-venv/
-ENV/
-env/
-.venv
 
 # IDE
-.vscode/
 .idea/
-*.swp
-*.swo
-*~
+.vscode/
 
-# 操作系统
-.DS_Store
-Thumbs.db
-
-# 日志和临时文件
-*.log
-logs/
+# Temporary files
+nul
 *.tmp
+*.log
 
-# 缓存
-.cache/
-*.cache
-
-# 大型临时文件
-*.zip
-*.tar.gz
-*.rar
+# Debug directories
+debug/

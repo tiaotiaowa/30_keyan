@@ -1,0 +1,210 @@
+{
+  "timestamp": "2026-03-04 20:08:35",
+  "total_files": 1,
+  "results": [
+    {
+      "file_path": "data\\test_validation.jsonl",
+      "start_time": "2026-03-04 20:08:35",
+      "end_time": "2026-03-04 20:08:35",
+      "duration_seconds": 0.0,
+      "total_records": 6,
+      "total_valid": 3,
+      "total_invalid": 3,
+      "overall_pass_rate": 0.5,
+      "is_valid": false,
+      "levels": {
+        "L1": {
+          "level": "L1",
+          "name": "格式验证",
+          "total_records": 6,
+          "passed_records": 6,
+          "failed_records": 0,
+          "pass_rate": 1.0,
+          "error_count": 0,
+          "errors": []
+        },
+        "L2": {
+          "level": "L2",
+          "name": "语义验证",
+          "total_records": 6,
+          "passed_records": 4,
+          "failed_records": 2,
+          "pass_rate": 0.6666666666666666,
+          "error_count": 4,
+          "errors": [
+            {
+              "level": "L2",
+              "record_id": "test_005",
+              "field": "spatial_relation_type",
+              "message": "无效的空间关系类型: invalid_type，必须是['directional', 'topological', 'metric', 'composite']之一",
+              "severity": "error"
+            },
+            {
+              "level": "L2",
+              "record_id": "test_005",
+              "field": "entities",
+              "message": "entities列表不能为空",
+              "severity": "error"
+            },
+            {
+              "level": "L2",
+              "record_id": "test_005",
+              "field": "spatial_tokens",
+              "message": "spatial_tokens列表不能为空",
+              "severity": "error"
+            },
+            {
+              "level": "L2",
+              "record_id": "test_006",
+              "field": "spatial_tokens",
+              "message": "spatial_tokens列表不能为空",
+              "severity": "error"
+            }
+          ]
+        },
+        "L3": {
+          "level": "L3",
+          "name": "空间关系验证",
+          "total_records": 6,
+          "passed_records": 5,
+          "failed_records": 1,
+          "pass_rate": 0.8333333333333334,
+          "error_count": 1,
+          "errors": [
+            {
+              "level": "L3",
+              "record_id": "test_006",
+              "field": "spatial_relation_type",
+              "message": "空间关系类型为directional，但问题或答案中未检测到相关关键词: ['东', '西', '南', '北', '方位']",
+              "severity": "warning"
+            }
+          ]
+        },
+        "L4": {
+          "level": "L4",
+          "name": "坐标验证",
+          "total_records": 6,
+          "passed_records": 5,
+          "failed_records": 1,
+          "pass_rate": 0.8333333333333334,
+          "error_count": 2,
+          "errors": [
+            {
+              "level": "L4",
+              "record_id": "test_006",
+              "field": "entities[0].coords",
+              "message": "实体'测试城市'的经度200.0°超出中国范围(73.66°-135.05°E)",
+              "severity": "error"
+            },
+            {
+              "level": "L4",
+              "record_id": "test_006",
+              "field": "entities[0].coords",
+              "message": "实体'测试城市'的纬度100.0°超出中国范围(3.86°-53.55°N)",
+              "severity": "error"
+            }
+          ]
+        },
+        "L5": {
+          "level": "L5",
+          "name": "推理链验证",
+          "total_records": 6,
+          "passed_records": 0,
+          "failed_records": 6,
+          "pass_rate": 0.0,
+          "error_count": 13,
+          "errors": [
+            {
+              "level": "L5",
+              "record_id": "test_001",
+              "field": "answer",
+              "message": "答案可能与问题不匹配:问题中的实体未出现在答案中",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_002",
+              "field": "answer",
+              "message": "答案可能与问题不匹配:问题中的实体未出现在答案中",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_003",
+              "field": "answer",
+              "message": "答案可能与问题不匹配:问题中的实体未出现在答案中",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_004",
+              "field": "reasoning_chain",
+              "message": "推理链步骤过少(2步)，建议至少3步",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_004",
+              "field": "reasoning_chain[0]",
+              "message": "推理链第1步内容过短(少于5个字符)",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_004",
+              "field": "reasoning_chain[1]",
+              "message": "推理链第2步内容过短(少于5个字符)",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_004",
+              "field": "answer",
+              "message": "答案可能与问题不匹配:问题中的实体未出现在答案中",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_005",
+              "field": "reasoning_chain",
+              "message": "推理链步骤过少(1步)，建议至少3步",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_005",
+              "field": "reasoning_chain[0]",
+              "message": "推理链第1步内容过短(少于5个字符)",
+              "severity": "warning"
+            },
+            {
+              "level": "L5",
+              "record_id": "test_005",
+              "field": "answer",
+              "message": "答案可能与问题不匹配:问题中的实体未出现在答案中",
+              "severity": "warning"
+            }
+          ]
+        },
+        "L6": {
+          "level": "L6",
+          "name": "去重验证",
+          "total_records": 6,
+          "passed_records": 5,
+          "failed_records": 1,
+          "pass_rate": 0.8333333333333334,
+          "error_count": 1,
+          "errors": [
+            {
+              "level": "L6",
+              "record_id": "test_004",
+              "field": "question,answer",
+              "message": "与记录test_001完全重复",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
