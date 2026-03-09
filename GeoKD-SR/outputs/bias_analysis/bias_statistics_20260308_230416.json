@@ -1,0 +1,418 @@
+{
+  "metadata": {
+    "data_path": "D:/30_keyan/GeoKD-SR/data/geosr_chain/balanced_topology_final.jsonl",
+    "analysis_time": "2026-03-08T23:04:16.017101",
+    "total_records": 10000
+  },
+  "coordinate_analysis": {
+    "total_with_coords": 1249,
+    "total_without_coords": 8751,
+    "with_coords_ratio": 0.1249,
+    "without_coords_ratio": 0.8751,
+    "sample_records_with_coords": [
+      {
+        "id": "geosr_directional_prompt_0005_8238",
+        "question": "已知衢州的地理位置约为北纬28.9度、东经118.9度，大巴山脉的地理位置约为北纬32.5度、东经108.5度。请问相对于衢州，大巴山脉位于什么方向？",
+        "relation_type": "directional"
+      },
+      {
+        "id": "geosr_directional_prompt_0011_5082",
+        "question": "已知伊春位于北纬47.7273度，东经128.899度；大别山脉位于北纬31.0度，东经116.0度。请结合两地的经纬度差异，判断大别山脉相对于伊春的大致方位。",
+        "relation_type": "directional"
+      },
+      {
+        "id": "geosr_composite_prompt_0013_7991",
+        "question": "已知成都宽窄巷子位于纬度30.6656°N，经度104.0617°E，龙虎山位于纬度28.0333°N，经度116.9667°E。请判断龙虎山相对于成都宽窄巷子的空间位置关系（包括方向和大致距离）。",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_composite_prompt_0014_5246",
+        "question": "已知宁夏回族自治区位于北纬38.4681°，东经106.2731°，上海市位于北纬31.2304°，东经121.4737°。请判断宁夏回族自治区相对于上海市的精确地理方位，并估算两者之间的直线距离。",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_metric_prompt_0015_4919",
+        "question": "已知吉林省中心区域大致位于纬度43.8868°N，经度125.3245°E，大庆市位于纬度46.5879°N，经度125.1033°E。请根据经纬度坐标判断，两地之间的直线距离约为多少公里？",
+        "relation_type": "metric"
+      },
+      {
+        "id": "geosr_composite_prompt_0020_5892",
+        "question": "已知绵阳位于北纬31.4678度，东经104.6794度；临沂位于北纬35.1041度，东经118.3561度。请判断临沂相对于绵阳的精确地理方位，并估算两地之间的直线距离。",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_metric_prompt_0022_8956",
+        "question": "已知湖北省的地理坐标约为（30.5928°N，114.3055°E），江苏省的地理坐标约为（32.0603°N，118.7969°E）。若考虑两地之间的直线距离，请判断湖北省与江苏省在空间距离上是否相",
+        "relation_type": "metric"
+      },
+      {
+        "id": "geosr_composite_prompt_0024_7455",
+        "question": "已知雅安市的地理坐标为（103.0134°E，29.9806°N），瓦房店市的地理坐标为（121.9811°E，39.6281°N）。请综合判断雅安市相对于瓦房店市的空间方位关系，并估算两地之间的直线",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_directional_prompt_0028_2124",
+        "question": "已知长沙位于北纬28.2度，东经112.9度；潍坊位于北纬36.7度，东经119.1度。请判断潍坊在长沙的什么方向？",
+        "relation_type": "directional"
+      },
+      {
+        "id": "geosr_composite_prompt_0035_6688",
+        "question": "已知霸州位于纬度39.1194°N，经度116.3914°E，朝阳位于纬度41.5757°N，经度120.4508°E。请综合判断霸州相对于朝阳的精确地理方位，并估算两地之间的直线距离。",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_metric_prompt_0036_1207",
+        "question": "已知五常市位于44.9117°N，127.1567°E，尚志市位于45.2111°N，127.9617°E，请问两地之间的直线距离约为多少公里？",
+        "relation_type": "metric"
+      },
+      {
+        "id": "geosr_composite_prompt_0037_8532",
+        "question": "已知山东省的地理坐标约为(36.6683°N, 117.0204°E)，东港市的地理坐标约为(39.8617°N, 124.1522°E)。请根据坐标信息，分析东港市相对于山东省的空间位置关系，并计算",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_composite_prompt_0040_8613",
+        "question": "已知上海市的地理坐标为(31.2304°N, 121.4737°E)，南昌的地理坐标为(28.6769°N, 115.9099°E)。请根据坐标信息判断南昌相对于上海市的精确空间方位，并计算两地之间的",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_directional_prompt_0048_4545",
+        "question": "已知吕梁的地理坐标约为（37.5183°N，111.1347°E），鼓浪屿郑成功纪念馆的地理坐标约为（24.4511°N，118.0694°E）。请判断鼓浪屿郑成功纪念馆位于吕梁的什么方向？",
+        "relation_type": "directional"
+      },
+      {
+        "id": "geosr_composite_prompt_0050_5952",
+        "question": "已知山东省的地理坐标大致位于117.0204°E, 36.6683°N，营口市的地理坐标大致位于122.235°E, 40.6678°N。请根据两地的经纬度差异，分析山东省相对于营口市的方位关系，并估",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_composite_prompt_0054_2213",
+        "question": "已知西藏自治区的地理坐标约为(29.6524°N, 91.1721°E)，宁夏回族自治区的地理坐标约为(38.4681°N, 106.2731°E)。请根据两地的经纬度差异，判断西藏自治区相对于宁夏回",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_metric_prompt_0057_6003",
+        "question": "威海（37.5131°N，122.1202°E）与武汉长江大桥（30.5786°N，114.2636°E）之间的直线距离约为多少公里？",
+        "relation_type": "metric"
+      },
+      {
+        "id": "geosr_metric_prompt_0063_1977",
+        "question": "长治（113.1161°E, 36.1953°N）与张家港（120.5533°E, 31.8753°N）之间的直线距离约为多少公里？",
+        "relation_type": "metric"
+      },
+      {
+        "id": "geosr_composite_prompt_0068_8708",
+        "question": "已知朝阳位于纬度41.5757°N，经度120.4508°E，周口位于纬度33.6264°N，经度114.6965°E。请判断周口相对于朝阳的精确地理方位，并估算两地之间的直线距离。",
+        "relation_type": "composite"
+      },
+      {
+        "id": "geosr_composite_prompt_0070_2713",
+        "question": "已知陕西省的地理坐标约为（108.9398°E, 34.3416°N），台州的地理坐标约为（121.4287°E, 28.6563°N）。请判断台州相对于陕西省的精确空间方位，并计算两地之间的大致直线",
+        "relation_type": "composite"
+      }
+    ]
+  },
+  "prompt_bias_analysis": {
+    "counts": {
+      "task_hint": 1078,
+      "relation_leak_topology": 3,
+      "relation_leak_spatial": 14,
+      "relation_leak_general": 469,
+      "reasoning_guide": 0,
+      "polite_prompt": 2719
+    },
+    "ratios": {
+      "task_hint": 0.1078,
+      "relation_leak_topology": 0.0003,
+      "relation_leak_spatial": 0.0014,
+      "relation_leak_general": 0.0469,
+      "reasoning_guide": 0.0,
+      "polite_prompt": 0.2719
+    },
+    "sample_records": {
+      "polite_prompt": [
+        {
+          "id": "geosr_metric_prompt_0002_7592",
+          "question": "请问桂林与益阳之间的直线距离约为多少公里？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_metric_prompt_0003_3851",
+          "question": "龙井市位于吉林省，古交市位于山西省，请问两地之间的直线距离约为多少公里？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_metric_prompt_0004_5700",
+          "question": "辽宁省位于中国东北地区，孝感市位于湖北省，请问两地之间的直线距离约为多少公里？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_directional_prompt_0005_8238",
+          "question": "已知衢州的地理位置约为北纬28.9度、东经118.9度，大巴山脉的地理位置约为北纬32.5度、东经108.5度。请问相对于衢州，大巴山脉位于什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_composite_prompt_0012_9702",
+          "question": "请问嘉峪关相对于阿城的方向和距离分别是多少？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_metric_prompt_0018_9890",
+          "question": "桂林位于中国南部，德阳位于中国西南部，请问两地之间的直线距离约是多少公里？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_directional_prompt_0023_3704",
+          "question": "东营位于山东省黄河入海口，鄱阳湖生态经济区位于江西省。请问鄱阳湖生态经济区位于东营的什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_directional_prompt_0026_8449",
+          "question": "请问普兰店在益阳的什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_metric_prompt_0029_1333",
+          "question": "百色位于中国南部，曲阜孔庙位于中国北部。请估算百色与曲阜孔庙之间的直线距离约为多少公里？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_directional_prompt_0033_7149",
+          "question": "任丘位于河北省，丽水位于浙江省，请问丽水在任丘的什么方向？",
+          "relation_type": "directional"
+        }
+      ],
+      "task_hint": [
+        {
+          "id": "geosr_composite_prompt_0013_7991",
+          "question": "已知成都宽窄巷子位于纬度30.6656°N，经度104.0617°E，龙虎山位于纬度28.0333°N，经度116.9667°E。请判断龙虎山相对于成都宽窄巷子的空间位置关系（包括方向和大致距离）。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_0014_5246",
+          "question": "已知宁夏回族自治区位于北纬38.4681°，东经106.2731°，上海市位于北纬31.2304°，东经121.4737°。请判断宁夏回族自治区相对于上海市的精确地理方位，并估算两者之间的直线距离。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_0020_5892",
+          "question": "已知绵阳位于北纬31.4678度，东经104.6794度；临沂位于北纬35.1041度，东经118.3561度。请判断临沂相对于绵阳的精确地理方位，并估算两地之间的直线距离。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_metric_prompt_0021_9947",
+          "question": "已知达州位于四川盆地东北部，延吉位于吉林省东部山区。若不考虑地形阻挡，仅基于经纬度坐标进行空间推算，请判断这两座城市之间的直线距离是否超过2000公里，并给出具体的距离数值。",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_metric_prompt_0022_8956",
+          "question": "已知湖北省的地理坐标约为（30.5928°N，114.3055°E），江苏省的地理坐标约为（32.0603°N，118.7969°E）。若考虑两地之间的直线距离，请判断湖北省与江苏省在空间距离上是否相",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_directional_prompt_0028_2124",
+          "question": "已知长沙位于北纬28.2度，东经112.9度；潍坊位于北纬36.7度，东经119.1度。请判断潍坊在长沙的什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_directional_prompt_0048_4545",
+          "question": "已知吕梁的地理坐标约为（37.5183°N，111.1347°E），鼓浪屿郑成功纪念馆的地理坐标约为（24.4511°N，118.0694°E）。请判断鼓浪屿郑成功纪念馆位于吕梁的什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_composite_prompt_0068_8708",
+          "question": "已知朝阳位于纬度41.5757°N，经度120.4508°E，周口位于纬度33.6264°N，经度114.6965°E。请判断周口相对于朝阳的精确地理方位，并估算两地之间的直线距离。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_0070_2713",
+          "question": "已知陕西省的地理坐标约为（108.9398°E, 34.3416°N），台州的地理坐标约为（121.4287°E, 28.6563°N）。请判断台州相对于陕西省的精确空间方位，并计算两地之间的大致直线",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_metric_prompt_0090_2121",
+          "question": "已知四川省（纬度30.6171°N，经度104.0648°E）与广西壮族自治区（纬度22.8155°N，经度108.3275°E）的地理坐标，请计算两地的直线距离，并判断相对于500公里的参照距离，这",
+          "relation_type": "metric"
+        }
+      ],
+      "relation_leak_general": [
+        {
+          "id": "geosr_directional_prompt_0279_1187",
+          "question": "佛山位于中国南部，而皖江城市带位于长江沿岸，请从经纬度角度判断，皖江城市带相对于佛山处于什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_metric_prompt_0282_8454",
+          "question": "已知杭州位于浙江省北部（纬度30.2741°N，经度120.1551°E），桦甸位于吉林省东南部（纬度42.9722°N，经度126.7464°E）。若不考虑地形阻挡，仅从球面距离角度分析，请计算两地",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_metric_prompt_0876_8304",
+          "question": "绥芬河市位于黑龙江省东南部，是重要的边境口岸城市；长三角地区位于中国长江下游。请从空间距离的角度分析，绥芬河与长三角地区的直线距离约为多少公里？这一距离体现了两者怎样的地理空间格局特征？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_composite_prompt_1094_2750",
+          "question": "赤峰市位于内蒙古自治区，临江市位于吉林省。请从经纬度角度分析，赤峰相对于临江处于什么方位？两者的直线距离是多少？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_metric_prompt_1371_9495",
+          "question": "已知北京市位于中国华北平原北部，海南省位于中国最南端，请从地理空间角度分析，相比于从海南省出发，从北京市到中国版图几何中心（约在兰州市附近）的直线距离是更远还是更近？请计算北京市与海南省之间的直线距离",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_directional_prompt_1444_3879",
+          "question": "福建省地处中国东南沿海，锦州位于辽宁省西南部。请从经纬度角度分析，锦州相对于福建省的整体方位是什么？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_directional_prompt_1516_2633",
+          "question": "已知辽宁省的地理中心大致位于纬度41.2956°N，经度123.4315°E，而遂宁市的坐标为纬度30.5134°N，经度105.5929°E。请从地理方位的角度判断，遂宁市相对于辽宁省处于什么方向？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_directional_prompt_1569_8222",
+          "question": "澳门特别行政区位于中国南部沿海，云南省位于中国西南内陆，请从地理方位的角度判断，云南省相对于澳门特别行政区的位置方向是什么？",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_directional_prompt_1701_6093",
+          "question": "假设你身处吉林省的桦甸市，想要前往澜沧江流域进行生态考察，请问你应该主要向哪个方向行进？请从经纬度角度分析。",
+          "relation_type": "directional"
+        },
+        {
+          "id": "geosr_metric_prompt_1955_7046",
+          "question": "临沧位于云南省西南部（23.8864°N, 100.0927°E），泰兴位于江苏省南部（32.1717°N, 120.02°E）。请从空间角度分析，这两座城市是否属于“临近”城市？它们之间的实际直线距",
+          "relation_type": "metric"
+        }
+      ],
+      "relation_leak_spatial": [
+        {
+          "id": "geosr_metric_prompt_1955_7046",
+          "question": "临沧位于云南省西南部（23.8864°N, 100.0927°E），泰兴位于江苏省南部（32.1717°N, 120.02°E）。请从空间角度分析，这两座城市是否属于“临近”城市？它们之间的实际直线距",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_metric_prompt_1974_4467",
+          "question": "考虑到浙江省（以杭州为代表）和江苏省东台市都位于中国东部沿海，请从空间角度分析，浙江省中心区域距离东台市有多远？这是否属于邻省的近距离范围？",
+          "relation_type": "metric"
+        },
+        {
+          "id": "geosr_composite_prompt_2595_5161",
+          "question": "周口位于河南省，沈阳是辽宁省的省会。请从空间角度描述沈阳相对于周口的方位，并估算两城的大致距离。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_5203_9481",
+          "question": "吉林省位于中国东北地区中部，丽水市位于浙江省西南部。请从空间角度分析，丽水市相对于吉林省处于什么方位？两地之间的直线距离大约是多少公里？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_6724_4593",
+          "question": "聊城市地处山东省西部，福州市是福建省的省会。请从空间角度分析，福州在聊城的什么方位？两地之间的直线距离约为多少公里？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_6865_8207",
+          "question": "资阳位于四川盆地，姜堰位于江苏中部。请从空间角度分析，姜堰相对于资阳的方位以及两地的大致直线距离。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_6938_7674",
+          "question": "山东省位于华东地区，闽江是福建省最大的河流。请从空间角度描述闽江入海口相对于山东省的位置关系（包括方向和大致距离）。",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_7193_7506",
+          "question": "黑河市位于黑龙江省东北部，大安市位于吉林省西北部。请从空间角度分析，从黑河市出发前往大安市，大致应朝什么方向行进？两地的直线距离约为多少公里？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_7830_7121",
+          "question": "成都是四川省的省会，青海湖是中国最大的内陆湖。请从空间角度分析，青海湖相对于成都处于什么方位？两者之间的距离大约是多少？",
+          "relation_type": "composite"
+        },
+        {
+          "id": "geosr_composite_prompt_8118_7356",
+          "question": "河北省地处华北，金坛区位于江苏省南部。请从空间角度分析，河北省相对于金坛区处于什么方位？两者的直线距离大约是多少？",
+          "relation_type": "composite"
+        }
+      ],
+      "relation_leak_topology": [
+        {
+          "id": "geosr_topological_prompt_0733_9715",
+          "question": "已知甘肃省在中国西北部，陕西省位于中国内陆腹地。若从拓扑角度分析，酒泉市与商洛市是否存在包含关系？请具体说明是“酒泉包含商洛”、“商洛包含酒泉”还是“互不包含”。",
+          "relation_type": "topological"
+        },
+        {
+          "id": "geosr_topological_prompt_10255_6426",
+          "question": "洱海位于云南省境内，从拓扑角度来看，洱海与相邻的贵州省是什么关系？",
+          "relation_type": "topological"
+        },
+        {
+          "id": "geosr_topological_prompt_5785_5088",
+          "question": "著名景点成都宽窄巷子与黑龙江省伊春市在空间上是否存在重叠关系？请从拓扑角度分析。",
+          "relation_type": "topological"
+        }
+      ]
+    }
+  },
+  "relation_type_distribution": {
+    "metric": 3104,
+    "directional": 2859,
+    "composite": 2362,
+    "topological": 1675
+  },
+  "relation_type_coords": {
+    "metric": {
+      "with_coords": 274,
+      "without_coords": 2830
+    },
+    "directional": {
+      "with_coords": 435,
+      "without_coords": 2424
+    },
+    "composite": {
+      "with_coords": 446,
+      "without_coords": 1916
+    },
+    "topological": {
+      "with_coords": 94,
+      "without_coords": 1581
+    }
+  },
+  "relation_type_biases": {
+    "metric": {
+      "task_hint": 163,
+      "relation_leak_topology": 0,
+      "relation_leak_spatial": 4,
+      "relation_leak_general": 14,
+      "reasoning_guide": 0,
+      "polite_prompt": 1221
+    },
+    "directional": {
+      "task_hint": 231,
+      "relation_leak_topology": 0,
+      "relation_leak_spatial": 0,
+      "relation_leak_general": 60,
+      "reasoning_guide": 0,
+      "polite_prompt": 883
+    },
+    "composite": {
+      "task_hint": 263,
+      "relation_leak_topology": 0,
+      "relation_leak_spatial": 10,
+      "relation_leak_general": 20,
+      "reasoning_guide": 0,
+      "polite_prompt": 327
+    },
+    "topological": {
+      "task_hint": 421,
+      "relation_leak_topology": 3,
+      "relation_leak_spatial": 0,
+      "relation_leak_general": 375,
+      "reasoning_guide": 0,
+      "polite_prompt": 288
+    }
+  }
+}

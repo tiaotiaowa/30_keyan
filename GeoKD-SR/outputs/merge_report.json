@@ -1,0 +1,65 @@
+{
+  "total_files": 13,
+  "total_records_loaded": 11691,
+  "unique_records": 11691,
+  "duplicates_removed": 0,
+  "file_stats": {
+    "generated_1000.jsonl": 1000,
+    "generated_10001_to_10600.jsonl": 598,
+    "generated_1001_to_2000.jsonl": 974,
+    "generated_10601_to_11200.jsonl": 594,
+    "generated_11201_to_11800.jsonl": 599,
+    "generated_2001_to_3000.jsonl": 959,
+    "generated_3001_to_4000.jsonl": 983,
+    "generated_4001_to_5000.jsonl": 1000,
+    "generated_5001_to_6000.jsonl": 995,
+    "generated_6001_to_7000.jsonl": 999,
+    "generated_7001_to_8000.jsonl": 995,
+    "generated_8001_to_9000.jsonl": 1000,
+    "generated_9001_to_10000.jsonl": 995
+  },
+  "spatial_distribution": {
+    "topological": 3260,
+    "metric": 3159,
+    "directional": 2910,
+    "composite": 2362
+  },
+  "difficulty_distribution": {
+    "easy": 3445,
+    "medium": 5970,
+    "hard": 2276
+  },
+  "topology_subtype_distribution": {
+    "contains": 226,
+    "disjoint": 2531,
+    "overlap": 88,
+    "adjacent": 160,
+    "within": 232,
+    "inside": 7,
+    "touch": 12,
+    "crosses": 1,
+    "connected": 1,
+    "separated": 1,
+    "intersect": 1
+  },
+  "unique_entity_pairs": 11691,
+  "entity_pair_coverage": {
+    "长沙|陕西省": 1,
+    "桂林|益阳": 1,
+    "古交|龙井": 1,
+    "孝感|辽宁省": 1,
+    "大巴山脉|衢州": 1,
+    "凌海|宁夏回族自治区": 1,
+    "浙江省|黑河": 1,
+    "昆明|邵阳": 1,
+    "河北省|秦皇岛": 1,
+    "本溪|鹤岗": 1
+  },
+  "field_missing": {
+    "prompt_id": 1000,
+    "topology_subtype": 8431,
+    "difficulty_score": 10691
+  },
+  "records_with_coords": 11691,
+  "records_without_coords": 0
+}

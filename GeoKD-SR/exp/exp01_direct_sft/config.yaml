@@ -1,0 +1,59 @@
+# 实验配置 - Exp1: B1-Direct-SFT（对照组）
+# 直接监督微调，无蒸馏
+# 针对24GB显存优化配置
+
+experiment:
+  name: "exp01_direct_sft"
+  description: "对照组：直接监督微调，无蒸馏"
+  seed: 42
+
+model:
+  # 教师模型: 不使用（对照组）
+  teacher:
+    enabled: false
+    name: "/mnt/workspace/models/Qwen2.5-7B-Instruct"
+
+  # 学生模型: Qwen2.5-1.5B-Instruct
+  student:
+    name: "/mnt/workspace/models/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 2e-4  # 稍微提高学习率
+  batch_size: 4  # 24GB显存适配
+  gradient_accumulation_steps: 8  # 有效batch=32
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+  max_length: 1024  # 减少以节省显存
+
+distillation:
+  enabled: false
+  temperature: 2.0
+  alpha: 0.5
+
+data:
+  train_path: "../../data/geosr_chain/final/train.jsonl"
+  dev_path: "../../data/geosr_chain/final/dev.jsonl"
+  test_path: "../../data/geosr_chain/final/test.jsonl"
+  max_length: 1024
+
+# ChatML 模板配置
+chat_template:
+  system_prompt: "你是一个地理空间推理专家，擅长分析和解决空间关系问题。请根据给定的地理信息，准确判断空间位置关系并给出详细推理过程。"
+  format: "chatml"  # Qwen2.5 使用 ChatML 格式
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

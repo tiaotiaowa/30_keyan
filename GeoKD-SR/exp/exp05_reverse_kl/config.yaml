@@ -1,0 +1,58 @@
+# 实验配置 - Exp5: B2+C3（逆向KL蒸馏）
+# ICLR 2024: Reverse KL更适合生成任务，减少幻觉
+
+experiment:
+  name: "exp05_reverse_kl"
+  description: "逆向KL蒸馏：减少幻觉，更适合生成任务"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "reverse_kl"
+  temperature: 2.0
+  alpha: 0.5
+  # Reverse KL: KL(P_S || P_T) 而非 KL(P_T || P_S)
+  reverse_kl:
+    # Forward KL vs Reverse KL 混合比例
+    forward_weight: 0.0   # 0.0表示纯逆向KL
+    reverse_weight: 1.0
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

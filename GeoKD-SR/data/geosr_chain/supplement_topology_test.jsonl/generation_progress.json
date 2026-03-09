@@ -1,0 +1,13 @@
+{
+  "total": 1,
+  "completed": 1,
+  "failed": 0,
+  "completed_ids": [
+    "prompt_0001"
+  ],
+  "failed_ids": [],
+  "errors": [],
+  "start_time": "2026-03-09T12:24:17.826975",
+  "end_time": "2026-03-09T12:24:29.823411",
+  "last_index": 0
+}

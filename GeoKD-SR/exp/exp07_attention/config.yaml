@@ -1,0 +1,60 @@
+# 实验配置 - Exp7: B2+C5（空间关系注意力蒸馏）
+# 蒸馏注意力模式以传递空间关系推理能力
+
+experiment:
+  name: "exp07_attention"
+  description: "空间关系注意力蒸馏：蒸馏注意力模式"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "attention_distillation"
+  temperature: 2.0
+  alpha: 0.5
+  attention:
+    # 注意力蒸馏参数
+    attention_weight: 0.3  # 注意力损失权重
+    hidden_weight: 0.2     # 隐藏状态损失权重
+    logit_weight: 0.5      # 输出logits损失权重
+    # 注意力层映射
+    layer_mapping: "last"  # last, all, or specific layers
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

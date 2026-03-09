@@ -1,0 +1,205 @@
+# GeoKD-SR 数据集审查配置
+# 版本: 1.0
+# 创建时间: 2026-03-08
+
+validation:
+  # 各级别通过阈值
+  thresholds:
+    L1_format: 1.0           # 100%
+    L2_logic: 0.98           # 98%
+    L3_distribution: 0.95    # 偏差5%
+    L4_semantic: 0.85        # 85%
+
+  # 分布目标
+  distribution_targets:
+    spatial_relation:
+      directional: 0.25      # 25%
+      topological: 0.275     # 27.5%
+      metric: 0.275          # 27.5%
+      composite: 0.20        # 20%
+    difficulty:
+      easy: 0.30             # 30%
+      medium: 0.50           # 50%
+      hard: 0.20             # 20%
+    tolerance: 0.05          # 偏差容忍度 5%
+
+  # 难度分数映射
+  difficulty_score_mapping:
+    easy: [1, 3]
+    medium: [4, 6]
+    hard: [7, 10]
+
+  # 坐标范围 (中国境内)
+  coordinate_bounds:
+    longitude: [73.0, 135.0]
+    latitude: [18.0, 54.0]
+
+  # 实体分布目标
+  entity_distribution:
+    max_cv: 0.7              # 变异系数上限
+
+# 关键词配置
+keywords:
+  within: ["位于", "内", "境内", "内部", "属于", "处在"]
+  contains: ["包含", "含有", "涵盖", "包括", "内有"]
+  adjacent: ["相邻", "接壤", "毗邻", "邻接", "交界", "相连"]
+  disjoint: ["不相邻", "不接壤", "分离", "相离", "不毗邻", "不交界"]
+  overlap: ["流经", "贯穿", "跨越", "经过", "交叉", "穿越"]
+
+  # 方向关键词
+  directions:
+    primary: ["东", "南", "西", "北"]
+    secondary: ["东南", "东北", "西南", "西北"]
+
+# 必需字段
+required_fields:
+  - id
+  - question
+  - answer
+  - reasoning_chain
+  - spatial_relation_type
+  - difficulty
+  - difficulty_score
+  - entity_a
+  - entity_b
+  - entity_to_token
+  - spatial_tokens
+
+# 推理链必需字段
+reasoning_chain_fields:
+  common:
+    - step
+    - name
+    - action
+    - content
+  specific:
+    directional:
+      - direction
+    topological:
+      - topology_type
+    metric:
+      - distance_km
+    composite:
+      - sub_questions
+
+# 省份列表 (34个省级行政区)
+provinces:
+  - 北京市
+  - 天津市
+  - 河北省
+  - 山西省
+  - 内蒙古自治区
+  - 辽宁省
+  - 吉林省
+  - 黑龙江省
+  - 上海市
+  - 江苏省
+  - 浙江省
+  - 安徽省
+  - 福建省
+  - 江西省
+  - 山东省
+  - 河南省
+  - 湖北省
+  - 湖南省
+  - 广东省
+  - 广西壮族自治区
+  - 海南省
+  - 重庆市
+  - 四川省
+  - 贵州省
+  - 云南省
+  - 西藏自治区
+  - 陕西省
+  - 甘肃省
+  - 青海省
+  - 宁夏回族自治区
+  - 新疆维吾尔自治区
+  - 香港特别行政区
+  - 澳门特别行政区
+  - 台湾省
+
+# 报告配置
+report:
+  output_dir: "reports"
+  formats:
+    - markdown
+    - json
+  include_samples: true
+  sample_size: 10
+
+# ============================================
+# L5 提示词偏差检查配置 (新增 2026-03-08)
+# ============================================
+prompt_bias:
+  enabled: true
+
+  # 引导词检查
+  introductory_words:
+    - "请问"
+    - "请判断"
+    - "请分析"
+    - "请估算"
+    - "请计算"
+    - "请描述"
+    - "请说明"
+    max_single_ratio: 0.30  # 单一引导词最大占比 30%
+
+  # 专业术语泄露检查 (高风险)
+  technical_terms:
+    topological:
+      - "拓扑关系"
+      - "从拓扑角度"
+      - "拓扑学"
+      - "拓扑结构"
+    risk_level: "high"
+    allowed: false  # 不允许出现
+
+  # 推理链元数据泄露检查 (高风险)
+  reasoning_chain_leakage:
+    # 不应出现在训练数据中的字段
+    forbidden_fields:
+      - "relation_type"      # 直接泄露关系类型
+      - "spatial_relation"   # 空间关系标注
+    # 应使用通用名称的action
+    generic_actions:
+      "calculate_distance": "process_spatial"
+      "determine_topology": "process_spatial"
+      "calculate_direction": "process_spatial"
+    risk_level: "high"
+
+  # 答案格式暗示检查
+  answer_format_hints:
+    binary_hints:
+      - "是否"
+      - "有没有"
+      - "存不存在"
+    numeric_hints:
+      - "多少公里"
+      - "距离是"
+      - "约为多少"
+    max_hint_ratio: 0.25  # 暗示词最大占比 25%
+
+  # 提示词多样性要求
+  diversity:
+    min_patterns: 4  # 最少提示词模式数量
+    max_dominant_ratio: 0.35  # 主导模式最大占比
+    pattern_types:
+      - "direct_statement"    # 直接陈述式
+      - "polite_inquiry"      # 请问式
+      - "judgment_request"    # 判断式
+      - "description_request" # 描述式
+
+  # 信息给予模式检查
+  info_giving_patterns:
+    coordinate_given:
+      - "已知坐标"
+      - "位于北纬"
+      - "经纬度是"
+    max_ratio: 0.40  # 最大占比 40%
+
+  # 风险阈值
+  risk_thresholds:
+    high: 0.15      # >15% 高风险
+    medium: 0.10    # 10-15% 中风险
+    low: 0.05       # 5-10% 低风险

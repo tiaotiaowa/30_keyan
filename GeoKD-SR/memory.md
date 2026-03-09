@@ -1,5 +1,67 @@
 # GeoKD-SR 项目记忆
 
+## 2026-03-09 拓扑补充Prompts生成脚本
+
+### 任务概述
+创建`scripts/create_topology_supplement_prompts.py`脚本，生成拓扑关系的补充prompts配置文件。
+
+### 目标数量（2026-03-09更新）
+- **within**: 512条（城市-省份包含关系）✅
+- **contains**: 374条（省份-城市被包含关系，补齐到600）✅
+- **adjacent**: 440条（省份邻接关系）✅
+- **overlap**: 512条（区域重叠关系，bonus）✅
+
+### 关键功能
+1. **省份邻接关系数据**: 基于中国地理构建了34个省份的邻接关系映射
+2. **城市-省份映射**: 使用entity_database_expanded.json中的province字段确保语义正确
+3. **随机种子42**: 保证结果可复现
+4. **难度分布**: easy 30%, medium 50%, hard 20%
+5. **Split分布**: train 80%, dev 10%, test 10%
+
+### 生成结果
+- 总计: **1,838条**prompts
+- 输出文件: `data/prompts/topology_supplement_prompts.json`
+
+### 分布验证
+```
+拓扑子类型分布:
+  within: 512 (27.9%)
+  contains: 374 (20.3%)
+  adjacent: 440 (23.9%)
+  overlap: 512 (27.9%)
+
+难度分布:
+  easy: 536 (29.2%)
+  medium: 946 (51.5%)
+  hard: 356 (19.4%)
+
+Split分布:
+  train: 1486 (80.8%)
+  dev: 175 (9.5%)
+  test: 177 (9.6%)
+```
+  adjacent: 440 (26.0%)
+  overlap: 512 (30.2%)
+
+难度分布:
+  easy: 502 (29.6%)
+  medium: 868 (51.2%)
+  hard: 324 (19.1%)
+
+Split分布:
+  train: 1371 (80.9%)
+  dev: 176 (10.4%)
+  test: 147 (8.7%)
+```
+
+### 技术要点
+- 使用Haversine公式计算两点间距离
+- 使用atan2计算方向关系（8方位：北、东北、东、东南、南、西南、西、西北）
+- prompt_text模板严格遵循prompts_config_full.json格式
+- 包含完整的5步reasoning_chain示例
+
+---
+
 ## 2026-03-07 GLM-5 API调用验证
 
 ### 任务概述

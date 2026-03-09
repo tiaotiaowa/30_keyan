@@ -1,0 +1,64 @@
+# 实验配置 - Exp3: B2+C1(Learnable)（空间关系蒸馏-可学习权重）
+# 核心创新：根据空间关系类型动态加权
+
+experiment:
+  name: "exp03_srd"
+  description: "空间关系蒸馏（可学习权重）：核心创新组件"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "spatial_relation_learnable"
+  temperature: 2.0
+  alpha: 0.5
+  spatial_relation:
+    # 可学习权重设置
+    weight_type: "learnable"
+    # 初始化权重（会被学习更新）
+    initial_weights:
+      directional: 1.5   # 方向关系：空间认知基础
+      topological: 1.3   # 拓扑关系：空间推理核心
+      metric: 1.0        # 度量关系：相对简单
+      composite: 1.8     # 组合推理：最复杂
+    # 权重学习率
+    weight_lr: 0.01
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

@@ -1,0 +1,187 @@
+{
+  "validation_time": "2026-03-08T16:37:15.188855",
+  "summary": {
+    "total_files": 6,
+    "total_records": 5910,
+    "avg_pass_rates": {
+      "L1": 100.0,
+      "L2": 99.89908658131952,
+      "L3": 99.98324958123953,
+      "L4": 99.96622176591376,
+      "L5": 100.0,
+      "L6": 100.0
+    },
+    "missing_fields_summary": {
+      "entity_to_token": 5910,
+      "difficulty_score": 5910
+    },
+    "experiment_compatibility": {
+      "Exp1": {
+        "count": 5910,
+        "ratio": 1.0
+      },
+      "Exp2": {
+        "count": 5910,
+        "ratio": 1.0
+      },
+      "Exp3a": {
+        "count": 5910,
+        "ratio": 1.0
+      },
+      "Exp3": {
+        "count": 5910,
+        "ratio": 1.0
+      },
+      "Exp4": {
+        "count": 5909,
+        "ratio": 0.9998307952622674
+      },
+      "Exp5": {
+        "count": 5910,
+        "ratio": 1.0
+      },
+      "Exp6": {
+        "count": 5910,
+        "ratio": 1.0
+      }
+    }
+  },
+  "distribution": {
+    "spatial": {
+      "metric": {
+        "count": 1588,
+        "ratio": 0.26869712351945857
+      },
+      "directional": {
+        "count": 1484,
+        "ratio": 0.25109983079526227
+      },
+      "topological": {
+        "count": 1634,
+        "ratio": 0.27648054145516077
+      },
+      "composite": {
+        "count": 1204,
+        "ratio": 0.20372250423011845
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "count": 1707,
+        "ratio": 0.28883248730964467
+      },
+      "medium": {
+        "count": 3046,
+        "ratio": 0.5153976311336718
+      },
+      "hard": {
+        "count": 1157,
+        "ratio": 0.1957698815566836
+      }
+    },
+    "topology_subtype": {
+      "contains": 114,
+      "disjoint": 1284,
+      "adjacent": 72,
+      "within": 99,
+      "overlap": 54,
+      "touch": 4,
+      "crosses": 1,
+      "inside": 4,
+      "connected": 1,
+      "separated": 1
+    }
+  },
+  "file_summaries": {
+    "generated_1001_to_2000.jsonl": {
+      "total_records": 974,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 100.0,
+        "L3": 100.0,
+        "L4": 99.89733059548254,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 974,
+        "difficulty_score": 974
+      }
+    },
+    "generated_2001_to_3000.jsonl": {
+      "total_records": 959,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 99.89572471324296,
+        "L3": 100.0,
+        "L4": 100.0,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 959,
+        "difficulty_score": 959
+      }
+    },
+    "generated_3001_to_4000.jsonl": {
+      "total_records": 983,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 100.0,
+        "L3": 100.0,
+        "L4": 100.0,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 983,
+        "difficulty_score": 983
+      }
+    },
+    "generated_4001_to_5000.jsonl": {
+      "total_records": 1000,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 99.9,
+        "L3": 100.0,
+        "L4": 99.9,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 1000,
+        "difficulty_score": 1000
+      }
+    },
+    "generated_5001_to_6000.jsonl": {
+      "total_records": 995,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 99.79899497487436,
+        "L3": 99.89949748743719,
+        "L4": 100.0,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 995,
+        "difficulty_score": 995
+      }
+    },
+    "generated_6001_to_7000.jsonl": {
+      "total_records": 999,
+      "pass_rates": {
+        "L1": 100.0,
+        "L2": 99.7997997997998,
+        "L3": 100.0,
+        "L4": 100.0,
+        "L5": 100.0,
+        "L6": 100.0
+      },
+      "missing_fields_count": {
+        "entity_to_token": 999,
+        "difficulty_score": 999
+      }
+    }
+  }
+}

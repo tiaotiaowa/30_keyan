@@ -1,0 +1,57 @@
+# 实验配置 - Exp4: B2+C2（思维链蒸馏）
+# ACL 2023: Distilling Reasoning Capabilities
+
+experiment:
+  name: "exp04_cot_distill"
+  description: "思维链蒸馏：蒸馏推理过程而非仅答案"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "chain_of_thought"
+  temperature: 2.0
+  # L_SCOT = α × L_chain + (1-α) × L_answer
+  alpha: 0.6  # 推理链权重更高
+  cot:
+    # 推理链蒸馏参数
+    normalize_by_steps: true  # 是否按步骤数归一化
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

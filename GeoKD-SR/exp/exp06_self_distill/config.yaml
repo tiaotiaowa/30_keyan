@@ -1,0 +1,63 @@
+# 实验配置 - Exp6: B2+C4（自蒸馏）
+# 使用历史最优模型作为教师
+
+experiment:
+  name: "exp06_self_distill"
+  description: "自蒸馏：使用历史最优模型作为教师"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+    # 自蒸馏模式
+    self_distillation:
+      enabled: true
+      # 使用训练过程中的EMA或历史最优模型
+      use_ema: true
+      ema_decay: 0.999
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "self_distillation"
+  temperature: 2.0
+  alpha: 0.5
+  self_distill:
+    # 自蒸馏损失权重
+    self_weight: 0.3
+    teacher_weight: 0.7
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

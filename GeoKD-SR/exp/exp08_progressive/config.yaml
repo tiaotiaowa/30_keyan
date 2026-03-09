@@ -1,0 +1,71 @@
+# 实验配置 - Exp8: B2+C6（渐进式蒸馏）
+# 课程学习：从简单到复杂的渐进式蒸馏
+
+experiment:
+  name: "exp08_progressive"
+  description: "渐进式蒸馏：从简单到复杂的课程学习"
+  seed: 42
+
+model:
+  teacher:
+    enabled: true
+    name: "Qwen/Qwen2.5-7B-Instruct"
+    quantization: "4bit"
+    device_map: "auto"
+
+  student:
+    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    lora:
+      r: 8
+      lora_alpha: 16
+      lora_dropout: 0.05
+      target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+      bias: "none"
+      task_type: "CAUSAL_LM"
+
+training:
+  learning_rate: 1e-4
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+
+distillation:
+  enabled: true
+  method: "progressive"
+  temperature: 2.0
+  alpha: 0.5
+  progressive:
+    # 渐进式蒸馏阶段
+    stages:
+      - name: "easy"
+        epochs: [0, 1]
+        temperature: 4.0  # 高温度，软目标
+        alpha: 0.7
+        difficulty: "easy"  # 简单样本
+      - name: "medium"
+        epochs: [1, 2]
+        temperature: 2.0
+        alpha: 0.5
+        difficulty: "medium"
+      - name: "hard"
+        epochs: [2, 3]
+        temperature: 1.0  # 低温度，硬目标
+        alpha: 0.3
+        difficulty: "hard"
+
+data:
+  train_path: "data/geosr_chain/final/train.jsonl"
+  dev_path: "data/geosr_chain/final/dev.jsonl"
+  test_path: "data/geosr_chain/final/test.jsonl"
+  max_length: 2048
+
+output:
+  checkpoint_dir: "checkpoints/"
+  log_dir: "logs/"
+  result_dir: "results/"

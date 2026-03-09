@@ -1,5 +1,760 @@
 # GeoKD-SR Project Work Log
 
+## 2026-03-09 16:40 拓扑子类型数据补充生成计划执行中 🔄
+
+### 任务概述
+根据拓扑子类型数据补充生成计划，补充1724条数据使每种子类型达到610条规模。
+
+### 执行进度
+
+#### Step 0: 完善提示词文件 ✅
+- 从 `prompts_config_full.json` 提取 disjoint 类型提示词（50条）
+- 补充 contains 和 overlap 的差额提示词
+- 更新后 `topology_supplement_prompts.json` 分布：
+  - disjoint: 48条
+  - within: 512条
+  - contains: 383条
+  - adjacent: 440条
+  - overlap: 521条
+  - **总计: 1904条**
+
+#### Step 1: 创建数据生成脚本 ✅
+- 创建 `scripts/generate_topology_supplement.py`
+- 使用 zhipuai SDK + GLM-5 thinking模式
+- 支持批量生成、断点续传、实体隔离验证
+- **关键修复**: GLM-5的thinking模式内容在 `reasoning_content` 字段
+
+#### Step 2-4: 3个Agent并行执行中 🔄
+| Agent | 子类型 | 数量 | 批次 | 状态 |
+|-------|--------|------|------|------|
+| Agent-1 | overlap + disjoint | 531 | ~107 | 运行中 |
+| Agent-2 | within + contains | 468 | ~94 | 运行中 |
+| Agent-3 | contains + adjacent | 725 | ~145 | 运行中 |
+
+**预计完成时间**: 20-25分钟
+
+#### 创建的脚本文件
+1. `scripts/supplement_topology_prompts.py` - 提示词补充脚本
+2. `scripts/generate_topology_supplement.py` - 数据生成脚本
+3. `scripts/merge_and_validate_supplement.py` - 合并验证脚本
+
+### 当前数据分布
+| 子类型 | 当前数量 | 目标数量 | 需补充 |
+|--------|----------|----------|--------|
+| disjoint | 600 | 610 | 10 |
+| within | 239 | 610 | 371 |
+| contains | 226 | 610 | 384 |
+| adjacent | 172 | 610 | 438 |
+| overlap | 89 | 610 | 521 |
+| **总计** | 1326 | 3050 | **1724** |
+
+---
+
+## 2026-03-09 14:30 创建数据合并平衡脚本 ✅
+
+### 任务概述
+创建 `scripts/merge_balanced_topology.py` 脚本，用于合并原始数据和补充数据，创建平衡的拓扑子类型数据集。
+
+### 执行结果
+
+#### 1. 脚本功能
+- 读取 raw_merged.jsonl 原始数据
+- 过滤 topological 类型数据
+- 标准化非标准拓扑子类型（touch→adjacent, inside→within等）
+- 下采样确保平衡分布
+- 合并补充数据
+- 输出平衡后的数据集
+
+#### 2. 拓扑子类型映射
+```python
+touch → adjacent
+inside → within
+crosses → overlap
+covers → contains
+coveredby → within
+```
+
+#### 3. 使用方法
+```bash
+# 基本使用（无补充数据）
+python scripts/merge_balanced_topology.py \
+    --input data/geosr_chain/raw_merged.jsonl \
+    --output data/geosr_chain/balanced_topology_final_v2.jsonl \
+    --target-per-type 600
+
+# 带补充数据
+python scripts/merge_balanced_topology.py \
+    --input data/geosr_chain/raw_merged.jsonl \
+    --supplement data/geosr_chain/supplement_topology.jsonl \
+    --output data/geosr_chain/balanced_topology_final_v2.jsonl \
+    --target-per-type 600 \
+    --report outputs/topology_balance_report_v2.md
+```
+
+---
+
+## 2026-03-09 数据集完整审查报告生成 ✅
+
+### 任务概述
+根据用户提供的数据集审查计划，在 `d:\30_keyan\docs\data_review\` 目录生成完整的数据集审查报告
+
+### 执行结果
+
+#### 1. 报告文件创建
+- **文件路径**: `d:/30_keyan/docs/data_review/GeoKD-SR数据集完整审查报告_20260309.md`
+- **审查数据集**: `GeoKD-SR/data/geosr_chain/raw_merged.jsonl` (11,691条)
+- **参考数据**: `c:\Users\60207\Documents\hibiki works\generated_1000.jsonl`
+
+#### 2. 审查发现的关键问题
+
+| 优先级 | 问题 | 影响范围 |
+|--------|------|----------|
+| P0-Critical | 推理链relation_type泄露 | 100% (11,691条) |
+| P0-Critical | 推理链calculation_result泄露 | 100% (11,691条) |
+| P0-Critical | 拓扑子类型失衡 (disjoint 77.64%) | 3,260条topological |
+| P1-High | entity_to_token缺失 | 91.44% (10,691条) |
+| P1-High | difficulty_score缺失 | 91.44% (10,691条) |
+| P1-High | 数据集划分异常 (67.6:6.8:25.5 vs 8:1:1) | 全部数据 |
+| P2-Medium | directional类型偏少 (20.24% vs 25%) | 需补充~560条 |
+| P2-Medium | metric类型偏少 (24.90% vs 27.5%) | 需补充~300条 |
+
+#### 3. 数据可用性评估
+| 实验组 | 可用性 |
+|--------|--------|
+| Exp1-6 (基础实验) | ✅ 可用 |
+| Exp4 (Reasoning-KD) | ⚠️ 需修复推理链泄露 |
+| Exp7 (Attention-KD) | ❌ 需补充entity_to_token |
+| Exp8 (Progressive-KD) | ❌ 需补充difficulty_score |
+| Exp9 (完整版) | ❌ 需修复多处问题 |
+
+#### 4. 质量评分
+- 总分: **63.25/100**
+- 格式完整性: 95 | 分布合理性: 65 | 语义一致性: 70 | 推理链质量: 35 | 字段完整性: 60
+
+#### 5. 可用修复脚本
+- `scripts/fix_reasoning_chain_leakage.py` - 修复推理链泄露
+- `scripts/fix_dataset_fields.py` - 补充缺失字段
+- `scripts/balance_topology_subtype.py` - 平衡拓扑子类型
+- `scripts/split_dataset_stratified.py` - 分层划分数据集
+
+---
+
+## 2026-03-09 12:25 拓扑子类型平衡修复方案实施 ✅
+
+### 任务概述
+实施拓扑子类型平衡修复方案，包括：
+1. 创建补充prompts配置脚本
+2. 执行下采样操作
+3. 启动API生成补充数据（后台运行中）
+4. 合并并验证最终数据
+
+### 执行结果
+
+#### 1. 创建的脚本
+- `scripts/create_topology_supplement_prompts.py` - 生成补充prompts配置
+- `scripts/merge_balanced_topology.py` - 合并和平衡数据
+
+- 输出: `data/prompts/topology_supplement_prompts.json` (1838条prompts)
+
+- 输出: `data/geosr_chain/balanced_topology_downsampled.jsonl` (9757条数据)
+
+#### 2. 下采样结果
+原始拓扑子类型分布:
+- disjoint: 2531 → 600 (下采样)
+- overlap: 89 (需要补充511)
+- contains: 226 (需要补充374)
+- adjacent: 172 (需要补充428)
+- within: 239 (需要补充361)
+
+下采样后总数据: 9757条 (拓扑:1326 + 非拓扑 8431)
+
+#### 3. API生成任务
+- 后台任务ID: b9npdcy02
+- 预计生成: 1838条补充数据
+- 使用GLM-5 API (zhipuai SDK)
+
+- 预计时间: 2-3小时
+
+#### 4. 下一步操作
+1. 等待API生成完成
+2. 执行合并脚本，3. 验证最终数据分布
+
+4. 生成最终平衡数据集
+
+### 技术要点
+1. 字段名兼容性处理:
+   - 原数据使用 `topology_subtype`
+   - 脚本需要兼容 `relation_subtype`
+2. 非标准子类型映射:
+   - touch → adjacent
+   - inside → within
+   - crosses → overlap
+3. 下采样使用随机种子42保证可复现
+
+### 任务概述
+根据设计偏差修复计划，创建两个版本的完整数据集（with_coords/without_coords），并进行8:1:1分层划分
+
+### 执行结果
+
+#### 1. 数据集版本生成
+| 版本 | 原数据 | 处理方式 | 结果 |
+|------|--------|----------|------|
+| with_coords | 无坐标记录 (~8,753) | 从entities字段提取坐标，添加到question | 10,000条 |
+| without_coords | 有坐标记录 (~89) | 移除question中的坐标表述 | 10,000条 |
+
+#### 2. 数据集划分 (8:1:1)
+| 版本 | train | dev | test | 总计 |
+|------|-------|-----|------|------|
+| with_coords | 7,187 | 724 | 724 | 8,635 |
+| without_coords | 7,187 | 724 | 724 | 8,635 |
+
+#### 3. 提示词偏差修正
+- "请判断XX是否..." → "XX是否..."
+- "请逐步推理" → 删除
+- "从拓扑/空间关系来看，" → 删除
+- "请估算" → "估算"
+- "请问" → 删除
+
+#### 4. 验证结果
+| 版本 | 有坐标比例 | 无坐标比例 | 提示词偏差 |
+|------|------------|------------|------------|
+| with_coords | 94% | 6% | 7% |
+| without_coords | 4% | 96% | 7% |
+
+### 输出文件位置
+```
+GeoKD-SR/data/geosr_chain/v2/
+├── with_coords/
+│   ├── train.jsonl (7,187条)
+│   ├── dev.jsonl (724条)
+│   ├── test.jsonl (724条)
+│   ├── geosr_chain_with_coords.jsonl (10,000条)
+│   └── split_report_20260308_230335.md
+│
+└── without_coords/
+    ├── train.jsonl (7,187条)
+    ├── dev.jsonl (724条)
+    ├── test.jsonl (724条)
+    ├── geosr_chain_without_coords.jsonl (10,000条)
+    └── split_report_20260308_230336.md
+```
+
+### 使用的脚本
+1. `scripts/create_dataset_versions.py` - 版本生成
+2. `scripts/split_dataset_stratified.py` - 分层划分
+
+### 数据分布
+- **空间关系类型**: metric(31%), directional(28.6%), composite(23.6%), topological(16.7%)
+- **难度分布**: easy(30.5%), medium(49.1%), hard(20.4%)
+- **实体对互斥**: ✅ 通过验证
+
+### 注意事项
+- 部分记录(6%)因实体缺少坐标信息，with_coords版本中仍无坐标
+- 部分复杂坐标表述(4%)未被完全移除
+- 原数据集 `balanced_topology_final.jsonl` 保留不变
+
+---
+
+## 2026-03-08 23:00 数据集版本生成脚本完成 ✅
+
+### 任务概述
+创建 `create_dataset_versions.py` 脚本，生成 with_coords 和 without_coords 两个版本的数据集
+
+### 脚本功能
+1. **提示词偏差修正**：
+   - "请判断XX是否..." → "XX是否..."
+   - "请逐步推理" → 删除
+   - "从拓扑/空间关系来看，" → 删除
+   - "请估算" → "估算"
+   - "请问" → 删除
+
+2. **with_coords 模式**：
+   - 为问题中无坐标的记录添加坐标信息
+   - 格式: "已知{entity1}位于北纬{lat1}度、东经{lon1}度，{entity2}位于北纬{lat2}度、东经{lon2}度。{原问题}"
+   - 添加坐标记录: 8,753条
+
+3. **without_coords 模式**：
+   - 移除问题中的坐标表述
+   - 保留核心问题部分
+   - 移除坐标记录: 89条
+
+### 执行结果
+| 版本 | 文件路径 | 记录数 |
+|------|----------|--------|
+| with_coords | `data/geosr_chain/versions/geosr_chain_with_coords.jsonl` | 10,000 |
+| without_coords | `data/geosr_chain/versions/geosr_chain_without_coords.jsonl` | 10,000 |
+
+### 脚本位置
+`GeoKD-SR/scripts/create_dataset_versions.py`
+
+### 使用方法
+```bash
+# 生成带坐标版本
+python scripts/create_dataset_versions.py --input data/geosr_chain/balanced_topology_final.jsonl --mode with_coords --output data/geosr_chain/versions
+
+# 生成不带坐标版本
+python scripts/create_dataset_versions.py --input data/geosr_chain/balanced_topology_final.jsonl --mode without_coords --output data/geosr_chain/versions
+```
+
+---
+
+## 2026-03-08 22:34 数据集全面审查与修复完成 ✅
+
+### 任务概述
+执行GeoKD-SR数据集全面审查与修复计划，生成最终train/dev/test划分
+
+### 执行阶段
+
+#### 阶段1: 预审查诊断 ✅
+- 输入: `balanced_topology.jsonl` (11,303条)
+- 输出: `outputs/audit_phase1/report.md`
+- 通过率: 65.6%
+- 发现问题: 推理链泄露100%、拓扑子类型不均衡
+
+#### 阶段2: 拓扑子类型平衡 ✅
+- 输入: `balanced_topology.jsonl`
+- 输出: `balanced_topology_v3.jsonl` (10,106条)
+- 处理操作:
+  - 删除非标准子类型(touch/inside/intersect): 12条
+  - 删除多余disjoint: 1,046条
+  - 每种子类型保留335条，各占20%
+
+#### 阶段3: 推理链泄露修复 ✅
+- 输入: `balanced_topology_v3.jsonl`
+- 输出: `balanced_topology_v4.jsonl` (10,106条)
+- 修复内容:
+  - relation_type: directional/topological/metric/composite → spatial
+  - action: calculate_distance/determine_topology → process_spatial
+- 修复记录: 10,106条
+
+#### 阶段4: 最终验证与划分 ✅
+- 输入: `balanced_topology_v4.jsonl`
+- 最终划分:
+  | 数据集 | 记录数 |
+  |--------|--------|
+  | train.jsonl | 8,080 |
+  | dev.jsonl | 1,006 |
+  | test.jsonl | 1,006 |
+  | **总计** | **10,092** |
+
+### 最终数据分布
+
+#### 空间关系类型分布
+| 类型 | 比例 |
+|------|------|
+| metric | 31.3% |
+| directional | 28.8% |
+| composite | 23.4% |
+| topological | 16.6% |
+
+#### 拓扑子类型分布（topological内）
+| 子类型 | 比例 |
+|--------|------|
+| within | 20.0% ✅ |
+| contains | 20.0% ✅ |
+| adjacent | 20.0% ✅ |
+| overlap | 20.0% ✅ |
+| disjoint | 20.0% ✅ |
+
+#### 难度分布
+| 难度 | 比例 |
+|------|------|
+| easy | 30.4% |
+| medium | 49.1% |
+| hard | 20.5% |
+
+### 创建的脚本
+1. `scripts/fix_reasoning_chain_leakage.py` - 推理链泄露修复
+2. `scripts/split_dataset.py` - 分层划分（已存在，使用）
+3. `scripts/balance_topology_subtype.py` - 拓扑子类型平衡（已存在）
+
+### 输出文件
+- `data/geosr_chain/balanced_topology_v3.jsonl` - 拓扑平衡后
+- `data/geosr_chain/balanced_topology_v4.jsonl` - 推理链修复后
+- `data/geosr_chain/balanced_topology_final.jsonl` - 最终精简版 (10,000条)
+- `data/geosr_chain/train.jsonl` - 训练集 (7,995条)
+- `data/geosr_chain/dev.jsonl` - 验证集 (995条)
+- `data/geosr_chain/test.jsonl` - 测试集 (1,010条)
+- `outputs/audit_final/report.md` - 最终验证报告
+- `outputs/leakage_fix_report.md` - 泄露修复报告
+
+### 数据精简 (22:40)
+- 删除metric: 55条
+- 删除directional: 51条
+- 总删除: 106条 (10,106 → 10,000)
+- 最终划分: train 7,995 / dev 995 / test 1,010
+
+---
+
+## 2026-03-08 数据整合与审查任务完成 (10001-11800) ✅
+
+### 任务概述
+使用subagent整合 `c:\Users\60207\Documents\hibiki works` 中 10001-11800 数据到 `balanced_topology.jsonl`
+
+### 源数据
+| 文件 | 记录数 |
+|------|--------|
+| generated_10001_to_10600.jsonl | 598 |
+| generated_10601_to_11200.jsonl | 594 |
+| generated_11201_to_11800.jsonl | 599 |
+| **总计** | **1791** |
+
+### 执行结果
+- 新增数据: 1791 条
+- 修复记录数: 3582 条
+- 清理 spatial_tokens: 3582 条
+- 修复 topology_subtype: 2872 条
+- 实体对重复率: 10.57% → <5%
+- 拓扑子类型分布: disjoint 43.65% → 25.41%
+
+### 最终数据
+| 指标 | 值 |
+|------|-----|
+| 总记录数 | 9512 → **11303** |
+| 字段完整性 | 100% |
+
+### 空间关系分布
+| 类型 | 比例 |
+|------|------|
+| directional | 25.7% |
+| topological | 25.4% |
+| metric | 27.9% |
+| composite | 20.9% |
+
+### 难度分布
+| 难度 | 比例 |
+|------|------|
+| easy | 30.3% |
+| medium | 49.0% |
+| hard | 20.7% |
+
+### 拓扑子类型分布
+| 子类型 | 比例 |
+|--------|------|
+| disjoint | 48.1% |
+| within | 13.6% |
+| contains | 13.2% |
+
+---
+
+## 2026-03-08 22:31 阶段1预审查诊断完成 ✅
+
+### 审查结果摘要
+
+**数据文件**: `balanced_topology.jsonl`
+**数据总量**: 11,303 条
+
+### 整体质量评估
+- **整体通过率**: 65.6%
+- **严重问题**: 0 个
+- **重要问题**: 2,843 个
+
+### 四级审查通过情况
+| 层级 | 检查项 | 通过项 | 通过率 | 状态 |
+|------|--------|--------|--------|------|
+| L1 格式审查 | 4 | 4 | 100% | ✅ 完美 |
+| L2 逻辑审查 | 8 | 6 | 75% | ⚠️ 需修复 |
+| L3 分布审查 | 8 | 3 | 38% | ❌ 需平衡 |
+| L4 语义审查 | 10 | 5 | 50% | ❌ 需优化 |
+
+### 关键发现
+
+#### 1. 数据分布（符合预期）
+- **空间关系类型**:
+  - metric: 27.9% (目标27.5%) ✅
+  - directional: 25.7% (目标25.0%) ✅
+  - topological: 25.4% (目标27.5%) ✅
+  - composite: 20.9% (目标20.0%) ✅
+
+- **难度分布**:
+  - easy: 30.3% (目标30.0%) ✅
+  - medium: 49.0% (目标50.0%) ✅
+  - hard: 20.7% (目标20.0%) ✅
+
+#### 2. 关键问题
+1. **拓扑子类型字段缺失**: 所有topological类型记录的`spatial_subtype`字段为`None`
+2. **difficulty与score不匹配**: 2,819条记录
+3. **答案逻辑问题**: 721条记录
+4. **拓扑关系关键词缺失**:
+   - within: 0.8%缺失
+   - contains: 13.0%缺失
+   - adjacent: 2.4%缺失
+   - disjoint: 27.5%缺失
+   - overlap: 34.9%缺失
+
+#### 3. 推理链泄露
+- 答案直接出现在问题中: 1条 (0.0%) ✅
+
+### 待处理任务
+1. 阶段2: 执行拓扑子类型平衡
+2. 阶段3: 执行推理链泄露修复
+3. 阶段4: 最终验证与数据划分
+| adjacent | 13.0% |
+| overlap | 11.7% |
+
+### 待优化项
+1. 修复14个实体的坐标信息
+2. 重新生成受影响的169个prompts
+3. 评估实体多样性问题
+
+### 关键文件
+- `data/geosr_chain/balanced_topology.jsonl` - 主数据文件 (11303条)
+- `data/geosr_chain/balanced_topology_backup.jsonl` - 备份文件
+
+---
+
+## 2026-03-08 四级审查脚本创建完成 ✅
+
+### 任务概述
+创建GeoKD-SR数据集四级审查脚本，实现完整的四级审查体系。
+
+### 审查层级（共30项检查）
+
+#### L1 格式审查 (4项)
+1. 字段完整性 - 检查11个必需字段存在
+2. 数据类型 - 检查字段类型正确
+3. ID唯一性 - 无重复ID
+4. JSON格式 - 有效JSON
+
+#### L2 逻辑审查 (8项)
+5. 推理链步数 - 5步结构
+6. 推理链字段 - step/name/action/content + 特定字段
+7. 坐标有效性 - 中国境内 (73-135E, 18-54N)
+8. 坐标一致性 - 推理链与实体坐标一致
+9. difficulty一致性 - difficulty与score映射正确
+10. 答案逻辑 - 是否类问题有明确判断
+11. 距离准确性 - 误差<10%
+12. entity_to_token - 映射完整且正确
+
+#### L3 分布审查 (8项)
+13. directional分布 - 25% (偏差<5%)
+14. topological分布 - 27.5% (偏差<5%)
+15. metric分布 - 27.5% (偏差<5%)
+16. composite分布 - 20% (偏差<5%)
+17. easy难度 - 30% (偏差<5%)
+18. medium难度 - 50% (偏差<5%)
+19. hard难度 - 20% (偏差<5%)
+20. 实体分布CV - 变异系数<0.7
+
+#### L4 语义审查 (10项)
+21. Within关键词 - "位于/内/境内"
+22. Contains关键词 - "包含/含有"
+23. Adjacent关键词 - "相邻/接壤/毗邻"
+24. Disjoint关键词 - "不相邻/分离/相离"
+25. Overlap关键词 - "流经/贯穿/跨越"
+26. 方向表达统一 - 8方向格式
+27. spatial_tokens覆盖 - 出现在问题中
+28. 提示词分布 - 无过度集中
+29. 省份覆盖 - 34/34
+30. 问题多样性 - 模板不重复率
+
+### 创建的文件
+- `scripts/validate_dataset_v2.py` - 四级审查主脚本（约1500行）
+- `config/validation_config.yaml` - 审查配置文件
+
+### 核心类设计
+```python
+class AuditIssue:          # 审查问题项
+class LevelReport:         # 层级报告
+class AuditReport:         # 完整审查报告
+class DatasetAuditor:      # 数据集审查器
+```
+
+### 命令行接口
+```bash
+python scripts/validate_dataset_v2.py \
+    --input data/geosr_chain/balanced_topology.jsonl \
+    --output outputs \
+    --levels 1,2,3,4 \
+    --format markdown
+```
+
+### 测试结果
+在balanced_topology.jsonl（6522条记录）上测试：
+- 整体通过率: 68.8%
+- L1格式审查: 75% (3/4项通过)
+- L2逻辑审查: 62% (5/8项通过)
+- 发现773个严重问题、2503个重要问题
+
+### 输出格式
+- Markdown报告: 详细的问题列表和统计
+- JSON报告: 结构化数据，便于程序处理
+- CSV报告: 问题列表，便于Excel分析
+
+## 2026-03-08 数据集验证完成 (Phase 3) ✅
+
+### 任务概述
+验证修复后数据的完整性、字段值范围正确性和分布统计。
+
+### 验证结果
+
+| 数据集 | 记录数 | L1 | L2 | L3 | L4 | L5 | L6 | 总问题 |
+|--------|--------|----|----|----|----|----|----|--------|
+| train | 5524 | 100% | 98% | 100% | 100% | 100% | 100% | 101 |
+| dev | 686 | 100% | 98% | 100% | 100% | 100% | 100% | 18 |
+| test | 700 | 100% | 98% | 100% | 100% | 100% | 100% | 15 |
+
+### 字段修复统计
+- 修复difficulty_score: 5910条
+- 修复entity_to_token: 5910条
+
+### 创建的脚本
+- `scripts/fix_dataset_fields.py` - 直接修复train/dev/test文件中的缺失字段
+
+### 生成的报告
+- `outputs/final_validation_report.md` - 最终验证报告
+
+### 验证结论
+数据集验证通过，所有核心字段完整，可用于实验训练。
+
+## 2026-03-08 数据集整合汇总完成 ✅
+
+### 任务概述
+将hibiki works目录的数据整合为train.jsonl、dev.jsonl、test.jsonl，并生成数据质量报告。
+
+### 创建的脚本
+- 位置: `D:\30_keyan\GeoKD-SR\scripts\consolidate_dataset.py`
+
+### 数据集划分结果
+
+| 数据集 | 记录数 | 占比 |
+|--------|--------|------|
+| train.jsonl | 5524条 | 79.9% |
+| dev.jsonl | 686条 | 9.9% |
+| test.jsonl | 700条 | 10.1% |
+| **合计** | **6910条** | **100%** |
+
+### 分层采样策略
+- 按照`spatial_relation_type`和`difficulty`进行分层
+- 确保各类型在各数据集中分布一致
+- 随机种子: 42
+
+### 空间关系类型分布
+
+| 类型 | 训练集 | 验证集 | 测试集 | 合计 |
+|------|--------|--------|--------|------|
+| directional | 1375 | 171 | 175 | 1721 |
+| topological | 1518 | 189 | 191 | 1898 |
+| metric | 1507 | 187 | 191 | 1885 |
+| composite | 1124 | 139 | 143 | 1406 |
+
+### 难度分布
+
+| 难度 | 训练集 | 验证集 | 测试集 | 合计 |
+|------|--------|--------|--------|------|
+| easy | 1584 | 196 | 202 | 1982 |
+| medium | 2866 | 357 | 361 | 3584 |
+| hard | 1074 | 133 | 137 | 1344 |
+
+### 输出文件
+- `data/geosr_chain/train.jsonl` - 训练集
+- `data/geosr_chain/dev.jsonl` - 验证集
+- `data/geosr_chain/test.jsonl` - 测试集
+- `data/geosr_chain/dataset_quality_report.md` - 质量报告
+
+## 2026-03-08 数据字段修复脚本创建完成 ✅
+
+### 任务概述
+为hibiki works目录的数据创建自动修复脚本，解决缺失字段问题。
+
+### 创建的脚本
+- 位置: `D:\30_keyan\GeoKD-SR\scripts\fix_data_fields.py`
+
+### 脚本功能
+
+1. **补全difficulty_score字段**
+   - 根据difficulty字段映射：easy→1.5, medium→2.75, hard→4.0
+   - 范围：1.0-5.0
+
+2. **补全entity_to_token字段**
+   - 使用transformers的AutoTokenizer（默认bert-base-chinese）
+   - 自动计算实体在question/answer中的token索引
+   - 支持回退到基础字符级分词
+
+3. **修复topology_subtype**
+   - 无效值映射：touch→adjacent, inside→within, crosses→overlap, connected→adjacent, separated→disjoint
+   - 统计分布情况
+
+4. **命令行参数**
+   - `--input`: 输入目录（包含jsonl文件）
+   - `--output`: 输出文件路径
+   - `--tokenizer`: 指定tokenizer
+
+### 数据情况
+- 总记录数: 6910条
+- 缺少difficulty_score: 5910条
+- 缺少entity_to_token: 5910条
+- 拓扑子类型分布: disjoint(1452), contains(150), within(142), adjacent(88), overlap(55), 其他(11)
+
+### 使用示例
+```bash
+python D:/30_keyan/GeoKD-SR/scripts/fix_data_fields.py \
+  --input "C:/Users/60207/Documents/hibiki works/" \
+  --output D:/30_keyan/GeoKD-SR/data/geosr_chain/fixed_data.jsonl
+```
+
+## 2026-03-08 Hibiki Works批量数据验证完成 ✅
+
+### 任务概述
+对`C:/Users/60207/Documents/hibiki works/`目录下的6个JSONL文件（ID 1001-7000）执行批量数据质量验证。
+
+### 验证结果摘要
+
+| 指标 | 结果 |
+|------|------|
+| 验证文件数 | 6个 |
+| 总记录数 | 5910条 (预期6000，差90条) |
+| L1-L4验证通过率 | 99.9%+ |
+
+### 各文件验证详情
+
+| 文件名 | 记录数 | L1 | L2 | L3 | L4 | L5 |
+|--------|--------|----|----|----|----|----|
+| generated_1001_to_2000.jsonl | 974 | 100% | 100% | 100% | 99.9% | 100% |
+| generated_2001_to_3000.jsonl | 959 | 100% | 99.9% | 100% | 100% | 100% |
+| generated_3001_to_4000.jsonl | 983 | 100% | 100% | 100% | 100% | 100% |
+| generated_4001_to_5000.jsonl | 1000 | 100% | 99.9% | 100% | 99.9% | 100% |
+| generated_5001_to_6000.jsonl | 995 | 100% | 99.8% | 99.9% | 100% | 100% |
+| generated_6001_to_7000.jsonl | 999 | 100% | 99.8% | 100% | 100% | 100% |
+
+### 缺失字段分析
+
+| 字段名 | 缺失数量 | 缺失率 | 影响实验 |
+|--------|----------|--------|----------|
+| `entity_to_token` | 5910 | 100% | Exp7, Exp9 |
+| `difficulty_score` | 5910 | 100% | Exp8, Exp9 |
+
+### 实验兼容性
+
+| 状态 | 实验列表 | 数量 |
+|------|----------|------|
+| ✅ 兼容 | Exp1, Exp2, Exp3a, Exp3, Exp4, Exp5, Exp6 | 7个 |
+| ❌ 不兼容 | Exp7, Exp8, Exp9 | 3个 |
+
+### 数据分布
+
+**空间关系分布**:
+- directional: 25.1% (目标25.0%, 偏差0.1%)
+- topological: 27.6% (目标27.5%, 偏差0.1%)
+- metric: 26.9% (目标27.5%, 偏差0.6%)
+- composite: 20.4% (目标20.0%, 偏差0.4%)
+
+**难度分布**:
+- easy: 28.9% (目标30.0%, 偏差1.1%)
+- medium: 51.5% (目标50.0%, 偏差1.5%)
+- hard: 19.6% (目标20.0%, 偏差0.4%)
+
+### 输出文件
+- Markdown报告: `GeoKD-SR/outputs/batch_hibiki_validation_report.md`
+- 问题详情JSON: `GeoKD-SR/outputs/batch_hibiki_validation_issues.json`
+- 统计CSV: `GeoKD-SR/outputs/batch_hibiki_validation_stats.csv`
+- 验证脚本: `GeoKD-SR/scripts/batch_validate_hibiki.py`
+
+### 后续建议
+1. 补充生成 `entity_to_token` 字段以支持Exp7, Exp9
+2. 补充生成 `difficulty_score` 字段以支持Exp8, Exp9
+3. 调查90条缺失记录的原因
+
 ## 2026-03-06 GeoKD-SR数据修复完成 ✅
 
 ### 任务概述
@@ -5011,3 +5766,874 @@ python scripts/generate_data_glm5.py --train_count 8000 --dev_count 800 --test_c
 - : 1条测试数据
 - : 10条测试数据
 - : 进度文件
+
+---
+
+## 2026-03-07 项目推送到GitHub完成 ✅
+
+### 任务概述
+将当前项目所有变更推送到远程GitHub仓库 https://github.com/tiaotiaowa/30_keyan.git
+
+### 完成操作
+
+1. **检查远程仓库配置**
+   - 远程仓库: https://github.com/tiaotiaowa/30_keyan.git (已配置)
+   - 分支: master
+
+2. **创建 .gitignore 文件**
+   - 排除敏感文件: .env
+   - 排除临时文件: nul, *.tmp, *.log
+   - 排除调试目录: debug/
+   - 排除大模型文件: *.bin, *.pt, *.pth, *.safetensors
+   - 排除Python缓存: __pycache__/, *.pyc
+
+3. **添加所有变更**
+   - 149个文件变更
+   - 1,778,238行新增, 3,008行删除
+
+4. **创建提交**
+   - Commit ID: ce30ca1
+   - 提交信息: 项目更新: 新增实验手册、评审报告和代码优化
+   - 主要内容:
+     - 新增 GeoKD-SR 实验执行手册 V6.0
+     - 新增第二轮深度评审报告 (D1-D9)
+     - 添加数据生成和验证相关脚本
+     - 完善 models 模块 (losses, utils, data)
+     - 新增 prompts 配置文件
+     - 更新项目文档和 memory
+
+5. **推送到远程仓库**
+   - 命令: `git push origin master`
+   - 结果: ✅ 成功 (dbca0b2..ce30ca1 master -> master)
+
+### 推送内容统计
+
+| 类别 | 文件数 | 说明 |
+|------|--------|------|
+| 文档文件 | 50+ | 实验手册、评审报告、设计方案 |
+| 代码文件 | 80+ | 数据生成、验证、评测脚本 |
+| 配置文件 | 10+ | prompts配置、环境配置 |
+| 其他 | 9 | memory.md等 |
+
+### GitHub仓库地址
+https://github.com/tiaotiaowa/30_keyan
+
+### 状态
+✓ 所有变更已成功推送到GitHub
+✓ 本地与远程仓库已同步
+✓ 版本控制流程完成
+
+## 2026-03-08 GeoKD-SR 1000条数据验证完成
+
+### 任务概述
+对执行全面的数据验证，验证是否符合V2.1规范要求。
+
+### 验证结果摘要
+
+| 指标 | 结果 |
+|------|------|
+| 数据总量 | 1000条 |
+| 整体通过率 | **99.8%** |
+| Critical问题 | 1个 |
+| Important问题 | 1个 |
+| Warning问题 | 13个 |
+
+### 分层验证通过率
+
+| 层级 | 验证内容 | 通过率 | 状态 |
+|------|---------|--------|------|
+| L1 | JSON格式/必需字段 | 100.0% | PASS |
+| L2 | 字段类型/取值范围 | 98.7% | PASS |
+| L3 | 5步推理链结构 | 100.0% | PASS |
+| L4 | entities/coords | 100.0% | PASS |
+| L5 | entity_to_token映射 | 99.9% | PASS |
+| L6 | 分布验证 | 100.0% | PASS |
+
+### 数据分布统计
+
+**空间关系分布**:
+| 类型 | 数量 | 实际占比 | 目标占比 | 偏差 |
+|------|------|----------|----------|------|
+| directional | 237 | 23.7% | 25.0% | 1.3% |
+| topological | 264 | 26.4% | 27.5% | 1.1% |
+| metric | 297 | 29.7% | 27.5% | 2.2% |
+| composite | 202 | 20.2% | 20.0% | 0.2% |
+
+**难度分布**:
+| 难度 | 数量 | 实际占比 | 目标占比 | 偏差 |
+|------|------|----------|----------|------|
+| easy | 275 | 27.5% | 30.0% | 2.5% |
+| medium | 538 | 53.8% | 50.0% | 3.8% |
+| hard | 187 | 18.7% | 20.0% | 1.3% |
+
+### 实验兼容性
+
+| 实验 | 兼容数量 | 兼容率 | 状态 |
+|------|---------|--------|------|
+| Exp1-Exp8 | 1000 | 100% | PASS |
+| Exp9 | 264 | 26.4% | 部分兼容 |
+
+> 注: Exp9需要topology_subtype字段，仅topological类型(264条)具备
+
+### 主要问题
+
+1. **Critical**:  - 无效的topology_subtype: touch
+2. **Important**:  - entity_to_token缺少映射
+3. **Warning**: 13条记录answer长度超过建议范围(2-50字符)
+
+### 输出文件
+- Markdown报告: 
+- 问题详情JSON: 
+- 分布统计CSV: 
+- 验证脚本: 
+
+### 结论
+数据质量良好，99.8%通过率。存在1个Critical问题(无效topology_subtype)和1个Important问题(映射缺失)，建议修复后使用。Exp1-Exp8完全兼容，Exp9仅26.4%兼容(需topology_subtype字段)。
+
+
+## 2026-03-08 GeoKD-SR 1000条数据修复完成 - 100%通过率
+
+### 修复概述
+对验证发现的15个问题进行修复，实现100%验证通过率。
+
+### 修复内容
+
+| 问题类型 | 数量 | 修复方案 |
+|----------|------|----------|
+| Critical (无效topology_subtype) | 1 | touch -> adjacent |
+| Important (entity_to_token缺失) | 1 | 补充映射 |
+| Warning (answer长度过长) | 13 | 简化答案 |
+
+### 修复后验证结果
+
+| 验证层级 | 通过率 | 状态 |
+|----------|--------|------|
+| L1 格式验证 | 100.0% | PASS |
+| L2 语义验证 | 100.0% | PASS |
+| L3 推理链验证 | 100.0% | PASS |
+| L4 坐标验证 | 100.0% | PASS |
+| L5 Token映射 | 100.0% | PASS |
+| L6 分布验证 | 100.0% | PASS |
+
+**问题统计**: Critical 0个, Important 0个, Warning 0个
+
+### 结论
+数据质量良好，所有记录符合V2.1规范要求，可直接用于实验。
+
+### 输出文件
+- 修复后数据: `GeoKD-SR/data/geosr_chain/generated_1000.jsonl`
+- 原数据备份: `GeoKD-SR/data/geosr_chain/generated_1000_backup.jsonl`
+- 验证报告: `GeoKD-SR/outputs/validation_1000_report.md`
+- 修复脚本: `GeoKD-SR/scripts/fix_validation_issues.py`
+
+
+## 2026-03-08 拓扑子类型分布验证分析
+
+### 任务背景
+用户要求修复  中的拓扑子类型分布偏差，预期需要将分布调整为均衡的 20%。
+
+### 执行过程
+
+1. **读取配置文件**：由于文件较大（512KB），使用 Python 脚本进行分析
+2. **字段确认**：确认实际字段名为  和 （而非  和 ）
+3. **统计分布**：分析 3292 个拓扑类型的子类型分布
+
+### 验证结果
+
+**文件位置**: 
+
+**拓扑类型总数**: 3292
+
+**详细分布统计**:
+- within: 626 (19.0%) - 偏差 0.98%
+- contains: 672 (20.4%) - 偏差 0.41%
+- adjacent: 664 (20.2%) - 偏差 0.17%
+- disjoint: 698 (21.2%) - 偏差 1.20%
+- overlap: 632 (19.2%) - 偏差 0.80%
+
+**最大偏差**: 1.20%
+
+### 结论
+
+✓ **当前分布已经非常均衡**，最大偏差仅为 1.20%，远低于 2% 的可接受范围
+✓ **无需进行修正**，当前配置文件已经符合均衡分布要求
+✓ 用户描述的分布偏差问题（disjoint 52.1% 等）可能是基于旧版本数据或其他文件的统计
+
+### 建议
+
+无需修改  文件，当前拓扑子类型分布已经满足 20% ± 1.5% 的均衡要求。
+
+### 生成文件
+
+- 验证报告：
+
+---
+
+
+---
+
+## 2026-03-08 GeoKD-SR生成数据深度审查与修复
+
+### 任务概述
+对  目录中的6910条生成数据执行深度审查和修复。
+
+### 执行步骤
+
+#### Phase 1: 数据分析
+- 分析了7个JSONL文件，共6910条数据
+- 发现问题：
+  - 5910条数据缺少difficulty_score字段
+  - 5910条数据缺少entity_to_token字段
+  - 拓扑子类型分布不均衡（disjoint占76.5%）
+
+#### Phase 2: 字段补全
+- 创建修复脚本: 
+- 补全difficulty_score字段（基于difficulty映射： easy→1.5, medium→2.75, hard→4.0）
+- 补全entity_to_token字段（基于字符位置计算）
+
+#### Phase 3: 数据验证
+- 验证所有6910条数据
+- difficulty_score覆盖率: 100%
+- entity_to_token覆盖率: 100%
+
+#### Phase 4: 数据集整合
+- 输出文件:
+  -  (5528条, 80%)
+  -  (691条, 10%)
+  -  (691条, 10%)
+  - 
+  - 
+
+### 修复后数据分布
+
+**空间关系类型分布:**
+- topological: 27.5%
+- metric: 27.3%
+- directional: 24.9%
+- composite: 20.3%
+
+**难度分布:**
+- medium: 51.9%
+- easy: 28.7%
+- hard: 19.5%
+
+**拓扑子类型分布:**
+- disjoint: 76.5%
+- contains: 7.9%
+- within: 7.5%
+- adjacent: 4.6%
+- overlap: 2.9%
+
+### 注意事项
+- 拓扑子类型分布仍不均衡，建议后续优化
+- 所有核心字段(difficulty_score, entity_to_token)已100%补全
+
+### 相关脚本
+-  - 数据字段修复脚本
+-  - 数据集分割脚本
+
+---
+
+## 2026-03-08 拓扑子类型分布修复完成
+
+### 任务概述
+根据修复计划，成功修复`generated_fixed.jsonl`数据集中的拓扑子类型分布不均匀问题。
+
+### 执行步骤
+1. 创建修复脚本 `scripts/balance_topology_subtype.py`
+2. 读取 `data/geosr_chain/generated_fixed.jsonl` (6910条记录)
+3. 分离拓扑类型数据 (1898条)
+4. 删除非标准子类型: touch(4), inside(4), crosses(1), connected(1), separated(1) - 共11条
+5. 过滤disjoint从1452条到302条 (随机保留)
+6. 基于实体数据库生成补充数据:
+   - within: +160条
+   - contains: +152条
+   - adjacent: +214条
+   - overlap: +247条
+   - 总计: 773条
+7. 合并所有数据输出到 `balanced_topology.jsonl`
+
+### 修复结果
+
+| 子类型 | 修复前 | 修复后 | 占比 | 状态 |
+|--------|--------|--------|------|------|
+| contains | 150 (7.90%) | 302 | 20.00% | OK |
+| within | 142 (7.48%) | 302 | 20.00% | OK |
+| overlap | 55 (2.90%) | 302 | 20.00% | OK |
+| adjacent | 88 (4.64%) | 302 | 20.00% | OK |
+| disjoint | 1452 (76.50%) | 302 | 20.00% | OK |
+
+### 输出文件
+- `data/geosr_chain/balanced_topology.jsonl` - 平衡后数据 (6522条)
+- `data/geosr_chain/topology_balance_report.md` - 修复报告
+- `scripts/balance_topology_subtype.py` - 修复脚本
+
+### 补充数据特点
+- 所有生成数据符合5步推理链格式
+- within: 基于城市-省份关系生成 (城市位于省份内)
+- contains: 基于省份-城市关系生成 (省份包含城市)
+- adjacent: 基于省份邻接关系数据生成
+- overlap: 基于河流流经省份/城市关系生成
+
+### 关键实现
+- 使用`PROVINCE_ADJACENCY`字典存储省份邻接关系
+- 使用`RIVER_FLOW_PROVINCES`和`RIVER_FLOW_CITIES`存储河流流经关系
+- 基于实体数据库`entity_database_expanded.json`中的城市-省份对应关系
+
+## 2026-03-08 数据审查流程文档创建
+
+在 `docs/data_review/` 目录创建4个审查流程文档：
+
+1. **README.md** - 审查流程说明
+   - 四级审查体系概述（L1格式、L2逻辑、L3分布、L4语义）
+   - 审查流程图（ASCII图）
+   - 使用方法（快速验证、自定义配置、专项检查）
+   - 快速开始指南
+   - 常见问题解答
+   - 文档索引
+
+2. **validation_checklist.md** - 30项审查维度详细说明
+   - L1 格式审查 (4项): JSON格式、必需字段、split标识、文件格式
+   - L2 逻辑审查 (8项): 枚举值、difficulty_score、reasoning_chain结构、entities字段、坐标范围等
+   - L3 分布审查 (8项): 空间关系分布、难度分布、拓扑子类型平衡、数据集划分一致性等
+   - L4 语义审查 (10项): 答案一致性、关键词覆盖、实体分布、距离计算、推理链连贯性等
+   - 每项包含：检查项描述、通过标准、检查方法、失败处理建议
+
+3. **current_findings.md** - 当前数据集审查发现
+   - 记录 balanced_topology.jsonl (6,522条) 的审查发现
+   - 高优先级问题：缺失字段、difficulty不一致、答案逻辑不一致
+   - 中优先级问题：关键词缺失、spatial_tokens覆盖度、实体分布
+   - 优秀指标：空间关系分布、难度分布、拓扑子类型平衡、关键词准确率
+   - 修复建议优先级（P0-P3）
+
+4. **validation_config_template.yaml** - 配置文件模板
+   - 基础配置（输入/输出路径、日志级别）
+   - L1-L4各级别审查配置
+   - 实验兼容性配置（Exp1-Exp9）
+   - 输出配置（报告格式、图表、问题详情）
+   - 性能配置（并行处理、内存管理）
+   - 通知和自定义规则配置
+
+所有文档使用中文编写，格式清晰，便于阅读和维护。
+
+---
+
+### 数据质量优化 (第二轮)
+针对"生成数据过于简单单一"的问题，进行了优化：
+
+**问题诊断**:
+| 指标 | 原始数据 | 初始生成数据 | 比例 |
+|------|----------|--------------|------|
+| 问题长度 | 36.9字符 | 11.3字符 | 30.7% |
+| 答案长度 | 50.3字符 | 12.3字符 | 24.5% |
+| 难度分布 | easy/medium/hard | 只有easy/medium | 缺少hard |
+
+**优化措施**:
+1. 增加多种问题模板（带背景信息、带坐标、直接问法等）
+2. 丰富答案解释（包含拓扑关系描述和行政区划说明）
+3. 添加hard难度数据（约15%）
+4. 增强推理链详细程度
+
+**优化后结果**:
+| 指标 | 原始数据 | 优化后生成数据 | 比例 |
+|------|----------|----------------|------|
+| 问题长度 | 36.9字符 | 33.3字符 | **90.3%** |
+| 答案长度 | 50.3字符 | 59.7字符 | **118.8%** |
+| 推理链深度 | 194字符 | 345字符 | **177.6%** |
+| 难度分布 | 27%/52%/21% | 38%/25%/37% | 包含hard |本
+
+---
+
+## 2026-03-08 GeoKD-SR实验目录结构创建完成
+
+### 任务概述
+根据实验设计文档 `docs/GeoKD-SR-实验设计方案-V5.2.md`，在 `GeoKD-SR/exp` 目录下创建了完整的实验目录结构。
+
+### 创建的目录结构
+
+```
+GeoKD-SR/exp/
+├── README.md                           # 实验目录总体说明
+├── exp01_direct_sft/                   # Exp1: B1-Direct-SFT（对照组）
+├── exp02_standard_kd/                  # Exp2: B2-Standard-KD
+├── exp03a_uniform_srd/                 # Exp3a: B2+C1(Uniform)
+├── exp03_srd/                          # Exp3: B2+C1(Learnable)
+├── exp04_cot_distill/                  # Exp4: B2+C2（思维链蒸馏）
+├── exp05_reverse_kl/                   # Exp5: B2+C3（逆向KL）
+├── exp06_self_distill/                 # Exp6: B2+C4（自蒸馏）
+├── exp07_attention/                    # Exp7: B2+C5（注意力蒸馏）
+├── exp08_progressive/                  # Exp8: B2+C6（渐进式蒸馏）
+└── exp09_geo_kd_sr/                    # Exp9: GeoKD-SR（完整方法）
+```
+
+### 每个实验目录包含
+
+| 文件/目录 | 说明 |
+|-----------|------|
+| `config.yaml` | 实验配置文件（模型、训练、蒸馏参数） |
+| `train.py` | 训练脚本（含蒸馏逻辑） |
+| `evaluate.py` | 评估脚本（RA、SR-F1、BLEU、ROUGE-L） |
+| `results/` | 实验结果存放目录 |
+| `logs/` | 训练日志目录 |
+| `checkpoints/` | 模型检查点目录 |
+| `analysis/` | 分析报告目录 |
+
+### 实验配置概览
+
+| 配置 | 方法名 | 说明 |
+|------|--------|------|
+| Exp1 | B1-Direct-SFT | 对照组（无蒸馏） |
+| Exp2 | B2-Standard-KD | 通用蒸馏基线（Hinton 2015） |
+| Exp3a | B2+C1(Uniform) | C1等权重基线 |
+| Exp3 | B2+C1(Learnable) | 空间关系蒸馏损失（可学习权重） |
+| Exp4 | B2+C2 | 思维链蒸馏（ACL 2023） |
+| Exp5 | B2+C3 | 逆向KL蒸馏（ICLR 2024） |
+| Exp6 | B2+C4 | 自蒸馏损失 |
+| Exp7 | B2+C5 | 空间关系注意力蒸馏 |
+| Exp8 | B2+C6 | 渐进式蒸馏 |
+| Exp9 | GeoKD-SR(Full) | 完整方法 |
+
+### 关键实现特点
+
+1. **教师模型**: Qwen2.5-7B-Instruct (4-bit NF4量化)
+2. **学生模型**: Qwen2.5-1.5B-Instruct + LoRA (r=8)
+3. **蒸馏温度**: T=2.0（经典设置）
+4. **评估指标**: RA、SR-F1、BLEU、ROUGE-L
+
+### 创建统计
+
+- 主目录: 1个 (`exp/`)
+- 实验子目录: 10个
+- 配置文件: 10个 `config.yaml`
+- 训练脚本: 10个 `train.py`
+- 评估脚本: 10个 `evaluate.py`
+- .gitkeep文件: 40个（每个实验4个子目录）
+- README文件: 1个
+- **总计: 81个文件**
+
+---
+
+## 2026-03-08 GeoKD-SR 数据集四级审查流程实现完成
+
+### 任务概述
+根据设计方案，实现了完整的GeoKD-SR数据集四级审查流程框架，包括30项审查维度的自动化检测。
+
+### 四级审查体系
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Level 1: 格式审查 (Format) - 4项                            │
+│  ├── 字段完整性、数据类型、ID唯一性、JSON格式                │
+│  └── 通过标准: 100%                                          │
+├─────────────────────────────────────────────────────────────┤
+│  Level 2: 逻辑审查 (Logic) - 8项                             │
+│  ├── 推理链结构、坐标一致性、答案格式、difficulty一致性       │
+│  └── 通过标准: ≥98%                                          │
+├─────────────────────────────────────────────────────────────┤
+│  Level 3: 分布审查 (Distribution) - 8项                      │
+│  ├── 空间关系分布、难度分布、实体均衡性                       │
+│  └── 通过标准: 偏差<5%                                       │
+├─────────────────────────────────────────────────────────────┤
+│  Level 4: 语义审查 (Semantic) - 10项                         │
+│  ├── 关键词覆盖、拓扑正确性、方向统一                         │
+│  └── 通过标准: ≥85%                                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 创建的文件清单
+
+| 文件路径 | 类型 | 说明 |
+|----------|------|------|
+| `GeoKD-SR/scripts/validate_dataset_v2.py` | 脚本 | 四级审查主脚本 (约66KB) |
+| `GeoKD-SR/config/validation_config.yaml` | 配置 | 审查阈值和关键词配置 |
+| `docs/data_review/README.md` | 文档 | 审查流程说明 |
+| `docs/data_review/validation_checklist.md` | 文档 | 30项审查维度详细说明 |
+| `docs/data_review/current_findings.md` | 文档 | 当前数据集审查发现 |
+| `docs/data_review/validation_config_template.yaml` | 模板 | 配置文件模板 |
+
+### 核心类设计
+
+```python
+class AuditReport:
+    """审查报告类"""
+    pass
+
+class DatasetAuditor:
+    def __init__(self, data_path: str, config_path: str = None)
+    def run_audit(self, levels: List[int] = [1,2,3,4]) -> AuditReport
+    def generate_report(self, output_format: str = 'markdown') -> str
+    def _check_level1_format(self) -> dict    # L1 格式审查
+    def _check_level2_logic(self) -> dict     # L2 逻辑审查
+    def _check_level3_distribution(self) -> dict  # L3 分布审查
+    def _check_level4_semantic(self) -> dict  # L4 语义审查
+```
+
+### 使用方法
+
+```bash
+# 运行完整审查
+python scripts/validate_dataset_v2.py \
+    --input data/geosr_chain/balanced_topology.jsonl \
+    --config config/validation_config.yaml \
+    --output reports/validation_report.md \
+    --levels 1,2,3,4
+
+# 快速审查（仅L1+L2）
+python scripts/validate_dataset_v2.py \
+    --input data/geosr_chain/train.jsonl \
+    --levels 1,2
+```
+
+### 首次运行结果 (balanced_topology.jsonl, 6522条)
+
+| 指标 | 结果 |
+|------|------|
+| 整体通过率 | 68.8% |
+| 严重问题 | 773个 |
+| 重要问题 | 2503个 |
+| L1格式审查 | 3/4项通过 (75%) |
+| L2逻辑审查 | 5/8项通过 (62%) |
+
+**主要发现**:
+- 缺失 entity_to_token: 773条 (11.9%)
+- 缺失 difficulty_score: 773条 (11.9%)
+- difficulty不一致: 1710条 (26.2%)
+- 答案逻辑问题: 391条
+
+### 团队协作
+使用Agent Team并行完成3个子任务：
+- script-developer: 创建验证脚本
+- config-developer: 创建配置文件
+- doc-writer: 创建审查文档
+n- �� docs/data_review/ Ŀ¼����4����������ĵ���n  - validation_checklist.md: 30�����ά����ϸ˵����L1��ʽ4�L2�߼�8�L3�ֲ�8�L4����10�n  - validation_config_template.yaml: ���������ļ�ģ�壨L1-L4���á�ʵ������ԡ�������ã�n
+
+## 2026-03-08 提示词偏差检查整合到审查机制
+
+### 任务概述
+将提示词偏差分析流程整合到 d:\30_keyan\docs\data_review 审查机制中，新增L5审查级别。
+
+### 偏差风险分析结果
+
+| 偏差来源 | 风险等级 | 具体问题 |
+|---------|---------|---------|
+| 推理链元数据泄露 | 🔴 高 | `relation_type`、`action`字段直接标注任务类型 |
+| topological专业术语 | 🟠 中高 | "拓扑关系"术语泄露问题类型 |
+| 提示词模式单一 | 🟡 中 | "请问"出现率85% |
+
+### 更新的文件清单
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `GeoKD-SR/config/validation_config.yaml` | 修改 | 添加L5提示词偏差检查配置 |
+| `docs/data_review/validation_checklist.md` | 修改 | 添加L5提示词偏差审查5项检查 |
+| `docs/data_review/README.md` | 修改 | 更新为五级审查体系，添加L5使用说明 |
+| `docs/data_review/prompt_bias_checklist.md` | 新建 | 提示词偏差检查详细文档 |
+
+### L5 提示词偏差审查项 (5项)
+
+| # | 检查项 | 风险等级 |
+|---|--------|---------|
+| L5-1 | 推理链元数据泄露 | 🔴 高 |
+| L5-2 | 专业术语泄露 | 🟠 中高 |
+| L5-3 | 引导词分布均衡 | 🟡 中 |
+| L5-4 | 答案格式暗示 | 🟡 中 |
+| L5-5 | 信息给予模式 | 🟢 低 |
+
+### 使用方法
+
+```bash
+# 提示词偏差专项检查
+python scripts/validate_dataset_v2.py \
+    --input data/geosr_chain/balanced_topology.jsonl \
+    --levels 5 \
+    --output outputs/prompt_bias
+
+# 推理链泄露检查
+python scripts/validate_dataset_v2.py \
+    --input data/geosr_chain/balanced_topology.jsonl \
+    --check-reasoning-chain-leakage
+```
+
+---
+
+## 2026-03-08 Exp01和Exp02实验代码实现完成 ✅
+
+### 任务概述
+根据实验设计方案，完成 GeoKD-SR Exp01 (Direct-SFT) 和 Exp02 (Standard-KD) 的具体实验代码实现，针对阿里云PAI平台24GB显存优化。
+
+### 主要改进
+1. **数据加载安全** - 使用 `json.loads()` 替代 `eval()` 安全加载
+2. **ChatML模板格式** - 使用 Qwen2.5 的 ChatML 模板格式
+3. **Labels正确生成** - 用户部分设为 -100，助手部分保留 token IDs
+4. **模型路径本地化** - 配置为 PAI 平台本地路径 `/mnt/workspace/models/`
+5. **显存优化配置** - Exp01 batch_size=4, Exp02 batch_size=2
+
+### 修改的文件
+
+#### Exp01: Direct-SFT (对照组)
+- `exp/exp01_direct_sft/config.yaml` - 本地模型路径、batch_size、数据路径
+- `exp/exp01_direct_sft/train.py` - json.loads、ChatML格式、labels生成
+- `exp/exp01_direct_sft/evaluate.py` - ChatML生成、指标计算
+
+#### Exp02: Standard-KD (通用蒸馏)
+- `exp/exp02_standard_kd/config.yaml` - 教师模型配置、蒸馏参数、batch_size
+- `exp/exp02_standard_kd/train.py` - 教师加载、DistillationTrainer、KL损失
+- `exp/exp02_standard_kd/evaluate.py` - 与exp01相同的改进
+
+### 新建的文件
+- `scripts/check_environment.py` - 环境检查脚本（GPU、依赖、模型路径、数据路径）
+- `scripts/run_exp.sh` - 一键运行实验脚本
+
+### 显存估算 (24GB A10)
+
+| 组件 | Exp01 (Direct-SFT) | Exp02 (Standard-KD) |
+|------|-------------------|---------------------|
+| 学生模型 (1.5B) | ~3 GB | ~3 GB |
+| 教师模型 (7B, 4-bit) | - | ~4 GB |
+| 梯度 + 优化器 | ~4 GB | ~4 GB |
+| 激活值 | ~6 GB (batch=4) | ~8 GB (batch=2) |
+| **总计** | **~13 GB** ✅ | **~19 GB** ✅ |
+
+### 使用方法
+```bash
+# 环境检查
+python scripts/check_environment.py
+
+# 运行 Exp01 训练
+bash scripts/run_exp.sh exp01
+
+# 运行 Exp02 训练
+bash scripts/run_exp.sh exp02
+
+# 评估
+bash scripts/run_exp.sh -e exp01 --checkpoint checkpoints/final_model
+```
+
+### 核心代码片段
+
+#### ChatML 格式处理
+```python
+messages = [
+    {"role": "system", "content": system_prompt},
+    {"role": "user", "content": question},
+    {"role": "assistant", "content": answer}
+]
+text = tokenizer.apply_chat_template(messages, tokenize=False)
+```
+
+#### Labels 生成
+```python
+# 用户部分设为 -100，助手部分保留
+labels = [-100] * user_len + input_ids[user_len:]
+```
+
+#### KL散度蒸馏损失
+```python
+def kl_divergence_loss(student_logits, teacher_logits, temperature=2.0):
+    p_teacher = F.softmax(teacher_logits / temperature, dim=-1)
+    log_p_student = F.log_softmax(student_logits / temperature, dim=-1)
+    kl_loss = F.kl_div(log_p_student, p_teacher, reduction='batchmean')
+    return kl_loss * (temperature ** 2)
+```
+
+---
+
+## 2026-03-08 创建推理链泄露修复脚本完成 ✅
+
+### 任务概述
+创建 `fix_reasoning_chain_leakage.py` 脚本，修复推理链中暴露任务类型的字段，将其通用化以防止泄露。
+
+### 创建文件
+- **路径**: `D:/30_keyan/GeoKD-SR/scripts/fix_reasoning_chain_leakage.py`
+- **功能**: 修复推理链泄露问题
+
+### 修复策略
+
+**relation_type字段通用化（Step 2）:**
+- directional → spatial
+- topological → spatial
+- metric → spatial
+- composite → spatial
+
+**action字段通用化（Step 4）:**
+- calculate_distance → process_spatial
+- determine_topology → process_spatial
+- calculate_direction → process_spatial
+- classify_relation → analyze_spatial
+- calculate_composite → analyze_spatial
+
+### 使用方法
+```bash
+# 修复单个文件
+python fix_reasoning_chain_leakage.py --input data/geosr_chain/train.jsonl --output data/geosr_chain/train_fixed.jsonl
+
+# 修复并覆盖原文件
+python fix_reasoning_chain_leakage.py --input data/geosr_chain/train.jsonl
+
+# 查看帮助
+python fix_reasoning_chain_leakage.py --help
+```
+
+### 脚本特性
+1. 使用 argparse 接受参数（--input, --output, --report, --quiet）
+2. 遍历每条记录的 reasoning_chain（5个步骤）
+3. 精确修复指定字段，保留其他内容
+4. 添加进度显示（每500条记录）
+5. 生成详细的修复报告（Markdown格式）
+6. 支持批量处理多个文件
+
+### 测试结果
+- 已通过功能测试
+- 原始 step 2: relation_type="topological" → 修复后: "spatial" ✓
+- 原始 step 4: action="determine_topology" → 修复后: "process_spatial" ✓
+- 其他字段保持不变 ✓
+
+---
+
+## 2026-03-08 Exp01和Exp02实验说明文档创建完成 ✅
+
+### 任务概述
+为 exp01_direct_sft 和 exp02_standard_kd 创建详细的实验说明文档（README.md）。
+
+### 创建的文件
+
+| 文件 | 大小 | 说明 |
+|------|------|------|
+| `exp/exp01_direct_sft/README.md` | ~8KB | Direct-SFT对照组说明 |
+| `exp/exp02_standard_kd/README.md` | ~12KB | Standard-KD蒸馏基线说明 |
+
+### 文档内容结构
+
+1. **实验概述** - 名称、类型、方法、损失函数、目的
+2. **目录结构** - 文件组织说明
+3. **模型配置** - 学生/教师模型参数、LoRA配置
+4. **训练配置** - 针对24GB显存优化的参数
+5. **显存估算** - 各组件显存占用明细
+6. **数据格式** - JSONL格式、ChatML模板、Labels生成
+7. **使用方法** - 环境检查、训练、评估命令
+8. **评估指标** - Accuracy、SR-F1、BLEU-4、ROUGE-L
+9. **预期结果** - 性能基线和训练时间估算
+10. **代码改进说明** - 相比原版本的改进点
+11. **故障排除** - 常见问题及解决方案
+12. **相关文件** - 关联文档链接
+13. **版本历史** - 更新记录
+
+### Exp02 特有内容
+- KL散度损失原理详解
+- DistillationTrainer核心逻辑
+- 教师模型4-bit量化配置
+- 与其他实验对比表
+- 实验记录模板
+
+---
+
+
+## 2026-03-08 创建分层划分脚本完成 ✅
+
+### 任务概述
+在  目录下创建  脚本，实现按分层采样方式将数据集划分为train/dev/test三部分。
+
+### 创建的文件
+- **路径**: 
+- **大小**: 约800行代码
+
+### 核心功能
+
+1. **分层采样策略**:
+   - 按空间关系类型分层: directional(25%), topological(27.5%), metric(27.5%), composite(20%)
+   - 按难度分层: easy(30%), medium(50%), hard(20%)
+
+2. **实体对互斥**:
+   - 提取每条记录的实体对
+   - 按实体对分组，确保train/dev/test中的实体对不重叠
+
+3. **划分比例配置**:
+   - 默认: 0.8:0.1:0.1
+   - 支持自定义比例
+
+### 命令行参数
+
+
+
+### 输出文件
+
+| 文件 | 说明 |
+|------|------|
+| train.jsonl | 训练集 (约8000条) |
+| dev.jsonl | 验证集 (约1000条) |
+| test.jsonl | 测试集 (约1000条) |
+| split_report_<timestamp>.md | 划分报告 |
+
+### 验证检查
+
+1. 空间关系类型分布验证
+2. 难度分布验证
+3. 实体对互斥验证
+4. KS统计量检验
+
+### 状态
+✓ 分层划分脚本创建完成
+✓ 支持实体对互斥和分布均衡
+✓ 包含完整的验证和报告生成功能
+
+---
+
+## 2026-03-08 创建分层划分脚本完成 ✅
+
+### 任务概述
+在 D:/30_keyan/GeoKD-SR/scripts/ 目录下创建 split_dataset_stratified.py 脚本
+
+### 核心功能
+1. 分层采样: 按spatial_relation_type和difficulty分层
+2. 实体对互斥: 确保train/dev/test中的实体对不重叠
+3. 划分比例: 默认0.8:0.1:0.1，支持自定义
+
+### 状态
+✓ 脚本创建完成
+✓ 支持实体对互斥和分布均衡
+✓ 包含完整的验证和报告生成功能
+
+---
+
+---
+
+## 2026-03-09 (数据集v3版本生成)
+
+### GeoKD-SR 数据集补充与重新划分完成
+
+**任务**: 补充数据至10,000条并重新划分，满足实体对互斥条件
+
+**执行的脚本**:
+1.  - 合并原始数据 (11,691条)
+2.  - 数据格式验证
+3.  - 分层采样 (10,000条)
+4.  - 实体对互斥划分
+5.  - 训练集补充
+6.  - 生成with/without coords版本
+7.  - 最终验证
+
+**最终数据集结构**:
+```
+v3/
+├── train.jsonl (8,000条)
+├── dev.jsonl (1,000条)
+├── test.jsonl (1,000条)
+├── with_coords/
+│   ├── train.jsonl (8,000条)
+│   ├── dev.jsonl (1,000条)
+│   └── test.jsonl (1,000条)
+└── without_coords/
+    ├── train.jsonl (8,000条)
+    ├── dev.jsonl (1,000条)
+    └── test.jsonl (1,000条)
+```
+
+**验证结果**:
+- 数据量: train=8,000, dev=1,000, test=1,000 [OK]
+- 空间关系类型分布:
+  - directional: 25.3% (目标: 25.0%)
+  - topological: 26.1% (目标: 27.5%)
+  - metric: 27.9% (目标: 27.5%)
+  - composite: 20.6% (目标: 20.0%)
+- 实体对互斥验证: train/dev/test 实体对完全不重叠 [OK]
+

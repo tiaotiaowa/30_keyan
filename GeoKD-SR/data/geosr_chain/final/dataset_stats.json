@@ -1,0 +1,71 @@
+{
+  "total_records": 6023,
+  "train": {
+    "count": 4816,
+    "spatial_relation_types": {
+      "topological": 808,
+      "metric": 1508,
+      "directional": 1376,
+      "composite": 1124
+    },
+    "difficulty_distribution": {
+      "medium": 2514,
+      "easy": 1389,
+      "hard": 913
+    },
+    "topology_subtype_distribution": {
+      "overlap": 162,
+      "within": 162,
+      "contains": 159,
+      "adjacent": 157,
+      "disjoint": 157,
+      "crosses": 1,
+      "separated": 1,
+      "inside": 4,
+      "touch": 4,
+      "connected": 1
+    }
+  },
+  "dev": {
+    "count": 601,
+    "spatial_relation_types": {
+      "topological": 101,
+      "metric": 188,
+      "directional": 172,
+      "composite": 140
+    },
+    "difficulty_distribution": {
+      "easy": 179,
+      "medium": 307,
+      "hard": 115
+    },
+    "topology_subtype_distribution": {
+      "adjacent": 20,
+      "overlap": 20,
+      "contains": 20,
+      "disjoint": 17,
+      "within": 24
+    }
+  },
+  "test": {
+    "count": 606,
+    "spatial_relation_types": {
+      "topological": 102,
+      "metric": 189,
+      "directional": 173,
+      "composite": 142
+    },
+    "difficulty_distribution": {
+      "medium": 327,
+      "hard": 112,
+      "easy": 167
+    },
+    "topology_subtype_distribution": {
+      "disjoint": 26,
+      "within": 14,
+      "contains": 21,
+      "overlap": 18,
+      "adjacent": 23
+    }
+  }
+}
