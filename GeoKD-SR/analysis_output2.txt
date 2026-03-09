@@ -1,79 +1,27 @@
-=== 实体分布均衡性分析 ===
+生成数据Question长度统计:
+  平均: 14.4 字符
+  样本数: 115
 
-省份实体分布:
-  独立省份数: 33
-  最高频: ('四川省', 153)
-  最低频: ('黑龙江', 7)
-  平均出现次数: 77.1
-  标准差: 42.1
-  变异系数(CV): 0.55 (越小越均衡)
+生成数据Question示例:
 
+[1]
+  Question: 呼伦贝尔市是否位于内蒙古自治区内？
+  Answer: 是的，呼伦贝尔市位于内蒙古自治区内。...
 
-=== 城市实体分布 ===
+[2]
+  Question: 乌鲁木齐是否包含在新疆维吾尔自治区内？
+  Answer: 是的，乌鲁木齐位于新疆维吾尔自治区内。...
 
-独立城市数: 287
-最高频10个: [('丽水', 63), ('安康', 63), ('福州', 62), ('沈阳', 62), ('龙井', 61), ('银川', 61), ('东莞', 61), ('松原', 60), ('平凉', 59), ('郴州', 59)]
-最低频10个: [('漳州', 1), ('来宾', 1), ('霍林郭勒', 1), ('烟台', 1), ('珲春', 1), ('和龙', 1), ('武威', 1), ('钦州', 1), ('六盘水', 1), ('珠海', 1)]
-平均出现次数: 30.5
-变异系数(CV): 0.72
+[3]
+  Question: 常德市位于湖南省内吗？
+  Answer: 是的，常德市位于湖南省内。...
 
+[4]
+  Question: 安康市是否属于陕西省？
+  Answer: 是的，安康市位于陕西省内。...
 
-=== 空间关系类型与实体类型交叉分析 ===
+[5]
+  Question: 南昌市在江西省的范围内吗？
+  Answer: 是的，南昌市位于江西省内。...
 
-关系类型与实体类型对分布:
-  metric + ('city', 'city'): 1107
-  directional + ('city', 'city'): 999
-  composite + ('city', 'city'): 837
-  topological + ('city', 'province'): 636
-  metric + ('city', 'province'): 277
-  directional + ('city', 'province'): 263
-  topological + ('province', 'province'): 242
-  composite + ('city', 'province'): 217
-  topological + ('province', 'river'): 195
-  topological + ('city', 'city'): 151
-  metric + ('city', 'landmark'): 133
-  directional + ('city', 'landmark'): 129
-  topological + ('city', 'river'): 124
-  metric + ('city', 'mountain'): 92
-  composite + ('city', 'landmark'): 82
-  directional + ('city', 'mountain'): 71
-  metric + ('city', 'river'): 64
-  composite + ('city', 'mountain'): 60
-  directional + ('city', 'river'): 52
-  metric + ('province', 'province'): 51
-
-
-=== 问题类型多样性检查 ===
-
-问题类型分布:
-  度量类: 2718 (41.7%)
-  什么类: 1473 (22.6%)
-  是否类: 1413 (21.7%)
-  其他: 647 (9.9%)
-  判断类: 210 (3.2%)
-  分析类: 36 (0.6%)
-  描述类: 25 (0.4%)
-
-
-=== 按拓扑子类型的问题多样性 ===
-
-disjoint:
-  总数: 302
-  唯一开头数: 302
-  多样性比例: 100.0%
-contains:
-  总数: 302
-  唯一开头数: 302
-  多样性比例: 100.0%
-within:
-  总数: 302
-  唯一开头数: 302
-  多样性比例: 100.0%
-adjacent:
-  总数: 302
-  唯一开头数: 277
-  多样性比例: 91.7%
-overlap:
-  总数: 302
-  唯一开头数: 202
-  多样性比例: 66.9%
+字段列表: ['answer', 'difficulty', 'entities', 'id', 'prompt_id', 'question', 'reasoning_chain', 'spatial_relation_type', 'spatial_tokens', 'split', 'topology_subtype']

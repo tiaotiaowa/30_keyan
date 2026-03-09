@@ -1,0 +1,81 @@
+```json
+{
+  "entity1": {
+    "name": "广东省",
+    "type": "province",
+    "coordinates": [116.6832, 23.379]
+  },
+  "entity2": {
+    "name": "广西壮族自治区",
+    "type": "province",
+    "coordinates": [108.3275, 22.8155]
+  },
+  "topology_subtype": "overlap",
+  "difficulty": "easy",
+  "question": "请判断广东省与广西壮族自治区是否存在空间重叠关系？"
+}
+---DATA---
+{
+  "entity1": {
+    "name": "上海市",
+    "type": "province",
+    "coordinates": [121.4737, 31.2304]
+  },
+  "entity2": {
+    "name": "浙江省",
+    "type": "province",
+    "coordinates": [120.1551, 30.2741]
+  },
+  "topology_subtype": "overlap",
+  "difficulty": "easy",
+  "question": "请判断上海市与浙江省是否存在空间重叠关系？"
+}
+---DATA---
+{
+  "entity1": {
+    "name": "湖北省",
+    "type": "province",
+    "coordinates": [114.3055, 30.5928]
+  },
+  "entity2": {
+    "name": "河南省",
+    "type": "province",
+    "coordinates": [113.6253, 34.7466]
+  },
+  "topology_subtype": "overlap",
+  "difficulty": "medium",
+  "question": "湖北省位于长江中游，河南省位于黄河中下游，请分析这两个省份在地理空间上的拓扑关系类型？"
+}
+---DATA---
+{
+  "entity1": {
+    "name": "福建省",
+    "type": "province",
+    "coordinates": [119.2965, 26.0745]
+  },
+  "entity2": {
+    "name": "浙江省",
+    "type": "province",
+    "coordinates": [120.1551, 30.2741]
+  },
+  "topology_subtype": "overlap",
+  "difficulty": "medium",
+  "question": "福建省地处中国东南沿海，浙江省位于其东北方向，请分析这两个省份在地理空间上的拓扑邻接或重叠关系？"
+}
+---DATA---
+{
+  "entity1": {
+    "name": "内蒙古自治区",
+    "type": "province",
+    "coordinates": [111.7519, 40.8414]
+  },
+  "entity2": {
+    "name": "甘肃省",
+    "type": "province",
+    "coordinates": [103.8343, 36.0611]
+  },
+  "topology_subtype": "overlap",
+  "difficulty": "hard",
+  "question": "内蒙古自治区横跨中国西北、华北和东北，甘肃省位于黄土高原、青藏高原和内蒙古高原的交汇处。请结合两者的地理范围和空间分布，详细分析这两个自治区与省份之间的拓扑空间关系。"
+}
+```

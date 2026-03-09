@@ -1,5 +1,81 @@
 # GeoKD-SR 项目记忆
 
+## 2026-03-09 Agent1数据生成任务执行
+
+### 任务概述
+执行命令：
+```
+python scripts/generate_from_agent_prompts.py --prompts-file data/prompts/agent_splits/agent1_prompts.json --output data/geosr_chain/supplement/agent1_output.jsonl --checkpoint data/geosr_chain/supplement/agent1_progress.json --batch-size 5
+```
+
+### 任务状态
+- 任务ID: bitrscfqh
+- 启动时间: 2026-03-09 20:49:36
+- 提示词总数: 635条
+- 当前生成数量: 30条
+- 失败数量: 0条
+- API状态: 正常 (HTTP 200 OK)
+- 最后更新: 2026-03-09 21:10
+
+### 执行情况
+- API调用正常，无429限流错误
+- 每批5条数据，平均每批耗时1-3分钟
+- 数据格式完整，包含完整的reasoning_chain
+
+### 输出文件位置
+- 输出文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent1_output.jsonl`
+- 进度文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent1_progress.json`
+
+### 数据样例
+```json
+{
+  "id": "geosr_topological_42773_8536",
+  "spatial_relation_type": "topological",
+  "question": "广东省和广西壮族自治区在地理上是否属于直接接壤的关系？",
+  "answer": "是，广东省与广西壮族自治区在地理上属于直接接壤的关系。",
+  "reasoning_chain": [...],
+  "entities": [...],
+  "topology_subtype": "overlap",
+  "difficulty": "easy"
+}
+```
+
+### 备注
+任务仍在后台运行中，支持断点续传。按当前速度估算，完成全部635条数据约需3-4小时。
+
+---
+
+## 2026-03-09 Agent3数据生成任务执行
+
+### 任务概述
+执行命令：
+```
+python scripts/generate_from_agent_prompts.py --prompts-file data/prompts/agent_splits/agent3_prompts.json --output data/geosr_chain/supplement/agent3_output.jsonl --checkpoint data/geosr_chain/supplement/agent3_progress.json --batch-size 5
+```
+
+### 任务状态
+- 任务ID: bnj5705po
+- 启动时间: 2026-03-09 20:49:36
+- 提示词总数: 634条
+- 当前生成数量: 23条
+- 失败数量: 0条
+- 最后更新: 2026-03-09 21:04:27
+
+### 遇到的问题
+智谱API持续限流（HTTP 429 Too Many Requests）：
+- 第一次限流: 等待300秒
+- 第二次限流: 等待600秒
+- 第三次限流: 等待900秒
+
+### 进度文件位置
+- 输出文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent3_output.jsonl`
+- 进度文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent3_progress.json`
+
+### 备注
+任务仍在后台运行，支持断点续传。由于API限流严重，建议稍后检查进度或等待API限流恢复后继续执行。
+
+---
+
 ## 2026-03-09 拓扑补充Prompts生成脚本
 
 ### 任务概述

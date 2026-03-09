@@ -1,0 +1,553 @@
+# GeoKD-SR 数据审查配置文件模板
+# 版本: V2.1
+# 用途: 配置validate_dataset_v2.py的审查参数
+#
+# 使用方法:
+# 1. 复制此文件为 validation_config.yaml
+# 2. 根据需要修改配置项
+# 3. 运行: python validate_dataset_v2.py --config validation_config.yaml
+
+# ===================================================================
+# 基础配置
+# ===================================================================
+
+# 数据文件路径（支持通配符）
+input_paths:
+  - "data/geosr_chain/balanced_topology.jsonl"
+  # - "data/geosr_chain/train.jsonl"
+  # - "data/geosr_chain/dev.jsonl"
+  # - "data/geosr_chain/test.jsonl"
+
+# 输出目录
+output_dir: "outputs/validation_$(date +%Y%m%d_%H%M%S)"
+
+# 日志级别: DEBUG, INFO, WARNING, ERROR
+log_level: "INFO"
+
+# ===================================================================
+# 审查级别配置
+# ===================================================================
+
+# 执行哪些级别的审查（可选: L1, L2, L3, L4, ALL）
+validation_levels: ["L1", "L2", "L3", "L4"]
+
+# 某一级别失败时是否继续: true/false
+continue_on_failure: true
+
+# ===================================================================
+# L1 格式审查配置
+# ===================================================================
+
+l1_format:
+  # 必需字段列表
+  required_fields:
+    - "id"
+    - "spatial_relation_type"
+    - "question"
+    - "answer"
+    - "reasoning_chain"
+    - "entities"
+    - "spatial_tokens"
+    - "difficulty"
+
+  # 条件必需字段（特定情况下的必需字段）
+  conditional_required:
+    - field: "entity_to_token"
+      when: "always"  # always, never, 或条件表达式
+    - field: "difficulty_score"
+      when: "always"
+    - field: "topology_subtype"
+      when: "spatial_relation_type == 'topological'"
+
+  # 可选字段
+  optional_fields:
+    - "split"
+    - "prompt_id"
+
+  # JSON解析选项
+  json_options:
+    strict_parsing: true
+    allow_comments: false
+    allow_trailing_commas: false
+
+# ===================================================================
+# L2 逻辑审查配置
+# ===================================================================
+
+l2_logic:
+  # spatial_relation_type枚举值
+  spatial_types:
+    valid_values:
+      - "directional"
+      - "topological"
+      - "metric"
+      - "composite"
+
+  # difficulty枚举值
+  difficulties:
+    valid_values:
+      - "easy"
+      - "medium"
+      - "hard"
+
+  # difficulty_score范围
+  difficulty_score:
+    min: 1.0
+    max: 5.0
+    # difficulty到score的映射
+    mapping:
+      easy: 1.5
+      medium: 2.75
+      hard: 4.0
+    # 检查与difficulty一致性
+    check_consistency: true
+
+  # reasoning_chain结构验证
+  reasoning_chain:
+    required_length: 5
+    required_fields:
+      - "step"
+      - "name"
+      - "action"
+      - "content"
+    # 标准步骤名称（设为null则不检查名称）
+    standard_names:
+      1: "entity_identification"
+      2: "spatial_relation_extraction"
+      3: "coordinate_retrieval"
+      4: "spatial_calculation"
+      5: "answer_generation"
+    # 检查步骤编号连续性
+    check_sequence: true
+
+  # entities字段验证
+  entities:
+    min_count: 2
+    max_count: 10
+    required_entity_fields:
+      - "name"
+      - "coords"
+
+  # 坐标范围验证（中国境内）
+  coordinates:
+    longitude:
+      min: 73.0
+      max: 135.0
+    latitude:
+      min: 18.0
+      max: 54.0
+    # 坐标系类型
+    crs: "WGS84"
+
+  # topology_subtype枚举值（仅topological类型）
+  topology_subtypes:
+    valid_values:
+      - "within"
+      - "contains"
+      - "adjacent"
+      - "disjoint"
+      - "overlap"
+
+  # 字段长度限制
+  length_limits:
+    question:
+      min: 10
+      max: 200
+      recommended_max: 100
+    answer:
+      min: 2
+      max: 100
+      recommended_max: 50
+
+# ===================================================================
+# L3 分布审查配置
+# ===================================================================
+
+l3_distribution:
+  # 空间关系类型目标分布
+  spatial_targets:
+    directional:
+      target: 0.25      # 25%
+      tolerance: 0.02   # ±2%
+    topological:
+      target: 0.275     # 27.5%
+      tolerance: 0.02
+    metric:
+      target: 0.275     # 27.5%
+      tolerance: 0.02
+    composite:
+      target: 0.20      # 20%
+      tolerance: 0.02
+
+  # 难度目标分布
+  difficulty_targets:
+    easy:
+      target: 0.30      # 30%
+      tolerance: 0.02
+    medium:
+      target: 0.50      # 50%
+      tolerance: 0.02
+    hard:
+      target: 0.20      # 20%
+      tolerance: 0.02
+
+  # 拓扑子类型平衡配置（仅topological数据）
+  topology_balance:
+    check_balance: true
+    target_ratio: 0.20   # 每种20%
+    tolerance: 0.05      # ±5%
+    subtypes:
+      - "within"
+      - "contains"
+      - "adjacent"
+      - "disjoint"
+      - "overlap"
+
+  # 数据集划分一致性检查
+  split_consistency:
+    check: true
+    tolerance: 0.03      # ±3%
+    splits:
+      - "train"
+      - "dev"
+      - "test"
+
+  # 实体数量分布
+  entity_count_distribution:
+    min: 2
+    max: 5
+    recommended_avg: 2.5
+    two_entity_ratio_min: 0.60  # 2实体占比至少60%
+
+  # 文本长度分布
+  length_distribution:
+    question:
+      min: 10
+      max: 100
+      avg_target: 30
+    answer:
+      min: 2
+      max: 50
+      short_ratio_min: 0.80  # 简短答案(2-10字符)至少80%
+
+  # spatial_tokens数量分布
+  spatial_tokens_distribution:
+    min: 4
+    max: 8
+    avg_target: 6
+    middle_range_ratio_min: 0.70  # 5-7个占比至少70%
+
+# ===================================================================
+# L4 语义审查配置
+# ===================================================================
+
+l4_semantic:
+  # 答案一致性检查
+  answer_consistency:
+    check_question_match: true
+    check_reasoning_match: true
+    # 是/否问题配置
+    yes_no_questions:
+      keywords: ["是否", "是不是", "有没有"]
+      valid_answers: ["是", "否", "是的", "不是"]
+    # 数值问题配置
+    numerical_questions:
+      keywords: ["多少", "多远", "距离"]
+      require_number: true
+
+  # 关键词覆盖度检查
+  keyword_coverage:
+    min_coverage: 0.80          # 至少80%的token在question中
+    core_keyword_coverage: 1.0  # 核心关键词100%覆盖
+
+  # 空间关系关键词
+  relation_keywords:
+    directional:
+      - "东"
+      - "西"
+      - "南"
+      - "北"
+      - "方向"
+      - "东北"
+      - "东南"
+      - "西北"
+      - "西南"
+    topological:
+      - "包含"
+      - "相邻"
+      - "分离"
+      - "重叠"
+      - "边界"
+    metric:
+      - "公里"
+      - "米"
+      - "千米"
+      - "距离"
+      - "远"
+      - "近"
+    composite:
+      - "既"
+      - "同时"
+      - "并且"
+
+  # 拓扑子类型关键词
+  topology_keywords:
+    within:
+      - "在...内"
+      - "内部"
+      - "在...里面"
+    contains:
+      - "包含"
+      - "涵盖"
+      - "包括"
+    adjacent:
+      - "相邻"
+      - "接壤"
+      - "边界"
+      - "相连"
+    disjoint:
+      - "不相邻"
+      - "分离"
+      - "不相接"
+    overlap:
+      - "重叠"
+      - "相交"
+      - "部分"
+      - "有重叠"
+
+  # 实体名称检查
+  entity_name_check:
+    must_appear_in_question: true
+    allow_aliases: true
+    alias_mapping:
+      "北京": ["京", "北京市", "北京城"]
+      "上海": ["沪", "上海市", "上海城"]
+      # 添加更多别名...
+
+  # entity_to_token映射验证
+  entity_token_mapping:
+    check_char_positions: true
+    check_token_indices: true
+    verify_substring: true  # 验证question[start:end] == entity
+
+  # 距离计算验证
+  distance_calculation:
+    method: "haversine"      # haversine, euclidean
+    tolerance: 0.10          # 10%误差
+    check_units: true        # 检查单位(km/m)
+    supported_units:
+      - "公里"
+      - "km"
+      - "千米"
+      - "米"
+      - "m"
+
+  # 实体分布均衡性
+  entity_distribution:
+    max_cv: 0.8              # 最大变异系数
+    max_top_entity_ratio: 0.05  # 最高频实体最多5%
+    max_single_entity_count: 130 # 单一实体最多出现130次 (5% of 6522)
+
+  # 推理链连贯性检查
+  reasoning_coherence:
+    check_causality: true
+    check_references: true
+    detect_logical_gaps: true
+
+# ===================================================================
+# 实验兼容性配置
+# ===================================================================
+
+experiment_compatibility:
+  # 10个实验的字段需求
+  experiments:
+    Exp1:
+      required_fields:
+        - "question"
+        - "answer"
+      description: "基础问答"
+
+    Exp2:
+      required_fields:
+        - "question"
+        - "answer"
+      description: "基础问答"
+
+    Exp3a:
+      required_fields:
+        - "question"
+        - "answer"
+        - "spatial_relation_type"
+      description: "带关系类型"
+
+    Exp3:
+      required_fields:
+        - "question"
+        - "answer"
+        - "spatial_relation_type"
+      description: "带关系类型"
+
+    Exp4:
+      required_fields:
+        - "question"
+        - "answer"
+        - "reasoning_chain"
+      reasoning_chain_length: 5
+      description: "带推理链"
+
+    Exp5:
+      required_fields:
+        - "question"
+        - "answer"
+      description: "基础问答"
+
+    Exp6:
+      required_fields:
+        - "question"
+        - "answer"
+      description: "基础问答"
+
+    Exp7:
+      required_fields:
+        - "question"
+        - "answer"
+        - "entities"
+        - "spatial_tokens"
+        - "entity_to_token"
+      description: "实体到token映射"
+
+    Exp8:
+      required_fields:
+        - "question"
+        - "answer"
+        - "spatial_relation_type"
+        - "difficulty"
+        - "difficulty_score"
+      description: "难度分析"
+
+    Exp9:
+      required_fields:
+        - "question"
+        - "answer"
+        - "spatial_relation_type"
+        - "topology_subtype"
+        - "reasoning_chain"
+        - "entities"
+        - "spatial_tokens"
+        - "entity_to_token"
+        - "difficulty"
+        - "difficulty_score"
+      reasoning_chain_length: 5
+      description: "完整字段"
+
+# ===================================================================
+# 输出配置
+# ===================================================================
+
+output:
+  # 报告格式
+  formats:
+    - "markdown"   # .md报告
+    - "json"       # .json详细数据
+    - "csv"        # .csv统计数据
+    - "html"       # .html可视化报告（可选）
+
+  # 报告文件名模板
+  file_templates:
+    markdown: "report.md"
+    json: "issues.json"
+    csv: "stats.csv"
+    html: "report.html"
+
+  # 是否生成分布图表
+  generate_charts: true
+  chart_types:
+    - "bar"       # 柱状图
+    - "pie"       # 饼图
+    - "heatmap"   # 热力图
+
+  # 问题详情配置
+  issue_report:
+    max_sample_issues: 100      # 最多显示多少问题样本
+    group_by_severity: true     # 按严重性分组
+    include_record_ids: true    # 包含记录ID
+    sort_by: "severity"         # severity, level, count
+
+  # 是否生成修复脚本
+  generate_fix_script: true
+  fix_script_name: "fix_suggestions.py"
+
+# ===================================================================
+# 性能配置
+# ===================================================================
+
+performance:
+  # 并行处理
+  parallel:
+    enabled: true
+    max_workers: 4  # 最大并行进程数
+    chunk_size: 100 # 每个进程处理的记录数
+
+  # 内存管理
+  memory:
+    max_records_in_memory: 10000
+    use_streaming: true  # 大文件使用流式处理
+
+  # 缓存配置
+  cache:
+    enabled: true
+    cache_dir: ".cache/validation"
+    ttl: 86400  # 缓存有效期（秒）
+
+# ===================================================================
+# 通知配置
+# ===================================================================
+
+notifications:
+  # 验证完成通知
+  on_complete:
+    enabled: false
+    message: "数据验证完成"
+
+  # 发现严重问题时通知
+  on_critical_issues:
+    enabled: true
+    threshold: 10  # 超过10个critical问题触发
+
+# ===================================================================
+# 自定义规则
+# ===================================================================
+
+# 可以添加自定义验证规则
+custom_rules:
+  # 示例：自定义规则1
+  - name: "check_question_length_balance"
+    description: "检查问题长度分布是否均衡"
+    level: "L3"
+    enabled: true
+    params:
+      max_length_ratio: 0.3  # 最长问题不超过平均的1.3倍
+
+  # 示例：自定义规则2
+  - name: "check_entity_diversity"
+    description: "检查实体多样性"
+    level: "L4"
+    enabled: true
+    params:
+      min_unique_entities: 100  # 至少100个不同实体
+      max_repeat_ratio: 0.05    # 单一实体重复率<5%
+
+# ===================================================================
+# 备注
+# ===================================================================
+
+# 1. 配置文件支持变量替换:
+#    $(date +%Y%m%d) - 当前日期
+#    $(hostname) - 主机名
+#    ${ENV_VAR} - 环境变量
+#
+# 2. 值为null的项目表示不检查该项
+#
+# 3. 列表项前的"-"表示可配置多个值
+#
+# 4. "# "开头的行为注释
