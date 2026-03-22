@@ -1,283 +1,385 @@
-# GeoKD-SR 项目记忆
+# GeoKD-SR 项目记忆文档
 
-## 2026-03-09 Agent1数据生成任务执行
+---
 
-### 任务概述
-执行命令：
+## 2026-03-21 Qwen2.5-1.5B SFT 训练数据格式修复
+
+### 问题描述
+SFT 训练代码报错：
 ```
-python scripts/generate_from_agent_prompts.py --prompts-file data/prompts/agent_splits/agent1_prompts.json --output data/geosr_chain/supplement/agent1_output.jsonl --checkpoint data/geosr_chain/supplement/agent1_progress.json --batch-size 5
+AttributeError: 'GeoSRDataProcessor' object has no attribute 'column_names'
 ```
 
-### 任务状态
-- 任务ID: bitrscfqh
-- 启动时间: 2026-03-09 20:49:36
-- 提示词总数: 635条
-- 当前生成数量: 30条
-- 失败数量: 0条
-- API状态: 正常 (HTTP 200 OK)
-- 最后更新: 2026-03-09 21:10
+### 根本原因
+`GeoSRDataProcessor` 继承自 `torch.utils.data.Dataset`，但 TRL 的 `SFTTrainer` 期望 Hugging Face `datasets.Dataset` 格式，后者具有 `column_names` 属性。
 
-### 执行情况
-- API调用正常，无429限流错误
-- 每批5条数据，平均每批耗时1-3分钟
-- 数据格式完整，包含完整的reasoning_chain
+### 修复方案
+在 `data_processor.py` 中添加 HF Dataset 转换方法。
 
-### 输出文件位置
-- 输出文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent1_output.jsonl`
-- 进度文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent1_progress.json`
+### 修改内容
 
-### 数据样例
-```json
+#### 1. `src/data_processor.py`
+- 添加导入: `from datasets import Dataset as HFDataset`
+- 新增 `to_hf_dataset()` 方法 - 将内部数据转换为 messages 格式的 HF Dataset
+- 新增 `create_hf_dataset()` 静态方法 - 直接创建 HF Dataset（推荐方式）
+
+#### 2. `scripts/train.py`
+- 修改数据加载部分，使用 `GeoSRDataProcessor.create_hf_dataset()` 静态方法
+- 添加数据集列名日志输出验证
+
+### 验证结果
+- ✅ Dry-run 模式通过
+- ✅ HF Dataset 类型正确: `<class 'datasets.arrow_dataset.Dataset'>`
+- ✅ 数据集列名: `['messages']`
+- ✅ 训练样本数: 9463
+- ✅ 验证样本数: 1124
+
+### 代码示例
+```python
+# 使用新的静态方法创建 HF Dataset
+train_dataset = GeoSRDataProcessor.create_hf_dataset(
+    data_path=data_dir,
+    tokenizer=trainer.tokenizer,
+    max_length=config.optimization.max_length,
+    system_prompt=config.data.system_prompt,
+    data_version=data_version,
+    split="train"
+)
+```
+
+### 数据格式
+转换后的 HF Dataset 包含 `messages` 列，格式如下：
+```python
 {
-  "id": "geosr_topological_42773_8536",
-  "spatial_relation_type": "topological",
-  "question": "广东省和广西壮族自治区在地理上是否属于直接接壤的关系？",
-  "answer": "是，广东省与广西壮族自治区在地理上属于直接接壤的关系。",
-  "reasoning_chain": [...],
-  "entities": [...],
-  "topology_subtype": "overlap",
-  "difficulty": "easy"
+    'messages': [
+        {'content': '系统提示词', 'role': 'system'},
+        {'content': '用户问题', 'role': 'user'},
+        {'content': '模型回答', 'role': 'assistant'}
+    ]
 }
 ```
 
-### 备注
-任务仍在后台运行中，支持断点续传。按当前速度估算，完成全部635条数据约需3-4小时。
+---
+
+## 2026-03-21 创建 GeoSRSFTTrainer 训练器模块
+
+### 任务概述
+在 `D:\30_keyan\GeoKD-SR\exp\exp0\qwen-1.5B-sft\src\trainer.py` 创建训练器模块，用于 Qwen2.5-1.5B 模型的监督微调。
+
+### 实现功能
+
+1. **GeoSRSFTTrainer 类** - 封装完整训练逻辑
+   - `__init__(model_path, config)` - 初始化训练器
+   - `setup_model_and_tokenizer()` - 加载模型和 tokenizer
+   - `setup_lora()` - 配置 LoRA 参数高效微调
+   - `train(train_dataset, eval_dataset)` - 执行训练
+   - `save_model(output_path)` - 保存模型
+
+2. **核心特性**
+   - 使用 TRL 的 SFTTrainer 进行监督微调
+   - 使用 PEFT 的 LoRA 进行参数高效微调
+   - 支持配置化的训练参数（从 Config 对象读取）
+   - 支持 gradient_checkpointing
+   - 支持 fp16/bf16 混合精度训练（自动检测 GPU 支持）
+   - 支持 Trackio 日志记录
+   - 自动保存 checkpoints
+
+3. **辅助函数**
+   - `create_trainer()` - 便捷函数，创建并初始化训练器
+
+### 技术细节
+
+- **LoRA 配置**: 从 Config 对象读取 r, alpha, dropout, target_modules
+- **混合精度**: 自动检测 BF16 支持，不支持时回退到 FP16
+- **保存策略**: 支持按 epoch 或 steps 保存，可配置保存数量限制
+- **日志**: 使用 logging 模块，详细记录训练过程
+- **参数统计**: 自动计算并打印可训练参数占比
+
+### 文件位置
+- `GeoKD-SR/exp/exp0/qwen-1.5B-sft/src/trainer.py`
+
+### 依赖库
+- transformers
+- peft
+- trl
+- torch
+- datasets
 
 ---
 
-## 2026-03-09 Agent3数据生成任务执行
+## 2026-03-21 创建 Qwen2.5-1.5B SFT 评测脚本
 
 ### 任务概述
-执行命令：
+为 Qwen2.5-1.5B LoRA 微调实验创建评测脚本 `evaluate.py`。
+
+### 执行内容
+
+**创建文件**: `exp/exp0/qwen-1.5B-sft/scripts/evaluate.py`
+
+**功能特性**:
+1. **命令行参数支持**:
+   - `--checkpoint`: 模型 checkpoint 路径
+   - `--test-file`: 测试数据路径
+   - `--output`: 输出目录
+   - `--batch-size`: 批次大小（默认 8）
+   - `--max-new-tokens`: 最大生成 token 数（默认 256）
+   - `--base-model`: 基础模型路径
+   - `--temperature`, `--top-p`, `--do-sample`: 生成参数
+   - `--system-prompt`: 系统提示词
+
+2. **LoRA 模型加载**:
+   - 支持加载 PeftModel 微调后的模型
+   - 支持自动合并 LoRA 权重到基础模型
+   - 兼容 CPU/GPU 设备
+
+3. **批量推理**:
+   - 使用 Qwen2.5 的 chat template 格式
+   - 支持批量生成提高效率
+
+4. **评测指标**（复用 `exp/exp0/metrics/deterministic.py`）:
+   - Overall Accuracy（整体准确率）
+   - Format Valid Rate（格式有效率）
+   - BLEU-4（文本相似度）
+   - ROUGE-L（最长公共子序列）
+   - Spatial F1（空间关键词 F1）
+
+5. **分层统计**:
+   - 按空间类型分层（directional, topological, metric, composite）
+   - 按难度分层（easy, medium, hard）
+
+6. **输出文件**:
+   - `predictions.jsonl`: 预测结果
+   - `metrics.json`: 指标结果
+
+### 使用示例
+```bash
+python evaluate.py \
+    --checkpoint ./checkpoints/checkpoint-500 \
+    --test-file ../../data/splits/test.jsonl \
+    --output ./results \
+    --batch-size 8 \
+    --max-new-tokens 256
 ```
-python scripts/generate_from_agent_prompts.py --prompts-file data/prompts/agent_splits/agent3_prompts.json --output data/geosr_chain/supplement/agent3_output.jsonl --checkpoint data/geosr_chain/supplement/agent3_progress.json --batch-size 5
+
+### 输出示例
 ```
+【整体指标】
+  样本数量: 1183
+  Overall Accuracy: 0.2316
+  Format Valid Rate: 0.9234
+  BLEU-4: 0.1823
+  ROUGE-L: 0.3456
+  Spatial F1: 0.4521
 
-### 任务状态
-- 任务ID: bnj5705po
-- 启动时间: 2026-03-09 20:49:36
-- 提示词总数: 634条
-- 当前生成数量: 23条
-- 失败数量: 0条
-- 最后更新: 2026-03-09 21:04:27
-
-### 遇到的问题
-智谱API持续限流（HTTP 429 Too Many Requests）：
-- 第一次限流: 等待300秒
-- 第二次限流: 等待600秒
-- 第三次限流: 等待900秒
-
-### 进度文件位置
-- 输出文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent3_output.jsonl`
-- 进度文件: `D:\30_keyan\GeoKD-SR\data\geosr_chain\supplement\agent3_progress.json`
-
-### 备注
-任务仍在后台运行，支持断点续传。由于API限流严重，建议稍后检查进度或等待API限流恢复后继续执行。
+【按空间类型分层】
+  类型           数量     准确率     BLEU-4    ROUGE-L   Spatial F1
+  directional    457   0.4349    0.2345    0.4123      0.5123
+  ...
+```
 
 ---
 
-## 2026-03-09 拓扑补充Prompts生成脚本
+## 2026-03-19 Qwen2.5-1.5B 坐标增强数据集答案生成完成
 
 ### 任务概述
-创建`scripts/create_topology_supplement_prompts.py`脚本，生成拓扑关系的补充prompts配置文件。
+使用 Qwen2.5-1.5B 本地模型对带坐标的测试数据进行答案生成。
 
-### 目标数量（2026-03-09更新）
-- **within**: 512条（城市-省份包含关系）✅
-- **contains**: 374条（省份-城市被包含关系，补齐到600）✅
-- **adjacent**: 440条（省份邻接关系）✅
-- **overlap**: 512条（区域重叠关系，bonus）✅
+### 执行内容
+1. **创建配置文件**: `exp/exp0/exp0/stage1_generation/config/generation_config_coords.yaml`
+   - 关键改动: Prompt 模板增加了坐标说明 "地理实体后的括号里附有相应坐标，格式为(经度,纬度)"
 
-### 关键功能
-1. **省份邻接关系数据**: 基于中国地理构建了34个省份的邻接关系映射
-2. **城市-省份映射**: 使用entity_database_expanded.json中的province字段确保语义正确
-3. **随机种子42**: 保证结果可复现
-4. **难度分布**: easy 30%, medium 50%, hard 20%
-5. **Split分布**: train 80%, dev 10%, test 10%
+2. **运行环境**: conda llamafactory
 
-### 生成结果
-- 总计: **1,838条**prompts
-- 输出文件: `data/prompts/topology_supplement_prompts.json`
+3. **执行命令**:
+   ```bash
+   conda run -n llamafactory python generate_answers.py --config config/generation_config_coords.yaml
+   ```
 
-### 分布验证
-```
-拓扑子类型分布:
-  within: 512 (27.9%)
-  contains: 374 (20.3%)
-  adjacent: 440 (23.9%)
-  overlap: 512 (27.9%)
+### 执行结果
+- **输入数据**: `data/split_coords/test.jsonl` (1183条)
+- **输出文件**: `exp/exp0/exp0/stage1_generation/outputs/predictions_qwen_coords.jsonl` (1183条)
+- **执行时间**: 约16分钟32秒
+- **模型**: Qwen2.5-1.5B-Instruct (本地路径)
 
-难度分布:
-  easy: 536 (29.2%)
-  medium: 946 (51.5%)
-  hard: 356 (19.4%)
-
-Split分布:
-  train: 1486 (80.8%)
-  dev: 175 (9.5%)
-  test: 177 (9.6%)
-```
-  adjacent: 440 (26.0%)
-  overlap: 512 (30.2%)
-
-难度分布:
-  easy: 502 (29.6%)
-  medium: 868 (51.2%)
-  hard: 324 (19.1%)
-
-Split分布:
-  train: 1371 (80.9%)
-  dev: 176 (10.4%)
-  test: 147 (8.7%)
+### 输出格式示例
+```json
+{
+  "id": "geosr_directional_00513",
+  "question": "鼓浪屿郑成功纪念馆(118.0694,24.4511)位于福建省(117.5,26.5)的什么方位？",
+  "reference": "东南方向",
+  "prediction": "东南方向",
+  "spatial_type": "directional",
+  "difficulty": "medium"
+}
 ```
 
-### 技术要点
-- 使用Haversine公式计算两点间距离
-- 使用atan2计算方向关系（8方位：北、东北、东、东南、南、西南、西、西北）
-- prompt_text模板严格遵循prompts_config_full.json格式
-- 包含完整的5步reasoning_chain示例
+### 观察
+- 模型对坐标信息的利用程度有限
+- 部分预测存在格式不规范问题（如包含列表格式）
+- 方向问题准确率相对较高
+- 距离问题数值偏差较大
+
+### 后续任务
+- ~~对预测结果进行评估~~ ✅ 已完成
+- ~~分析模型对坐标信息的利用情况~~ ✅ 已完成
+- ~~对比有无坐标提示的性能差异~~ ✅ 已完成
 
 ---
 
-## 2026-03-07 GLM-5 API调用验证
+## 2026-03-21 Qwen2.5-1.5B SFT 训练系统实施完成
 
 ### 任务概述
-验证GLM-5 API调用方式并测试单条数据生成。
+实现 Qwen2.5-1.5B-Instruct 的 LoRA 微调训练系统，用于 GeoKD-SR Exp1 Direct-SFT 基线实验。
+
+### 项目结构
+```
+d:\30_keyan\GeoKD-SR\exp\exp0\qwen-1.5B-sft\
+├── configs/
+│   ├── train_6gb.yaml           # Windows 6GB配置 (batch=1, grad_accum=128)
+│   ├── train_24gb.yaml          # 阿里云 24GB配置 (batch=8, grad_accum=16)
+│   └── eval.yaml                # 评测配置
+├── scripts/
+│   ├── train.py                 # 主训练脚本
+│   ├── evaluate.py              # 评测脚本
+│   ├── run_windows.bat          # Windows启动脚本
+│   └── run_aliyun.sh            # 阿里云启动脚本
+├── src/
+│   ├── __init__.py
+│   ├── config.py                # 配置加载模块
+│   ├── data_processor.py        # 数据处理（ChatML格式）
+│   ├── trainer.py               # 训练器封装
+│   └── utils.py                 # 工具函数
+├── outputs/                     # 训练输出
+├── logs/                        # 训练日志
+├── checkpoints/                 # 模型检查点
+└── README.md                    # 使用说明
+```
+
+### 关键配置
+
+#### 6GB 配置 (train_6gb.yaml)
+- batch_size: 1
+- gradient_accumulation_steps: 128
+- effective_batch_size: 128
+- learning_rate: 5e-5
+- max_length: 1024
+- mixed_precision: fp16
+- LoRA: r=8, alpha=16
+
+#### 24GB 配置 (train_24gb.yaml)
+- batch_size: 8
+- gradient_accumulation_steps: 16
+- effective_batch_size: 128
+- learning_rate: 5e-5
+- max_length: 2048
+- mixed_precision: bf16
+- LoRA: r=16, alpha=32
+
+### 核心模块
+
+1. **config.py** - 配置加载
+   - Config, LoRAConfig, ModelConfig, TrainingConfig 等数据类
+   - from_yaml() 方法加载 YAML 配置
+   - get_dataset_path() 获取数据路径
+
+2. **data_processor.py** - 数据处理
+   - ChatMLConverter: 将数据转换为 ChatML 格式
+   - GeoSRDataProcessor: 加载和处理 GeoKD-SR 数据集
+   - Label 构造: system/user 段 → -100, assistant 段 → token_ids
+
+3. **trainer.py** - 训练器
+   - GeoSRSFTTrainer 类封装 TRL SFTTrainer
+   - 支持 LoRA 微调
+   - 支持 Gradient Checkpointing
+   - 支持 FP16/BF16 混合精度
+   - 支持 Trackio 日志记录
+
+4. **utils.py** - 工具函数
+   - setup_seed(): 设置随机种子
+   - setup_logging(): 配置日志
+   - get_device_info(): 获取设备信息
+   - format_time(): 时间格式化
+   - AverageMeter, Timer 类
+
+### 验证结果
+
+Dry-run 测试通过:
+- 配置文件加载正常
+- 训练数据: 9463 样本
+- 验证数据: 1124 样本
+- 模型文件验证通过 (config.json, tokenizer.json, tokenizer_config.json)
+
+### 使用方法
+
+```bash
+# Windows 6GB 环境训练
+python scripts/train.py --config configs/train_6gb.yaml --dataset splits
+
+# 阿里云 24GB 环境训练
+python scripts/train.py --config configs/train_24gb.yaml --dataset split_coords
+
+# Dry-run 验证
+python scripts/train.py --config configs/train_6gb.yaml --dataset splits --dry-run
+
+# 评测
+python scripts/evaluate.py --checkpoint ./checkpoints/checkpoint-xxx --test-file ../../data/splits/test.jsonl --output ./results
+```
+
+### 设计文档
+- `docs/superpowers/specs/2026-03-21-qwen-1.5b-sft-design.md`
+- `docs/superpowers/plans/2026-03-21-qwen-1.5b-sft-implementation.md`
+
+### 复用模块
+- `exp/exp0/metrics/deterministic.py` - 评测指标
+- `exp/exp0/utils/model_loader.py` - 模型加载参考
+
+---
+
+## 2026-03-19 predictions_qwen_coords.jsonl 评价完成
+
+### 任务概述
+对带坐标版本的预测结果（predictions_qwen_coords.jsonl）进行评价，并与不带坐标版本进行对比分析。
+
+### 评价结果
+
+#### 带坐标版本 (qwen_coords_eval)
+- **总体准确率**: 19.53%
+- **样本数**: 1183
+
+#### 不带坐标版本 (qwen_eval)
+- **总体准确率**: 23.16%
+- **样本数**: 1183
 
 ### 关键发现
-1. **GLM-5是推理模型**，返回两个字段：
-   - `content`: 最终答案 (1177字符)
-   - `reasoning_content`: 推理过程 (1573字符)
-2. **max_tokens设置**: 建议使用4096以上，否则content可能为空
-3. **API调用方式正确**，无需修改
 
-### 测试结果
-成功生成1条metric类型数据：
-- 文件: `outputs/test_single_record_v2.json`
-- ID: geosr_metric_001
-- 问题: 沧州与珠海之间的直线距离约为多少公里？
-- 答案: 沧州与珠海之间的直线距离约为1809公里。
-- 推理链: 5步完整 ✅
+#### 准确率对比
+| 类型 | 不带坐标 | 带坐标 | 变化 |
+|------|---------|--------|------|
+| **总体** | 23.16% | 19.53% | **-3.63%** ⬇️ |
+| Directional | 43.49% | 33.22% | **-10.27%** ⬇️⬇️ |
+| Topological | 24.85% | 23.37% | -1.48% |
+| Metric | 17.59% | 13.36% | -4.23% |
+| Composite | 3.66% | 5.69% | **+2.03%** ⬆️ |
 
-### 测试脚本
-创建了简化测试脚本 `scripts/test_glm5_simple.py`，特点：
-- 自动加载.env中的API密钥
-- 使用max_tokens=4096确保完整响应
-- 优先使用content，为空时使用reasoning_content
+#### 难度分层对比
+| 难度 | 不带坐标 | 带坐标 | 变化 |
+|------|---------|--------|------|
+| Easy | 32.53% | 25.81% | -6.72% |
+| Medium | 26.92% | 22.12% | -4.80% |
+| Hard | 4.47% | 6.87% | +2.40% |
 
-### 环境配置
-- API Key: 已配置在 `.env` 文件
-- API URL: `https://open.bigmodel.cn/api/paas/v4/chat/completions`
-- Model: `glm-5`
+### 主要结论
+1. **坐标信息总体产生负面影响**: 准确率下降3.63%
+2. **方向关系受影响最大**: 准确率下降10.27%
+3. **复合关系是唯一提升的类型**: 准确率提升2.03%
+4. **Hard难度受益**: 复杂问题中坐标可能提供辅助信息
 
----
+### 输出文件
+- 评价结果: `stage2_evaluation/results/qwen_coords_eval/metrics.json`
+- 评价报告: `stage2_evaluation/results/qwen_coords_eval/report.md`
+- 对比分析: `stage2_evaluation/results/coords_comparison_report.md`
 
-## 2026-03-06 省份-城市映射问题修复
-
-### 问题描述
-审查发现284条拓扑语义错误，省份-城市包含关系不正确。例如：
-- 陕西省-长沙（长沙实际属于湖南省）
-- 浙江省-黑河（黑河实际属于黑龙江省）
-- 吉林省-苏州（苏州实际属于江苏省）
-
-### 问题根源
-在`scripts/generate_prompts.py`的`_select_topological_entity_pair`方法中，选择省份-城市组合时使用的是完全随机配对逻辑：
-```python
-return random.choice(provinces), random.choice(cities)
-```
-这会导致省份和城市之间没有实际的包含关系。
-
-### 修复方案
-在`_select_topological_entity_pair`方法中添加了辅助函数`get_valid_province_city_pair()`：
-1. 按省份分组所有城市
-2. 构建省份名称映射（处理"省"、"市"后缀）
-3. 只返回真正有包含关系的省份-城市配对
-
-### 修复的代码位置
-- 文件: `D:\30_keyan\GeoKD-SR\scripts\generate_prompts.py`
-- 方法: `_select_topological_entity_pair`
-- 修改点:
-  - easy难度: 第725-726行 (使用valid_pair替代随机配对)
-  - medium难度: 第749-750行 (使用valid_pair替代随机配对)
-  - hard难度: 第839-840行 (使用valid_pair替代随机配对)
-  - 备选方案: 添加valid_pair检查
-
-### 验证结果
-测试生成了10个省份-城市配对，全部验证通过：
-```
-1. 福建省 - 三明 (城市属于: 福建省) [OK]
-2. 四川省 - 遂宁 (城市属于: 四川省) [OK]
-3. 河北省 - 三河 (城市属于: 河北省) [OK]
-...
-```
-
-### 注意事项
-- `entity_database.py`中的城市-省份映射本身是正确的
-- 问题出在生成脚本中的随机配对逻辑
-- 修复后需要重新生成数据才能生效
-
----
-
-## 2026-03-06 数据质量验证任务总结
-
-### 任务概述
-作为数据验证Agent，执行了GeoKD-SR实验数据的质量验证任务，检查了`data/prompts/prompts_config_full.json`文件的数据质量。
-
-### 验证结果
-
-**总体评估**: 数据质量未达标，得分88/100
-
-#### 通过的检查项:
-1. 总样本数: 11,800个 (达标)
-2. 数据集分布: train/dev/test比例正确
-3. 空间关系分布: directional/topological/metric/composite分布均衡
-4. 难度分布: easy/medium/hard比例合理
-5. 拓扑关系子类型: contains/disjoint/adjacent/within/overlap分布合理
-
-#### 发现的问题:
-
-**问题1: 实体对重复率过高 (10.57% vs 目标<5%)**
-- 总实体对数: 10,553
-- 重复实体对数: 422
-- 重复出现次数: 1,247
-- 高频重复Top3:
-  - 内江-自贡: 41次
-  - 吉林-白山: 39次
-  - 荆州-黄冈: 38次
-
-**问题2: 存在170个(0,0)坐标**
-- 影响169个prompts
-- 涉及14个唯一实体:
-  - 河流类: 珠江(26)、韩江(13)、嫩江(11)、松花江(11)、澜沧江(10)、额尔古纳河(9)、海河(7)、黄河(7)、长江(3)
-  - 湖泊类: 抚仙湖(25)、西湖(10)、呼伦湖(9)
-  - 山脉类: 武夷山脉(17)、云岭(12)
-
-### 生成的文件
-1. `scripts/validate_data_quality.py` - 数据质量验证脚本
-2. `scripts/analyze_detailed_issues.py` - 详细问题分析脚本
-3. `outputs/data_quality_report.txt` - 简明验证报告
-4. `outputs/detailed_issue_analysis.json` - 详细问题数据
-5. `outputs/data_quality_validation_report.md` - 完整验证报告
-
-### 修复建议
-1. **高优先级**: 从`entity_database_expanded.json`查找14个实体的正确坐标，或手动补充
-2. **中优先级**: 优化实体配对策略，降低重复率到5%以下
-
-### 项目文件结构
-```
-GeoKD-SR/
-├── data/
-│   ├── prompts/
-│   │   └── prompts_config_full.json (11,800个prompts)
-│   ├── entity_database_expanded.json (507个实体)
-│   └── geosr_chain/
-│       ├── train.jsonl (8,000)
-│       ├── dev.jsonl (800)
-│       └── test.jsonl (3,000)
-├── scripts/
-│   ├── validate_data_quality.py
-│   └── analyze_detailed_issues.py
-└── outputs/
-    ├── data_quality_report.txt
-    ├── detailed_issue_analysis.json
-    └── data_quality_validation_report.md
-```
+### 建议
+1. 如使用带坐标输入，需针对性微调
+2. 考虑仅在Hard难度的复合关系问题上使用坐标
+3. 探索不同坐标表示方式的效果

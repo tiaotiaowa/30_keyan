@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 
 MODEL_NAME = "glm-4.7"
 API_KEY = "90fec3d49a8c40babbacecc617b34cf3.i4lMb9sTCUQlHKMw"
+BASE_URL = "https://open.bigmodel.cn/api/anthropic"
 
 # 超时和重试配置
 REQUEST_TIMEOUT = 180
@@ -177,17 +178,20 @@ class ProgressManager:
 # ================================
 
 class GLMClient:
-    """GLM API客户端 - 带超时和重试"""
+    """GLM API客户端 - 使用ANTHROPIC兼容接口"""
 
-    def __init__(self, api_key: str = API_KEY, model: str = MODEL_NAME):
-        from zhipuai import ZhipuAI
-        self.client = ZhipuAI(api_key=api_key)
+    def __init__(self, api_key: str = API_KEY, model: str = MODEL_NAME, base_url: str = BASE_URL):
+        from openai import OpenAI
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url=base_url
+        )
         self.model = model
         self._request_count = 0
         self._success_count = 0
         self._error_count = 0
 
-        logger.info(f"GLM客户端初始化: model={model}")
+        logger.info(f"GLM客户端初始化: model={model}, base_url={base_url}")
 
     def generate(self, prompt: str, max_tokens: int = 8192, temperature: float = 0.95) -> Optional[str]:
         """生成响应 - 带超时和重试机制"""
@@ -214,8 +218,6 @@ class GLMClient:
                     content = None
                     if hasattr(message, 'content') and message.content:
                         content = message.content
-                    elif hasattr(message, 'reasoning_content') and message.reasoning_content:
-                        content = message.reasoning_content
 
                     if content:
                         self._success_count += 1

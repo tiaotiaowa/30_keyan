@@ -1,0 +1,474 @@
+# 角色与背景
+你是一位地理信息科学与自然语言处理领域的专家，正在协助一个名为“GeoKD-SR”的研究项目。该项目旨在构建一个高质量的空间关系推理数据集，用于知识蒸馏实验。数据将用于训练轻量级语言模型，使其具备空间推理能力。数据集必须严格遵循实验设计文档（V5.3）和数据生成规范（V2.1）的要求。
+
+# 任务描述
+我将一次性提供5条JSON格式的地理空间推理数据，每条数据包含一个问题、答案、推理链、实体信息等字段。请你逐条审核并修复数据中的问题，确保每条数据都符合以下所有质量标准。请直接输出修复后的完整JSON数据，每行一条，保持原有的JSON结构。
+
+## 审核与修复要求
+
+### 1. 问句形式统一与避免提示引导
+- 问题应自然流畅，像人类提问，不能直接给出空间关系类型的关键词（如“包含关系”、“拓扑关系”、“方向关系”），而是通过上下文隐式表达。
+- 例如，应使用“A位于B的什么方向？”而非“A与B的方向关系是什么？”；使用“A是否在B内部？”而非“A与B的拓扑包含关系如何？”。
+- 问题中不得出现坐标（如经纬度），坐标必须仅存在于`entities`字段中。
+
+### 2. 坐标准确性
+- 所有坐标必须在中国境内（经度73°-135°，纬度18°-54°），精确到小数点后4位。
+- 不同类型实体的坐标应符合以下惯例：
+  - 省份/直辖市/自治区：使用省会或行政中心坐标（如北京市使用市中心坐标）。
+  - 城市/县级市：使用市中心坐标。
+  - 地标（景点、古迹）：使用精确的坐标点。
+  - 山脉：使用主峰坐标。
+  - 河流：使用具有代表性的中点或主要流经城市坐标（可注明）。
+  - 湖泊：使用湖心坐标。
+- 如果坐标明显偏离（例如城市坐标落在海洋或境外），请根据地理常识修正。
+
+### 3. 地理知识正确性
+- 实体的行政归属（如某市属于某省）必须正确。
+- 实体之间的空间关系（包含、相邻、相离等）必须符合现实地理知识。例如，不能出现“北京位于上海内部”这样的错误。
+- 如果问题涉及河流流经、山脉位置等，需确保事实准确。
+
+### 4. 推理链正确性
+- `reasoning_chain`必须包含**5个步骤**，每个步骤是一个对象，包含`step`（整数）、`name`（步骤名称，如"entity_identification"）、`action`（动作类型，如"extract_entities"）、`content`（描述）。建议步骤顺序为：
+  1. 实体识别（entity_identification）
+  2. 空间关系提取（spatial_relation_extraction）
+  3. 坐标检索（coordinate_retrieval）
+  4. 空间计算/推理（spatial_calculation）
+  5. 答案生成（answer_generation）
+- 每一步的内容应逻辑连贯，与最终答案一致。第5步的`final_answer`应与顶层的`answer`字段语义一致（可适当详细）。
+- 如果推理链中引用了坐标，请确保与`entities`中的坐标一致。
+
+### 5. 字段完整性与格式规范
+- 必需字段：`id`, `spatial_relation_type`, `question`, `answer`, `reasoning_chain`, `entities`, `spatial_tokens`, `difficulty`, `topology_subtype`（仅当`spatial_relation_type`为"topological"时必需）, `split`, `difficulty_score`。
+- `spatial_relation_type`取值只能是`"directional"`, `"topological"`, `"metric"`, `"composite"`之一。
+- `topology_subtype`取值只能是`"within"`, `"contains"`, `"adjacent"`, `"disjoint"`, `"overlap"`之一（仅topological类型需要）。
+- `difficulty`取值`"easy"`, `"medium"`, `"hard"`。
+- `difficulty_score`应为1.0-5.0之间的浮点数，可根据数据规范中的规则计算（但不必强求精确，大致合理即可）。
+- `entities`数组至少包含2个实体，每个实体有`name`, `type`, `coords`。实体类型包括：`province`, `city`, `landmark`, `mountain`, `river`, `lake`等。
+- `spatial_tokens`是从问题中提取的与空间相关的关键词（如实体名、方位词、关系词），应为列表形式。
+- `entity_to_token`字段：映射实体在问题中的字符位置和token索引（可粗略估算，但需保证`char_start`和`char_end`准确）。如果无法精确计算token索引，可暂时保留原样，但尽量调整字符位置使之正确。
+
+### 6. 修复原则
+- 如果发现问题，请直接修改并输出修复后的完整JSON。
+- 如果数据完全正确，可原样输出（但请确保所有字段存在且格式正确）。
+- 对于不确定的地理知识，请基于你的常识进行判断；如果无法确定，可标记但尽量保持原数据。
+
+## 输入数据格式（5条JSON，每行一条）
+{"id": "geosr_topological_prompt_1588_2596", "spatial_relation_type": "topological", "question": "集安与上海市在行政区划上是否存在包含关系？", "answer": "不存在包含关系。集安市隶属于吉林省通化市，而上海市是直辖市，两者互不隶属。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为上海市（直辖市）和集安（县级市）。", "entities_involved": ["上海市", "集安"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问包含关系，属于拓扑空间关系（topological）。"}, {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "检索空间位置属性，上海位于华东沿海，集安位于东北吉林省。", "coordinates": {"上海市": [121.4737, 31.2304], "集安": [126.1944, 41.1258]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断两者的行政隶属及空间包含状态。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据行政归属判定两者无包含关系。", "final_answer": "集安位于上海市内"}], "entities": [{"name": "上海市", "type": "province", "coords": [121.4737, 31.2304]}, {"name": "集安", "type": "city", "coords": [126.1944, 41.1258]}], "spatial_tokens": ["上海市", "集安", "包含", "位于", "行政", "隶属"], "difficulty": "easy", "topology_subtype": "disjoint", "prompt_id": "prompt_1588", "split": "train", "entity_to_token": {"上海市": {"char_start": 3, "char_end": 5, "token_indices": [3, 4]}, "集安": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_0653_6653", "spatial_relation_type": "topological", "question": "已知地理实体大巴山脉（mountain类型）和云冈石窟（landmark类型），请判断这两个实体之间的拓扑关系，并回答云冈石窟是否位于大巴山脉内部？", "answer": "云冈石窟不位于大巴山脉内部，两者在空间上呈相离关系。大巴山脉位于中国西南部（川渝陕交界），云冈石窟位于中国北部（山西大同），两者地理跨度极大，互不包含。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体，分别为‘大巴山脉’（类型：mountain）和‘云冈石窟’（类型：landmark）。", "entities_involved": ["大巴山脉", "云冈石窟"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "识别问题中的空间关系类型，关键词为‘位于...内部’，属于拓扑关系中的包含关系判断。"}, {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取实体的地理坐标信息。大巴山脉大致位于东经108.5度、北纬32.5度附近；云冈石窟位于东经113.1206度、北纬40.1106度。", "coordinates": {"大巴山脉": [108.5, 32.5], "云冈石窟": [113.1206, 40.1106]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "计算并判断拓扑关系。对比坐标可知，大巴山脉位于秦巴山区西南部，而云冈石窟位于山西省大同市，两者经度相差约5度，纬度相差约8度，空间上完全分离，不存在包含关系。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据空间计算结果，生成最终答案：云冈石窟不在大巴山脉内部，两者相离。", "final_answer": "disjoint"}], "entities": [{"name": "大巴山脉", "type": "mountain", "coords": [108.5, 32.5]}, {"name": "云冈石窟", "type": "landmark", "coords": [113.1206, 40.1106]}], "spatial_tokens": ["大巴山脉", "云冈石窟", "包含", "位于", "内部", "相离"], "difficulty": "medium", "topology_subtype": "disjoint", "split": "train", "difficulty_score": 3.1, "entity_to_token": {"大巴山脉": {"char_start": 6, "char_end": 10, "token_indices": [6, 7, 8, 9]}, "云冈石窟": {"char_start": 23, "char_end": 27, "token_indices": [23, 24, 25, 26]}}}
+{"id": "geosr_topological_prompt_3690_8536", "spatial_relation_type": "topological", "question": "沅江是否流经定西市？", "answer": "否，沅江与定西市在空间上处于分离状态，沅江不流经定西市。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为河流沅江和城市定西。", "entities_involved": ["沅江", "定西"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问“是否流经”，涉及包含或相交关系，属于拓扑空间关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取坐标信息：沅江主要流域经纬度范围大致在[111.4, 28.4]附近，定西经纬度[104.5861, 35.5806]。", "coordinates": {"沅江": [111.4, 28.4], "定西": [104.5861, 35.5806]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "分析地理知识：沅江位于湖南（长江中游南岸），定西位于甘肃（西北地区），两者地理位置相隔甚远。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于拓扑关系判断，得出否定结论。", "final_answer": "A与B分离"}], "entities": [{"name": "沅江", "type": "river", "coords": [111.4, 28.4]}, {"name": "定西", "type": "city", "coords": [104.5861, 35.5806]}], "spatial_tokens": ["沅江", "定西", "流经", "分离", "拓扑", "包含"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_3690", "split": "train", "entity_to_token": {"沅江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}, "定西": {"char_start": 6, "char_end": 8, "token_indices": [6, 7]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_3022_6496", "spatial_relation_type": "topological", "question": "同江市在地理行政区划上是否归属于湖北省？", "answer": "同江市不属于湖北省。同江市位于中国东北地区，是黑龙江省佳木斯市下辖的县级市；而湖北省位于中国中部地区。两者在地理空间和行政区划上均无交集，距离较远。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为'湖北省'（省级行政区）和'同江'（县级市）。", "entities_involved": ["湖北省", "同江"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "确定问题旨在询问两者之间的行政隶属或空间包含的拓扑关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取坐标信息：湖北省位于华中地区（约114.31°E, 30.59°N）；同江市位于黑龙江东北部（约132.51°E, 47.65°N）。", "coordinates": {"湖北省": [114.3055, 30.5928], "同江": [132.5108, 47.6458]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "比较空间位置：同江的纬度远高于湖北，经度也偏东。经度差约18度，纬度差约17度。显然同江不在湖北省的边界范围内。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "综合行政区划知识，同江归属黑龙江省，因此不在湖北省内。", "final_answer": "同江不在湖北省内"}], "entities": [{"name": "湖北省", "type": "province", "coords": [114.3055, 30.5928]}, {"name": "同江", "type": "city", "coords": [132.5108, 47.6458]}], "spatial_tokens": ["湖北省", "同江", "包含", "位于", "行政区划", "黑龙江省", "相离"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_3022", "split": "train", "entity_to_token": {"湖北省": {"char_start": 16, "char_end": 18, "token_indices": [16, 17]}, "同江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_2497_5705", "spatial_relation_type": "topological", "question": "从行政区划的包含关系来看，长治市和阜新市是否属于同一个省份？它们之间的行政隶属拓扑关系如何？", "answer": "长治市位于山西省境内，阜新市位于辽宁省境内，两者互不包含，属于相离（ disjoint）的拓扑关系。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体为长治市和阜新市。", "entities_involved": ["长治", "阜新"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "分析问题核心，需要判断两者在行政区划上的包含或相邻等拓扑关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取实体空间信息：长治位于山西省南部，阜新位于辽宁省西部。", "coordinates": {"长治": [113.1161, 36.1953], "阜新": [121.6709, 42.0215]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断拓扑关系：长治属于山西省行政区划范围，阜新属于辽宁省行政区划范围，两者边界不相交，互不包含。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于行政区划事实，生成两者互不隶属的答案。", "final_answer": "长治和阜新分别位于不同的省份，互不相包含"}], "entities": [{"name": "长治", "type": "city", "coords": [113.1161, 36.1953]}, {"name": "阜新", "type": "city", "coords": [121.6709, 42.0215]}], "spatial_tokens": ["长治", "阜新", "包含", "位于", "省份", "行政区划", "相离"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_2497", "split": "train", "entity_to_token": {"长治": {"char_start": 13, "char_end": 15, "token_indices": [13, 14]}, "阜新": {"char_start": 17, "char_end": 19, "token_indices": [17, 18]}}, "difficulty_score": 2.6}
+
+
+## 输出要求
+请只输出修复后的5条JSON数据，每行一条，不要添加任何解释、前缀或后缀。确保每条JSON都是有效的、格式正确的。
+我们被要求审核并修复5条JSON格式的地理空间推理数据。需要逐条检查并确保符合所有质量标准：问句形式统一、避免提示引导、坐标准确性、地理知识正确性、推理链正确性（5步）、字段完整性与格式规范。最后输出修复后的完整JSON，每行一条。
+
+我们将逐条检查，并做出必要修正。
+
+首先，列出每条数据的问题。
+
+第一条数据
+json
+{
+  "id": "geosr_topological_prompt_1588_2596",
+  "spatial_relation_type": "topological",
+  "question": "集安与上海市在行政区划上是否存在包含关系？",
+  "answer": "不存在包含关系。集安市隶属于吉林省通化市，而上海市是直辖市，两者互不隶属。",
+  "reasoning_chain": [
+    {"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为上海市（直辖市）和集安（县级市）。", "entities_involved": ["上海市", "集安"]},
+    {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问包含关系，属于拓扑空间关系（topological）。"},
+    {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "检索空间位置属性，上海位于华东沿海，集安位于东北吉林省。", "coordinates": {"上海市": [121.4737, 31.2304], "集安": [126.1944, 41.1258]}},
+    {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断两者的行政隶属及空间包含状态。"},
+    {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据行政归属判定两者无包含关系。", "final_answer": "集安位于上海市内"}
+  ],
+  "entities": [
+    {"name": "上海市", "type": "province", "coords": [121.4737, 31.2304]},
+    {"name": "集安", "type": "city", "coords": [126.1944, 41.1258]}
+  ],
+  "spatial_tokens": ["上海市", "集安", "包含", "位于", "行政", "隶属"],
+  "difficulty": "easy",
+  "topology_subtype": "disjoint",
+  "prompt_id": "prompt_1588",
+  "split": "train",
+  "entity_to_token": {
+    "上海市": {"char_start": 3, "char_end": 5, "token_indices": [3, 4]},
+    "集安": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}
+  },
+  "difficulty_score": 3.1
+}
+检查点：
+
+问句形式：问题“集安与上海市在行政区划上是否存在包含关系？”直接使用了“包含关系”，这是空间关系类型关键词。根据要求，应避免直接给出关键词，而是通过上下文隐式表达。可以改为“集安在行政区划上属于上海市吗？”或类似。
+
+坐标：上海市坐标[121.4737,31.2304]是人民广场附近，合理。集安坐标[126.1944,41.1258]是集安市中心，合理。
+
+地理知识：集安属于吉林省通化市，上海市是直辖市，两者互不隶属，正确。答案说“不存在包含关系”，正确。
+
+推理链：步骤5的final_answer是“集安位于上海市内”，这与答案矛盾，应该是“集安不在上海市内”。明显错误。需要修正为“集安不在上海市内”或“集安与上海市无包含关系”。
+
+步骤3中action是“infer_entity_to_token”，但名称是“coordinate_retrieval”，这里action似乎不匹配。不过action字段在规范中未强制，但内容提到“检索空间位置属性”，action可以是“retrieve_coordinates”，但现有的是“infer_entity_to_token”，可能不规范。我们可以调整action为更合适的，但规范未严格要求action值，可以保留，但最好统一。我们检查其他条目的action，有的用“extract_entities”、“classify_relation”、“infer_entity_to_token”、“determine_topology”、“generate_answer”。这里步骤3的action是“infer_entity_to_token”，但内容是检索坐标，这似乎不匹配，因为infer_entity_to_token通常用于建立实体到token映射。但规范中步骤名称和action没有强制对应，我们可保留或修改。但为了逻辑一致，我们可以将步骤3的action改为“retrieve_coordinates”或保持原样。但步骤名称是“coordinate_retrieval”，action应该是描述动作，可以是“retrieve_coordinates”。目前是“infer_entity_to_token”，可能是个错误。我们可修正为“retrieve_coordinates”。
+
+字段完整性：所有必需字段都存在。但prompt_id是额外字段，可以保留。
+
+entity_to_token中字符位置：问题“集安与上海市在行政区划上是否存在包含关系？”中，“集安”从索引0到2（假设字符计数，集安是两个汉字，但“集安”占2个字符，char_start=0, char_end=1? 通常字符索引以0开始，包含结束位置，如果“集安”占两个字符，那么char_start=0, char_end=1（如果包含结束索引为最后一个字符索引）。但这里char_end=2，可能是包含关系，比如“集安”占两个位置，索引0和1，结束索引为2（即左闭右开）。我们需要确认。但问题中“集安”后面紧跟“与”，所以“集安”在位置0和1。如果char_end=2，则包含0,1，即结束索引是2，合理。同样“上海市”从索引3开始（“集安与”占3个字符？实际字符串："集安与上海市"，索引0集，1安，2与，3上，4海，5市，所以“上海市”从3到5，如果char_end=5，则包含3,4,5，即结束索引6？需要明确。通常用左闭右开，char_start=3, char_end=6表示占3,4,5。这里char_end=5，可能用了闭区间？需要保持一致性。但规范可能允许，我们暂时保留，但检查是否准确。如果按左闭右闭，char_start=3, char_end=5表示占3,4,5三个字符，也是可以的。我们保留原样，但需确保与问题字符串一致。问题字符串是“集安与上海市在行政区划上是否存在包含关系？”，其中“集安”位置0-1，“与”位置2，“上海市”位置3-5，“在”位置6，等等。所以char_start=3, char_end=5是正确的（如果左闭右闭）。集安char_start=0, char_end=1也是正确的。token_indices是估计的，可以保留。
+
+推理链步骤数：5步，正确。
+
+主要问题：final_answer错误，问句有直接关系词。另外步骤3的action可能需调整。
+
+修正：
+
+将问题改为更自然的问法，例如：“集安在行政区划上属于上海市吗？”或者“集安市是上海市的一部分吗？”这样隐式询问包含关系。
+
+将推理链第5步的final_answer改为“集安不在上海市内”或“集安与上海市无包含关系”。
+
+可能需调整步骤3的action为“retrieve_coordinates”或保持原样，但最好统一。我们看看其他条目的步骤3 action有的是“infer_entity_to_token”，有的是“retrieve_coordinates”，不一致。但规范并未要求action固定，我们可以根据内容调整。这里步骤3内容是检索坐标，所以action应该是“retrieve_coordinates”。我们改成"retrieve_coordinates"。
+
+步骤2的action是“classify_relation”，但名称是“spatial_relation_extraction”，可以。步骤4 action是“determine_topology”，步骤5 action是“generate_answer”，都合理。
+
+另外，第5步的final_answer应该是字符串，可以包含答案。但答案应该与顶层answer一致。顶层answer是“不存在包含关系。集安市隶属于吉林省通化市，而上海市是直辖市，两者互不隶属。” final_answer目前是“集安位于上海市内”，明显错误。应改为“集安不在上海市内，两者无包含关系。”但为了简洁，可以只给出关键结论，如“集安与上海市无包含关系”。但顶层answer详细，final_answer可以略简，但语义一致。我们改为“集安与上海市无包含关系”。
+
+此外，检查topology_subtype为“disjoint”，正确。
+
+修改后第一条。
+
+第二条数据
+json
+{
+  "id": "geosr_topological_prompt_0653_6653",
+  "spatial_relation_type": "topological",
+  "question": "已知地理实体大巴山脉（mountain类型）和云冈石窟（landmark类型），请判断这两个实体之间的拓扑关系，并回答云冈石窟是否位于大巴山脉内部？",
+  "answer": "云冈石窟不位于大巴山脉内部，两者在空间上呈相离关系。大巴山脉位于中国西南部（川渝陕交界），云冈石窟位于中国北部（山西大同），两者地理跨度极大，互不包含。",
+  "reasoning_chain": [
+    {"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体，分别为‘大巴山脉’（类型：mountain）和‘云冈石窟’（类型：landmark）。", "entities_involved": ["大巴山脉", "云冈石窟"]},
+    {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "识别问题中的空间关系类型，关键词为‘位于...内部’，属于拓扑关系中的包含关系判断。"},
+    {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取实体的地理坐标信息。大巴山脉大致位于东经108.5度、北纬32.5度附近；云冈石窟位于东经113.1206度、北纬40.1106度。", "coordinates": {"大巴山脉": [108.5, 32.5], "云冈石窟": [113.1206, 40.1106]}},
+    {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "计算并判断拓扑关系。对比坐标可知，大巴山脉位于秦巴山区西南部，而云冈石窟位于山西省大同市，两者经度相差约5度，纬度相差约8度，空间上完全分离，不存在包含关系。"},
+    {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据空间计算结果，生成最终答案：云冈石窟不在大巴山脉内部，两者相离。", "final_answer": "disjoint"}
+  ],
+  "entities": [
+    {"name": "大巴山脉", "type": "mountain", "coords": [108.5, 32.5]},
+    {"name": "云冈石窟", "type": "landmark", "coords": [113.1206, 40.1106]}
+  ],
+  "spatial_tokens": ["大巴山脉", "云冈石窟", "包含", "位于", "内部", "相离"],
+  "difficulty": "medium",
+  "topology_subtype": "disjoint",
+  "split": "train",
+  "difficulty_score": 3.1,
+  "entity_to_token": {
+    "大巴山脉": {"char_start": 6, "char_end": 10, "token_indices": [6, 7, 8, 9]},
+    "云冈石窟": {"char_start": 23, "char_end": 27, "token_indices": [23, 24, 25, 26]}
+  }
+}
+检查：
+
+问句形式：问题中明确给出了实体类型，并直接问“拓扑关系”和“是否位于...内部”，有点直接，但“位于...内部”是自然问法，可以接受。但“拓扑关系”是术语，应避免。问题说“请判断这两个实体之间的拓扑关系”，这直接使用了“拓扑关系”，是提示引导。应改为更自然的问法，比如“请判断这两个实体之间的空间关系，并回答云冈石窟是否位于大巴山脉内部？”但“空间关系”仍有点术语，但可能可以接受。最好完全避免术语，如“云冈石窟在大巴山脉里面吗？”但原问题加了“已知地理实体大巴山脉（mountain类型）和云冈石窟（landmark类型）”，这是为了提供类型信息，但可能也是提示。规范要求问题自然流畅，像人类提问，不能直接给出空间关系类型的关键词。这里“拓扑关系”是关键词，应移除。我们可以将问题改为：“大巴山脉和云冈石窟，云冈石窟在大巴山脉内部吗？”但类型信息可能需要在上下文中隐含？实际上，类型信息可以在实体中提供，问题中不必重复。所以我们可以简化问题为：“云冈石窟位于大巴山脉内部吗？”这样既自然又隐式询问包含关系。但原问题中“已知地理实体...”可能为了明确实体，但也可以不要。我们修改为更自然的问题。
+
+坐标：大巴山脉坐标[108.5,32.5]大概在川陕交界，合理。云冈石窟坐标[113.1206,40.1106]在山西大同，合理。
+
+地理知识：正确。
+
+推理链：步骤5的final_answer是"disjoint"，这只是一个词，而顶层answer是详细描述。final_answer可以是简洁的，但应语义一致。这里"disjoint"是拓扑关系类型，可以接受，但最好用自然语言描述。但规范中并未强制final_answer必须是自然语言，但通常应该与答案对应。我们可以保留，或改为“相离”。但为了与顶层答案一致，可以改为“云冈石窟不在大巴山脉内部，两者相离”。不过步骤5的content已经说了“生成最终答案：云冈石窟不在大巴山脉内部，两者相离。”而final_answer却是"disjoint"，不一致。应该将final_answer改为与content一致。我们修正。
+
+步骤3的action又是“infer_entity_to_token”，应该改为“retrieve_coordinates”。
+
+实体to token：字符位置计算可能有问题。原问题：“已知地理实体大巴山脉（mountain类型）和云冈石窟（landmark类型），请判断这两个实体之间的拓扑关系，并回答云冈石窟是否位于大巴山脉内部？”我们数一下字符（汉字、标点符号都算一个字符）。我们按原始字符串计算：
+“已”0，“知”1，“地”2，“理”3，“实”4，“体”5，“大”6，“巴”7，“山”8，“脉”9，“（”10，“m”11，“o”12，“u”13，“n”14，“t”15，“a”16，“i”17，“n”18，“类”19，“型”20，“）”21，“和”22，“云”23，“冈”24，“石”25，“窟”26，“（”27，“l”28，“a”29，“n”30，“d”31，“m”32，“a”33，“r”34，“k”35，“类”36，“型”37，“）”38，“，”39，“请”40，“判”41，“断”42，“这”43，“两”44，“个”45，“实”46，“体”47，“之”48，“间”49，“的”50，“拓”51，“扑”52，“关”53，“系”54，“，”55，“并”56，“回”57，“答”58，“云”59，“冈”60，“石”61，“窟”62，“是”63，“否”64，“位”65，“于”66，“大”67，“巴”68，“山”69，“脉”70，“内”71，“部”72，“？”73。
+所以“大巴山脉”从6到9（包含6,7,8,9），char_start=6, char_end=9（如果左闭右闭），但这里char_end=10，可能是左闭右开，即包含6-9，结束索引10。通常我们用左闭右开，那么char_start=6, char_end=10。这里用的是10，合理。“云冈石窟”从23到26，左闭右闭的话char_end=26，左闭右开的话char_end=27。这里用了27，也是左闭右开。所以字符位置正确。
+
+token_indices是估计的，可能不准确，但可以保留。
+
+修正：
+
+问题改为：“云冈石窟位于大巴山脉内部吗？”或者保留部分信息但去掉“拓扑关系”，如：“大巴山脉和云冈石窟，请问云冈石窟在大巴山脉内部吗？”这样更自然。我们采用“云冈石窟位于大巴山脉内部吗？”简单直接。
+
+步骤3 action改为“retrieve_coordinates”。
+
+步骤5 final_answer改为“云冈石窟不在大巴山脉内部，两者相离。”或与content一致，但content中已经写了“生成最终答案：云冈石窟不在大巴山脉内部，两者相离。”所以final_answer可以就取这个字符串。
+
+注意，修改问题后，entity_to_token中的字符位置需要重新计算。因为问题变了，我们需要重新定位实体的字符起始和结束。新问题：“云冈石窟位于大巴山脉内部吗？” 字符串：“云”0，“冈”1，“石”2，“窟”3，“位”4，“于”5，“大”6，“巴”7，“山”8，“脉”9，“内”10，“部”11，“？”12。所以“云冈石窟”从0到3（左闭右开为0-4），“大巴山脉”从6到9（左闭右开为6-10）。因此需要更新entity_to_token中的char_start和char_end。
+我们更新为：
+"云冈石窟": {"char_start": 0, "char_end": 4, "token_indices": [0,1,2,3]}（假设token索引按字符顺序，但token_indices可以保留原样或重新估算，由于我们不确定分词，可以保持原token_indices，但为了准确，可以简单设为对应字符索引。规范要求“可粗略估算”，所以我们可以保留原token_indices或设置为[0,1,2,3]？但原token_indices是[23,24,25,26]，显然不对，需要重新估计。由于问题变短了，token_indices应该从0开始。但“可粗略估算”，我们可设token_indices为[0,1,2,3]或[0,1,2,3]？注意，分词可能不是每个字符一个token，但我们可以简单设为对应字符索引。但规范说“可粗略估算”，我们保留原token_indices？那肯定不对。我们可以重新估算为[0,1,2,3]和[6,7,8,9]？但实际分词可能将“云冈石窟”作为一个词，可能只有一个token。但为了避免复杂，我们保持token_indices为字符索引的简单对应。我们可以设“云冈石窟”的token_indices为[0,1,2,3]，“大巴山脉”为[6,7,8,9]。这样大致合理。
+但规范中entity_to_token要求映射实体在问题中的字符位置和token索引，我们尽量提供合理的token索引。我们可以基于字符索引近似。由于中文通常一个字一个token？但模型分词可能不同。我们按字符索引作为token索引，问题不大。
+所以更新entity_to_token。
+
+第三条数据
+json
+{
+  "id": "geosr_topological_prompt_3690_8536",
+  "spatial_relation_type": "topological",
+  "question": "沅江是否流经定西市？",
+  "answer": "否，沅江与定西市在空间上处于分离状态，沅江不流经定西市。",
+  "reasoning_chain": [
+    {"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为河流沅江和城市定西。", "entities_involved": ["沅江", "定西"]},
+    {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问“是否流经”，涉及包含或相交关系，属于拓扑空间关系。"},
+    {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取坐标信息：沅江主要流域经纬度范围大致在[111.4, 28.4]附近，定西经纬度[104.5861, 35.5806]。", "coordinates": {"沅江": [111.4, 28.4], "定西": [104.5861, 35.5806]}},
+    {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "分析地理知识：沅江位于湖南（长江中游南岸），定西位于甘肃（西北地区），两者地理位置相隔甚远。"},
+    {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于拓扑关系判断，得出否定结论。", "final_answer": "A与B分离"}
+  ],
+  "entities": [
+    {"name": "沅江", "type": "river", "coords": [111.4, 28.4]},
+    {"name": "定西", "type": "city", "coords": [104.5861, 35.5806]}
+  ],
+  "spatial_tokens": ["沅江", "定西", "流经", "分离", "拓扑", "包含"],
+  "difficulty": "medium",
+  "topology_subtype": "disjoint",
+  "prompt_id": "prompt_3690",
+  "split": "train",
+  "entity_to_token": {
+    "沅江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]},
+    "定西": {"char_start": 6, "char_end": 8, "token_indices": [6, 7]}
+  },
+  "difficulty_score": 3.1
+}
+检查：
+
+问句形式：问题“沅江是否流经定西市？”很自然，没有直接给出关系类型关键词，符合要求。
+
+坐标：沅江坐标[111.4,28.4]大约在湖南常德附近，是沅江流域中游，可以代表。定西坐标[104.5861,35.5806]是定西市中心，合理。
+
+地理知识：沅江主要流经湖南，不流经甘肃定西，正确。
+
+推理链：步骤5的final_answer是“A与B分离”，这太抽象，应给出具体结论，如“沅江不流经定西市”。而且顶层answer是“否，沅江与定西市在空间上处于分离状态，沅江不流经定西市。”所以final_answer可以简化为“沅江不流经定西市”或“两者分离”。但“A与B分离”不够明确。我们改为“沅江不流经定西市”。
+
+步骤3 action又是“infer_entity_to_token”，应改为“retrieve_coordinates”。
+
+实体to token：问题“沅江是否流经定西市？”字符：沅0，江1，是2，否3，流4，经5，定6，西7，市8，？9。所以“沅江”从0到1，左闭右开char_end=2，正确。“定西”从6到7，左闭右开char_end=8，正确。token_indices近似为[0,1]和[6,7]，可以。
+
+spatial_tokens中包含“拓扑”，但问题中没有出现“拓扑”，这个关键词可能多余，但可以保留，因为spatial_tokens是问题中与空间相关的关键词，但“拓扑”不在问题中，所以不应该出现。应移除“拓扑”。同样“包含”也不在问题中，但“流经”在，还有“分离”在答案中？spatial_tokens应该从问题中提取，而不是答案。所以spatial_tokens应为["沅江","定西","流经"]。但可能也包括隐含的，但最好只从问题中提取。规范说“是从问题中提取的与空间相关的关键词”，所以应该只包含问题中的词。这里问题中只有“沅江”、“定西”、“流经”，可能还有“是否”但无关。所以应修正spatial_tokens为["沅江","定西","流经"]。
+
+另外，注意“定西市”在问题中，但实体名是“定西”，所以spatial_tokens可以包括“定西市”或“定西”，但通常用实体名。这里已包括“定西”，没问题。
+
+修正：
+
+步骤3 action改为“retrieve_coordinates”。
+
+步骤5 final_answer改为“沅江不流经定西市”。
+
+spatial_tokens去掉“拓扑”和“包含”，只保留["沅江","定西","流经"]，但“分离”也不在问题中，所以去掉。保留["沅江","定西","流经"]。
+
+第四条数据
+json
+{
+  "id": "geosr_topological_prompt_3022_6496",
+  "spatial_relation_type": "topological",
+  "question": "同江市在地理行政区划上是否归属于湖北省？",
+  "answer": "同江市不属于湖北省。同江市位于中国东北地区，是黑龙江省佳木斯市下辖的县级市；而湖北省位于中国中部地区。两者在地理空间和行政区划上均无交集，距离较远。",
+  "reasoning_chain": [
+    {"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为'湖北省'（省级行政区）和'同江'（县级市）。", "entities_involved": ["湖北省", "同江"]},
+    {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "确定问题旨在询问两者之间的行政隶属或空间包含的拓扑关系。"},
+    {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取坐标信息：湖北省位于华中地区（约114.31°E, 30.59°N）；同江市位于黑龙江东北部（约132.51°E, 47.65°N）。", "coordinates": {"湖北省": [114.3055, 30.5928], "同江": [132.5108, 47.6458]}},
+    {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "比较空间位置：同江的纬度远高于湖北，经度也偏东。经度差约18度，纬度差约17度。显然同江不在湖北省的边界范围内。"},
+    {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "综合行政区划知识，同江归属黑龙江省，因此不在湖北省内。", "final_answer": "同江不在湖北省内"}
+  ],
+  "entities": [
+    {"name": "湖北省", "type": "province", "coords": [114.3055, 30.5928]},
+    {"name": "同江", "type": "city", "coords": [132.5108, 47.6458]}
+  ],
+  "spatial_tokens": ["湖北省", "同江", "包含", "位于", "行政区划", "黑龙江省", "相离"],
+  "difficulty": "medium",
+  "topology_subtype": "disjoint",
+  "prompt_id": "prompt_3022",
+  "split": "train",
+  "entity_to_token": {
+    "湖北省": {"char_start": 16, "char_end": 18, "token_indices": [16, 17]},
+    "同江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}
+  },
+  "difficulty_score": 3.1
+}
+检查：
+
+问句形式：“同江市在地理行政区划上是否归属于湖北省？”很自然，没有直接给出关系类型关键词，符合要求。
+
+坐标：湖北省坐标[114.3055,30.5928]大概是武汉市中心，合理。同江坐标[132.5108,47.6458]在同江市，合理。
+
+地理知识：同江属于黑龙江省，不属于湖北，正确。
+
+推理链：步骤5 final_answer“同江不在湖北省内”与顶层答案一致，可以。
+
+步骤3 action又是“infer_entity_to_token”，应改为“retrieve_coordinates”。
+
+spatial_tokens中“包含”、“位于”、“行政区划”、“黑龙江省”、“相离”有些不在问题中。问题中只有“同江市”、“湖北省”、“地理行政区划”、“归属于”。所以应提取关键词为["同江市","湖北省","归属于","行政区划"]？但“归属于”不是典型空间词，但可以保留。规范要求“与空间相关的关键词”，所以可以包括实体名、方位词、关系词。这里“归属于”表达了包含关系，可以保留。但“黑龙江省”和“相离”不在问题中，应去掉。“包含”也不在问题中。所以spatial_tokens应调整为["同江市","湖北省","归属于","行政区划"]。但注意实体名在问题中是“同江市”不是“同江”，但entities中是“同江”，spatial_tokens可以用“同江市”或“同江”，通常保持一致。这里问题中用的是“同江市”，所以spatial_tokens可包括“同江市”。但entities中name是“同江”，所以entity_to_token中实体名是“同江”，但char_start对应的是“同江市”中的“同江”部分。问题中“同江市”占三个字符：同0、江1、市2，所以“同江”是从0到1。entity_to_token中“同江”的char_start=0, char_end=2，即占0,1，左闭右开正确。所以spatial_tokens可以保留“同江”还是“同江市”？建议与实体名一致，但问题中出现的可能是“同江市”，为了准确，spatial_tokens可以包含“同江市”或“同江”。但规范没有强制，我们保留“同江”即可，因为实体名是“同江”。但问题中“同江市”作为一个整体，如果提取“同江”作为关键词，也可以。我们保留原spatial_tokens中的“同江”和“湖北省”，去掉多余的“包含”、“位于”、“黑龙江省”、“相离”，加上“归属于”和“行政区划”。但“行政区划”在问题中，可以保留。所以新spatial_tokens = ["同江", "湖北省", "归属于", "行政区划"]。
+
+entity_to_token中“湖北省”的char_start=16，需要验证。原问题：“同江市在地理行政区划上是否归属于湖北省？” 字符索引：同0、江1、市2、在3、地4、理5、行6、政7、区8、划9、上10、是11、否12、归13、属14、于15、湖16、北17、省18、？19。所以“湖北省”从16到18，左闭右开char_end=19？这里char_end=18，如果是左闭右闭，则占16,17,18三个字符，结束索引18，那么char_start=16, char_end=18表示16,17,18，正确。所以没问题。
+
+同江的char_start=0, char_end=2表示0,1，正确。
+
+修正：
+
+步骤3 action改为“retrieve_coordinates”。
+
+spatial_tokens修正为["同江","湖北省","归属于","行政区划"]，或者更准确包括“同江市”？但“同江市”作为整体，而实体名是“同江”，为了匹配，可以保留“同江”。我们保留“同江”。
+
+第五条数据
+json
+{
+  "id": "geosr_topological_prompt_2497_5705",
+  "spatial_relation_type": "topological",
+  "question": "从行政区划的包含关系来看，长治市和阜新市是否属于同一个省份？它们之间的行政隶属拓扑关系如何？",
+  "answer": "长治市位于山西省境内，阜新市位于辽宁省境内，两者互不包含，属于相离（ disjoint）的拓扑关系。",
+  "reasoning_chain": [
+    {"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体为长治市和阜新市。", "entities_involved": ["长治", "阜新"]},
+    {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "分析问题核心，需要判断两者在行政区划上的包含或相邻等拓扑关系。"},
+    {"step": 3, "name": "coordinate_retrieval", "action": "infer_entity_to_token", "content": "获取实体空间信息：长治位于山西省南部，阜新位于辽宁省西部。", "coordinates": {"长治": [113.1161, 36.1953], "阜新": [121.6709, 42.0215]}},
+    {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断拓扑关系：长治属于山西省行政区划范围，阜新属于辽宁省行政区划范围，两者边界不相交，互不包含。"},
+    {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于行政区划事实，生成两者互不隶属的答案。", "final_answer": "长治和阜新分别位于不同的省份，互不相包含"}
+  ],
+  "entities": [
+    {"name": "长治", "type": "city", "coords": [113.1161, 36.1953]},
+    {"name": "阜新", "type": "city", "coords": [121.6709, 42.0215]}
+  ],
+  "spatial_tokens": ["长治", "阜新", "包含", "位于", "省份", "行政区划", "相离"],
+  "difficulty": "medium",
+  "topology_subtype": "disjoint",
+  "prompt_id": "prompt_2497",
+  "split": "train",
+  "entity_to_token": {
+    "长治": {"char_start": 13, "char_end": 15, "token_indices": [13, 14]},
+    "阜新": {"char_start": 17, "char_end": 19, "token_indices": [17, 18]}
+  },
+  "difficulty_score": 2.6
+}
+检查：
+
+问句形式：问题中直接出现了“包含关系”和“拓扑关系”，是明显的提示引导。应改为自然问法。可以改为“长治市和阜新市属于同一个省份吗？”或者“长治市和阜新市在行政区划上有什么关系？”但原问题还问了“它们之间的行政隶属拓扑关系如何？”，这很直接。我们可以简化问题，只问第一个问题，因为答案中已经回答了互不包含。或者合并为一个自然问句：“长治市和阜新市在行政区划上是否属于同一个省份？”这样就隐式询问包含关系（是否同省）。所以我们将问题改为：“长治市和阜新市在行政区划上属于同一个省份吗？”
+
+坐标：长治[113.1161,36.1953]在山西，阜新[121.6709,42.0215]在辽宁，合理。
+
+地理知识：正确。
+
+推理链：步骤5 final_answer“长治和阜新分别位于不同的省份，互不相包含”与顶层答案一致，可以。
+
+步骤3 action又是“infer_entity_to_token”，应改为“retrieve_coordinates”。
+
+实体to token：原问题“从行政区划的包含关系来看，长治市和阜新市是否属于同一个省份？它们之间的行政隶属拓扑关系如何？”我们数一下字符：
+从0、行1、政2、区3、划4、的5、包6、含7、关8、系9、来10、看11、，12、长13、治14、市15、和16、阜17、新18、市19、是20、否21、属22、于23、同24、一25、个26、省27、份28、？29、它30、们31、之32、间33、的34、行35、政36、隶37、属38、拓39、扑40、关41、系42、如43、何44、？45。
+所以“长治”在13-14，左闭右开char_end=15，正确。“阜新”在17-18，char_end=19，正确。
+修改问题后，新问题：“长治市和阜新市在行政区划上属于同一个省份吗？”字符：
+长0、治1、市2、和3、阜4、新5、市6、在7、行8、政9、区10、划11、上12、属13、于14、同15、一16、个17、省18、份19、吗20、？21。
+所以“长治”从0到1，左闭右开char_end=2；“阜新”从4到5，char_end=6。需要更新entity_to_token。token_indices可以设为[0,1]和[4,5]。
+
+spatial_tokens：原问题中的关键词，新问题中只有实体名、“行政区划”、“属于”、“同一个省份”等。应提取为["长治","阜新","行政区划","属于","省份"]。但“属于”和“省份”可能算空间相关？可以保留。我们调整为["长治","阜新","行政区划","省份"]，因为“属于”不是典型空间词，但可以保留。规范要求“与空间相关的关键词”，所以实体名和“行政区划”是空间相关的，“省份”也是空间区域，可以保留。我们保留["长治","阜新","行政区划","省份"]，去掉“包含”、“位于”、“相离”等。
+
+另外，注意实体名在entities中是“长治”和“阜新”，问题中实体名是“长治市”和“阜新市”，但我们在entity_to_token中映射的是“长治”和“阜新”，所以char_start应指向“长”和“阜”。新问题中“长治市”是三个字，“长治”占前两个，所以char_start=0, char_end=2正确。“阜新”占4-5，正确。
+
+修正：
+
+问题改为：“长治市和阜新市在行政区划上属于同一个省份吗？”
+
+步骤3 action改为“retrieve_coordinates”。
+
+更新entity_to_token为新字符位置。
+
+更新spatial_tokens。
+
+另外，检查所有条目的topology_subtype都是“disjoint”，合理。
+
+现在，我们还需要确保所有字段都存在，特别是对于topological类型，必须有topology_subtype。都有。
+
+difficulty_score需要合理，我们保留原值。
+
+还有一点，第一条的答案中提到了“集安市隶属于吉林省通化市”，但实体名是“集安”，答案中用了“集安市”，可以接受。但推理链中用了“集安”，一致。
+
+最后，输出修复后的5条JSON，每行一条。
+
+我们逐条输出。
+
+{"id": "geosr_topological_prompt_1588_2596", "spatial_relation_type": "topological", "question": "集安在行政区划上属于上海市吗？", "answer": "不存在包含关系。集安市隶属于吉林省通化市，而上海市是直辖市，两者互不隶属。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为上海市（直辖市）和集安（县级市）。", "entities_involved": ["上海市", "集安"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问包含关系，属于拓扑空间关系（topological）。"}, {"step": 3, "name": "coordinate_retrieval", "action": "retrieve_coordinates", "content": "检索空间位置属性，上海位于华东沿海，集安位于东北吉林省。", "coordinates": {"上海市": [121.4737, 31.2304], "集安": [126.1944, 41.1258]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断两者的行政隶属及空间包含状态。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据行政归属判定两者无包含关系。", "final_answer": "集安与上海市无包含关系"}], "entities": [{"name": "上海市", "type": "province", "coords": [121.4737, 31.2304]}, {"name": "集安", "type": "city", "coords": [126.1944, 41.1258]}], "spatial_tokens": ["上海市", "集安", "包含", "位于", "行政", "隶属"], "difficulty": "easy", "topology_subtype": "disjoint", "prompt_id": "prompt_1588", "split": "train", "entity_to_token": {"上海市": {"char_start": 3, "char_end": 5, "token_indices": [3, 4]}, "集安": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_0653_6653", "spatial_relation_type": "topological", "question": "云冈石窟位于大巴山脉内部吗？", "answer": "云冈石窟不位于大巴山脉内部，两者在空间上呈相离关系。大巴山脉位于中国西南部（川渝陕交界），云冈石窟位于中国北部（山西大同），两者地理跨度极大，互不包含。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体，分别为‘大巴山脉’（类型：mountain）和‘云冈石窟’（类型：landmark）。", "entities_involved": ["大巴山脉", "云冈石窟"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "识别问题中的空间关系类型，关键词为‘位于...内部’，属于拓扑关系中的包含关系判断。"}, {"step": 3, "name": "coordinate_retrieval", "action": "retrieve_coordinates", "content": "获取实体的地理坐标信息。大巴山脉大致位于东经108.5度、北纬32.5度附近；云冈石窟位于东经113.1206度、北纬40.1106度。", "coordinates": {"大巴山脉": [108.5, 32.5], "云冈石窟": [113.1206, 40.1106]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "计算并判断拓扑关系。对比坐标可知，大巴山脉位于秦巴山区西南部，而云冈石窟位于山西省大同市，两者经度相差约5度，纬度相差约8度，空间上完全分离，不存在包含关系。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "根据空间计算结果，生成最终答案：云冈石窟不在大巴山脉内部，两者相离。", "final_answer": "云冈石窟不在大巴山脉内部，两者相离"}], "entities": [{"name": "大巴山脉", "type": "mountain", "coords": [108.5, 32.5]}, {"name": "云冈石窟", "type": "landmark", "coords": [113.1206, 40.1106]}], "spatial_tokens": ["大巴山脉", "云冈石窟", "包含", "位于", "内部", "相离"], "difficulty": "medium", "topology_subtype": "disjoint", "split": "train", "difficulty_score": 3.1, "entity_to_token": {"大巴山脉": {"char_start": 6, "char_end": 10, "token_indices": [6, 7, 8, 9]}, "云冈石窟": {"char_start": 0, "char_end": 4, "token_indices": [0, 1, 2, 3]}}}
+{"id": "geosr_topological_prompt_3690_8536", "spatial_relation_type": "topological", "question": "沅江是否流经定西市？", "answer": "否，沅江与定西市在空间上处于分离状态，沅江不流经定西市。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为河流沅江和城市定西。", "entities_involved": ["沅江", "定西"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "问题询问“是否流经”，涉及包含或相交关系，属于拓扑空间关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "retrieve_coordinates", "content": "获取坐标信息：沅江主要流域经纬度范围大致在[111.4, 28.4]附近，定西经纬度[104.5861, 35.5806]。", "coordinates": {"沅江": [111.4, 28.4], "定西": [104.5861, 35.5806]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "分析地理知识：沅江位于湖南（长江中游南岸），定西位于甘肃（西北地区），两者地理位置相隔甚远。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于拓扑关系判断，得出否定结论。", "final_answer": "沅江不流经定西市"}], "entities": [{"name": "沅江", "type": "river", "coords": [111.4, 28.4]}, {"name": "定西", "type": "city", "coords": [104.5861, 35.5806]}], "spatial_tokens": ["沅江", "定西", "流经"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_3690", "split": "train", "entity_to_token": {"沅江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}, "定西": {"char_start": 6, "char_end": 8, "token_indices": [6, 7]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_3022_6496", "spatial_relation_type": "topological", "question": "同江市在地理行政区划上是否归属于湖北省？", "answer": "同江市不属于湖北省。同江市位于中国东北地区，是黑龙江省佳木斯市下辖的县级市；而湖北省位于中国中部地区。两者在地理空间和行政区划上均无交集，距离较远。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别地理实体为'湖北省'（省级行政区）和'同江'（县级市）。", "entities_involved": ["湖北省", "同江"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "确定问题旨在询问两者之间的行政隶属或空间包含的拓扑关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "retrieve_coordinates", "content": "获取坐标信息：湖北省位于华中地区（约114.31°E, 30.59°N）；同江市位于黑龙江东北部（约132.51°E, 47.65°N）。", "coordinates": {"湖北省": [114.3055, 30.5928], "同江": [132.5108, 47.6458]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "比较空间位置：同江的纬度远高于湖北，经度也偏东。经度差约18度，纬度差约17度。显然同江不在湖北省的边界范围内。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "综合行政区划知识，同江归属黑龙江省，因此不在湖北省内。", "final_answer": "同江不在湖北省内"}], "entities": [{"name": "湖北省", "type": "province", "coords": [114.3055, 30.5928]}, {"name": "同江", "type": "city", "coords": [132.5108, 47.6458]}], "spatial_tokens": ["同江", "湖北省", "归属于", "行政区划"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_3022", "split": "train", "entity_to_token": {"湖北省": {"char_start": 16, "char_end": 18, "token_indices": [16, 17]}, "同江": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}}, "difficulty_score": 3.1}
+{"id": "geosr_topological_prompt_2497_5705", "spatial_relation_type": "topological", "question": "长治市和阜新市在行政区划上属于同一个省份吗？", "answer": "长治市位于山西省境内，阜新市位于辽宁省境内，两者互不包含，属于相离（ disjoint）的拓扑关系。", "reasoning_chain": [{"step": 1, "name": "entity_identification", "action": "extract_entities", "content": "识别问题中的地理实体为长治市和阜新市。", "entities_involved": ["长治", "阜新"]}, {"step": 2, "name": "spatial_relation_extraction", "action": "classify_relation", "content": "分析问题核心，需要判断两者在行政区划上的包含或相邻等拓扑关系。"}, {"step": 3, "name": "coordinate_retrieval", "action": "retrieve_coordinates", "content": "获取实体空间信息：长治位于山西省南部，阜新位于辽宁省西部。", "coordinates": {"长治": [113.1161, 36.1953], "阜新": [121.6709, 42.0215]}}, {"step": 4, "name": "spatial_calculation", "action": "determine_topology", "content": "判断拓扑关系：长治属于山西省行政区划范围，阜新属于辽宁省行政区划范围，两者边界不相交，互不包含。"}, {"step": 5, "name": "answer_generation", "action": "generate_answer", "content": "基于行政区划事实，生成两者互不隶属的答案。", "final_answer": "长治和阜新分别位于不同的省份，互不相包含"}], "entities": [{"name": "长治", "type": "city", "coords": [113.1161, 36.1953]}, {"name": "阜新", "type": "city", "coords": [121.6709, 42.0215]}], "spatial_tokens": ["长治", "阜新", "行政区划", "省份"], "difficulty": "medium", "topology_subtype": "disjoint", "prompt_id": "prompt_2497", "split": "train", "entity_to_token": {"长治": {"char_start": 0, "char_end": 2, "token_indices": [0, 1]}, "阜新": {"char_start": 4, "char_end": 6, "token_indices": [4, 5]}}, "difficulty_score": 2.6}
+
+
+
+
+
+第二套提示词
+以下是为大模型设计的完整提示词，整合了实验设计文档（GeoKD-SR-V5.3）和数据生成规范（V2.1）的核心要求，并特别强调了推理链、问句形式、坐标使用及实体类型规范，以确保数据质量符合后续实验需求。
+
+```markdown
+# 角色与项目背景
+你是一位地理信息科学与自然语言处理领域的专家，正在参与“GeoKD-SR”研究项目。该项目旨在构建高质量的空间关系推理数据集，用于验证空间关系感知蒸馏的有效性（详见实验设计文档V5.3）。数据集将用于10个消融实验（Exp1-Exp9），必须严格遵循数据生成规范V2.1中的字段定义、格式要求和质量准则。
+
+# 任务说明
+我将一次性提供5条JSON格式的地理空间推理数据（每行一条）。请你逐条审核并修复数据中的问题，确保每条数据完全符合以下要求。修复后请直接输出5条JSON数据（每行一条），不要添加任何额外文本。
+
+## 必须遵循的数据规范（摘要自实验设计文档V5.3与数据生成规范V2.1）
+
+### 1. 核心字段与约束
+| 字段名               | 类型   | 必需性 | 取值/格式说明                                                                 |
+|----------------------|--------|--------|------------------------------------------------------------------------------|
+| id                   | string | 是     | 唯一标识，如`geosr_topological_prompt_1588_2596`                            |
+| spatial_relation_type| enum   | 是     | `directional`, `topological`, `metric`, `composite` 之一                   |
+| topology_subtype     | enum   | 条件   | 仅当`spatial_relation_type`为`topological`时必需，取值：`within`, `contains`, `adjacent`, `disjoint`, `overlap` |
+| question             | string | 是     | 自然问句，不得出现坐标，不得直接给出关系类型关键词（如“包含关系”、“拓扑关系”）          |
+| answer               | string | 是     | 简洁答案，与推理链中的`final_answer`语义一致                                |
+| reasoning_chain      | array  | 是     | 必须包含5个步骤，每步含`step`(int), `name`(str), `action`(str), `content`(str)；建议步骤顺序：1实体识别、2关系提取、3坐标检索、4空间计算、5答案生成；推理过程中不得泄露最终答案，不得使用“拓扑关系”等标签词，应通过自然语言描述推理 |
+| entities             | array  | 是     | 至少2个实体，每个实体含`name`, `type`, `coords`(长度为2的浮点数列表)        |
+| spatial_tokens       | array  | 是     | 问题中与空间相关的关键词（实体名、方位词等），列表形式                        |
+| entity_to_token      | object | 是     | 每个实体映射字符位置（`char_start`, `char_end`）和token索引（可粗略，但字符位置需准确） |
+| difficulty           | enum   | 是     | `easy`, `medium`, `hard`                                                     |
+| difficulty_score     | float  | 是     | 1.0~5.0，大致合理即可                                                        |
+| split                | string | 是     | `train`, `dev`, `test` 之一                                                  |
+
+### 2. 问句形式统一要求（避免提示引导）
+- 问题必须自然、口语化，像人类日常提问，**禁止出现**以下显式标签词：“拓扑关系”、“包含关系”、“方向关系”、“度量关系”、“空间关系”等。这些关系应通过上下文隐式表达。
+  - ✅ 正确示例：“北京在上海的什么方向？”（隐含方向关系）
+  - ❌ 错误示例：“北京与上海之间的方向关系是什么？”（直接使用“方向关系”）
+  - ✅ 正确示例：“故宫位于北京市内吗？”（隐含拓扑包含关系）
+  - ❌ 错误示例：“故宫与北京市的拓扑包含关系如何？”（直接使用“拓扑包含关系”）
+- 问题中**不得出现任何坐标**（如经纬度数字），坐标仅允许出现在`entities`字段中。
+
+### 3. 实体类型与坐标惯例（坐标版本区分）
+- 所有坐标必须在中国境内（经度73°~135°，纬度18°~54°），精确到小数点后4位。
+- 不同类型实体的坐标选取规则如下（后续实验将区分有坐标版本和无坐标版本训练，因此坐标必须准确）：
+  | 实体类型     | 坐标惯例                           | 示例                         |
+  |--------------|------------------------------------|------------------------------|
+  | province     | 省会或行政中心坐标                 | 北京市[116.4074, 39.9042]    |
+  | city         | 市中心坐标                         | 上海[121.4737, 31.2304]      |
+  | landmark     | 地标精确坐标                       | 故宫[116.3972, 39.9163]      |
+  | mountain     | 主峰坐标                           | 泰山[117.135, 36.255]        |
+  | river        | 代表性中点或主要流经城市坐标       | 长江[114.2734, 30.5844]      |
+  | lake         | 湖心坐标                           | 洞庭湖[112.9, 29.4]          |
+- 对于拓扑关系数据（特别是`within`, `contains`, `adjacent`, `overlap`），被包含实体的坐标应大致落在包含实体的地理范围内（例如，城市坐标应在所属省份的行政中心附近，河流应在其流经区域）。若坐标明显偏离（如将上海坐标放在青海省），则需修正。
+
+### 4. 地理知识正确性
+- 实体的行政归属（如某市属于某省）必须正确。
+- 实体之间的空间关系（包含、相邻、相离等）必须符合现实地理事实。
+- 涉及河流流经、山脉位置等，需确保准确。
+
+### 5. 推理链要求（避免泄露）
+- 5个步骤必须完整，逻辑连贯，每一步的`content`应详细描述推理过程，但**不得直接给出最终答案**（例如，不能在步骤3就说“所以A不在B内”），最终结论应留在步骤5的`final_answer`中。
+- 步骤名称和内容中**禁止使用**“拓扑关系”、“方向关系”等标签词，应使用日常语言描述，如“判断A是否在B内部”、“计算A相对于B的方位”。
+- 第5步的`final_answer`应与顶层`answer`字段语义一致（可适当详细），但顶层`answer`应简洁。
+- 若推理链中引用坐标，需与`entities`中的坐标完全一致。
+
+### 6. 其他字段要求
+- `spatial_tokens`应从问题中提取关键实体和空间词（如“北京”、“上海”、“西北”、“内部”、“距离”等）。
+- `entity_to_token`中`char_start`和`char_end`必须基于问题文本准确计算（字符索引从0开始）。如果原数据中的索引明显错误，请根据问题文本重新计算并修正。
+- `difficulty_score`可根据数据规范中的规则估算，但大致合理即可（如`easy`对应1.0-2.0，`medium`对应2.1-3.5，`hard`对应3.6-5.0）。
+
+## 修复原则
+- 若发现问题，直接修改并输出修复后的完整JSON。
+- 若数据完全正确，可原样输出（但请确保所有字段符合规范）。
+- 对于不确定的地理知识，请基于常识判断；若无法确认，尽量保持原数据，但可微调明显错误（如坐标偏移过大）。
+- 修复后确保JSON格式有效，无语法错误。
+
+## 输入数据格式（5条JSON，每行一条）
+（此处将粘贴5条数据，每条一行）
+
+## 输出要求
+只输出修复后的5条JSON数据，每行一条。不要添加任何解释、前缀或后缀。确保每条JSON都是有效的、格式正确的。
+```
+
+此提示词已完全集成您提出的所有要求，模型可依据它进行批量审核修复。使用时，将待审核数据粘贴到“输入数据格式”部分即可。
+
+
+
+
+
+
+
+

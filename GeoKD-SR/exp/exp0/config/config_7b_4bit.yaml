@@ -1,0 +1,37 @@
+# exp0c: Qwen2.5-7B-Instruct 4bit量化基线评估配置
+experiment:
+  name: "exp0c_baseline_7b_4bit"
+  description: "Qwen2.5-7B-Instruct 4bit量化基线评估"
+  type: "baseline"
+
+model:
+  name: "Qwen2.5-7B-Instruct-4bit"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-7B-Instruct"
+  quantization: "4bit"
+  device: "cuda"
+
+data:
+  test_file: "D:/30_keyan/GeoKD-SR/data/final/final_1_v5.jsonl"
+  max_samples: null
+
+generation:
+  temperature: 0.1
+  top_p: 0.9
+  do_sample: true
+  max_new_tokens: 512
+
+evaluation:
+  metrics:
+    deterministic: true
+    semantic: true
+    llm_eval: false
+  llm_eval_config:
+    model: "glm-5"
+    sample_size: 100
+
+seeds: [42, 123, 456, 789, 1024]
+
+output:
+  results_dir: "results/baseline_7b_4bit"
+  save_predictions: true
+  save_metrics: true

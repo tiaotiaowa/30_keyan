@@ -1,0 +1,365 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-19T22:06:54.382554",
+    "total_samples": 1183
+  },
+  "deterministic": {
+    "total": 1183,
+    "accuracy": {
+      "overall": 0.1952662721893491,
+      "directional_accuracy": 0.3321917808219178,
+      "metric_accuracy": 0.13355048859934854,
+      "composite_accuracy": 0.056910569105691054,
+      "topological_accuracy": 0.23372781065088757,
+      "by_type": {
+        "directional": {
+          "correct": 97,
+          "total": 292
+        },
+        "metric": {
+          "correct": 41,
+          "total": 307
+        },
+        "composite": {
+          "correct": 14,
+          "total": 246
+        },
+        "topological": {
+          "correct": 79,
+          "total": 338
+        }
+      }
+    },
+    "format_valid_rate": 1.0,
+    "bleu4": 0.14586607551202072,
+    "rouge_l": 0.43048468009465396,
+    "spatial_f1": {
+      "overall": {
+        "precision": 0.5891132572431957,
+        "recall": 0.6184331797235023,
+        "f1": 0.6034172661870503
+      },
+      "by_type": {
+        "directional": {
+          "precision": 0.4222333000997009,
+          "recall": 0.5062761506276151,
+          "f1": 0.46045120956781743
+        },
+        "topological": {
+          "precision": 0.6153846153846154,
+          "recall": 0.09815950920245399,
+          "f1": 0.1693121693121693
+        },
+        "metric": {
+          "precision": 0.8303249097472925,
+          "recall": 0.8104298801973221,
+          "f1": 0.8202567760342369
+        }
+      }
+    }
+  },
+  "by_spatial_type": {
+    "directional": {
+      "total": 292,
+      "accuracy": {
+        "overall": 0.3321917808219178,
+        "directional_accuracy": 0.3321917808219178,
+        "by_type": {
+          "directional": {
+            "correct": 97,
+            "total": 292
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.23086123418826057,
+      "rouge_l": 0.564691743200448,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.49019607843137253,
+          "recall": 0.48721071863581,
+          "f1": 0.4886988393402566
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.5089058524173028,
+            "recall": 0.48721071863581,
+            "f1": 0.4978220286247666
+          },
+          "topological": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0
+          },
+          "metric": {
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0
+          }
+        }
+      }
+    },
+    "metric": {
+      "total": 307,
+      "accuracy": {
+        "overall": 0.13355048859934854,
+        "metric_accuracy": 0.13355048859934854,
+        "by_type": {
+          "metric": {
+            "correct": 41,
+            "total": 307
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.04139747254386248,
+      "rouge_l": 0.3021038025853572,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.6207983193277311,
+          "recall": 0.7807133421400264,
+          "f1": 0.6916325336454067
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.07053941908713693,
+            "recall": 0.7727272727272727,
+            "f1": 0.12927756653992395
+          },
+          "topological": {
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0
+          },
+          "metric": {
+            "precision": 0.8073136427566807,
+            "recall": 0.7830832196452933,
+            "f1": 0.7950138504155124
+          }
+        }
+      }
+    },
+    "composite": {
+      "total": 246,
+      "accuracy": {
+        "overall": 0.056910569105691054,
+        "composite_accuracy": 0.056910569105691054,
+        "by_type": {
+          "composite": {
+            "correct": 14,
+            "total": 246
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.08745864197162555,
+      "rouge_l": 0.36305619685353263,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.6425438596491229,
+          "recall": 0.6482300884955752,
+          "f1": 0.6453744493392071
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.39763779527559057,
+            "recall": 0.4469026548672566,
+            "f1": 0.42083333333333334
+          },
+          "topological": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0
+          },
+          "metric": {
+            "precision": 0.9504950495049505,
+            "recall": 0.8495575221238938,
+            "f1": 0.897196261682243
+          }
+        }
+      }
+    },
+    "topological": {
+      "total": 338,
+      "accuracy": {
+        "overall": 0.23372781065088757,
+        "topological_accuracy": 0.23372781065088757,
+        "by_type": {
+          "topological": {
+            "correct": 79,
+            "total": 338
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.2098350205673454,
+      "rouge_l": 0.4802239518277253,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.5088967971530249,
+          "recall": 0.4454828660436137,
+          "f1": 0.4750830564784054
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.5852534562211982,
+            "recall": 0.8355263157894737,
+            "f1": 0.6883468834688347
+          },
+          "topological": {
+            "precision": 0.6153846153846154,
+            "recall": 0.09937888198757763,
+            "f1": 0.1711229946524064
+          },
+          "metric": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0
+          }
+        }
+      }
+    }
+  },
+  "by_difficulty": {
+    "medium": {
+      "total": 520,
+      "accuracy": {
+        "overall": 0.22115384615384615,
+        "directional_accuracy": 0.2727272727272727,
+        "topological_accuracy": 0.24914675767918087,
+        "metric_accuracy": 0.10256410256410256,
+        "by_type": {
+          "directional": {
+            "correct": 30,
+            "total": 110
+          },
+          "topological": {
+            "correct": 73,
+            "total": 293
+          },
+          "metric": {
+            "correct": 12,
+            "total": 117
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.18778841785376216,
+      "rouge_l": 0.4506283923458674,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.5216473072861668,
+          "recall": 0.5550561797752809,
+          "f1": 0.5378334240609689
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.4444444444444444,
+            "recall": 0.5991189427312775,
+            "f1": 0.5103189493433395
+          },
+          "topological": {
+            "precision": 0.5238095238095238,
+            "recall": 0.07801418439716312,
+            "f1": 0.13580246913580246
+          },
+          "metric": {
+            "precision": 0.6719745222929936,
+            "recall": 0.7152542372881356,
+            "f1": 0.6929392446633826
+          }
+        }
+      }
+    },
+    "easy": {
+      "total": 372,
+      "accuracy": {
+        "overall": 0.25806451612903225,
+        "metric_accuracy": 0.15263157894736842,
+        "directional_accuracy": 0.36813186813186816,
+        "by_type": {
+          "metric": {
+            "correct": 29,
+            "total": 190
+          },
+          "directional": {
+            "correct": 67,
+            "total": 182
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.13997460681267093,
+      "rouge_l": 0.4583672298709823,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.5837988826815642,
+          "recall": 0.6457260556127703,
+          "f1": 0.6132029339853301
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.43137254901960786,
+            "recall": 0.5019011406844106,
+            "f1": 0.46397188049209137
+          },
+          "topological": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0
+          },
+          "metric": {
+            "precision": 0.7857142857142857,
+            "recall": 0.8157303370786517,
+            "f1": 0.8004410143329659
+          }
+        }
+      }
+    },
+    "hard": {
+      "total": 291,
+      "accuracy": {
+        "overall": 0.06872852233676977,
+        "composite_accuracy": 0.056910569105691054,
+        "topological_accuracy": 0.13333333333333333,
+        "by_type": {
+          "composite": {
+            "correct": 14,
+            "total": 246
+          },
+          "topological": {
+            "correct": 6,
+            "total": 45
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.07848466086752784,
+      "rouge_l": 0.3588453712031588,
+      "spatial_f1": {
+        "overall": {
+          "precision": 0.6389684813753582,
+          "recall": 0.6398852223816356,
+          "f1": 0.6394265232974911
+        },
+        "by_type": {
+          "directional": {
+            "precision": 0.3976982097186701,
+            "recall": 0.44877344877344877,
+            "f1": 0.4216949152542373
+          },
+          "topological": {
+            "precision": 1.0,
+            "recall": 0.22727272727272727,
+            "f1": 0.37037037037037035
+          },
+          "metric": {
+            "precision": 0.9458128078817734,
+            "recall": 0.8483063328424153,
+            "f1": 0.8944099378881988
+          }
+        }
+      }
+    }
+  }
+}

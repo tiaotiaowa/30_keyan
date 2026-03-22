@@ -1,0 +1,213 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-18T00:12:05.495917",
+    "total_samples": 1183
+  },
+  "deterministic": {
+    "total": 1183,
+    "accuracy": {
+      "overall": 0.25612848689771767,
+      "directional_accuracy": 0.4349315068493151,
+      "metric_accuracy": 0.1758957654723127,
+      "composite_accuracy": 0.3943089430894309,
+      "topological_accuracy": 0.07396449704142012,
+      "by_type": {
+        "directional": {
+          "correct": 127,
+          "total": 292
+        },
+        "metric": {
+          "correct": 54,
+          "total": 307
+        },
+        "composite": {
+          "correct": 97,
+          "total": 246
+        },
+        "topological": {
+          "correct": 25,
+          "total": 338
+        }
+      }
+    },
+    "format_valid_rate": 1.0,
+    "bleu4": 0.1714339361007425,
+    "rouge_l": 0.4237170280481789,
+    "spatial_f1": {
+      "precision": 0.43577163247100803,
+      "recall": 0.5321350762527233,
+      "f1": 0.4791564492398234
+    }
+  },
+  "by_spatial_type": {
+    "directional": {
+      "total": 292,
+      "accuracy": {
+        "overall": 0.4349315068493151,
+        "directional_accuracy": 0.4349315068493151,
+        "by_type": {
+          "directional": {
+            "correct": 127,
+            "total": 292
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.2541819684071032,
+      "rouge_l": 0.5586803856555695,
+      "spatial_f1": {
+        "precision": 0.5519253208868145,
+        "recall": 0.5761266747868453,
+        "f1": 0.563766388557807
+      }
+    },
+    "metric": {
+      "total": 307,
+      "accuracy": {
+        "overall": 0.1758957654723127,
+        "metric_accuracy": 0.1758957654723127,
+        "by_type": {
+          "metric": {
+            "correct": 54,
+            "total": 307
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.07078049183676326,
+      "rouge_l": 0.28006265948138404,
+      "spatial_f1": {
+        "precision": 0.06291390728476821,
+        "recall": 0.7916666666666666,
+        "f1": 0.11656441717791412
+      }
+    },
+    "composite": {
+      "total": 246,
+      "accuracy": {
+        "overall": 0.3943089430894309,
+        "composite_accuracy": 0.3943089430894309,
+        "by_type": {
+          "composite": {
+            "correct": 97,
+            "total": 246
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.11954390506096439,
+      "rouge_l": 0.3430911634913509,
+      "spatial_f1": {
+        "precision": 0.4287548138639281,
+        "recall": 0.49262536873156343,
+        "f1": 0.4584763212079616
+      }
+    },
+    "topological": {
+      "total": 338,
+      "accuracy": {
+        "overall": 0.07396449704142012,
+        "topological_accuracy": 0.07396449704142012,
+        "by_type": {
+          "topological": {
+            "correct": 25,
+            "total": 338
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.22913550293911447,
+      "rouge_l": 0.496280795532281,
+      "spatial_f1": {
+        "precision": 0.4967105263157895,
+        "recall": 0.48242811501597443,
+        "f1": 0.48946515397082657
+      }
+    }
+  },
+  "by_difficulty": {
+    "medium": {
+      "total": 520,
+      "accuracy": {
+        "overall": 0.15576923076923077,
+        "directional_accuracy": 0.38181818181818183,
+        "topological_accuracy": 0.07167235494880546,
+        "metric_accuracy": 0.15384615384615385,
+        "by_type": {
+          "directional": {
+            "correct": 42,
+            "total": 110
+          },
+          "topological": {
+            "correct": 21,
+            "total": 293
+          },
+          "metric": {
+            "correct": 18,
+            "total": 117
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.20583695589210702,
+      "rouge_l": 0.4604886841014769,
+      "spatial_f1": {
+        "precision": 0.42572944297082227,
+        "recall": 0.5394957983193277,
+        "f1": 0.47590808005930313
+      }
+    },
+    "easy": {
+      "total": 372,
+      "accuracy": {
+        "overall": 0.32526881720430106,
+        "metric_accuracy": 0.18947368421052632,
+        "directional_accuracy": 0.46703296703296704,
+        "by_type": {
+          "metric": {
+            "correct": 36,
+            "total": 190
+          },
+          "directional": {
+            "correct": 85,
+            "total": 182
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.17351234251805553,
+      "rouge_l": 0.43231966911948644,
+      "spatial_f1": {
+        "precision": 0.4538799414348463,
+        "recall": 0.5893536121673004,
+        "f1": 0.5128205128205129
+      }
+    },
+    "hard": {
+      "total": 291,
+      "accuracy": {
+        "overall": 0.3470790378006873,
+        "composite_accuracy": 0.3943089430894309,
+        "topological_accuracy": 0.08888888888888889,
+        "by_type": {
+          "composite": {
+            "correct": 97,
+            "total": 246
+          },
+          "topological": {
+            "correct": 4,
+            "total": 45
+          }
+        }
+      },
+      "format_valid_rate": 1.0,
+      "bleu4": 0.10730081761706571,
+      "rouge_l": 0.34701103620542123,
+      "spatial_f1": {
+        "precision": 0.4298136645962733,
+        "recall": 0.48391608391608393,
+        "f1": 0.45526315789473687
+      }
+    }
+  }
+}

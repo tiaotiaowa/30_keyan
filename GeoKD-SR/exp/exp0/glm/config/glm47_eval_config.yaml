@@ -1,0 +1,76 @@
+# GLM-4.7 评测配置文件
+# 创建时间: 2026-03-16
+# 用途: GeoKD-SR 测试集评测
+
+# ========================================
+# API 配置
+# ========================================
+api:
+  model: "glm-4.7"                    # 使用glm-4.7模型
+  api_key_env: "ZHIPUAI_API_KEY"      # 从环境变量读取API密钥
+  stream: false                       # 禁用流式输出
+  timeout: 60                         # 请求超时(秒)
+  max_retries: 3                      # 最大重试次数
+  retry_delay: 5                      # 重试延迟(秒)，指数退避
+
+# ========================================
+# 生成参数
+# ========================================
+generation:
+  temperature: 0.1                    # 低温度保证一致性
+  top_p: 0.9                          # 核采样参数
+  max_tokens: 512                     # 最大输出token数
+  do_sample: true                     # 是否采样
+
+# ========================================
+# 批处理配置
+# ========================================
+batch:
+  batch_size: 10                      # 每批处理数量
+  delay_between_requests: 0.5         # 请求间隔(秒)，避免限流
+  checkpoint_interval: 50             # 每50条保存checkpoint
+
+# ========================================
+# 评测配置
+# ========================================
+eval:
+  # LLM-as-Judge评估
+  llm_eval_sample_size: 300           # LLM评估采样数(约25%)
+  llm_eval_temperature: 0.1           # 评估时的温度
+
+  # BERTScore配置
+  use_bertscore: true                 # 是否计算BERTScore
+  bert_model: "bert-base-chinese"     # 中文BERT模型
+  bert_max_length: 512                # 最大长度
+
+  # 确定性指标阈值
+  accuracy_threshold:
+    directional: 1.0                  # 方向匹配完全一致
+    topological: 1.0                  # 拓扑匹配完全一致
+    metric_tolerance: 0.1             # 距离容差10%
+    metric_min_tolerance: 50          # 最小距离容差50km
+
+# ========================================
+# 路径配置
+# ========================================
+paths:
+  # 测试数据
+  split_coords_test: "data/split_coords/test.jsonl"
+  splits_test: "data/splits/test.jsonl"
+
+  # 输出目录
+  output_dir: "exp/exp0/glm/results"
+  checkpoint_dir: "exp/exp0/glm/checkpoints"
+
+  # 复用的模块
+  deterministic_metrics: "exp/exp0/metrics/deterministic.py"
+  semantic_metrics: "exp/exp0/metrics/semantic.py"
+
+# ========================================
+# 日志配置
+# ========================================
+logging:
+  level: "INFO"
+  save_to_file: true
+  log_dir: "exp/exp0/glm/logs"
+  log_filename_template: "glm47_eval_{timestamp}.log"  # 日志文件名模板

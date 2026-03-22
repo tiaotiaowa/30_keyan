@@ -1,0 +1,51 @@
+# Stage 2: 评测配置
+# 用于 Qwen2.5-1.5B-Instruct 评测
+
+# 数据配置
+data:
+  predictions_file: "D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage1_generation/outputs/predictions_qwen.jsonl"
+  output_dir: "D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage2_evaluation/results"
+
+# 指标配置
+metrics:
+  # 确定性指标
+  deterministic:
+    enabled: true
+    # 准确率匹配模式
+    accuracy:
+      # 方向匹配（允许近似）
+      directional_fuzzy: true
+      # 拓扑关系匹配
+      topological_exact: true
+      # 距离容忍度（百分比）
+      distance_tolerance: 0.15  # 15%误差
+    # BLEU配置
+    bleu:
+      max_n: 4
+      weights: [0.25, 0.25, 0.25, 0.25]
+    # ROUGE配置
+    rouge:
+      use_stemmer: true
+    # 空间关键词
+    spatial_keywords:
+      directions: ["东", "南", "西", "北", "东北", "东南", "西北", "西南", "东偏北", "东偏南", "西偏北", "西偏南", "北偏东", "北偏西", "南偏东", "南偏西", "正北", "正南", "正东", "正西"]
+      topological: ["相邻", "包含", "被包含", "交叉", "分离", "接壤", "重叠"]
+      distance_units: ["公里", "千米", "米"]
+
+  # 语义指标（BERTScore）
+  semantic:
+    enabled: false  # 暂时禁用，需要安装 bert_score
+    model_type: "bert-base-chinese"
+    lang: "zh"
+    rescale_with_baseline: true
+
+# 分层分析配置
+stratified_analysis:
+  by_spatial_type: true
+  by_difficulty: true
+
+# 报告配置
+report:
+  format: "markdown"
+  include_examples: true
+  max_examples: 10

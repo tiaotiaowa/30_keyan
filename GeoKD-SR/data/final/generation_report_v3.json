@@ -1,0 +1,19 @@
+{
+  "subtype": "contains",
+  "target_count": 5,
+  "actual_count": 5,
+  "difficulty_distribution": {
+    "easy": 0.3,
+    "medium": 0.5,
+    "hard": 0.2
+  },
+  "stats": {
+    "total_attempted": 420,
+    "total_success": 401,
+    "total_failed": 0,
+    "start_time": "2026-03-13T00:29:50.448880",
+    "last_update": "2026-03-13T00:30:42.802965"
+  },
+  "failed_count": 0,
+  "generation_time": "2026-03-13T00:30:42.802965"
+}

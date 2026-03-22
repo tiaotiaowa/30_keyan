@@ -1,0 +1,53 @@
+# Qwen2.5-1.5B SFT 评测配置
+# 设计文档: docs/superpowers/specs/2026-03-21-qwen-1.5b-sft-design.md
+
+evaluation:
+  name: "qwen-1.5b-sft-eval"
+  batch_size: 8
+  max_new_tokens: 256
+  temperature: 0.1                  # 低温度保证确定性
+  top_p: 0.9
+  do_sample: false                  # 确定性生成
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  base_path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"
+
+data:
+  test_file: "data/splits/test.jsonl"
+  # 支持两种数据集版本
+  versions:
+    - name: "splits"
+      test_file: "data/splits/test.jsonl"
+    - name: "split_coords"
+      test_file: "data/split_coords/test.jsonl"
+
+metrics:
+  # 6个确定性指标
+  list:
+    - overall_accuracy
+    - format_valid_rate
+    - bleu_4
+    - rouge_l
+    - spatial_f1
+  # 按空间类型分层统计
+  by_spatial_type: true
+
+output:
+  results_dir: "exp/exp0/qwen-1.5B-sft/results"
+  predictions_file: "predictions.jsonl"
+  metrics_file: "metrics.json"
+  report_file: "report.md"
+
+# 验收标准（来自设计文档）
+acceptance_criteria:
+  overall_accuracy_baseline: 0.2316
+  overall_accuracy_target: 0.30
+  directional_baseline: 0.4349
+  directional_target: 0.50
+  topological_baseline: 0.2485
+  topological_target: 0.35
+  metric_baseline: 0.1759
+  metric_target: 0.25
+  composite_baseline: 0.0366
+  composite_target: 0.10

@@ -1,0 +1,48 @@
+# Stage 1: 坐标增强数据集答案生成配置
+# 适用于 Qwen2.5-1.5B-Instruct 模型
+# 数据集: split_coords (含坐标)
+
+# 模型配置
+model:
+  name: "Qwen/Qwen2.5-1.5B-Instruct"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"
+  use_local: true
+  device: "cuda"
+  dtype: "float16"
+  max_memory: "5GB"
+
+# 生成参数
+generation:
+  max_new_tokens: 256
+  temperature: 0.1
+  top_p: 0.9
+  top_k: 50
+  do_sample: true
+  repetition_penalty: 1.1
+  num_return_sequences: 1
+
+# 数据配置
+data:
+  input_file: "D:/30_keyan/GeoKD-SR/data/split_coords/test.jsonl"
+  output_file: "D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage1_generation/outputs/predictions_qwen_coords.jsonl"
+  batch_size: 1
+
+# Prompt模板 - 坐标增强版本
+prompt_template: |
+  你是一个地理空间推理专家。请根据问题给出准确、简洁的答案。
+  注意：问题中的地理实体后的括号里附有相应坐标，格式为(经度,纬度)，你可以利用这些坐标信息进行精确推理。
+
+  问题: {question}
+
+  请直接给出答案，不需要解释过程。答案格式要求：
+  - 方向问题：直接说明方向，如"东南方向"
+  - 距离问题：给出具体数值，如"约1200公里"
+  - 拓扑问题：明确说明关系，如"是的，XX位于YY内部"
+  - 复合问题：同时给出最终结果
+
+  答案:
+
+# 日志配置
+logging:
+  level: "INFO"
+  save_interval: 50

@@ -17,3 +17,8 @@ nul
 
 # Debug directories
 debug/
+
+# Large model files (>2GB, exceed GitHub LFS limit)
+GeoKD-SR/models/
+*.safetensors
+*.bin

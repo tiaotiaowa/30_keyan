@@ -1,0 +1,32 @@
+============================================================
+Step 1: 准备自评测数据
+============================================================
+已生成 1183 条自评测预测数据
+预测文件: D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage2_evaluation/self_eval_results\self_eval_predictions.jsonl
+
+============================================================
+Step 2: 运行自评测
+============================================================
+加载 1183 条预测数据
+
+计算确定性指标...
+
+按空间关系类型分层分析...
+
+============================================================
+Step 3: 生成报告
+============================================================
+
+报告已保存: D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage2_evaluation/self_eval_results\self_eval_report.md
+
+============================================================
+自评测完成摘要
+============================================================
+总体准确率: 100.00%
+总样本数: 1183
+Traceback (most recent call last):
+  File "D:\30_keyan\GeoKD-SR\exp\exp0\exp0\stage2_evaluation\self_eval_test.py", line 244, in <module>
+    main()
+  File "D:\30_keyan\GeoKD-SR\exp\exp0\exp0\stage2_evaluation\self_eval_test.py", line 236, in main
+    print("\n\u2705 自评测通过！评测指标设计合理。")
+UnicodeEncodeError: 'gbk' codec can't encode character '\u2705' in position 2: illegal multibyte sequence

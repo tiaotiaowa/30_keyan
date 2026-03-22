@@ -1,0 +1,48 @@
+{
+  "experiment": {
+    "name": "qwen-1.5b-sft-6gb",
+    "type": "exp1_direct_sft",
+    "seed": 42
+  },
+  "model": {
+    "name": "Qwen2.5-1.5B-Instruct",
+    "path": "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct",
+    "use_lora": true,
+    "lora": {
+      "r": 8,
+      "alpha": 16,
+      "dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ]
+    }
+  },
+  "training": {
+    "learning_rate": 5e-05,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 128,
+    "num_epochs": 3,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "lr_scheduler_type": "cosine"
+  },
+  "optimization": {
+    "max_length": 256,
+    "gradient_checkpointing": true,
+    "mixed_precision": "bf16"
+  },
+  "data": {
+    "train_file": "data/splits/train.jsonl",
+    "dev_file": "data/splits/dev.jsonl"
+  },
+  "runtime": {
+    "dataset": "splits",
+    "dry_run": false,
+    "resume": false,
+    "timestamp": "2026-03-21T23:04:52.565503"
+  }
+}

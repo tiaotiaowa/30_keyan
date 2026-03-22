@@ -1,0 +1,47 @@
+# Stage 1: 答案生成配置
+# 适用于 Qwen2.5-1.5B-Instruct 模型
+# 与 GLM-4.7 使用一致的 Prompt 格式
+
+# 模型配置
+model:
+  name: "Qwen/Qwen2.5-1.5B-Instruct"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"  # 本地模型绝对路径
+  use_local: true  # 使用本地模型
+  device: "cuda"  # cuda 或 cpu
+  dtype: "float16"  # float16, bfloat16, float32
+  max_memory: "5GB"  # 最大显存使用
+
+# 生成参数
+generation:
+  max_new_tokens: 256
+  temperature: 0.1  # 低温度保证确定性
+  top_p: 0.9
+  top_k: 50
+  do_sample: true
+  repetition_penalty: 1.1
+  num_return_sequences: 1
+
+# 数据配置
+data:
+  input_file: "D:/30_keyan/GeoKD-SR/data/splits/test.jsonl"
+  output_file: "D:/30_keyan/GeoKD-SR/exp/exp0/exp0/stage1_generation/outputs/predictions_qwen.jsonl"
+  batch_size: 1  # 6GB显存建议使用1
+
+# Prompt模板 - 与 GLM-4.7 完全一致
+prompt_template: |
+  你是一个地理空间推理专家。请根据问题给出准确、简洁的答案。
+
+  问题: {question}
+
+  请直接给出答案，不需要解释过程。答案格式要求：
+  - 方向问题：直接说明方向，如"东南方向"
+  - 距离问题：给出具体数值，如"约1200公里"
+  - 拓扑问题：明确说明关系，如"是的，XX位于YY内部"
+  - 复合问题：同时给出最终结果
+
+  答案:
+
+# 日志配置
+logging:
+  level: "INFO"
+  save_interval: 50  # 每50条保存一次

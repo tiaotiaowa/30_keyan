@@ -1,0 +1,45 @@
+# Qwen2.5-1.5B SFT训练配置 - 6GB显存版本
+# 设计文档: docs/superpowers/specs/2026-03-21-qwen-1.5b-sft-design.md
+# 实验类型: Exp1 Direct-SFT 基线
+
+experiment:
+  name: "qwen-1.5b-sft-6gb"
+  type: "exp1_direct_sft"
+  seed: 42
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"
+  use_lora: true
+  lora:
+    r: 8
+    alpha: 16
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+
+training:
+  learning_rate: 5.0e-5            # LoRA推荐值
+  batch_size: 1                    # 6GB限制
+  gradient_accumulation_steps: 128  # effective_batch=128
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  lr_scheduler_type: "cosine"
+
+optimization:
+  max_length: 256                 # 降低以节省显存
+  gradient_checkpointing: true
+  mixed_precision: "bf16"          # 6GB不支持bf16
+
+data:
+  train_file: "data/splits/train.jsonl"
+  dev_file: "data/splits/dev.jsonl"
+  system_prompt: "你是一个地理空间推理专家，专门回答关于地理位置、方向、距离和空间关系的问题。请简洁准确地回答问题。"
+
+output:
+  base_dir: "exp/exp0/qwen-1.5B-sft/outputs"
+  logging_dir: "exp/exp0/qwen-1.5B-sft/logs"
+  checkpoint_dir: "exp/exp0/qwen-1.5B-sft/checkpoints"
+  save_strategy: "epoch"
+  save_total_limit: 3

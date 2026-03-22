@@ -1,0 +1,5 @@
+{"id": "geosr_directional_00513", "question": "鼓浪屿郑成功纪念馆位于福建省的什么方位？", "reference": "东南方向", "prediction": "东南方向", "spatial_type": "directional", "difficulty": "medium"}
+{"id": "geosr_metric_01427", "question": "昆明和海口分别是云南省和海南省的省会城市，请问这两座城市之间的直线距离大约是多少公里？", "reference": "约1200公里", "prediction": "", "spatial_type": "metric", "difficulty": "easy"}
+{"id": "geosr_metric_00647", "question": "临汾市位于山西省西南部，丽水市位于浙江省西南部。假如要架设一条连接两地的空中索道，请问这条索道的理论长度（直线距离）约为多少公里？", "reference": "约1157公里。", "prediction": "", "spatial_type": "metric", "difficulty": "easy"}
+{"id": "geosr_composite_00464", "question": "从宜宾到哈尔滨的直线距离大约是多少？哈尔滨位于宜宾的什么方向？", "reference": "东北方向，距离约2692公里。", "prediction": "", "spatial_type": "composite", "difficulty": "hard"}
+{"id": "geosr_directional_00916", "question": "请问舟山市位于海伦市的什么方向？", "reference": "舟山市位于海伦市的东南方向。", "prediction": "", "spatial_type": "directional", "difficulty": "easy"}
