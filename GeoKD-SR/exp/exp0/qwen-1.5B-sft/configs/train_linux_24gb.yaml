@@ -1,0 +1,47 @@
+# Qwen2.5-1.5B SFT训练配置 - 24GB显存版本 (Linux)
+# 设计文档: docs/superpowers/specs/2026-03-21-qwen-1.5b-sft-design.md
+# 实验类型: Exp1 Direct-SFT 基线
+
+experiment:
+  name: "qwen-1.5b-sft-24gb"
+  type: "exp1_direct_sft"
+  seed: 42
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  path: "/mnt/workspace/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct/Qwen/Qwen2___5-1___5B-Instruct"
+  use_lora: true
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+
+training:
+  learning_rate: 5.0e-5
+  batch_size: 8
+  gradient_accumulation_steps: 16
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  lr_scheduler_type: "cosine"
+
+optimization:
+  max_length: 1024
+  gradient_checkpointing: true
+  mixed_precision: "bf16"
+
+data:
+  train_file: "/mnt/workspace/30_keyan/GeoKD-SR/data/splits/train.jsonl"
+  dev_file: "/mnt/workspace/30_keyan/GeoKD-SR/data/splits/dev.jsonl"
+  system_prompt: ""  # 空字符串，不使用自定义system prompt，确保训练-推理一致性
+
+output:
+  base_dir: "/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/outputs"
+  logging_dir: "logs"
+  checkpoint_dir: "checkpoints"
+  save_strategy: "epoch"
+  save_total_limit: 5
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"

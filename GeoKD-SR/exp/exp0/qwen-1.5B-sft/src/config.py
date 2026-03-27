@@ -62,7 +62,7 @@ class DataConfig:
     """数据配置"""
     train_file: str = ""
     dev_file: str = ""
-    system_prompt: str = "你是一个地理空间推理专家，专门回答关于地理位置、方向、距离和空间关系的问题。请简洁准确地回答问题。"
+    system_prompt: str = ""  # 空字符串，不使用自定义system prompt，确保训练-推理一致性
 
 
 @dataclass

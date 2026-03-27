@@ -110,6 +110,9 @@ def load_model_and_tokenizer(
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    # 设置left padding (decoder-only模型必需)
+    tokenizer.padding_side = "left"
+
     # 加载基础模型
     model = AutoModelForCausalLM.from_pretrained(
         base_model_path,
@@ -146,7 +149,7 @@ def generate_predictions(
     temperature: float = 0.1,
     top_p: float = 0.9,
     do_sample: bool = False,
-    system_prompt: str = "你是一个地理空间推理专家，专门回答关于地理位置、方向、距离和空间关系的问题。请简洁准确地回答问题。"
+    system_prompt: str = ""  # 空字符串，不使用自定义system prompt，确保与训练格式一致
 ) -> List[Dict[str, Any]]:
     """
     批量生成预测结果
@@ -173,9 +176,9 @@ def generate_predictions(
         question = item.get("question", "")
         # 构建对话格式
         messages = [
-            {"role": "system", "content": system_prompt},
             {"role": "user", "content": question}
         ]
+        # 注意：移除system prompt以确保与训练格式一致
         text = tokenizer.apply_chat_template(
             messages,
             tokenize=False,

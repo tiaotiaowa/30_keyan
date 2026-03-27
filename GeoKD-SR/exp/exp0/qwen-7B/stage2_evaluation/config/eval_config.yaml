@@ -1,0 +1,34 @@
+# Stage 2: 评测配置 (Qwen2.5-7B-Instruct)
+# 与 results 下现有评价完全一致（使用15%距离容差）
+
+metrics:
+  deterministic:
+    enabled: true
+    accuracy:
+      directional_fuzzy: true      # 方向模糊匹配 (正东=东, 东偏北=东北)
+      topological_exact: true      # 拓扑精确匹配 (区分5种类型)
+      distance_tolerance: 0.15     # 15%距离容差 (与统一标准一致)
+    bleu:
+      max_n: 4
+      weights: [0.25, 0.25, 0.25, 0.25]
+    rouge:
+      use_stemmer: true
+    spatial_keywords:
+      directions: ["东", "南", "西", "北", "东北", "东南", "西北", "西南",
+                   "东偏北", "东偏南", "西偏北", "西偏南", "北偏东", "北偏西", "南偏东", "南偏西",
+                   "正北", "正南", "正东", "正西"]
+      topological: ["相邻", "包含", "被包含", "交叉", "分离", "接壤", "重叠",
+                    "位于", "在...内", "内部", "外部", "毗邻", "属于", "涵盖",
+                    "相接", "相连", "不相邻", "不重叠", "被包围", "环绕", "穿过", "贯穿", "跨越"]
+      metric: ["距离", "公里", "千米", "米", "远", "近", "相距", "间隔", "半径", "范围", "约"]
+  semantic:
+    enabled: false  # BERTScore 暂时禁用
+
+stratified_analysis:
+  by_spatial_type: true
+  by_difficulty: true
+
+report:
+  format: markdown
+  include_examples: true
+  max_examples: 10

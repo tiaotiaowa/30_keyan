@@ -1,0 +1,64 @@
+{
+  "overall": {
+    "total_samples": 1183,
+    "overall_accuracy": 0.05156382079459002,
+    "format_valid_rate": 0.4268808114961961,
+    "bleu_4": 0.022170412058789245,
+    "rouge_l": 0.13903818261086653,
+    "spatial_f1": 0.3527110252384978
+  },
+  "by_spatial_type": {
+    "directional": {
+      "count": 292,
+      "accuracy": 0.13013698630136986,
+      "bleu_4": 0.039472370521061055,
+      "rouge_l": 0.14396451280186676,
+      "spatial_f1": 0.11474777125462057
+    },
+    "metric": {
+      "count": 307,
+      "accuracy": 0.029315960912052116,
+      "bleu_4": 0.00446007630542533,
+      "rouge_l": 0.10878968691178095,
+      "spatial_f1": 0.16856936042603796
+    },
+    "composite": {
+      "count": 246,
+      "accuracy": 0.012195121951219513,
+      "bleu_4": 0.03067633849087625,
+      "rouge_l": 0.17514844931426937,
+      "spatial_f1": 1.0
+    },
+    "topological": {
+      "count": 338,
+      "accuracy": 0.03254437869822485,
+      "bleu_4": 0.017118469168274305,
+      "rouge_l": 0.13597508839432834,
+      "spatial_f1": 0.25443786982248523
+    }
+  },
+  "by_difficulty": {
+    "medium": {
+      "count": 520,
+      "accuracy": 0.057692307692307696
+    },
+    "easy": {
+      "count": 372,
+      "accuracy": 0.06989247311827956
+    },
+    "hard": {
+      "count": 291,
+      "accuracy": 0.01718213058419244
+    }
+  },
+  "metadata": {
+    "checkpoint": "./outputs/splits/seed_42/final_model/best_model",
+    "test_file": "/mnt/workspace/30_keyan/GeoKD-SR/data/splits/test.jsonl",
+    "base_model": "/mnt/workspace/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct/Qwen/Qwen2___5-1___5B-Instruct",
+    "batch_size": 8,
+    "max_new_tokens": 256,
+    "temperature": 0.1,
+    "do_sample": false,
+    "timestamp": "2026-03-22T05:21:50.148729"
+  }
+}

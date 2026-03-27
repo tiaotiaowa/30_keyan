@@ -35,7 +35,7 @@ class DataConfig:
     train_file: str = "train.jsonl"
     dev_file: str = "dev.jsonl"
     test_file: str = "test.jsonl"
-    system_prompt: str = "你是一个专业的地理空间推理助手，擅长回答关于地理位置、方向、距离和拓扑关系的问题。"
+    system_prompt: str = ""  # 空字符串表示不使用system prompt，确保训练-推理一致性
 
 
 class ChatMLConverter:
@@ -45,8 +45,8 @@ class ChatMLConverter:
     将 GeoKD-SR 数据转换为 Qwen2.5 的 ChatML 格式
     """
 
-    # 系统提示词
-    DEFAULT_SYSTEM_PROMPT = "你是一个专业的地理空间推理助手，擅长回答关于地理位置、方向、距离和拓扑关系的问题。"
+    # 系统提示词 - 空字符串表示不使用system prompt，确保训练-推理一致性
+    DEFAULT_SYSTEM_PROMPT = ""
 
     def __init__(
         self,
@@ -88,10 +88,10 @@ class ChatMLConverter:
             ChatML 格式的消息列表
         """
         messages = [
-            {"role": "system", "content": self.system_prompt},
             {"role": "user", "content": question},
             {"role": "assistant", "content": answer}
         ]
+        # 注意：移除system prompt以确保训练-推理格式一致性
         return messages
 
     def tokenize_with_labels(
@@ -469,10 +469,10 @@ class GeoSRDataProcessor(Dataset):
         messages_data = []
         for example in self.data:
             messages = [
-                {"role": "system", "content": self.converter.system_prompt},
                 {"role": "user", "content": example.get("question", "")},
                 {"role": "assistant", "content": example.get("answer", "")}
             ]
+            # 注意：移除system prompt以确保训练-推理格式一致性
             messages_data.append({"messages": messages})
 
         # 创建 Hugging Face Dataset

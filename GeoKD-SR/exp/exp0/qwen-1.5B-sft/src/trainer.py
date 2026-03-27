@@ -397,11 +397,14 @@ class GeoSRSFTTrainer:
 
     def save_model(self, output_path: str) -> None:
         """
-        保存模型
+        保存模型（同时保存最优和最后模型）
 
         Args:
             output_path: 保存路径
         """
+        import shutil
+        import re
+
         if self._trainer is None:
             raise RuntimeError("训练器未初始化，无法保存模型")
 
@@ -411,19 +414,37 @@ class GeoSRSFTTrainer:
         save_path = Path(output_path) / "final_model"
         save_path.mkdir(parents=True, exist_ok=True)
 
-        # 保存模型
-        if self.config.model.use_lora:
-            # LoRA 模型保存
-            self._trainer.model.save_pretrained(str(save_path))
-            logger.info(f"LoRA 适配器已保存到: {save_path}")
-        else:
-            # 完整模型保存
-            self._trainer.model.save_pretrained(str(save_path))
-            logger.info(f"完整模型已保存到: {save_path}")
+        # 1. 保存最优模型（当前已加载的，因为load_best_model_at_end=True）
+        best_model_path = save_path / "best_model"
+        best_model_path.mkdir(parents=True, exist_ok=True)
 
-        # 保存 tokenizer
-        self._tokenizer.save_pretrained(str(save_path))
-        logger.info(f"Tokenizer 已保存到: {save_path}")
+        if self.config.model.use_lora:
+            self._trainer.model.save_pretrained(str(best_model_path))
+            logger.info(f"最优模型(LoRA)已保存到: {best_model_path}")
+        else:
+            self._trainer.model.save_pretrained(str(best_model_path))
+            logger.info(f"最优模型(完整)已保存到: {best_model_path}")
+
+        # 保存 tokenizer 到最优模型目录
+        self._tokenizer.save_pretrained(str(best_model_path))
+
+        # 2. 复制最后一个checkpoint作为last_model
+        # TRL checkpoint命名格式: checkpoint-XXX (XXX是step数)
+        checkpoint_dir = Path(output_path)
+        if checkpoint_dir.exists():
+            checkpoints = list(checkpoint_dir.glob("checkpoint-*"))
+            if checkpoints:
+                # 按step数排序，取最后一个
+                def get_step(path):
+                    match = re.search(r'checkpoint-(\d+)', path.name)
+                    return int(match.group(1)) if match else 0
+
+                last_checkpoint = max(checkpoints, key=get_step)
+                last_model_path = save_path / "last_model"
+                if last_model_path.exists():
+                    shutil.rmtree(last_model_path)
+                shutil.copytree(last_checkpoint, last_model_path)
+                logger.info(f"最后模型已保存到: {last_model_path} (来自 {last_checkpoint.name})")
 
         # 保存训练配置
         config_save_path = save_path / "training_config.yaml"
