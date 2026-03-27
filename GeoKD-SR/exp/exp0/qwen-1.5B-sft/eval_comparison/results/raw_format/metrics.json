@@ -1,0 +1,32 @@
+{
+  "total_samples": 1183,
+  "by_type": {
+    "directional": {
+      "accuracy": 0.5582191780821918,
+      "count": 292
+    },
+    "metric": {
+      "accuracy": 0.11400651465798045,
+      "count": 307
+    },
+    "composite": {
+      "accuracy": 0.044715447154471545,
+      "count": 246
+    },
+    "topological": {
+      "accuracy": 0.14792899408284024,
+      "count": 338
+    }
+  },
+  "overall": {
+    "accuracy": 0.21893491124260356,
+    "format_valid_rate": 1.0
+  },
+  "metadata": {
+    "base_model": "/mnt/workspace/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct/Qwen/Qwen2___5-1___5B-Instruct",
+    "lora_path": "/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/outputs/splits/seed_42/final_model/best_model",
+    "test_file": "/mnt/workspace/30_keyan/GeoKD-SR/data/splits/test.jsonl",
+    "format": "raw_question",
+    "timestamp": "2026-03-27T05:06:09.167087"
+  }
+}

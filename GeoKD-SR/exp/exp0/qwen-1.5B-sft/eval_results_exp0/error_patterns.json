@@ -1,0 +1,772 @@
+{
+  "before": {
+    "topological_bias": {
+      "description": "拓扑关系偏见：倾向于回答\"位于内部\"",
+      "count": 218,
+      "samples": [
+        {
+          "id": "geosr_topological_01488",
+          "question": "江苏省与浙江省这两片地理区域在空间分布上是相互独立的，还是存在某种拓扑连接关系？",
+          "prediction": "是的，江苏省位于浙江省内部。",
+          "reference": "江苏省与浙江省存在拓扑连接关系，两省相邻。"
+        },
+        {
+          "id": "geosr_topological_03455",
+          "question": "深圳市包含在广东省的范围内吗？",
+          "prediction": "是的，深圳市位于广东省内部。",
+          "reference": "是的，深圳属于广东省。"
+        },
+        {
+          "id": "geosr_topological_03355",
+          "question": "沅江与贵州省的空间关系是怎样的？",
+          "prediction": "沅江与贵州省的空间关系是：是的，沅江位于贵州省内部。",
+          "reference": "存在交叉，流经贵州。"
+        },
+        {
+          "id": "geosr_topological_01692",
+          "question": "基于中国的行政区划地理特征，请推断湖北省与河南省之间是否存在共享边界。",
+          "prediction": "是的，河南省位于湖北省内部。",
+          "reference": "湖北省与河南省之间存在共享边界。"
+        },
+        {
+          "id": "geosr_topological_00489",
+          "question": "松花江是中国东北地区的主要河流之一，西藏自治区位于青藏高原。请判断松花江的干流流经区域与西藏自治区之间是否存在拓扑相交或包含关系？",
+          "prediction": "否，松花江的干流不位于西藏自治区内部。松花江的干流流经中国东北地区，而西藏自治区位于青藏高原，两者不存在拓扑相交或包含关系。",
+          "reference": "不存在。两者在空间上完全分离。"
+        },
+        {
+          "id": "geosr_topological_01831",
+          "question": "比较分析湖北省和河南省的地理特征，考虑到中原地区与江汉平原的地缘联系，请判定这两个省份在地理空间层面上的逻辑连接方式。",
+          "prediction": "东南方向；约1200公里；是的，河南省位于湖北省内部。",
+          "reference": "相邻，共享省界。"
+        },
+        {
+          "id": "geosr_topological_03112",
+          "question": "内蒙古自治区的版图狭长，且横跨中国东西，其东南方向是否与河北省直接接壤？",
+          "prediction": "东南方向，是的，内蒙古自治区位于河北省内部。",
+          "reference": "是，内蒙古自治区与河北省直接接壤。"
+        },
+        {
+          "id": "geosr_topological_03810",
+          "question": "长江中游城市群与江西省是否存在地理重叠？",
+          "prediction": "是的，长江中游城市群位于江西省内部。",
+          "reference": "是的，江西省属于该城市群范围。"
+        },
+        {
+          "id": "geosr_topological_01437",
+          "question": "青海省与甘肃省这两个省份的行政区划边界是否存在重叠或相邻关系？",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "是，青海省与甘肃省接壤。"
+        },
+        {
+          "id": "geosr_topological_01629",
+          "question": "在分析中国西北地区地形时，我们发现青海省与甘肃省紧密相关。请推断：从地理行政区划的角度来看，这两个省份是彼此完全独立、互不相邻的，还是存在空间上的关联？",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "两省存在空间关联，地理上相互接壤。"
+        },
+        {
+          "id": "geosr_topological_02840",
+          "question": "假设你正在规划一次关于中国沿海经济特区的实地考察，重点关注广东省内的城市分布。请基于地理位置的拓扑包含原理，描述汕头市相对于广东省的空间位置关系。",
+          "prediction": "是的，汕头市位于广东省内部。",
+          "reference": "汕头市位于广东省东部沿海，被广东省包含。"
+        },
+        {
+          "id": "geosr_topological_03869",
+          "question": "地处中国西南的云南省是否包含临沧市这一行政区？",
+          "prediction": "是的，临沧市位于云南省内部。",
+          "reference": "是的，云南省包含临沧市。"
+        },
+        {
+          "id": "geosr_topological_02559",
+          "question": "假如你在内蒙古自治区进行自驾游，途经包头市，请问此时你依然处于该自治区的行政区域内吗？",
+          "prediction": "是的，包头市位于内蒙古自治区内部。",
+          "reference": "是的，包头市属于内蒙古自治区。"
+        },
+        {
+          "id": "geosr_topological_01436",
+          "question": "若要规划从青海省前往甘肃省的路线，是否直接跨越省界即可？",
+          "prediction": "是的，青海省位于甘肃省内部。因此，若要规划从青海省前往甘肃省的路线，无需直接跨越省界即可。",
+          "reference": "是的，两省直接相邻，直接跨越省界即可。"
+        },
+        {
+          "id": "geosr_topological_01423",
+          "question": "判断青海省和甘肃省在行政区域上是否相连。",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "是，两省行政区域相连。"
+        },
+        {
+          "id": "geosr_topological_02598",
+          "question": "曲靖市在行政区划上归属于云南省吗？",
+          "prediction": "是的，曲靖市位于云南省内部。",
+          "reference": "是的，曲靖市隶属于云南省。"
+        },
+        {
+          "id": "geosr_topological_02174",
+          "question": "若某考察团位于沧州境内，请问该考察团此时是否处于河北省的辖区之内？",
+          "prediction": "是的，沧州位于河北省内部。",
+          "reference": "是"
+        },
+        {
+          "id": "geosr_topological_02955",
+          "question": "甘肃省与青海省是否属于彼此相邻的省份？",
+          "prediction": "是的，甘肃省位于青海省内部。",
+          "reference": "是，甘肃省与青海省彼此相邻。"
+        },
+        {
+          "id": "geosr_topological_01420",
+          "question": "江苏省与浙江省是相互独立的省份还是有空间重叠？",
+          "prediction": "是的，江苏省位于浙江省内部。",
+          "reference": "江苏省与浙江省相邻。"
+        },
+        {
+          "id": "geosr_topological_03350",
+          "question": "安康市是否完全位于陕西省行政边界内？",
+          "prediction": "是的，安康市位于陕西省内部。",
+          "reference": "是的，安康位于陕西境内。"
+        }
+      ]
+    },
+    "distance_bias": {
+      "description": "距离偏向：频繁输出\"约1200公里\"",
+      "count": 436,
+      "samples": [
+        {
+          "id": "geosr_metric_00647",
+          "question": "临汾市位于山西省西南部，丽水市位于浙江省西南部。假如要架设一条连接两地的空中索道，请问这条索道的理论长度（直线距离）约为多少公里？",
+          "prediction": "是的，临汾市位于丽水市内部。这条索道的理论长度（直线距离）约为1200公里。",
+          "reference": "约1157公里。"
+        },
+        {
+          "id": "geosr_composite_00464",
+          "question": "从宜宾到哈尔滨的直线距离大约是多少？哈尔滨位于宜宾的什么方向？",
+          "prediction": "- 方向问题：东北方向\n- 距离问题：约1200公里\n- 拓扑问题：是的，哈尔滨位于宜宾的东北方向",
+          "reference": "东北方向，距离约2692公里。"
+        },
+        {
+          "id": "geosr_composite_00819",
+          "question": "天水市相对于湖北省处于什么方位？两地的直线距离大约是多少？",
+          "prediction": "西南方向；约1200公里",
+          "reference": "西北方向，约917公里。"
+        },
+        {
+          "id": "geosr_directional_01480",
+          "question": "如果从丹东前往周口，应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_composite_01947",
+          "question": "比较香港特别行政区与湖南省岳阳市的地理位置。若从香港出发前往岳阳，应该向哪个方向行进？两地的直线距离大约是多少？",
+          "prediction": "- 方向问题：东北方向\n- 距离问题：约1200公里\n- 拓扑问题：是的，香港位于湖南省岳阳市内部",
+          "reference": "向正北偏西方向行进，直线距离约790公里。"
+        },
+        {
+          "id": "geosr_topological_01831",
+          "question": "比较分析湖北省和河南省的地理特征，考虑到中原地区与江汉平原的地缘联系，请判定这两个省份在地理空间层面上的逻辑连接方式。",
+          "prediction": "东南方向；约1200公里；是的，河南省位于湖北省内部。",
+          "reference": "相邻，共享省界。"
+        },
+        {
+          "id": "geosr_metric_01122",
+          "question": "吕梁和南昌之间的直线距离大约是多少公里？",
+          "prediction": "是的，吕梁位于南昌内部，直线距离大约为1200公里。",
+          "reference": "约1079公里"
+        },
+        {
+          "id": "geosr_metric_00830",
+          "question": "温州市位于浙江省东南部，西安城墙位于陕西省西安市市中心。请估算从温州市到西安城墙的直线距离大约是多少公里？",
+          "prediction": "是的，温州市位于浙江省东南部，西安城墙位于陕西省西安市市中心。温州市到西安城墙的直线距离大约是1200公里。",
+          "reference": "温州市到西安城墙的直线距离大约是1313公里。"
+        },
+        {
+          "id": "geosr_composite_00953",
+          "question": "请描述北京市相对于辽宁省的地理位置关系（包括方向和大致距离）。",
+          "prediction": "东北方向；约1200公里；是的，北京市位于辽宁省内部。",
+          "reference": "辽宁省位于北京市的东北方向，两地直线距离约为612.7公里。"
+        },
+        {
+          "id": "geosr_metric_00730",
+          "question": "若要以山西省为起点，规划一条前往江苏省高邮市的最短飞行航线，请问这条直飞航线的长度大约是多少公里？",
+          "prediction": "是的，山西省位于江苏省高邮市内部，因此从山西省到江苏省高邮市的最短飞行航线就是直线飞行，长度约为1200公里。",
+          "reference": "约872公里"
+        },
+        {
+          "id": "geosr_composite_01384",
+          "question": "江苏省位于昆仑山脉的什么方向？两地之间的直线距离约是多少公里？",
+          "prediction": "东南方向；约1200公里",
+          "reference": "江苏省位于昆仑山脉的东方向，两地直线距离约为3129.3公里。"
+        },
+        {
+          "id": "geosr_metric_02990",
+          "question": "烟台市位于山东半岛，龙岩市位于福建省西部。请问这两座城市之间的直线距离大约是多少公里？",
+          "prediction": "是的，烟台市位于山东省东部，龙岩市位于福建省西部，两者之间直线距离约为1200公里。",
+          "reference": "约1441.4公里"
+        },
+        {
+          "id": "geosr_metric_02634",
+          "question": "呼和浩特与铜川之间的直线距离大约是多少公里？",
+          "prediction": "是的，呼和浩特位于铜川内部，两者之间直线距离大约为1200公里。",
+          "reference": "呼和浩特与铜川之间的直线距离约为705.3公里。"
+        },
+        {
+          "id": "geosr_composite_02191",
+          "question": "温州位于昭通的什么方向，两地相距多远？",
+          "prediction": "复合问题：温州位于昭通的东南方向，两地相距约1200公里。",
+          "reference": "东方向，约1669公里"
+        },
+        {
+          "id": "geosr_metric_01392",
+          "question": "常熟位于江苏省，任丘位于河北省，请问这两座城市之间的直线距离约为多少公里？",
+          "prediction": "是的，常熟位于江苏省，任丘位于河北省，两座城市之间的直线距离约为1200公里。",
+          "reference": "常熟与任丘之间的直线距离约为891公里。"
+        },
+        {
+          "id": "geosr_metric_01840",
+          "question": "宁夏回族自治区与长株潭城市群之间的直线距离大约是多少公里？",
+          "prediction": "是的，宁夏回族自治区位于长株潭城市群内部，两者之间直线距离大约为1200公里。",
+          "reference": "两地之间的直线距离约为1295.1公里。"
+        },
+        {
+          "id": "geosr_directional_01760",
+          "question": "如果从莆田出发前往乌鲁木齐，应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西北方向"
+        },
+        {
+          "id": "geosr_composite_00456",
+          "question": "定西在秦岭的什么方位？两地之间的距离大约是多少？",
+          "prediction": "西南方向；约1200公里",
+          "reference": "定西位于秦岭的西北方向，距离约320公里。"
+        },
+        {
+          "id": "geosr_metric_01099",
+          "question": "甘肃省白银市与海南省海口市之间的直线距离大概是多少公里？",
+          "prediction": "是的，甘肃省白银市位于海南省海口市内部。直线距离约为1200公里。",
+          "reference": "白银与海口两地之间的直线距离约为1927.2公里。"
+        },
+        {
+          "id": "geosr_metric_02361",
+          "question": "张家口与酒泉之间的直线距离大约是多少公里？",
+          "prediction": "是的，张家口位于酒泉内部，直线距离大约为1200公里。",
+          "reference": "约1394公里"
+        }
+      ]
+    },
+    "direction_confusion": {
+      "description": "方向混淆：方向判断错误",
+      "count": 75,
+      "samples": [
+        {
+          "id": "geosr_directional_02028",
+          "question": "延吉市是延边朝鲜族自治州的首府，海城市由鞍山市代管。如果从延吉市出发前往海城市，大致应该向哪个方向行进？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_01480",
+          "question": "如果从丹东前往周口，应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_directional_00788",
+          "question": "已知庄河市位于辽东半岛东侧，扬中市位于长江中下游。请分析相对于庄河市而言，扬中市大致位于什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00530",
+          "question": "铁岭是辽宁省北部的城市，深圳是广东省南部的城市。请问深圳位于铁岭的什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00198",
+          "question": "请问南阳在铁岭的什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00861",
+          "question": "请问高邮市位于遵义市的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东北方向。"
+        },
+        {
+          "id": "geosr_directional_00197",
+          "question": "已知定西和合肥的地理坐标，请判断合肥在定西的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东方向"
+        },
+        {
+          "id": "geosr_directional_02781",
+          "question": "从荆州到内江的相对方位是什么？",
+          "prediction": "是的，内江位于荆州内部。",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_directional_02183",
+          "question": "对于海门区来说，中原城市群位于哪个基本方位？",
+          "prediction": "东南方向",
+          "reference": "西方向"
+        },
+        {
+          "id": "geosr_directional_01037",
+          "question": "如果从绥化市出发前往武汉市，大致应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_directional_00500",
+          "question": "扎兰屯位于内蒙古自治区东部，任丘位于河北省中部。请问任丘位于扎兰屯的什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_01268",
+          "question": "从地理位置上看，大巴山脉位于嘉峪关的什么方向？",
+          "prediction": "西北方向",
+          "reference": "东南方向"
+        },
+        {
+          "id": "geosr_directional_01346",
+          "question": "从黑龙江省富锦市出发，前往河南省南阳市，大致应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00397",
+          "question": "如果从吉林省的洮南市前往广西壮族自治区的钦州市，大致是朝哪个方向行进？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00192",
+          "question": "请判断苏州博物馆相对于嘉兴的方向关系。",
+          "prediction": "复合问题：是的，苏州博物馆位于嘉兴内部。",
+          "reference": "苏州博物馆在嘉兴的西北方向。"
+        },
+        {
+          "id": "geosr_directional_02811",
+          "question": "额尔古纳位于中国版图的鸡冠顶端，而钦州位于南部沿海。请结合两地的地理位置，判断从额尔古纳看钦州，大致位于什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_02371",
+          "question": "舟山位于浙江省沿海，资阳位于四川省中部。请问从舟山出发前往资阳，大致是朝哪个方向行进？",
+          "prediction": "东南方向",
+          "reference": "从舟山前往资阳，大致是朝西方向行进。"
+        },
+        {
+          "id": "geosr_directional_00891",
+          "question": "相对于白山，烟台位于什么方向？",
+          "prediction": "东北方向",
+          "reference": "烟台位于白山的西南方向。"
+        },
+        {
+          "id": "geosr_directional_02738",
+          "question": "南宁是广西壮族自治区的首府，信阳位于河南省南部。从地理位置上看，信阳位于南宁的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东北方向"
+        },
+        {
+          "id": "geosr_directional_00826",
+          "question": "阿尔山位于内蒙古大兴安岭西南麓，黄山位于安徽省南部。如果要从阿尔山去黄山游览，从方位上看，应该向哪个方向行进？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        }
+      ]
+    },
+    "format_issues": {
+      "description": "格式问题：输出格式不规范",
+      "count": 0,
+      "samples": []
+    }
+  },
+  "after": {
+    "topological_bias": {
+      "description": "拓扑关系偏见：倾向于回答\"位于内部\"",
+      "count": 250,
+      "samples": [
+        {
+          "id": "geosr_topological_01488",
+          "question": "江苏省与浙江省这两片地理区域在空间分布上是相互独立的，还是存在某种拓扑连接关系？",
+          "prediction": "是的，江苏省位于浙江省内部。",
+          "reference": "江苏省与浙江省存在拓扑连接关系，两省相邻。"
+        },
+        {
+          "id": "geosr_topological_03455",
+          "question": "深圳市包含在广东省的范围内吗？",
+          "prediction": "是的，深圳市位于广东省内部。",
+          "reference": "是的，深圳属于广东省。"
+        },
+        {
+          "id": "geosr_topological_03355",
+          "question": "沅江与贵州省的空间关系是怎样的？",
+          "prediction": "是的，沅江位于贵州省内部。",
+          "reference": "存在交叉，流经贵州。"
+        },
+        {
+          "id": "geosr_topological_01692",
+          "question": "基于中国的行政区划地理特征，请推断湖北省与河南省之间是否存在共享边界。",
+          "prediction": "是的，河南省位于湖北省内部。",
+          "reference": "湖北省与河南省之间存在共享边界。"
+        },
+        {
+          "id": "geosr_topological_02744",
+          "question": "如果将自贡市作为考察对象，它是否处于四川省的行政区域边界之内？",
+          "prediction": "是的，自贡市位于四川省内部。",
+          "reference": "是，自贡市处于四川省的行政区域边界之内。"
+        },
+        {
+          "id": "geosr_topological_00489",
+          "question": "松花江是中国东北地区的主要河流之一，西藏自治区位于青藏高原。请判断松花江的干流流经区域与西藏自治区之间是否存在拓扑相交或包含关系？",
+          "prediction": "是的，松花江位于西藏自治区内部。",
+          "reference": "不存在。两者在空间上完全分离。"
+        },
+        {
+          "id": "geosr_topological_01831",
+          "question": "比较分析湖北省和河南省的地理特征，考虑到中原地区与江汉平原的地缘联系，请判定这两个省份在地理空间层面上的逻辑连接方式。",
+          "prediction": "是的，河南省位于湖北省内部。",
+          "reference": "相邻，共享省界。"
+        },
+        {
+          "id": "geosr_topological_03112",
+          "question": "内蒙古自治区的版图狭长，且横跨中国东西，其东南方向是否与河北省直接接壤？",
+          "prediction": "是的，内蒙古位于河北内部",
+          "reference": "是，内蒙古自治区与河北省直接接壤。"
+        },
+        {
+          "id": "geosr_topological_03810",
+          "question": "长江中游城市群与江西省是否存在地理重叠？",
+          "prediction": "是的，长江中游城市群位于江西省内部。",
+          "reference": "是的，江西省属于该城市群范围。"
+        },
+        {
+          "id": "geosr_topological_01437",
+          "question": "青海省与甘肃省这两个省份的行政区划边界是否存在重叠或相邻关系？",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "是，青海省与甘肃省接壤。"
+        },
+        {
+          "id": "geosr_topological_02582",
+          "question": "在云贵高原的地理环境中，素有'入滇锁钥'之称的曲靖市，其行政区域是否在云南省的宏观地理空间范围内呈现出包含关系？",
+          "prediction": "是的，曲靖市位于云南省内部",
+          "reference": "是的，曲靖市隶属于云南省。"
+        },
+        {
+          "id": "geosr_topological_01629",
+          "question": "在分析中国西北地区地形时，我们发现青海省与甘肃省紧密相关。请推断：从地理行政区划的角度来看，这两个省份是彼此完全独立、互不相邻的，还是存在空间上的关联？",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "两省存在空间关联，地理上相互接壤。"
+        },
+        {
+          "id": "geosr_topological_02840",
+          "question": "假设你正在规划一次关于中国沿海经济特区的实地考察，重点关注广东省内的城市分布。请基于地理位置的拓扑包含原理，描述汕头市相对于广东省的空间位置关系。",
+          "prediction": "是的，汕头位于广东省内部。",
+          "reference": "汕头市位于广东省东部沿海，被广东省包含。"
+        },
+        {
+          "id": "geosr_topological_03869",
+          "question": "地处中国西南的云南省是否包含临沧市这一行政区？",
+          "prediction": "是的，临沧市位于云南省内部。",
+          "reference": "是的，云南省包含临沧市。"
+        },
+        {
+          "id": "geosr_topological_02559",
+          "question": "假如你在内蒙古自治区进行自驾游，途经包头市，请问此时你依然处于该自治区的行政区域内吗？",
+          "prediction": "是的，包头市位于内蒙古自治区内部。",
+          "reference": "是的，包头市属于内蒙古自治区。"
+        },
+        {
+          "id": "geosr_topological_01436",
+          "question": "若要规划从青海省前往甘肃省的路线，是否直接跨越省界即可？",
+          "prediction": "是的，甘肃省位于青海省内部。",
+          "reference": "是的，两省直接相邻，直接跨越省界即可。"
+        },
+        {
+          "id": "geosr_topological_01423",
+          "question": "判断青海省和甘肃省在行政区域上是否相连。",
+          "prediction": "是的，青海省位于甘肃省内部。",
+          "reference": "是，两省行政区域相连。"
+        },
+        {
+          "id": "geosr_topological_01402",
+          "question": "河北省与山西省这两个省份在地理空间上是否存在重合关系？",
+          "prediction": "是的，河北省位于山西省内部。",
+          "reference": "不存在"
+        },
+        {
+          "id": "geosr_topological_02598",
+          "question": "曲靖市在行政区划上归属于云南省吗？",
+          "prediction": "是的，曲靖市位于云南省内部。",
+          "reference": "是的，曲靖市隶属于云南省。"
+        },
+        {
+          "id": "geosr_topological_02174",
+          "question": "若某考察团位于沧州境内，请问该考察团此时是否处于河北省的辖区之内？",
+          "prediction": "是的，沧州位于河北省内部。",
+          "reference": "是"
+        }
+      ]
+    },
+    "distance_bias": {
+      "description": "距离偏向：频繁输出\"约1200公里\"",
+      "count": 509,
+      "samples": [
+        {
+          "id": "geosr_metric_00647",
+          "question": "临汾市位于山西省西南部，丽水市位于浙江省西南部。假如要架设一条连接两地的空中索道，请问这条索道的理论长度（直线距离）约为多少公里？",
+          "prediction": "是的，临汾市位于丽水市内部。约1200公里",
+          "reference": "约1157公里。"
+        },
+        {
+          "id": "geosr_composite_00819",
+          "question": "天水市相对于湖北省处于什么方位？两地的直线距离大约是多少？",
+          "prediction": "西南方向；约1200公里",
+          "reference": "西北方向，约917公里。"
+        },
+        {
+          "id": "geosr_composite_00153",
+          "question": "请判断南通相对于黑龙江的精确地理位置关系（包括方向和距离）。",
+          "prediction": "西南方向，约1200公里",
+          "reference": "南通位于黑龙江的南方，直线距离约2000公里"
+        },
+        {
+          "id": "geosr_directional_01480",
+          "question": "如果从丹东前往周口，应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_composite_02016",
+          "question": "汉中市是历史名城，嵩山是五岳之一。请综合描述嵩山相对于汉中的方向和大约直线距离。",
+          "prediction": "西南方向；约1200公里",
+          "reference": "嵩山位于汉中东偏北方向，直线距离约577公里。"
+        },
+        {
+          "id": "geosr_composite_01947",
+          "question": "比较香港特别行政区与湖南省岳阳市的地理位置。若从香港出发前往岳阳，应该向哪个方向行进？两地的直线距离大约是多少？",
+          "prediction": "西南方向；约1200公里；是的，香港位于岳阳市内部",
+          "reference": "向正北偏西方向行进，直线距离约790公里。"
+        },
+        {
+          "id": "geosr_metric_01122",
+          "question": "吕梁和南昌之间的直线距离大约是多少公里？",
+          "prediction": "约1200公里",
+          "reference": "约1079公里"
+        },
+        {
+          "id": "geosr_metric_00830",
+          "question": "温州市位于浙江省东南部，西安城墙位于陕西省西安市市中心。请估算从温州市到西安城墙的直线距离大约是多少公里？",
+          "prediction": "是的，温州市位于陕西省西安市的东南方向，直线距离约为1200公里。",
+          "reference": "温州市到西安城墙的直线距离大约是1313公里。"
+        },
+        {
+          "id": "geosr_composite_00984",
+          "question": "已知营口位于中国东北，长白山脉横亘于吉林省东南部。请根据两地的空间位置，计算营口相对于长白山脉的方向及直线距离。",
+          "prediction": "方向：西南方向\n距离：约1200公里\n拓扑：是的，营口位于长白山脉内部",
+          "reference": "长白山脉位于营口的东北方向，直线距离约503.5公里。"
+        },
+        {
+          "id": "geosr_directional_00198",
+          "question": "请问南阳在铁岭的什么方向？",
+          "prediction": "西南方向，约1200公里",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_composite_00076",
+          "question": "请综合判断广西壮族自治区相对于上海市的精确地理方位，并估算两者之间的直线距离。",
+          "prediction": "西南方向，约1200公里，是的，广西壮族自治区位于上海市内部。",
+          "reference": "西南方向，距离约1601.3公里"
+        },
+        {
+          "id": "geosr_composite_00953",
+          "question": "请描述北京市相对于辽宁省的地理位置关系（包括方向和大致距离）。",
+          "prediction": "东北方向，约1200公里",
+          "reference": "辽宁省位于北京市的东北方向，两地直线距离约为612.7公里。"
+        },
+        {
+          "id": "geosr_metric_00730",
+          "question": "若要以山西省为起点，规划一条前往江苏省高邮市的最短飞行航线，请问这条直飞航线的长度大约是多少公里？",
+          "prediction": "复合问题：是的，江苏省高邮市位于山西省的东南方向，直线距离约为1200公里。",
+          "reference": "约872公里"
+        },
+        {
+          "id": "geosr_composite_01384",
+          "question": "江苏省位于昆仑山脉的什么方向？两地之间的直线距离约是多少公里？",
+          "prediction": "西南方向；约1200公里",
+          "reference": "江苏省位于昆仑山脉的东方向，两地直线距离约为3129.3公里。"
+        },
+        {
+          "id": "geosr_metric_02990",
+          "question": "烟台市位于山东半岛，龙岩市位于福建省西部。请问这两座城市之间的直线距离大约是多少公里？",
+          "prediction": "是的，烟台市位于龙岩市内部，直线距离约为1200公里。",
+          "reference": "约1441.4公里"
+        },
+        {
+          "id": "geosr_metric_02634",
+          "question": "呼和浩特与铜川之间的直线距离大约是多少公里？",
+          "prediction": "约1200公里",
+          "reference": "呼和浩特与铜川之间的直线距离约为705.3公里。"
+        },
+        {
+          "id": "geosr_topological_00119",
+          "question": "榆林市是否位于江苏省的行政管辖范围内？",
+          "prediction": "否，榆林位于东北方，距离约1200公里。",
+          "reference": "相离"
+        },
+        {
+          "id": "geosr_composite_02191",
+          "question": "温州位于昭通的什么方向，两地相距多远？",
+          "prediction": "西南方向，约1200公里",
+          "reference": "东方向，约1669公里"
+        },
+        {
+          "id": "geosr_metric_01840",
+          "question": "宁夏回族自治区与长株潭城市群之间的直线距离大约是多少公里？",
+          "prediction": "是的，宁夏回族自治区位于长株潭城市群内部，直线距离约为1200公里。",
+          "reference": "两地之间的直线距离约为1295.1公里。"
+        },
+        {
+          "id": "geosr_directional_01760",
+          "question": "如果从莆田出发前往乌鲁木齐，应该向哪个方向行进？",
+          "prediction": "西北方向，约1200公里",
+          "reference": "西北方向"
+        }
+      ]
+    },
+    "direction_confusion": {
+      "description": "方向混淆：方向判断错误",
+      "count": 73,
+      "samples": [
+        {
+          "id": "geosr_directional_00513",
+          "question": "鼓浪屿郑成功纪念馆位于福建省的什么方位？",
+          "prediction": "是的，鼓浪屿郑成功纪念馆位于厦门市内部。",
+          "reference": "东南方向"
+        },
+        {
+          "id": "geosr_directional_02028",
+          "question": "延吉市是延边朝鲜族自治州的首府，海城市由鞍山市代管。如果从延吉市出发前往海城市，大致应该向哪个方向行进？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_01480",
+          "question": "如果从丹东前往周口，应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_directional_00562",
+          "question": "相对于南阳市，迁安市位于哪个方位？",
+          "prediction": "西南方向",
+          "reference": "东北方位"
+        },
+        {
+          "id": "geosr_directional_00530",
+          "question": "铁岭是辽宁省北部的城市，深圳是广东省南部的城市。请问深圳位于铁岭的什么方向？",
+          "prediction": "东北方向",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_02614",
+          "question": "站在常德面向太行山脉，大致是面向什么方向？",
+          "prediction": "西南方向",
+          "reference": "面向北方"
+        },
+        {
+          "id": "geosr_directional_02579",
+          "question": "请问石家庄市位于襄阳市的什么方向？",
+          "prediction": "西南方向",
+          "reference": "石家庄市位于襄阳市的东北方向。"
+        },
+        {
+          "id": "geosr_directional_01156",
+          "question": "洛阳市相对于德阳市的地理位置方向是什么？",
+          "prediction": "西南方向",
+          "reference": "东北方向。"
+        },
+        {
+          "id": "geosr_directional_01757",
+          "question": "拉萨是西藏自治区的首府，松花江是中国东北地区著名的河流。如果不考虑地形阻隔，从拉萨出发前往松花江流域，大致应该向哪个方向行进？",
+          "prediction": "西南方向",
+          "reference": "东北方向"
+        },
+        {
+          "id": "geosr_directional_00861",
+          "question": "请问高邮市位于遵义市的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东北方向。"
+        },
+        {
+          "id": "geosr_directional_00984",
+          "question": "粤港澳大湾区和山西省大同市在经度上非常接近，但在纬度上跨度较大。请问大同市相对于粤港澳大湾区位于什么方向？",
+          "prediction": "西南方向",
+          "reference": "大同市位于粤港澳大湾区的北方向。"
+        },
+        {
+          "id": "geosr_directional_01582",
+          "question": "如果从位于长江入海口的海门出发，前往位于广西的河池，大致应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_00636",
+          "question": "请问唐山在渭南的什么方向？",
+          "prediction": "西南方向，约1200公里",
+          "reference": "东北方向"
+        },
+        {
+          "id": "geosr_directional_00197",
+          "question": "已知定西和合肥的地理坐标，请判断合肥在定西的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东方向"
+        },
+        {
+          "id": "geosr_directional_02584",
+          "question": "请问大丰位于宜兴的什么方向？",
+          "prediction": "西南方向，约1200公里",
+          "reference": "东北方向"
+        },
+        {
+          "id": "geosr_directional_01037",
+          "question": "如果从绥化市出发前往武汉市，大致应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向。"
+        },
+        {
+          "id": "geosr_directional_01073",
+          "question": "请问铁力市位于遵化市的什么方向？",
+          "prediction": "西南方向",
+          "reference": "东北方向"
+        },
+        {
+          "id": "geosr_directional_02467",
+          "question": "已知北海市位于广西南部沿海，而颐和园位于北京西北郊，请从经纬度角度分析，相对于北海，颐和园处于什么方位？",
+          "prediction": "西南方向，约1200公里",
+          "reference": "颐和园在北海的东北方向。"
+        },
+        {
+          "id": "geosr_directional_01346",
+          "question": "从黑龙江省富锦市出发，前往河南省南阳市，大致应该向哪个方向行进？",
+          "prediction": "东北方向，约1200公里",
+          "reference": "西南方向"
+        },
+        {
+          "id": "geosr_directional_01926",
+          "question": "相对于湖北省，海门位于什么方向？",
+          "prediction": "西南方向",
+          "reference": "东方向"
+        }
+      ]
+    },
+    "format_issues": {
+      "description": "格式问题：输出格式不规范",
+      "count": 0,
+      "samples": []
+    }
+  }
+}
