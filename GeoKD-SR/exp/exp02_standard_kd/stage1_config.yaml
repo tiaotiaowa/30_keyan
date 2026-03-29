@@ -1,0 +1,36 @@
+# Exp02 Stage1: 生成配置
+# 复用exp0的prompt模板，确保评测完全可比
+
+model:
+  base_name: "/mnt/workspace/models/Qwen2.5-1.5B-Instruct"
+  device: "cuda"
+  dtype: "float16"
+
+generation:
+  max_new_tokens: 256
+  temperature: 0.1
+  top_p: 0.9
+  top_k: 50
+  do_sample: true
+  repetition_penalty: 1.1
+
+data:
+  input_file: "../../data/splits/test.jsonl"
+  output_file: "./outputs/predictions.jsonl"
+
+# 与exp0完全相同的prompt模板
+prompt_template: |
+  你是一个地理空间推理专家。请根据问题给出准确、简洁的答案。
+
+  问题: {question}
+
+  请直接给出答案，不需要解释过程。答案格式要求：
+  - 方向问题：直接说明方向，如"东南方向"
+  - 距离问题：给出具体数值，如"约1200公里"
+  - 拓扑问题：明确说明关系，如"是的，XX位于YY内部"
+  - 复合问题：同时给出最终结果
+
+  答案:
+
+logging:
+  save_interval: 50
