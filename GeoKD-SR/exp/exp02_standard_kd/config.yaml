@@ -35,8 +35,8 @@ training:
   weight_decay: 0.01
   max_grad_norm: 1.0
   logging_steps: 10
-  save_steps: 200
-  eval_steps: 200
+  save_steps: 100
+  eval_steps: 100
   max_length: 1024
 
 distillation:

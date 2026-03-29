@@ -60,7 +60,7 @@ def load_teacher_model(config: dict):
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_compute_dtype=torch.bfloat16,
         bnb_4bit_use_double_quant=True,
     )
 
@@ -68,7 +68,7 @@ def load_teacher_model(config: dict):
         model_name,
         quantization_config=quantization_config,
         device_map=config['model']['teacher']['device_map'],
-        torch_dtype=torch.float16,
+        torch_dtype=torch.bfloat16,
         trust_remote_code=True,
     )
 
@@ -86,7 +86,7 @@ def load_student_model(config: dict):
 
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=torch.float16,
+        torch_dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -110,6 +110,8 @@ def load_student_model(config: dict):
     )
 
     model = get_peft_model(model, lora_config)
+    model.enable_input_require_grads()
+    model.config.use_cache = False
     model.print_trainable_parameters()
 
     return model, tokenizer
@@ -261,7 +263,6 @@ class DistillationTrainer(Trainer):
 
         # 教师模型前向传播（不计算梯度）
         with torch.no_grad():
-            # 准备教师输入（不需要 labels）
             teacher_inputs = {
                 "input_ids": inputs["input_ids"],
                 "attention_mask": inputs["attention_mask"],
@@ -308,11 +309,9 @@ class DistillationTrainer(Trainer):
 
         # 记录损失详情
         if self.state.is_world_process_zero:
-            if hasattr(self, '_step') is False:
-                self._step = 0
-            self._step += 1
-            if self._step % 10 == 0:
-                print(f"\n[Step {self._step}] soft_loss: {soft_loss.item():.4f}, "
+            step = self.state.global_step
+            if step % 10 == 0:
+                print(f"\n[Step {step}] soft_loss: {soft_loss.item():.4f}, "
                       f"hard_loss: {hard_loss.item():.4f}, "
                       f"total_loss: {total_loss.item():.4f}")
 
@@ -380,7 +379,7 @@ def main():
         logging_steps=config['training']['logging_steps'],
         save_steps=config['training']['save_steps'],
         eval_steps=config['training']['eval_steps'],
-        evaluation_strategy="steps",
+        eval_strategy="steps",
         save_strategy="steps",
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
@@ -393,9 +392,9 @@ def main():
     # 数据整理器
     data_collator = DataCollatorForSeq2Seq(
         tokenizer=tokenizer,
-        model=student_model,
         padding=True,
         pad_to_multiple_of=8,
+        label_pad_token_id=-100,
     )
 
     # 训练器
@@ -407,7 +406,7 @@ def main():
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         data_collator=data_collator,
     )
 
