@@ -19,8 +19,8 @@ model:
   student:
     name: "/mnt/workspace/models/Qwen2.5-1.5B-Instruct"
     lora:
-      r: 8
-      lora_alpha: 16
+      r: 16
+      lora_alpha: 32
       lora_dropout: 0.05
       target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
       bias: "none"
@@ -28,16 +28,16 @@ model:
 
 training:
   learning_rate: 1e-4
-  batch_size: 2  # 进一步降低（教师+学生模型同时加载）
-  gradient_accumulation_steps: 16  # 有效batch=32
+  batch_size: 2  # 教师+学生同时加载A10 24GB
+  gradient_accumulation_steps: 64  # effective batch=128
   num_epochs: 3
   warmup_ratio: 0.1
   weight_decay: 0.01
   max_grad_norm: 1.0
   logging_steps: 10
-  save_steps: 500
-  eval_steps: 500
-  max_length: 1024  # 减少以节省显存
+  save_steps: 200
+  eval_steps: 200
+  max_length: 1024
 
 distillation:
   enabled: true
@@ -46,15 +46,10 @@ distillation:
   alpha: 0.5  # L_KD = α × L_soft + (1-α) × L_hard
 
 data:
-  train_path: "../../data/geosr_chain/final/train.jsonl"
-  dev_path: "../../data/geosr_chain/final/dev.jsonl"
-  test_path: "../../data/geosr_chain/final/test.jsonl"
+  train_path: "../../data/splits/train.jsonl"
+  dev_path: "../../data/splits/dev.jsonl"
+  test_path: "../../data/splits/test.jsonl"
   max_length: 1024
-
-# ChatML 模板配置
-chat_template:
-  system_prompt: "你是一个地理空间推理专家，擅长分析和解决空间关系问题。请根据给定的地理信息，准确判断空间位置关系并给出详细推理过程。"
-  format: "chatml"  # Qwen2.5 使用 ChatML 格式
 
 output:
   checkpoint_dir: "checkpoints/"
