@@ -132,7 +132,7 @@ def kl_divergence_loss(student_logits, teacher_logits, temperature=2.0):
     return kl_loss * (temperature ** 2)
 
 
-def load_dataset(data_path: str, tokenizer, max_length: int = 1024, system_prompt: str = ""):
+def load_dataset(data_path: str, tokenizer, max_length: int = 1024):
     """
     加载数据集并使用 ChatML 格式处理
 
@@ -164,9 +164,8 @@ def load_dataset(data_path: str, tokenizer, max_length: int = 1024, system_promp
         if not question or not answer:
             return None
 
-        # 构建 ChatML 格式消息
+        # 构建 ChatML 格式消息（无system prompt，对齐SFT训练格式）
         messages = [
-            {"role": "system", "content": system_prompt},
             {"role": "user", "content": question},
             {"role": "assistant", "content": answer}
         ]
@@ -181,7 +180,6 @@ def load_dataset(data_path: str, tokenizer, max_length: int = 1024, system_promp
 
         # 生成用户部分文本（用于计算 labels）
         user_messages = [
-            {"role": "system", "content": system_prompt},
             {"role": "user", "content": question}
         ]
         user_text = tokenizer.apply_chat_template(
@@ -334,11 +332,7 @@ def main():
     config = load_config(args.config)
     set_seed(args.seed)
 
-    # 获取系统提示
-    system_prompt = config.get('chat_template', {}).get(
-        'system_prompt',
-        "你是一个地理空间推理专家，擅长分析和解决空间关系问题。"
-    )
+    # 不使用system prompt（对齐SFT训练格式）
 
     print("=" * 60)
     print("Exp2: B2-Standard-KD（通用蒸馏基线）")
@@ -364,10 +358,10 @@ def main():
     # 加载数据集
     print("\n[2/4] 加载数据集...")
     train_dataset = load_dataset(
-        config['data']['train_path'], tokenizer, config['data']['max_length'], system_prompt
+        config['data']['train_path'], tokenizer, config['data']['max_length']
     )
     eval_dataset = load_dataset(
-        config['data']['dev_path'], tokenizer, config['data']['max_length'], system_prompt
+        config['data']['dev_path'], tokenizer, config['data']['max_length']
     )
 
     # 训练参数
@@ -390,7 +384,7 @@ def main():
         save_strategy="steps",
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
-        fp16=True,
+        bf16=True,
         gradient_checkpointing=True,
         report_to="tensorboard",
         remove_unused_columns=False,  # 保留自定义列
