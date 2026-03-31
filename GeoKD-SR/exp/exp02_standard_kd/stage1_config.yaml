@@ -2,8 +2,8 @@
 # 复用exp0的prompt模板，确保评测完全可比
 
 model:
-  base_name: "/mnt/workspace/models/Qwen2.5-1.5B-Instruct"
-  device: "cuda"
+  base_name: "/home/nihao/Qwen2.5-1.5B-Instruct"
+  device: "auto"
   dtype: "float16"
 
 generation:

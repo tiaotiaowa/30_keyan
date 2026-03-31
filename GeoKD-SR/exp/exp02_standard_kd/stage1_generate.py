@@ -39,7 +39,7 @@ def generate_predictions(config: dict, checkpoint_path: str) -> List[Dict]:
     dtype = torch.float16 if dtype_str == "float16" else torch.bfloat16
 
     print(f"加载base模型: {base_name}")
-    tokenizer = AutoTokenizer.from_pretrained(base_name, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(base_name, trust_remote_code=True, use_fast=False)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
@@ -48,6 +48,7 @@ def generate_predictions(config: dict, checkpoint_path: str) -> List[Dict]:
         torch_dtype=dtype,
         device_map=device,
         trust_remote_code=True,
+        low_cpu_mem_usage=True,
     )
 
     # 加载LoRA adapter并合并

@@ -1,24 +1,41 @@
-# Environment files
-.env
-*.env.local
+# 模型文件
+*.bin
+*.safetensors
+*.gguf
+models/
 
-# Python
+# 数据文件（太大）
+GeoKD-SR/data/
+
+# Checkpoints（可从训练恢复）
+*/checkpoints/
+*/checkpoints/**
+checkpoints/
+checkpoints/**
+
+# 训练日志和TensorBoard
+*/logs/runs/
+logs/runs/
+
+# Python缓存
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
+*.egg-info/
+
+# 环境文件
+.env
+.venv/
+venv/
 
 # IDE
 .idea/
 .vscode/
+*.swp
 
-# Temporary files
-nul
-*.tmp
-*.log
+# OS
+.DS_Store
+Thumbs.db
 
-# Debug directories
-debug/
-
-# Large model files (>2GB, exceed GitHub LFS limit)
-GeoKD-SR/models/
-*.safetensors
-*.bin
+# Claude相关
+.claude/

@@ -9985,3 +9985,228 @@ python scripts/split_dataset_entity_stratified.py     --input data/final/final_1
 | Metric | 17.59% | 15.64% | -1.95% |
 | Composite | 3.66% | 8.54% | **+4.88%** |
 
+
+## 2026-03-31 Exp02-Standard-KD (Hinton 2015 Forward KL) 实验完成
+
+### 实验配置
+- **教师模型**: Qwen2.5-7B-Instruct (bf16全量, 14GB)
+- **学生模型**: Qwen2.5-1.5B-Instruct + LoRA (r=16, alpha=32)
+- **蒸馏方法**: Forward KL, T=2.0, α=0.5
+- **训练参数**: batch=4, grad_accum=32, lr=1e-4, 3 epochs, 9463训练样本
+- **训练耗时**: 39分41秒, eval_loss=1.514
+- **修复问题**: 词表不匹配(152064→151936截断), torch_dtype弃用, 类型转换
+
+### 评测结果 (使用exp0统一评测框架, 含7B教师模型对比)
+
+| 指标 | Qwen-7B(教师) | Qwen-1.5B(baseline) | Exp01-SFT | **Exp02-KD** | KD保留率(学生/教师) |
+|------|-------------|-------------------|-----------|-------------|---------|
+| **Overall Acc** | **36.77%** | 23.16% | 22.06% | **25.95%** | 70.6% |
+| Directional | 50.00% | 43.49% | 41.44% | **42.47%** | 84.9% |
+| Topological | 56.51% | 24.85% | 21.01% | **28.99%** | 51.3% |
+| Metric | 25.41% | 17.59% | 15.64% | **20.20%** | 79.5% |
+| Composite | 8.13% | 3.66% | 8.54% | **9.35%** | 115.0% |
+| BLEU-4 | 0.2182 | - | - | 0.1611 | 73.9% |
+| ROUGE-L | 0.5683 | - | - | 0.4928 | 86.7% |
+| Spatial-F1 | 0.7115 | - | - | 0.5727 | 80.5% |
+
+### 关键发现
+1. **KD保留率70.6%**: 1.5B学生模型保留了7B教师70.6%的准确率，蒸馏有效
+2. **Composite超越教师(115%)**: 9.35% > 8.13%，LoRA微调+KD改善了复合推理
+3. **Topological保留率最低(51.3%)**: 拓扑推理是最难蒸馏的能力，需后续SRD组件加强
+4. **Directional保留率最高(84.9%)**: 方向推理蒸馏效果最好
+5. **KD vs baseline**: Overall +2.79%, Topological +4.14%, Composite +5.69%
+6. 存在"西南方向"和"约1200公里"输出偏置问题
+
+### 待改进
+- 分析并缓解方向/距离偏置问题
+- Exp02结果可作为后续消融实验的B2基线
+
+## 2026-03-31 四模型预测对比分析 (KD vs SFT vs Teacher7B vs Baseline)
+
+### 任务概述
+对4个模型（KD、SFT、Teacher7B、Baseline）在1183个样本上的predictions.jsonl进行全面对比分析，包括回答长度统计、默认回答频率、回答格式模式、模型间一致性、KD改进分析。
+
+### 关键发现
+
+**1. 回答长度统计**
+- KD: 均值12.1字符, 中位数12（最简洁）
+- SFT: 均值15.2字符, 中位数13
+- Teacher7B: 均值12.5字符, 中位数11
+- Baseline: 均值24.1字符, 中位数19（最冗长，存在大量幻觉模式如"位于...内部"）
+
+**2. 默认回答频率（严重问题）**
+- KD中626次出现"约1200公里"，其中511次为完全的"西南方向，约1200公里"默认回答，占全部样本43%
+- KD仅272种独特预测，其中502次为"西南方向，约1200公里"
+- 这表明KD存在严重的mode collapse（模式坍塌）问题
+
+**3. 回答格式模式**
+- Baseline中653次出现"位于...内部"幻觉模式（55.2%），这是最严重的问题
+- SFT中518次出现"位于...内部"模式（43.8%）
+- Baseline中133次使用bullet points格式（方向问题/距离问题）
+- Teacher7B格式最为多样（631种独特预测），但也存在方向偏向
+
+**4. 模型间一致性**
+- 所有模型对之间一致性极低（最高SFT vs Baseline 30.3%，最低SFT vs Teacher7B 11.7%）
+- KD与Teacher7B一致性仅13.7%，说明KD未能有效学习Teacher的多样性
+
+**5. KD改进分析**
+- 整体准确率极低：KD 10.1%, SFT 9.6%, Teacher7B 12.3%, Baseline 9.8%
+- composite类型所有模型均为0%准确率，metric类型几乎为0%
+- directional类型：Teacher7B最佳(38.4%)，KD次之(30.8%)
+- KD相比Baseline在directional上有微小优势，但差距不大
+- KD相比SFT在31个样本上表现更好（主要是directional类型），但24个样本不如SFT
+
+### 结论
+当前KD模型存在严重的mode collapse问题（默认输出"西南方向，约1200公里"），导致metric和composite类型几乎无法正确回答。Baseline和SFT的主要问题是"位于...内部"幻觉模式。Teacher7B表现最好但仍不够理想。需要在KD训练中增加多样性约束和幻觉惩罚机制。
+
+## 2026-03-31 Exp02 Standard-KD 可复现性验证（第二次运行）
+
+### 任务概述
+使用与第一次完全相同的配置重跑Exp02蒸馏实验，验证可复现性。
+
+### 配置
+- 教师: Qwen2.5-7B-Instruct (全量bf16)
+- 学生: Qwen2.5-1.5B-Instruct + LoRA (r=16, alpha=32)
+- 参数: T=2.0, α=0.5, batch=4, grad_accum=32, lr=1e-4, 3 epochs, seed=42
+
+### 训练结果
+- 总步数: 222步, 耗时: 39分31秒
+- eval_loss: 1.514
+
+### 可复现性对比表
+
+| 指标 | 第一次 | 第二次 | 差异 |
+|------|--------|--------|------|
+| Overall Accuracy | 25.95% | **26.37%** | +0.42% |
+| Directional | 42.47% | **43.49%** | +1.02% |
+| Topological | 28.99% | **29.59%** | +0.60% |
+| Metric | 20.20% | 20.20% | 0.00% |
+| Composite | 9.35% | 9.35% | 0.00% |
+| BLEU-4 | 0.1611 | **0.1630** | +0.0019 |
+| ROUGE-L | 0.4928 | **0.4949** | +0.0021 |
+| Spatial-F1 | 0.5727 | **0.5778** | +0.0051 |
+
+### 结论
+- 两次实验结果高度一致（Overall差异仅0.42%），验证了实验的可复现性
+- 第二次略优，属正常随机波动范围
+- KD保留率: 26.37%/36.77% = 71.7%（vs 7B教师）
+- 相比基线提升: 26.37% vs 23.16% = +3.21%
+
+## 2026-03-31 Exp05 Reverse KL蒸馏实验结果
+
+### 任务概述
+实现exp05逆向KL蒸馏（B2+C3），与exp02 Standard-KD（Forward KL）进行消融对比。
+基于exp02代码框架改造，仅将KL方向从Forward KL替换为Reverse KL。
+
+### 实验配置（与exp02完全一致，仅KL方向不同）
+- 教师: Qwen2.5-7B-Instruct (全量bf16)
+- 学生: Qwen2.5-1.5B-Instruct + LoRA (r=16, alpha=32)
+- 参数: T=2.0, α=0.5, batch=4, grad_accum=32, lr=1e-4, 3 epochs, seed=42
+- KL方向: 纯Reverse KL (fw=0.0, rw=1.0)
+
+### 训练结果
+- 总步数: 222步, 耗时: ~40分钟
+- eval_loss: 1.752 (vs exp02的1.514)
+- 可训练参数: 4,358,144 (0.2815%)
+
+### 消融对比表: Exp05(RKL) vs Exp02(FKL)
+
+| 指标 | Exp02(FKL) | Exp05(RKL) | 差异 | 结论 |
+|------|-----------|-----------|------|------|
+| Overall | 26.37% | **27.56%** | **+1.19%** | RKL优于FKL |
+| Directional | 43.49% | **47.95%** | **+4.46%** | 显著提升 |
+| Topological | 29.59% | **29.88%** | +0.29% | 略有提升 |
+| Metric | 20.20% | 20.20% | 0.00% | 无变化 |
+| Composite | 9.35% | 9.35% | 0.00% | 无变化 |
+| BLEU-4 | 0.1630 | 0.1141 | -0.049 | 下降 |
+| ROUGE-L | 0.4949 | 0.4050 | -0.090 | 下降 |
+| Spatial-F1 | 0.5778 | 0.5415 | -0.036 | 下降 |
+
+### 关键发现
+1. **Reverse KL提升了准确率**（+1.19%），验证了mode-seeking在地理空间推理任务中的优势
+2. **方向推理显著改善**（Directional +4.46%），mode-seeking更适合确定性方向判断
+3. **BLEU/ROUGE下降**但准确率提升，说明RKL生成的答案更精确但措辞与参考答案不同
+4. **KD保留率74.9%**（vs 7B教师36.77%），高于FKL的71.7%
+5. **vs 基线提升+4.40%**（27.56% vs 23.16%）
+
+### 理论验证
+- 数学验证: F.kl_div(log_P_T, P_S) = KL(P_S || P_T) ✓
+- 采用teacher-forced token级Reverse KL，与项目设计文档V5.2 C3组件一致
+- 参考: MiniLLM (Gu et al., ICLR 2024), RKLD (NAACL 2025)
+
+## 2026-03-31 exp05(Reverse KL) vs exp02(Forward KL) vs Baseline vs SFT vs Teacher-7B 综合对比分析
+
+### 任务概述
+对5个模型(exp05 Reverse KL, exp02 Forward KL, Baseline 1.5B, SFT 1.5B, Teacher 7B)的1183条预测结果进行全面对比分析,涵盖答案长度、默认答案频率、多样性、格式模式、分类准确率、难度准确率、模型一致性、胜负对比、模式崩塌分析和方向准确率。
+
+### 关键发现
+
+**整体准确率 (柔性匹配):**
+- Teacher_7B: 0.123 (最高)
+- exp05_ReverseKL: 0.116 (第二)
+- exp02_ForwardKL: 0.101
+- Baseline_1.5B: 0.098
+- SFT_1.5B: 0.096
+
+**方向准确率 (292道方向题):**
+- Teacher_7B: 50.7% (最高)
+- exp05_ReverseKL: 50.0% (第二, +4.8% over exp02)
+- exp02_ForwardKL: 45.2%
+- Baseline_1.5B: 44.9%
+- SFT_1.5B: 42.5%
+
+**模式崩塌分析:**
+- exp02 ForwardKL 模式崩塌最严重: Top-1预测"西南方向,约1200公里"占41.9%,仅268个独特预测
+- exp05 ReverseKL 崩塌有所缓解: Top-1占32.8%, 501个独特预测(比exp02多87.4%)
+- Baseline多样性最高: 806个独特预测, Top-1仅10.3%
+
+**exp05 vs exp02 直接对决:**
+- exp05获胜: 23例 (1.9%)
+- exp02获胜: 6例 (0.5%)
+- exp05在方向题上净赢14道,拓扑题净赢3道
+- exp05在easy难度上净赢13道,medium净赢4道
+
+**默认答案问题:**
+- exp05: 852个默认答案(72.0%),含"约1200公里"
+- exp02: 621个默认答案(52.5%)
+- Teacher_7B: 仅151个(12.8%),远优于学生模型
+
+**答案格式特征:**
+- exp05和exp02都倾向于输出"方向+约1200公里"的组合模板
+- Baseline和SFT倾向输出"是的,...位于...内部"模板
+- Teacher_7B格式最简洁,含句号比例39.6%
+
+### 分析脚本
+- 脚本路径: /mnt/workspace/30_keyan/comprehensive_comparison.py
+- READ-ONLY分析,未修改任何预测文件
+
+---
+
+## 2026-03-31 Forward KL vs Reverse KL 蒸馏对比全面分析报告
+
+### 分析报告位置
+`/mnt/workspace/30_keyan/GeoKD-SR/exp/exp02_standard_kd/results/analysis_report.md`
+
+### 核心结论
+
+| 维度 | Forward KL (exp02) | Reverse KL (exp05) | 胜出 |
+|------|:---:|:---:|:---:|
+| 准确率 | 26.37% | **27.56%** | Reverse KL |
+| BLEU-4/ROUGE-L | **0.1630/0.4949** | 0.1141/0.4050 | Forward KL |
+| 答案多样性(独特预测数) | 268 | **501** | Reverse KL |
+| eval_loss | **1.514** | 1.752 | Forward KL |
+| 方向准确率 | 43.49% | **47.95%** | Reverse KL |
+
+### 六大发现
+1. Reverse KL准确率更高(+1.19pp)但文本质量更差(BLEU-4降30%)
+2. Reverse KL有效缓解模式坍塌(独特预测+87%, Top-1频率-9.1pp)
+3. 方向推理是Reverse KL最大受益者(+4.46pp, 接近Teacher 50%)
+4. Easy难度exp05(37.63%)几乎追平Teacher(37.37%)
+5. Hard难度exp05(11.34%)超越Teacher(10.65%)
+6. Medium难度仍是核心瓶颈(距Teacher 20pp+)
+
+### 后续实验方向
+- 混合KL (Forward+Reverse) 兼顾准确率和文本质量
+- 降低温度T至1.0-1.5
+- Feature-level蒸馏 (Attention Transfer)
+- 任务/难度感知蒸馏权重

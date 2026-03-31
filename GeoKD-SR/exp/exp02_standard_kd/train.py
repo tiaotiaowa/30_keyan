@@ -54,23 +54,28 @@ def load_config(config_path: str) -> dict:
 
 
 def load_teacher_model(config: dict):
-    """加载4-bit量化的教师模型 (Qwen2.5-7B-Instruct)"""
+    """加载教师模型 (Qwen2.5-7B-Instruct)，支持全量bf16或4-bit量化"""
     model_name = config['model']['teacher']['name']
+    quantization = config['model']['teacher'].get('quantization', '4bit')
 
-    quantization_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=True,
-    )
+    load_kwargs = {
+        'device_map': config['model']['teacher']['device_map'],
+        'dtype': torch.bfloat16,
+        'trust_remote_code': True,
+    }
 
-    teacher = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        quantization_config=quantization_config,
-        device_map=config['model']['teacher']['device_map'],
-        torch_dtype=torch.bfloat16,
-        trust_remote_code=True,
-    )
+    if quantization == "4bit":
+        load_kwargs['quantization_config'] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_use_double_quant=True,
+        )
+        print("  - 教师模型加载模式: 4-bit量化 (NF4)")
+    else:
+        print("  - 教师模型加载模式: 全量 bf16")
+
+    teacher = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
 
     # 冻结教师参数
     for param in teacher.parameters():
@@ -86,7 +91,7 @@ def load_student_model(config: dict):
 
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -122,7 +127,13 @@ def kl_divergence_loss(student_logits, teacher_logits, temperature=2.0):
     计算KL散度蒸馏损失
 
     Forward KL: KL(P_T || P_S)
+    处理教师/学生词表大小不一致的情况（截断至最小词表）
     """
+    # 处理词表大小不一致: Qwen2.5-7B(152064) vs Qwen2.5-1.5B(151936)
+    min_vocab = min(student_logits.size(-1), teacher_logits.size(-1))
+    student_logits = student_logits[..., :min_vocab]
+    teacher_logits = teacher_logits[..., :min_vocab]
+
     # 获取软标签分布
     p_teacher = F.softmax(teacher_logits / temperature, dim=-1)
     log_p_student = F.log_softmax(student_logits / temperature, dim=-1)
@@ -249,8 +260,8 @@ class DistillationTrainer(Trainer):
     def __init__(self, teacher_model, temperature=2.0, alpha=0.5, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.teacher_model = teacher_model
-        self.temperature = temperature
-        self.alpha = alpha
+        self.temperature = float(temperature)
+        self.alpha = float(alpha)
 
     def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
         """计算蒸馏损失"""
@@ -338,7 +349,7 @@ def main():
     print("=" * 60)
     print(f"配置文件: {args.config}")
     print(f"随机种子: {args.seed}")
-    print(f"教师模型: {config['model']['teacher']['name']} (4-bit量化)")
+    print(f"教师模型: {config['model']['teacher']['name']} ({config['model']['teacher'].get('quantization', '4bit')})")
     print(f"学生模型: {config['model']['student']['name']}")
     print(f"温度参数: {config['distillation']['temperature']}")
     print(f"蒸馏权重α: {config['distillation']['alpha']}")
@@ -367,18 +378,18 @@ def main():
     print("\n[3/4] 配置训练参数...")
     training_args = TrainingArguments(
         output_dir=config['output']['checkpoint_dir'],
-        num_train_epochs=config['training']['num_epochs'],
-        per_device_train_batch_size=config['training']['batch_size'],
-        per_device_eval_batch_size=config['training']['batch_size'],
-        gradient_accumulation_steps=config['training']['gradient_accumulation_steps'],
-        learning_rate=config['training']['learning_rate'],
-        weight_decay=config['training']['weight_decay'],
-        warmup_ratio=config['training']['warmup_ratio'],
-        max_grad_norm=config['training']['max_grad_norm'],
-        logging_dir=config['output']['log_dir'],
-        logging_steps=config['training']['logging_steps'],
-        save_steps=config['training']['save_steps'],
-        eval_steps=config['training']['eval_steps'],
+        num_train_epochs=int(config['training']['num_epochs']),
+        per_device_train_batch_size=int(config['training']['batch_size']),
+        per_device_eval_batch_size=int(config['training']['batch_size']),
+        gradient_accumulation_steps=int(config['training']['gradient_accumulation_steps']),
+        learning_rate=float(config['training']['learning_rate']),
+        weight_decay=float(config['training']['weight_decay']),
+        warmup_ratio=float(config['training']['warmup_ratio']),
+        max_grad_norm=float(config['training']['max_grad_norm']),
+        logging_dir=config['output']['log_dir'],  # deprecated in v5.2 but still functional
+        logging_steps=int(config['training']['logging_steps']),
+        save_steps=int(config['training']['save_steps']),
+        eval_steps=int(config['training']['eval_steps']),
         eval_strategy="steps",
         save_strategy="steps",
         load_best_model_at_end=True,

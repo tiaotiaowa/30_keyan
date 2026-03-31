@@ -1,23 +1,23 @@
 # 实验配置 - Exp2: B2-Standard-KD（通用蒸馏基线）
 # Hinton 2015 经典KL蒸馏（Forward KL）
-# 针对24GB显存优化配置
+# 针对24GB显存优化配置 - 7B全量(bf16)教师模型
 
 experiment:
   name: "exp02_standard_kd"
-  description: "通用蒸馏基线：Hinton 2015经典KL蒸馏"
+  description: "通用蒸馏基线：Hinton 2015经典KL蒸馏（7B全量教师）"
   seed: 42
 
 model:
-  # 教师模型: Qwen2.5-7B-Instruct (4-bit量化)
+  # 教师模型: Qwen2.5-7B-Instruct (bf16全量)
   teacher:
     enabled: true
-    name: "/mnt/workspace/models/Qwen2.5-7B-Instruct"
-    quantization: "4bit"
+    name: "/home/nihao/Qwen2.5-7B-Instruct"
+    quantization: "none"
     device_map: "auto"
 
   # 学生模型: Qwen2.5-1.5B-Instruct
   student:
-    name: "/mnt/workspace/models/Qwen2.5-1.5B-Instruct"
+    name: "/home/nihao/Qwen2.5-1.5B-Instruct"
     lora:
       r: 16
       lora_alpha: 32
@@ -28,8 +28,8 @@ model:
 
 training:
   learning_rate: 1e-4
-  batch_size: 2  # 教师+学生同时加载A10 24GB
-  gradient_accumulation_steps: 64  # effective batch=128
+  batch_size: 4
+  gradient_accumulation_steps: 32  # effective batch=128
   num_epochs: 3
   warmup_ratio: 0.1
   weight_decay: 0.01

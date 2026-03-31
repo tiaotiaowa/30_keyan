@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Exp02 Stage2: 调用exp0统一评测框架计算指标
+Exp02 Stage2: 使用exp0统一评测框架计算指标
 确保与基线(23.16%)和SFT(22.06%)完全可比
 """
 
@@ -14,8 +14,8 @@ from datetime import datetime
 
 import yaml
 
-# 添加exp0评测模块路径
-EXP0_STAGE2 = Path(__file__).parent.parent / "exp0" / "exp0" / "stage2_evaluation"
+# 添加exp0评测模块路径 (正确路径: exp/exp0/exp0/stage2_evaluation/)
+EXP0_STAGE2 = Path(__file__).resolve().parent.parent / "exp0" / "exp0" / "stage2_evaluation"
 sys.path.insert(0, str(EXP0_STAGE2))
 
 from evaluate import Evaluator

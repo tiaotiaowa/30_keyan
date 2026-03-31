@@ -1,0 +1,3512 @@
+============================================================
+Exp05: B2+C3（逆向KL蒸馏）
+============================================================
+配置文件: config.yaml
+随机种子: 42
+教师模型: /home/nihao/Qwen2.5-7B-Instruct (none)
+学生模型: /home/nihao/Qwen2.5-1.5B-Instruct
+温度参数: 2.0
+蒸馏权重α: 0.5
+KL方向: Forward KL权重=0.0, Reverse KL权重=1.0
+  → 纯Reverse KL: KL(P_S || P_T) [mode-seeking]
+Batch Size: 4
+Gradient Accumulation: 32
+有效 Batch Size: 128
+============================================================
+
+[1/4] 加载模型...
+  - 加载教师模型...
+  - 教师模型加载模式: 全量 bf16
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:05<28:11,  5.00s/it]Loading weights:   1%|          | 2/339 [00:11<31:47,  5.66s/it]Loading weights:   1%|          | 4/339 [00:11<13:06,  2.35s/it]Loading weights:   1%|▏         | 5/339 [00:12<10:19,  1.86s/it]Loading weights:   2%|▏         | 6/339 [00:13<08:27,  1.52s/it]Loading weights:   3%|▎         | 10/339 [00:13<03:10,  1.73it/s]Loading weights:   3%|▎         | 11/339 [00:13<02:43,  2.01it/s]Loading weights:   5%|▍         | 16/339 [00:14<01:38,  3.29it/s]Loading weights:   5%|▌         | 17/339 [00:15<01:58,  2.72it/s]Loading weights:   5%|▌         | 18/339 [00:16<02:19,  2.30it/s]Loading weights:   6%|▋         | 22/339 [00:16<01:16,  4.13it/s]Loading weights:   7%|▋         | 24/339 [00:16<01:02,  5.04it/s]Loading weights:   8%|▊         | 28/339 [00:17<01:01,  5.07it/s]Loading weights:   9%|▊         | 29/339 [00:17<01:24,  3.68it/s]Loading weights:   9%|▉         | 30/339 [00:18<01:47,  2.87it/s]Loading weights:  10%|█         | 34/339 [00:18<01:02,  4.92it/s]Loading weights:  11%|█         | 36/339 [00:18<00:51,  5.90it/s]Loading weights:  12%|█▏        | 40/339 [00:19<00:53,  5.54it/s]Loading weights:  12%|█▏        | 41/339 [00:20<01:16,  3.90it/s]Loading weights:  12%|█▏        | 42/339 [00:21<01:39,  2.98it/s]Loading weights:  13%|█▎        | 45/339 [00:21<01:05,  4.49it/s]Loading weights:  14%|█▍        | 47/339 [00:21<00:52,  5.51it/s]Loading weights:  15%|█▌        | 51/339 [00:23<01:18,  3.69it/s]Loading weights:  16%|█▌        | 54/339 [00:23<01:15,  3.75it/s]Loading weights:  17%|█▋        | 58/339 [00:24<00:50,  5.53it/s]Loading weights:  18%|█▊        | 60/339 [00:24<00:44,  6.33it/s]Loading weights:  19%|█▉        | 64/339 [00:24<00:47,  5.84it/s]Loading weights:  19%|█▉        | 66/339 [00:26<01:21,  3.36it/s]Loading weights:  21%|██        | 70/339 [00:26<00:53,  4.99it/s]Loading weights:  21%|██        | 72/339 [00:26<00:46,  5.73it/s]Loading weights:  22%|██▏       | 76/339 [00:27<00:47,  5.51it/s]Loading weights:  23%|██▎       | 78/339 [00:29<01:19,  3.27it/s]Loading weights:  24%|██▍       | 82/339 [00:29<00:52,  4.88it/s]Loading weights:  25%|██▍       | 84/339 [00:29<00:45,  5.66it/s]Loading weights:  26%|██▌       | 88/339 [00:30<00:46,  5.43it/s]Loading weights:  27%|██▋       | 90/339 [00:31<01:16,  3.26it/s]Loading weights:  28%|██▊       | 94/339 [00:31<00:50,  4.85it/s]Loading weights:  28%|██▊       | 96/339 [00:32<00:43,  5.62it/s]Loading weights:  29%|██▉       | 100/339 [00:32<00:44,  5.42it/s]Loading weights:  30%|███       | 102/339 [00:34<01:12,  3.25it/s]Loading weights:  31%|███▏      | 106/339 [00:34<00:48,  4.84it/s]Loading weights:  32%|███▏      | 108/339 [00:34<00:41,  5.63it/s]Loading weights:  33%|███▎      | 112/339 [00:35<00:41,  5.43it/s]Loading weights:  34%|███▎      | 114/339 [00:36<01:09,  3.25it/s]Loading weights:  35%|███▍      | 118/339 [00:37<00:45,  4.84it/s]Loading weights:  35%|███▌      | 120/339 [00:37<00:38,  5.63it/s]Loading weights:  37%|███▋      | 124/339 [00:38<00:39,  5.41it/s]Loading weights:  37%|███▋      | 126/339 [00:39<01:05,  3.25it/s]Loading weights:  38%|███▊      | 129/339 [00:39<00:47,  4.38it/s]Loading weights:  39%|███▊      | 131/339 [00:39<00:40,  5.18it/s]Loading weights:  40%|████      | 136/339 [00:40<00:35,  5.69it/s]Loading weights:  41%|████      | 138/339 [00:42<00:59,  3.38it/s]Loading weights:  42%|████▏     | 142/339 [00:42<00:39,  4.96it/s]Loading weights:  42%|████▏     | 144/339 [00:42<00:34,  5.71it/s]Loading weights:  44%|████▎     | 148/339 [00:43<00:34,  5.48it/s]Loading weights:  44%|████▍     | 150/339 [00:44<00:57,  3.27it/s]Loading weights:  45%|████▌     | 154/339 [00:44<00:37,  4.89it/s]Loading weights:  46%|████▌     | 156/339 [00:45<00:32,  5.63it/s]Loading weights:  47%|████▋     | 160/339 [00:45<00:32,  5.44it/s]Loading weights:  48%|████▊     | 162/339 [00:47<00:54,  3.25it/s]Loading weights:  49%|████▉     | 166/339 [00:47<00:35,  4.84it/s]Loading weights:  50%|████▉     | 168/339 [00:47<00:30,  5.61it/s]Loading weights:  51%|█████     | 172/339 [00:48<00:30,  5.41it/s]Loading weights:  51%|█████▏    | 174/339 [00:50<00:50,  3.24it/s]Loading weights:  53%|█████▎    | 178/339 [00:50<00:33,  4.84it/s]Loading weights:  53%|█████▎    | 180/339 [00:50<00:28,  5.60it/s]Loading weights:  54%|█████▍    | 183/339 [00:51<00:31,  4.92it/s]Loading weights:  55%|█████▍    | 185/339 [00:51<00:37,  4.10it/s]Loading weights:  55%|█████▍    | 186/339 [00:52<00:48,  3.15it/s]Loading weights:  56%|█████▌    | 190/339 [00:52<00:28,  5.16it/s]Loading weights:  57%|█████▋    | 192/339 [00:52<00:24,  6.06it/s]Loading weights:  58%|█████▊    | 196/339 [00:53<00:25,  5.63it/s]Loading weights:  58%|█████▊    | 198/339 [00:55<00:43,  3.22it/s]Loading weights:  60%|█████▉    | 202/339 [00:55<00:27,  4.91it/s]Loading weights:  60%|██████    | 204/339 [00:55<00:23,  5.70it/s]Loading weights:  61%|██████▏   | 208/339 [00:57<00:33,  3.91it/s]Loading weights:  62%|██████▏   | 210/339 [00:57<00:36,  3.52it/s]Loading weights:  63%|██████▎   | 214/339 [00:58<00:25,  4.90it/s]Loading weights:  65%|██████▍   | 220/339 [00:58<00:20,  5.83it/s]Loading weights:  65%|██████▌   | 221/339 [00:59<00:26,  4.38it/s]Loading weights:  65%|██████▌   | 222/339 [01:00<00:34,  3.40it/s]Loading weights:  67%|██████▋   | 226/339 [01:00<00:23,  4.89it/s]Loading weights:  68%|██████▊   | 232/339 [01:02<00:24,  4.37it/s]Loading weights:  69%|██████▉   | 234/339 [01:03<00:27,  3.89it/s]Loading weights:  70%|███████   | 238/339 [01:03<00:18,  5.47it/s]Loading weights:  71%|███████   | 240/339 [01:03<00:15,  6.22it/s]Loading weights:  72%|███████▏  | 244/339 [01:04<00:16,  5.75it/s]Loading weights:  72%|███████▏  | 245/339 [01:04<00:22,  4.16it/s]Loading weights:  73%|███████▎  | 246/339 [01:05<00:29,  3.18it/s]Loading weights:  74%|███████▎  | 250/339 [01:06<00:18,  4.80it/s]Loading weights:  76%|███████▌  | 256/339 [01:07<00:19,  4.31it/s]Loading weights:  76%|███████▌  | 258/339 [01:08<00:21,  3.84it/s]Loading weights:  77%|███████▋  | 262/339 [01:08<00:15,  5.11it/s]Loading weights:  79%|███████▉  | 267/339 [01:09<00:13,  5.52it/s]Loading weights:  79%|███████▉  | 269/339 [01:10<00:15,  4.63it/s]Loading weights:  80%|███████▉  | 270/339 [01:10<00:19,  3.57it/s]Loading weights:  81%|████████  | 274/339 [01:11<00:11,  5.42it/s]Loading weights:  81%|████████▏ | 276/339 [01:11<00:10,  6.23it/s]Loading weights:  82%|████████▏ | 279/339 [01:12<00:11,  5.20it/s]Loading weights:  83%|████████▎ | 281/339 [01:12<00:13,  4.24it/s]Loading weights:  83%|████████▎ | 282/339 [01:13<00:17,  3.20it/s]Loading weights:  84%|████████▍ | 286/339 [01:13<00:10,  5.29it/s]Loading weights:  85%|████████▍ | 288/339 [01:13<00:08,  6.19it/s]Loading weights:  86%|████████▌ | 292/339 [01:15<00:11,  3.97it/s]Loading weights:  87%|████████▋ | 294/339 [01:16<00:12,  3.56it/s]Loading weights:  88%|████████▊ | 298/339 [01:16<00:08,  4.97it/s]Loading weights:  90%|████████▉ | 304/339 [01:17<00:05,  5.93it/s]Loading weights:  90%|████████▉ | 305/339 [01:17<00:07,  4.41it/s]Loading weights:  90%|█████████ | 306/339 [01:18<00:09,  3.42it/s]Loading weights:  91%|█████████▏| 310/339 [01:18<00:05,  5.29it/s]Loading weights:  92%|█████████▏| 312/339 [01:19<00:04,  6.17it/s]Loading weights:  93%|█████████▎| 315/339 [01:19<00:04,  5.15it/s]Loading weights:  94%|█████████▎| 317/339 [01:20<00:05,  4.20it/s]Loading weights:  94%|█████████▍| 318/339 [01:21<00:06,  3.17it/s]Loading weights:  95%|█████████▍| 322/339 [01:21<00:03,  5.25it/s]Loading weights:  96%|█████████▌| 324/339 [01:21<00:02,  6.17it/s]Loading weights:  97%|█████████▋| 328/339 [01:22<00:01,  5.69it/s]Loading weights:  97%|█████████▋| 329/339 [01:23<00:02,  3.98it/s]Loading weights:  97%|█████████▋| 330/339 [01:23<00:02,  3.02it/s]Loading weights:  99%|█████████▊| 334/339 [01:24<00:00,  5.16it/s]Loading weights:  99%|█████████▉| 336/339 [01:24<00:00,  6.11it/s]Loading weights: 100%|██████████| 339/339 [01:24<00:00,  4.02it/s]
+  - 加载学生模型...
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  12%|█▏        | 40/338 [00:00<00:00, 389.97it/s]Loading weights:  40%|████      | 136/338 [00:00<00:00, 702.79it/s]Loading weights:  71%|███████   | 239/338 [00:00<00:00, 848.22it/s]Loading weights:  97%|█████████▋| 329/338 [00:00<00:00, 864.83it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 823.01it/s]
+warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+`logging_dir` is deprecated and will be removed in v5.2. Please set `TENSORBOARD_LOGGING_DIR` instead.
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+trainable params: 4,358,144 || all params: 1,548,072,448 || trainable%: 0.2815
+
+[2/4] 加载数据集...
+加载了 9463 条数据
+成功处理 9463 条数据
+加载了 1124 条数据
+成功处理 1124 条数据
+
+[3/4] 配置训练参数...
+
+[4/4] 开始训练...
+训练开始时间: 2026-03-31 15:09:20
+  0%|          | 0/222 [00:00<?, ?it/s]  0%|          | 1/222 [00:10<38:59, 10.59s/it]  1%|          | 2/222 [00:20<37:38, 10.26s/it]  1%|▏         | 3/222 [00:30<37:22, 10.24s/it]  2%|▏         | 4/222 [00:40<36:49, 10.13s/it]  2%|▏         | 5/222 [00:50<36:31, 10.10s/it]  3%|▎         | 6/222 [01:00<36:18, 10.09s/it]  3%|▎         | 7/222 [01:10<36:01, 10.05s/it]  4%|▎         | 8/222 [01:21<36:01, 10.10s/it]  4%|▍         | 9/222 [01:31<36:04, 10.16s/it]  5%|▍         | 10/222 [01:41<35:45, 10.12s/it]                                                  5%|▍         | 10/222 [01:41<35:45, 10.12s/it]  5%|▍         | 11/222 [01:51<35:40, 10.15s/it]  5%|▌         | 12/222 [02:01<35:32, 10.15s/it]  6%|▌         | 13/222 [02:11<35:18, 10.14s/it]  6%|▋         | 14/222 [02:22<35:11, 10.15s/it]  7%|▋         | 15/222 [02:32<35:06, 10.18s/it]  7%|▋         | 16/222 [02:42<34:48, 10.14s/it]  8%|▊         | 17/222 [02:52<34:44, 10.17s/it]  8%|▊         | 18/222 [03:02<34:34, 10.17s/it]  9%|▊         | 19/222 [03:13<34:33, 10.21s/it]  9%|▉         | 20/222 [03:23<34:31, 10.26s/it]                                                  9%|▉         | 20/222 [03:23<34:31, 10.26s/it]  9%|▉         | 21/222 [03:33<34:23, 10.27s/it] 10%|▉         | 22/222 [03:44<34:16, 10.28s/it] 10%|█         | 23/222 [03:54<34:03, 10.27s/it] 11%|█         | 24/222 [04:04<34:01, 10.31s/it] 11%|█▏        | 25/222 [04:14<33:42, 10.27s/it] 12%|█▏        | 26/222 [04:24<33:20, 10.21s/it] 12%|█▏        | 27/222 [04:35<33:07, 10.19s/it] 13%|█▎        | 28/222 [04:45<32:56, 10.19s/it] 13%|█▎        | 29/222 [04:55<32:40, 10.16s/it] 14%|█▎        | 30/222 [05:05<32:24, 10.13s/it]                                                 14%|█▎        | 30/222 [05:05<32:24, 10.13s/it]
+[Step 0] soft_loss: 6.9803, hard_loss: 0.8185, total_loss: 3.8994
+
+[Step 0] soft_loss: 5.2283, hard_loss: 2.5209, total_loss: 3.8746
+
+[Step 0] soft_loss: 4.6575, hard_loss: 2.2305, total_loss: 3.4440
+
+[Step 0] soft_loss: 5.8166, hard_loss: 1.7250, total_loss: 3.7708
+
+[Step 0] soft_loss: 5.7840, hard_loss: 1.3559, total_loss: 3.5699
+
+[Step 0] soft_loss: 6.5284, hard_loss: 1.9912, total_loss: 4.2598
+
+[Step 0] soft_loss: 5.1352, hard_loss: 1.9933, total_loss: 3.5642
+
+[Step 0] soft_loss: 7.0651, hard_loss: 2.3277, total_loss: 4.6964
+
+[Step 0] soft_loss: 5.2002, hard_loss: 3.1927, total_loss: 4.1965
+
+[Step 0] soft_loss: 7.0876, hard_loss: 1.8111, total_loss: 4.4494
+
+[Step 0] soft_loss: 5.3615, hard_loss: 0.7883, total_loss: 3.0749
+
+[Step 0] soft_loss: 5.7177, hard_loss: 2.2433, total_loss: 3.9805
+
+[Step 0] soft_loss: 4.4885, hard_loss: 1.6538, total_loss: 3.0712
+
+[Step 0] soft_loss: 6.5656, hard_loss: 2.0218, total_loss: 4.2937
+
+[Step 0] soft_loss: 5.3324, hard_loss: 1.9607, total_loss: 3.6466
+
+[Step 0] soft_loss: 6.4686, hard_loss: 1.9940, total_loss: 4.2313
+
+[Step 0] soft_loss: 4.7205, hard_loss: 1.7093, total_loss: 3.2149
+
+[Step 0] soft_loss: 4.4789, hard_loss: 1.4972, total_loss: 2.9881
+
+[Step 0] soft_loss: 5.3314, hard_loss: 1.9293, total_loss: 3.6304
+
+[Step 0] soft_loss: 5.7475, hard_loss: 1.0214, total_loss: 3.3845
+
+[Step 0] soft_loss: 5.4345, hard_loss: 2.0718, total_loss: 3.7532
+
+[Step 0] soft_loss: 4.0620, hard_loss: 2.3601, total_loss: 3.2111
+
+[Step 0] soft_loss: 6.1236, hard_loss: 1.8084, total_loss: 3.9660
+
+[Step 0] soft_loss: 5.9535, hard_loss: 1.4796, total_loss: 3.7165
+
+[Step 0] soft_loss: 5.4672, hard_loss: 2.0031, total_loss: 3.7352
+
+[Step 0] soft_loss: 5.6478, hard_loss: 1.4315, total_loss: 3.5397
+
+[Step 0] soft_loss: 6.9384, hard_loss: 1.8558, total_loss: 4.3971
+
+[Step 0] soft_loss: 5.8251, hard_loss: 1.6436, total_loss: 3.7344
+
+[Step 0] soft_loss: 8.7048, hard_loss: 2.7783, total_loss: 5.7416
+
+[Step 0] soft_loss: 7.0367, hard_loss: 1.4375, total_loss: 4.2371
+
+[Step 0] soft_loss: 3.9776, hard_loss: 1.4268, total_loss: 2.7022
+
+[Step 0] soft_loss: 5.8515, hard_loss: 2.1599, total_loss: 4.0057
+{'loss': '119.4', 'grad_norm': '4.307', 'learning_rate': '3.913e-05', 'epoch': '0.1352'}
+
+[Step 10] soft_loss: 4.4377, hard_loss: 2.5652, total_loss: 3.5014
+
+[Step 10] soft_loss: 4.2130, hard_loss: 1.8778, total_loss: 3.0454
+
+[Step 10] soft_loss: 4.1932, hard_loss: 1.6563, total_loss: 2.9248
+
+[Step 10] soft_loss: 4.2331, hard_loss: 3.1224, total_loss: 3.6777
+
+[Step 10] soft_loss: 4.3976, hard_loss: 2.9276, total_loss: 3.6626
+
+[Step 10] soft_loss: 4.7663, hard_loss: 2.2519, total_loss: 3.5091
+
+[Step 10] soft_loss: 4.0247, hard_loss: 1.7270, total_loss: 2.8758
+
+[Step 10] soft_loss: 5.1711, hard_loss: 3.3943, total_loss: 4.2827
+
+[Step 10] soft_loss: 2.7549, hard_loss: 2.7900, total_loss: 2.7725
+
+[Step 10] soft_loss: 3.5853, hard_loss: 1.4015, total_loss: 2.4934
+
+[Step 10] soft_loss: 3.9026, hard_loss: 1.3820, total_loss: 2.6423
+
+[Step 10] soft_loss: 4.7870, hard_loss: 2.3198, total_loss: 3.5534
+
+[Step 10] soft_loss: 4.1789, hard_loss: 2.0345, total_loss: 3.1067
+
+[Step 10] soft_loss: 4.2484, hard_loss: 1.5380, total_loss: 2.8932
+
+[Step 10] soft_loss: 5.0694, hard_loss: 1.6683, total_loss: 3.3688
+
+[Step 10] soft_loss: 4.6197, hard_loss: 1.7208, total_loss: 3.1702
+
+[Step 10] soft_loss: 3.9303, hard_loss: 1.8971, total_loss: 2.9137
+
+[Step 10] soft_loss: 4.3118, hard_loss: 1.9761, total_loss: 3.1440
+
+[Step 10] soft_loss: 3.9391, hard_loss: 1.7615, total_loss: 2.8503
+
+[Step 10] soft_loss: 4.4006, hard_loss: 1.7297, total_loss: 3.0652
+
+[Step 10] soft_loss: 3.8192, hard_loss: 2.2762, total_loss: 3.0477
+
+[Step 10] soft_loss: 4.7375, hard_loss: 1.2362, total_loss: 2.9869
+
+[Step 10] soft_loss: 4.1132, hard_loss: 1.3517, total_loss: 2.7324
+
+[Step 10] soft_loss: 3.8658, hard_loss: 1.5961, total_loss: 2.7309
+
+[Step 10] soft_loss: 3.8322, hard_loss: 2.1621, total_loss: 2.9972
+
+[Step 10] soft_loss: 4.3665, hard_loss: 2.2736, total_loss: 3.3201
+
+[Step 10] soft_loss: 6.5139, hard_loss: 2.6332, total_loss: 4.5736
+
+[Step 10] soft_loss: 4.6206, hard_loss: 1.8219, total_loss: 3.2212
+
+[Step 10] soft_loss: 5.2491, hard_loss: 1.6667, total_loss: 3.4579
+
+[Step 10] soft_loss: 5.5788, hard_loss: 1.6213, total_loss: 3.6000
+
+[Step 10] soft_loss: 5.0058, hard_loss: 1.6190, total_loss: 3.3124
+
+[Step 10] soft_loss: 4.7819, hard_loss: 2.0324, total_loss: 3.4071
+{'loss': '93.65', 'grad_norm': '2.07', 'learning_rate': '8.261e-05', 'epoch': '0.2705'}
+
+[Step 20] soft_loss: 2.5926, hard_loss: 3.3352, total_loss: 2.9639
+
+[Step 20] soft_loss: 3.6617, hard_loss: 1.1299, total_loss: 2.3958
+
+[Step 20] soft_loss: 2.4390, hard_loss: 1.4471, total_loss: 1.9431
+
+[Step 20] soft_loss: 2.0705, hard_loss: 2.1577, total_loss: 2.1141
+
+[Step 20] soft_loss: 3.2235, hard_loss: 1.8428, total_loss: 2.5331
+
+[Step 20] soft_loss: 2.4663, hard_loss: 2.3462, total_loss: 2.4062
+
+[Step 20] soft_loss: 2.7296, hard_loss: 2.8135, total_loss: 2.7716
+
+[Step 20] soft_loss: 2.8305, hard_loss: 3.6396, total_loss: 3.2350
+
+[Step 20] soft_loss: 2.7400, hard_loss: 3.2351, total_loss: 2.9876
+
+[Step 20] soft_loss: 2.3120, hard_loss: 2.4317, total_loss: 2.3718
+
+[Step 20] soft_loss: 3.1709, hard_loss: 2.9469, total_loss: 3.0589
+
+[Step 20] soft_loss: 3.1490, hard_loss: 1.4555, total_loss: 2.3022
+
+[Step 20] soft_loss: 2.5296, hard_loss: 2.4780, total_loss: 2.5038
+
+[Step 20] soft_loss: 3.0660, hard_loss: 2.0956, total_loss: 2.5808
+
+[Step 20] soft_loss: 2.7753, hard_loss: 1.9351, total_loss: 2.3552
+
+[Step 20] soft_loss: 2.0517, hard_loss: 1.9781, total_loss: 2.0149
+
+[Step 20] soft_loss: 3.6687, hard_loss: 2.2482, total_loss: 2.9585
+
+[Step 20] soft_loss: 3.3121, hard_loss: 4.1823, total_loss: 3.7472
+
+[Step 20] soft_loss: 3.1319, hard_loss: 4.3043, total_loss: 3.7181
+
+[Step 20] soft_loss: 2.5365, hard_loss: 2.9546, total_loss: 2.7456
+
+[Step 20] soft_loss: 2.3324, hard_loss: 3.4618, total_loss: 2.8971
+
+[Step 20] soft_loss: 2.7834, hard_loss: 2.1090, total_loss: 2.4462
+
+[Step 20] soft_loss: 2.9580, hard_loss: 2.5783, total_loss: 2.7682
+
+[Step 20] soft_loss: 3.2958, hard_loss: 1.6390, total_loss: 2.4674
+
+[Step 20] soft_loss: 1.8037, hard_loss: 1.9310, total_loss: 1.8674
+
+[Step 20] soft_loss: 3.2268, hard_loss: 1.5980, total_loss: 2.4124
+
+[Step 20] soft_loss: 3.2051, hard_loss: 2.5892, total_loss: 2.8971
+
+[Step 20] soft_loss: 2.5413, hard_loss: 2.5699, total_loss: 2.5556
+
+[Step 20] soft_loss: 2.4143, hard_loss: 2.5895, total_loss: 2.5019
+
+[Step 20] soft_loss: 2.8123, hard_loss: 1.9257, total_loss: 2.3690
+
+[Step 20] soft_loss: 2.7041, hard_loss: 1.6796, total_loss: 2.1919
+
+[Step 20] soft_loss: 2.6997, hard_loss: 1.9032, total_loss: 2.3015
+{'loss': '77.46', 'grad_norm': '1.223', 'learning_rate': '9.698e-05', 'epoch': '0.4057'}
+
+[Step 30] soft_loss: 2.0477, hard_loss: 2.1607, total_loss: 2.1042
+
+[Step 30] soft_loss: 2.5934, hard_loss: 1.8367, total_loss: 2.2151
+
+[Step 30] soft_loss: 3.1086, hard_loss: 2.5597, total_loss: 2.8341
+
+[Step 30] soft_loss: 2.4433, hard_loss: 3.0008, total_loss: 2.7221
+
+[Step 30] soft_loss: 2.5012, hard_loss: 2.1587, total_loss: 2.3300
+
+[Step 30] soft_loss: 2.9078, hard_loss: 1.5868, total_loss: 2.2473
+
+[Step 30] soft_loss: 2.6605, hard_loss: 2.6346, total_loss: 2.6475
+
+[Step 30] soft_loss: 2.2163, hard_loss: 1.9730, total_loss: 2.0947
+
+[Step 30] soft_loss: 1.9942, hard_loss: 2.4706, total_loss: 2.2324
+
+[Step 30] soft_loss: 1.8840, hard_loss: 2.2982, total_loss: 2.0911
+
+[Step 30] soft_loss: 3.3425, hard_loss: 2.5784, total_loss: 2.9605
+
+[Step 30] soft_loss: 1.9645, hard_loss: 2.6554, total_loss: 2.3099
+
+[Step 30] soft_loss: 3.1420, hard_loss: 2.9920, total_loss: 3.0670
+
+[Step 30] soft_loss: 2.7132, hard_loss: 2.1222, total_loss: 2.4177
+
+[Step 30] soft_loss: 2.8340, hard_loss: 1.8138, total_loss: 2.3239
+
+[Step 30] soft_loss: 2.2095, hard_loss: 2.0325, total_loss: 2.1210
+
+[Step 30] soft_loss: 2.2136, hard_loss: 1.3499, total_loss: 1.7817
+
+[Step 30] soft_loss: 2.3437, hard_loss: 2.4668, total_loss: 2.4052
+
+[Step 30] soft_loss: 2.1133, hard_loss: 2.1727, total_loss: 2.1430
+
+[Step 30] soft_loss: 1.9147, hard_loss: 3.2217, total_loss: 2.5682
+
+[Step 30] soft_loss: 2.6447, hard_loss: 1.9369, total_loss: 2.2908
+
+[Step 30] soft_loss: 2.0274, hard_loss: 1.8459, total_loss: 1.9367 14%|█▍        | 31/222 [05:15<32:23, 10.17s/it] 14%|█▍        | 32/222 [05:25<32:01, 10.12s/it] 15%|█▍        | 33/222 [05:35<31:55, 10.14s/it] 15%|█▌        | 34/222 [05:46<31:49, 10.15s/it] 16%|█▌        | 35/222 [05:56<31:39, 10.16s/it] 16%|█▌        | 36/222 [06:06<31:26, 10.14s/it] 17%|█▋        | 37/222 [06:16<31:13, 10.13s/it] 17%|█▋        | 38/222 [06:26<31:14, 10.19s/it] 18%|█▊        | 39/222 [06:36<31:02, 10.18s/it] 18%|█▊        | 40/222 [06:47<30:52, 10.18s/it]                                                 18%|█▊        | 40/222 [06:47<30:52, 10.18s/it] 18%|█▊        | 41/222 [06:57<30:51, 10.23s/it] 19%|█▉        | 42/222 [07:07<30:39, 10.22s/it] 19%|█▉        | 43/222 [07:17<30:26, 10.20s/it] 20%|█▉        | 44/222 [07:28<30:16, 10.21s/it] 20%|██        | 45/222 [07:38<30:20, 10.29s/it] 21%|██        | 46/222 [07:48<30:09, 10.28s/it] 21%|██        | 47/222 [07:58<29:45, 10.20s/it] 22%|██▏       | 48/222 [08:08<29:36, 10.21s/it] 22%|██▏       | 49/222 [08:18<29:14, 10.14s/it] 23%|██▎       | 50/222 [08:29<29:05, 10.15s/it]                                                 23%|██▎       | 50/222 [08:29<29:05, 10.15s/it] 23%|██▎       | 51/222 [08:39<28:52, 10.13s/it] 23%|██▎       | 52/222 [08:49<28:48, 10.17s/it] 24%|██▍       | 53/222 [08:59<28:42, 10.19s/it] 24%|██▍       | 54/222 [09:09<28:34, 10.21s/it] 25%|██▍       | 55/222 [09:20<28:23, 10.20s/it] 25%|██▌       | 56/222 [09:30<28:13, 10.20s/it] 26%|██▌       | 57/222 [09:40<27:55, 10.15s/it] 26%|██▌       | 58/222 [09:50<28:02, 10.26s/it] 27%|██▋       | 59/222 [10:01<27:49, 10.24s/it] 27%|██▋       | 60/222 [10:11<27:38, 10.24s/it]                                                 27%|██▋       | 60/222 [10:11<27:38, 10.24s/it] 27%|██▋       | 61/222 [10:21<27:39, 10.31s/it] 28%|██▊       | 62/222 [10:31<27:13, 10.21s/it] 28%|██▊       | 63/222 [10:42<27:06, 10.23s/it] 29%|██▉       | 64/222 [10:52<26:53, 10.21s/it] 29%|██▉       | 65/222 [11:02<26:51, 10.27s/it] 30%|██▉       | 66/222 [11:13<26:46, 10.30s/it] 30%|███       | 67/222 [11:23<26:33, 10.28s/it] 31%|███       | 68/222 [11:33<26:27, 10.31s/it] 31%|███       | 69/222 [11:43<26:11, 10.27s/it] 32%|███▏      | 70/222 [11:53<25:52, 10.21s/it]                                                 32%|███▏      | 70/222 [11:53<25:52, 10.21s/it]
+
+[Step 30] soft_loss: 2.8681, hard_loss: 2.1878, total_loss: 2.5279
+
+[Step 30] soft_loss: 1.9858, hard_loss: 2.2959, total_loss: 2.1408
+
+[Step 30] soft_loss: 2.8528, hard_loss: 2.3561, total_loss: 2.6044
+
+[Step 30] soft_loss: 2.3140, hard_loss: 1.7596, total_loss: 2.0368
+
+[Step 30] soft_loss: 1.9291, hard_loss: 1.5212, total_loss: 1.7251
+
+[Step 30] soft_loss: 2.7710, hard_loss: 2.6089, total_loss: 2.6900
+
+[Step 30] soft_loss: 2.8672, hard_loss: 2.5913, total_loss: 2.7292
+
+[Step 30] soft_loss: 2.2889, hard_loss: 1.4577, total_loss: 1.8733
+
+[Step 30] soft_loss: 1.7035, hard_loss: 2.7069, total_loss: 2.2052
+
+[Step 30] soft_loss: 2.0225, hard_loss: 2.7329, total_loss: 2.3777
+{'loss': '70.18', 'grad_norm': '0.9331', 'learning_rate': '9.196e-05', 'epoch': '0.541'}
+
+[Step 40] soft_loss: 1.9073, hard_loss: 1.8354, total_loss: 1.8713
+
+[Step 40] soft_loss: 2.7939, hard_loss: 2.0207, total_loss: 2.4073
+
+[Step 40] soft_loss: 1.8080, hard_loss: 1.5354, total_loss: 1.6717
+
+[Step 40] soft_loss: 2.8688, hard_loss: 2.4043, total_loss: 2.6366
+
+[Step 40] soft_loss: 2.2780, hard_loss: 2.5545, total_loss: 2.4162
+
+[Step 40] soft_loss: 2.8099, hard_loss: 2.3453, total_loss: 2.5776
+
+[Step 40] soft_loss: 2.2091, hard_loss: 1.2107, total_loss: 1.7099
+
+[Step 40] soft_loss: 2.8256, hard_loss: 2.1531, total_loss: 2.4894
+
+[Step 40] soft_loss: 2.2026, hard_loss: 1.4674, total_loss: 1.8350
+
+[Step 40] soft_loss: 2.0631, hard_loss: 2.6400, total_loss: 2.3516
+
+[Step 40] soft_loss: 2.1006, hard_loss: 2.0498, total_loss: 2.0752
+
+[Step 40] soft_loss: 1.9593, hard_loss: 1.6558, total_loss: 1.8075
+
+[Step 40] soft_loss: 2.6786, hard_loss: 1.5817, total_loss: 2.1301
+
+[Step 40] soft_loss: 2.0831, hard_loss: 0.8571, total_loss: 1.4701
+
+[Step 40] soft_loss: 2.5657, hard_loss: 2.5761, total_loss: 2.5709
+
+[Step 40] soft_loss: 1.7007, hard_loss: 1.5351, total_loss: 1.6179
+
+[Step 40] soft_loss: 2.6858, hard_loss: 2.8848, total_loss: 2.7853
+
+[Step 40] soft_loss: 2.4855, hard_loss: 3.1640, total_loss: 2.8248
+
+[Step 40] soft_loss: 2.5236, hard_loss: 1.8853, total_loss: 2.2045
+
+[Step 40] soft_loss: 1.7564, hard_loss: 3.6010, total_loss: 2.6787
+
+[Step 40] soft_loss: 2.1985, hard_loss: 0.9777, total_loss: 1.5881
+
+[Step 40] soft_loss: 2.0103, hard_loss: 1.7793, total_loss: 1.8948
+
+[Step 40] soft_loss: 1.8864, hard_loss: 1.9853, total_loss: 1.9358
+
+[Step 40] soft_loss: 2.1474, hard_loss: 2.5679, total_loss: 2.3576
+
+[Step 40] soft_loss: 1.7425, hard_loss: 1.5870, total_loss: 1.6648
+
+[Step 40] soft_loss: 1.4606, hard_loss: 1.7335, total_loss: 1.5971
+
+[Step 40] soft_loss: 1.4749, hard_loss: 2.2980, total_loss: 1.8865
+
+[Step 40] soft_loss: 1.9788, hard_loss: 2.2278, total_loss: 2.1033
+
+[Step 40] soft_loss: 2.1946, hard_loss: 0.9672, total_loss: 1.5809
+
+[Step 40] soft_loss: 2.2474, hard_loss: 2.0765, total_loss: 2.1620
+
+[Step 40] soft_loss: 2.1716, hard_loss: 2.3741, total_loss: 2.2728
+
+[Step 40] soft_loss: 1.9235, hard_loss: 1.3086, total_loss: 1.6160
+{'loss': '66.1', 'grad_norm': '0.6051', 'learning_rate': '8.693e-05', 'epoch': '0.6762'}
+
+[Step 50] soft_loss: 1.8715, hard_loss: 1.6652, total_loss: 1.7684
+
+[Step 50] soft_loss: 1.8435, hard_loss: 3.1212, total_loss: 2.4823
+
+[Step 50] soft_loss: 2.2503, hard_loss: 2.0208, total_loss: 2.1355
+
+[Step 50] soft_loss: 1.8711, hard_loss: 1.6606, total_loss: 1.7659
+
+[Step 50] soft_loss: 2.1782, hard_loss: 2.5882, total_loss: 2.3832
+
+[Step 50] soft_loss: 1.9706, hard_loss: 1.2098, total_loss: 1.5902
+
+[Step 50] soft_loss: 1.9903, hard_loss: 1.6244, total_loss: 1.8073
+
+[Step 50] soft_loss: 2.1184, hard_loss: 2.6212, total_loss: 2.3698
+
+[Step 50] soft_loss: 1.5849, hard_loss: 1.2209, total_loss: 1.4029
+
+[Step 50] soft_loss: 2.7534, hard_loss: 1.9043, total_loss: 2.3289
+
+[Step 50] soft_loss: 2.0427, hard_loss: 1.5409, total_loss: 1.7918
+
+[Step 50] soft_loss: 2.0888, hard_loss: 1.5095, total_loss: 1.7992
+
+[Step 50] soft_loss: 2.1819, hard_loss: 1.9123, total_loss: 2.0471
+
+[Step 50] soft_loss: 1.8710, hard_loss: 1.5436, total_loss: 1.7073
+
+[Step 50] soft_loss: 2.2308, hard_loss: 1.2732, total_loss: 1.7520
+
+[Step 50] soft_loss: 2.0882, hard_loss: 2.1709, total_loss: 2.1296
+
+[Step 50] soft_loss: 2.3701, hard_loss: 1.0692, total_loss: 1.7197
+
+[Step 50] soft_loss: 2.5886, hard_loss: 1.5625, total_loss: 2.0755
+
+[Step 50] soft_loss: 2.4759, hard_loss: 2.0499, total_loss: 2.2629
+
+[Step 50] soft_loss: 2.0375, hard_loss: 2.5902, total_loss: 2.3139
+
+[Step 50] soft_loss: 2.2609, hard_loss: 2.2947, total_loss: 2.2778
+
+[Step 50] soft_loss: 1.8680, hard_loss: 1.7821, total_loss: 1.8250
+
+[Step 50] soft_loss: 1.7662, hard_loss: 1.5239, total_loss: 1.6451
+
+[Step 50] soft_loss: 1.7531, hard_loss: 2.1245, total_loss: 1.9388
+
+[Step 50] soft_loss: 2.2645, hard_loss: 1.3978, total_loss: 1.8312
+
+[Step 50] soft_loss: 1.9768, hard_loss: 1.1062, total_loss: 1.5415
+
+[Step 50] soft_loss: 1.7287, hard_loss: 1.6939, total_loss: 1.7113
+
+[Step 50] soft_loss: 2.1441, hard_loss: 2.2305, total_loss: 2.1873
+
+[Step 50] soft_loss: 1.9726, hard_loss: 1.5278, total_loss: 1.7502
+
+[Step 50] soft_loss: 2.4082, hard_loss: 2.0299, total_loss: 2.2190
+
+[Step 50] soft_loss: 2.4186, hard_loss: 1.4977, total_loss: 1.9582
+
+[Step 50] soft_loss: 1.9459, hard_loss: 2.2116, total_loss: 2.0788
+{'loss': '62.63', 'grad_norm': '0.7869', 'learning_rate': '8.191e-05', 'epoch': '0.8115'}
+
+[Step 60] soft_loss: 2.2521, hard_loss: 2.6570, total_loss: 2.4546
+
+[Step 60] soft_loss: 2.0860, hard_loss: 1.3058, total_loss: 1.6959
+
+[Step 60] soft_loss: 2.6763, hard_loss: 2.6362, total_loss: 2.6563
+
+[Step 60] soft_loss: 2.1608, hard_loss: 1.2309, total_loss: 1.6959
+
+[Step 60] soft_loss: 1.7153, hard_loss: 1.1656, total_loss: 1.4404
+
+[Step 60] soft_loss: 2.0135, hard_loss: 2.1299, total_loss: 2.0717
+
+[Step 60] soft_loss: 1.9494, hard_loss: 1.6493, total_loss: 1.7993
+
+[Step 60] soft_loss: 1.7272, hard_loss: 1.0892, total_loss: 1.4082
+
+[Step 60] soft_loss: 1.9694, hard_loss: 1.7458, total_loss: 1.8576
+
+[Step 60] soft_loss: 2.0995, hard_loss: 1.3052, total_loss: 1.7023
+
+[Step 60] soft_loss: 2.1146, hard_loss: 1.7563, total_loss: 1.9355
+
+[Step 60] soft_loss: 1.8366, hard_loss: 1.8274, total_loss: 1.8320
+
+[Step 60] soft_loss: 2.1396, hard_loss: 1.2054, total_loss: 1.6725
+
+[Step 60] soft_loss: 2.1792, hard_loss: 2.5936, total_loss: 2.3864
+
+[Step 60] soft_loss: 1.7065, hard_loss: 1.7105, total_loss: 1.7085
+
+[Step 60] soft_loss: 1.9059, hard_loss: 1.8911, total_loss: 1.8985
+
+[Step 60] soft_loss: 2.2349, hard_loss: 1.9815, total_loss: 2.1082
+
+[Step 60] soft_loss: 2.0444, hard_loss: 1.3226, total_loss: 1.6835
+
+[Step 60] soft_loss: 1.9162, hard_loss: 2.0681, total_loss: 1.9922
+
+[Step 60] soft_loss: 2.5744, hard_loss: 2.5954, total_loss: 2.5849
+
+[Step 60] soft_loss: 2.1921, hard_loss: 2.3389, total_loss: 2.2655
+
+[Step 60] soft_loss: 1.7318, hard_loss: 1.7007, total_loss: 1.7163
+
+[Step 60] soft_loss: 2.1269, hard_loss: 1.8033, total_loss: 1.9651
+
+[Step 60] soft_loss: 1.7768, hard_loss: 1.0384, total_loss: 1.4076
+
+[Step 60] soft_loss: 2.3476, hard_loss: 1.6753, total_loss: 2.0114
+
+[Step 60] soft_loss: 2.5079, hard_loss: 2.8503, total_loss: 2.6791
+
+[Step 60] soft_loss: 1.8778, hard_loss: 2.0461, total_loss: 1.9620
+
+[Step 60] soft_loss: 2.1895, hard_loss: 2.7099, total_loss: 2.4497
+
+[Step 60] soft_loss: 1.7373, hard_loss: 1.2988, total_loss: 1.5181
+
+[Step 60] soft_loss: 2.2414, hard_loss: 0.7438, total_loss: 1.4926
+
+[Step 60] soft_loss: 1.8317, hard_loss: 1.6949, total_loss: 1.7633
+
+[Step 60] soft_loss: 2.4741, hard_loss: 1.5690, total_loss: 2.0215
+{'loss': '60.39', 'grad_norm': '0.7253', 'learning_rate': '7.688e-05', 'epoch': '0.9467'}
+
+[Step 70] soft_loss: 2.0711, hard_loss: 2.6032, total_loss: 2.3371
+
+[Step 70] soft_loss: 1.5275, hard_loss: 2.3810, total_loss: 1.9542
+
+[Step 70] soft_loss: 2.3730, hard_loss: 2.4033, total_loss: 2.3881
+
+[Step 70] soft_loss: 1.5919, hard_loss: 1.4277, total_loss: 1.5098
+
+[Step 70] soft_loss: 1.9271, hard_loss: 1.3410, total_loss: 1.6340
+
+[Step 70] soft_loss: 1.5210, hard_loss: 1.4678, total_loss: 1.4944
+
+[Step 70] soft_loss: 1.7452, hard_loss: 1.5277, total_loss: 1.6364
+
+[Step 70] soft_loss: 1.7233, hard_loss: 0.9635, total_loss: 1.3434
+
+[Step 70] soft_loss: 2.2772, hard_loss: 1.8174, total_loss: 2.0473
+
+[Step 70] soft_loss: 1.6382, hard_loss: 1.4760, total_loss: 1.5571 32%|███▏      | 71/222 [12:04<25:41, 10.21s/it] 32%|███▏      | 72/222 [12:14<25:25, 10.17s/it] 33%|███▎      | 73/222 [12:24<25:14, 10.16s/it] 33%|███▎      | 74/222 [12:33<24:40, 10.00s/it] 34%|███▍      | 75/222 [12:44<24:39, 10.07s/it] 34%|███▍      | 76/222 [12:54<24:37, 10.12s/it] 35%|███▍      | 77/222 [13:04<24:26, 10.11s/it] 35%|███▌      | 78/222 [13:14<24:24, 10.17s/it] 36%|███▌      | 79/222 [13:24<24:14, 10.17s/it] 36%|███▌      | 80/222 [13:35<24:13, 10.23s/it]                                                 36%|███▌      | 80/222 [13:35<24:13, 10.23s/it] 36%|███▋      | 81/222 [13:45<24:01, 10.22s/it] 37%|███▋      | 82/222 [13:55<23:54, 10.24s/it] 37%|███▋      | 83/222 [14:06<23:41, 10.23s/it] 38%|███▊      | 84/222 [14:16<23:30, 10.22s/it] 38%|███▊      | 85/222 [14:26<23:23, 10.24s/it] 39%|███▊      | 86/222 [14:36<23:13, 10.24s/it] 39%|███▉      | 87/222 [14:47<23:03, 10.25s/it] 40%|███▉      | 88/222 [14:57<22:50, 10.22s/it] 40%|████      | 89/222 [15:07<22:43, 10.25s/it] 41%|████      | 90/222 [15:17<22:30, 10.23s/it]                                                 41%|████      | 90/222 [15:17<22:30, 10.23s/it] 41%|████      | 91/222 [15:27<22:12, 10.17s/it] 41%|████▏     | 92/222 [15:37<21:58, 10.14s/it] 42%|████▏     | 93/222 [15:47<21:49, 10.15s/it] 42%|████▏     | 94/222 [15:58<21:40, 10.16s/it] 43%|████▎     | 95/222 [16:08<21:28, 10.15s/it] 43%|████▎     | 96/222 [16:18<21:22, 10.18s/it] 44%|████▎     | 97/222 [16:28<21:07, 10.14s/it] 44%|████▍     | 98/222 [16:38<20:53, 10.11s/it] 45%|████▍     | 99/222 [16:48<20:48, 10.15s/it] 45%|████▌     | 100/222 [16:59<20:43, 10.20s/it]                                                  45%|████▌     | 100/222 [16:59<20:43, 10.20s/it]
+
+[Step 70] soft_loss: 1.6012, hard_loss: 2.1995, total_loss: 1.9004
+
+[Step 70] soft_loss: 1.6783, hard_loss: 1.1081, total_loss: 1.3932
+
+[Step 70] soft_loss: 2.0561, hard_loss: 1.9847, total_loss: 2.0204
+
+[Step 70] soft_loss: 1.9688, hard_loss: 1.2879, total_loss: 1.6283
+
+[Step 70] soft_loss: 2.1636, hard_loss: 1.5277, total_loss: 1.8456
+
+[Step 70] soft_loss: 1.6785, hard_loss: 2.1243, total_loss: 1.9014
+
+[Step 70] soft_loss: 1.8558, hard_loss: 1.1031, total_loss: 1.4794
+
+[Step 70] soft_loss: 2.2620, hard_loss: 1.4724, total_loss: 1.8672
+
+[Step 70] soft_loss: 1.6359, hard_loss: 1.8677, total_loss: 1.7518
+
+[Step 70] soft_loss: 1.5642, hard_loss: 1.8347, total_loss: 1.6994
+
+[Step 70] soft_loss: 2.2327, hard_loss: 1.8560, total_loss: 2.0444
+
+[Step 70] soft_loss: 1.7057, hard_loss: 1.9527, total_loss: 1.8292
+
+[Step 70] soft_loss: 1.9968, hard_loss: 1.9728, total_loss: 1.9848
+
+[Step 70] soft_loss: 1.7172, hard_loss: 2.3538, total_loss: 2.0355
+
+[Step 70] soft_loss: 1.6909, hard_loss: 1.6017, total_loss: 1.6463
+
+[Step 70] soft_loss: 2.0088, hard_loss: 1.5030, total_loss: 1.7559
+
+[Step 70] soft_loss: 1.7382, hard_loss: 1.7763, total_loss: 1.7572
+
+[Step 70] soft_loss: 1.6933, hard_loss: 1.2256, total_loss: 1.4594
+
+[Step 70] soft_loss: 2.1803, hard_loss: 1.3711, total_loss: 1.7757
+
+[Step 70] soft_loss: 2.0217, hard_loss: 1.3141, total_loss: 1.6679
+
+[Step 70] soft_loss: 2.9257, hard_loss: 2.3669, total_loss: 2.6463
+
+[Step 70] soft_loss: 1.7885, hard_loss: 2.3281, total_loss: 2.0583
+{'loss': '59.34', 'grad_norm': '0.5209', 'learning_rate': '7.186e-05', 'epoch': '1.081'}
+
+[Step 80] soft_loss: 1.8773, hard_loss: 1.1505, total_loss: 1.5139
+
+[Step 80] soft_loss: 2.0931, hard_loss: 1.6112, total_loss: 1.8521
+
+[Step 80] soft_loss: 1.5600, hard_loss: 1.6820, total_loss: 1.6210
+
+[Step 80] soft_loss: 2.5764, hard_loss: 2.5094, total_loss: 2.5429
+
+[Step 80] soft_loss: 2.1496, hard_loss: 2.1786, total_loss: 2.1641
+
+[Step 80] soft_loss: 1.8711, hard_loss: 0.9204, total_loss: 1.3958
+
+[Step 80] soft_loss: 1.7306, hard_loss: 1.3012, total_loss: 1.5159
+
+[Step 80] soft_loss: 1.8839, hard_loss: 1.9407, total_loss: 1.9123
+
+[Step 80] soft_loss: 1.8316, hard_loss: 1.0039, total_loss: 1.4178
+
+[Step 80] soft_loss: 1.9493, hard_loss: 2.4061, total_loss: 2.1777
+
+[Step 80] soft_loss: 1.8441, hard_loss: 1.2895, total_loss: 1.5668
+
+[Step 80] soft_loss: 1.7833, hard_loss: 1.2821, total_loss: 1.5327
+
+[Step 80] soft_loss: 2.1396, hard_loss: 1.5282, total_loss: 1.8339
+
+[Step 80] soft_loss: 2.1443, hard_loss: 1.0703, total_loss: 1.6073
+
+[Step 80] soft_loss: 2.3298, hard_loss: 1.6740, total_loss: 2.0019
+
+[Step 80] soft_loss: 2.0797, hard_loss: 1.9596, total_loss: 2.0196
+
+[Step 80] soft_loss: 2.0653, hard_loss: 1.8907, total_loss: 1.9780
+
+[Step 80] soft_loss: 1.4080, hard_loss: 1.1368, total_loss: 1.2724
+
+[Step 80] soft_loss: 1.9591, hard_loss: 0.9423, total_loss: 1.4507
+
+[Step 80] soft_loss: 1.6581, hard_loss: 1.7014, total_loss: 1.6797
+
+[Step 80] soft_loss: 1.6476, hard_loss: 1.6763, total_loss: 1.6620
+
+[Step 80] soft_loss: 2.0202, hard_loss: 1.8860, total_loss: 1.9531
+
+[Step 80] soft_loss: 2.1635, hard_loss: 1.3146, total_loss: 1.7390
+
+[Step 80] soft_loss: 2.0206, hard_loss: 1.7512, total_loss: 1.8859
+
+[Step 80] soft_loss: 2.1294, hard_loss: 1.3316, total_loss: 1.7305
+
+[Step 80] soft_loss: 1.8314, hard_loss: 1.6405, total_loss: 1.7359
+
+[Step 80] soft_loss: 1.9584, hard_loss: 2.1010, total_loss: 2.0297
+
+[Step 80] soft_loss: 2.3864, hard_loss: 1.5538, total_loss: 1.9701
+
+[Step 80] soft_loss: 1.7985, hard_loss: 1.3302, total_loss: 1.5644
+
+[Step 80] soft_loss: 2.0297, hard_loss: 2.0774, total_loss: 2.0535
+
+[Step 80] soft_loss: 2.1235, hard_loss: 1.7021, total_loss: 1.9128
+
+[Step 80] soft_loss: 1.7274, hard_loss: 1.2712, total_loss: 1.4993
+{'loss': '59.21', 'grad_norm': '0.6418', 'learning_rate': '6.683e-05', 'epoch': '1.216'}
+
+[Step 90] soft_loss: 2.1527, hard_loss: 1.5996, total_loss: 1.8761
+
+[Step 90] soft_loss: 1.6522, hard_loss: 1.0330, total_loss: 1.3426
+
+[Step 90] soft_loss: 1.8269, hard_loss: 1.8006, total_loss: 1.8138
+
+[Step 90] soft_loss: 1.9267, hard_loss: 1.3721, total_loss: 1.6494
+
+[Step 90] soft_loss: 1.8457, hard_loss: 1.9903, total_loss: 1.9180
+
+[Step 90] soft_loss: 2.4638, hard_loss: 2.1621, total_loss: 2.3129
+
+[Step 90] soft_loss: 2.4306, hard_loss: 2.2268, total_loss: 2.3287
+
+[Step 90] soft_loss: 1.9649, hard_loss: 2.3001, total_loss: 2.1325
+
+[Step 90] soft_loss: 1.5769, hard_loss: 1.4167, total_loss: 1.4968
+
+[Step 90] soft_loss: 1.6166, hard_loss: 0.9778, total_loss: 1.2972
+
+[Step 90] soft_loss: 2.3411, hard_loss: 3.2879, total_loss: 2.8145
+
+[Step 90] soft_loss: 1.7838, hard_loss: 1.5876, total_loss: 1.6857
+
+[Step 90] soft_loss: 1.5383, hard_loss: 1.4100, total_loss: 1.4741
+
+[Step 90] soft_loss: 1.8255, hard_loss: 1.3321, total_loss: 1.5788
+
+[Step 90] soft_loss: 1.5376, hard_loss: 1.6045, total_loss: 1.5711
+
+[Step 90] soft_loss: 1.9154, hard_loss: 2.7018, total_loss: 2.3086
+
+[Step 90] soft_loss: 1.6875, hard_loss: 1.3217, total_loss: 1.5046
+
+[Step 90] soft_loss: 2.0714, hard_loss: 1.7306, total_loss: 1.9010
+
+[Step 90] soft_loss: 2.3417, hard_loss: 1.5805, total_loss: 1.9611
+
+[Step 90] soft_loss: 1.8451, hard_loss: 1.2897, total_loss: 1.5674
+
+[Step 90] soft_loss: 1.9794, hard_loss: 1.5878, total_loss: 1.7836
+
+[Step 90] soft_loss: 1.6895, hard_loss: 1.8321, total_loss: 1.7608
+
+[Step 90] soft_loss: 1.8454, hard_loss: 1.5623, total_loss: 1.7039
+
+[Step 90] soft_loss: 2.0811, hard_loss: 1.2383, total_loss: 1.6597
+
+[Step 90] soft_loss: 1.9234, hard_loss: 1.9642, total_loss: 1.9438
+
+[Step 90] soft_loss: 1.8073, hard_loss: 1.5466, total_loss: 1.6770
+
+[Step 90] soft_loss: 1.3386, hard_loss: 1.2597, total_loss: 1.2991
+
+[Step 90] soft_loss: 2.7245, hard_loss: 2.0539, total_loss: 2.3892
+
+[Step 90] soft_loss: 1.7630, hard_loss: 0.9877, total_loss: 1.3753
+
+[Step 90] soft_loss: 1.8729, hard_loss: 0.9906, total_loss: 1.4317
+
+[Step 90] soft_loss: 1.7667, hard_loss: 2.4111, total_loss: 2.0889
+
+[Step 90] soft_loss: 1.9993, hard_loss: 2.0550, total_loss: 2.0272
+{'loss': '57.58', 'grad_norm': '0.6819', 'learning_rate': '6.181e-05', 'epoch': '1.352'}
+
+[Step 100] soft_loss: 2.0605, hard_loss: 1.0952, total_loss: 1.5779
+
+  0%|          | 0/281 [00:00<?, ?it/s][A
+  1%|          | 2/281 [00:00<00:19, 14.34it/s][A
+  1%|▏         | 4/281 [00:00<00:32,  8.65it/s][A
+  2%|▏         | 5/281 [00:00<00:33,  8.12it/s][A
+  2%|▏         | 6/281 [00:00<00:35,  7.70it/s][A
+  2%|▏         | 7/281 [00:00<00:38,  7.20it/s][A
+  3%|▎         | 8/281 [00:01<00:36,  7.48it/s][A
+  3%|▎         | 9/281 [00:01<00:36,  7.37it/s][A
+  4%|▎         | 10/281 [00:01<00:35,  7.61it/s][A
+  4%|▍         | 11/281 [00:01<00:36,  7.45it/s][A
+  4%|▍         | 12/281 [00:01<00:37,  7.25it/s][A
+  5%|▍         | 13/281 [00:01<00:38,  6.99it/s][A
+  5%|▍         | 14/281 [00:01<00:41,  6.46it/s][A
+  5%|▌         | 15/281 [00:02<00:38,  6.92it/s][A
+  6%|▌         | 16/281 [00:02<00:38,  6.91it/s][A
+  6%|▌         | 17/281 [00:02<00:37,  6.96it/s][A
+  6%|▋         | 18/281 [00:02<00:37,  7.01it/s][A
+  7%|▋         | 19/281 [00:02<00:37,  7.05it/s][A
+  7%|▋         | 20/281 [00:02<00:37,  6.97it/s][A
+  7%|▋         | 21/281 [00:02<00:38,  6.73it/s][A
+  8%|▊         | 22/281 [00:03<00:37,  6.84it/s][A
+  8%|▊         | 23/281 [00:03<00:37,  6.89it/s][A
+  9%|▊         | 24/281 [00:03<00:38,  6.75it/s][A
+  9%|▉         | 25/281 [00:03<00:38,  6.68it/s][A
+  9%|▉         | 26/281 [00:03<00:37,  6.79it/s][A
+ 10%|▉         | 27/281 [00:03<00:37,  6.80it/s][A
+ 10%|▉         | 28/281 [00:03<00:36,  6.89it/s][A
+ 10%|█         | 29/281 [00:04<00:36,  6.94it/s][A
+ 11%|█         | 30/281 [00:04<00:34,  7.29it/s][A
+ 11%|█         | 31/281 [00:04<00:34,  7.16it/s][A
+ 11%|█▏        | 32/281 [00:04<00:34,  7.13it/s][A
+ 12%|█▏        | 33/281 [00:04<00:34,  7.12it/s][A
+ 12%|█▏        | 34/281 [00:04<00:33,  7.43it/s][A
+ 12%|█▏        | 35/281 [00:04<00:33,  7.27it/s][A
+ 13%|█▎        | 36/281 [00:05<00:34,  7.10it/s][A
+ 13%|█▎        | 37/281 [00:05<00:32,  7.46it/s][A
+ 14%|█▎        | 38/281 [00:05<00:33,  7.26it/s][A
+ 14%|█▍        | 39/281 [00:05<00:33,  7.22it/s][A
+ 14%|█▍        | 40/281 [00:05<00:33,  7.09it/s][A
+ 15%|█▍        | 41/281 [00:05<00:34,  6.86it/s][A
+ 15%|█▍        | 42/281 [00:05<00:34,  6.94it/s][A
+ 15%|█▌        | 43/281 [00:06<00:35,  6.78it/s][A
+ 16%|█▌        | 44/281 [00:06<00:34,  6.87it/s][A
+ 16%|█▌        | 45/281 [00:06<00:34,  6.87it/s][A
+ 16%|█▋        | 46/281 [00:06<00:36,  6.42it/s][A
+ 17%|█▋        | 47/281 [00:06<00:35,  6.60it/s][A
+ 17%|█▋        | 48/281 [00:06<00:35,  6.57it/s][A
+ 17%|█▋        | 49/281 [00:06<00:33,  7.01it/s][A
+ 18%|█▊        | 50/281 [00:07<00:32,  7.06it/s][A
+ 18%|█▊        | 51/281 [00:07<00:33,  6.86it/s][A
+ 19%|█▊        | 52/281 [00:07<00:31,  7.22it/s][A
+ 19%|█▉        | 53/281 [00:07<00:32,  6.94it/s][A
+ 19%|█▉        | 54/281 [00:07<00:33,  6.78it/s][A
+ 20%|█▉        | 55/281 [00:07<00:33,  6.76it/s][A
+ 20%|█▉        | 56/281 [00:07<00:31,  7.14it/s][A
+ 20%|██        | 57/281 [00:08<00:31,  7.13it/s][A
+ 21%|██        | 58/281 [00:08<00:31,  7.06it/s][A
+ 21%|██        | 59/281 [00:08<00:31,  7.08it/s][A
+ 21%|██▏       | 60/281 [00:08<00:31,  7.09it/s][A
+ 22%|██▏       | 61/281 [00:08<00:29,  7.40it/s][A
+ 22%|██▏       | 62/281 [00:08<00:28,  7.64it/s][A
+ 22%|██▏       | 63/281 [00:08<00:29,  7.41it/s][A
+ 23%|██▎       | 64/281 [00:08<00:28,  7.64it/s][A
+ 23%|██▎       | 65/281 [00:09<00:31,  6.89it/s][A
+ 23%|██▎       | 66/281 [00:09<00:31,  6.87it/s][A
+ 24%|██▍       | 67/281 [00:09<00:31,  6.85it/s][A
+ 24%|██▍       | 68/281 [00:09<00:31,  6.73it/s][A
+ 25%|██▍       | 69/281 [00:09<00:32,  6.62it/s][A
+ 25%|██▍       | 70/281 [00:09<00:31,  6.73it/s][A
+ 25%|██▌       | 71/281 [00:10<00:31,  6.66it/s][A
+ 26%|██▌       | 72/281 [00:10<00:31,  6.60it/s][A
+ 26%|██▌       | 73/281 [00:10<00:30,  6.75it/s][A
+ 26%|██▋       | 74/281 [00:10<00:32,  6.33it/s][A
+ 27%|██▋       | 75/281 [00:10<00:32,  6.33it/s][A
+ 27%|██▋       | 76/281 [00:10<00:31,  6.50it/s][A
+ 27%|██▋       | 77/281 [00:10<00:30,  6.63it/s][A
+ 28%|██▊       | 78/281 [00:11<00:30,  6.74it/s][A
+ 28%|██▊       | 79/281 [00:11<00:28,  7.12it/s][A
+ 28%|██▊       | 80/281 [00:11<00:28,  7.13it/s][A
+ 29%|██▉       | 81/281 [00:11<00:28,  6.94it/s][A
+ 29%|██▉       | 82/281 [00:11<00:28,  6.92it/s][A
+ 30%|██▉       | 83/281 [00:11<00:27,  7.32it/s][A
+ 30%|██▉       | 84/281 [00:11<00:27,  7.24it/s][A
+ 30%|███       | 85/281 [00:12<00:27,  7.07it/s][A
+ 31%|███       | 86/281 [00:12<00:27,  7.01it/s][A
+ 31%|███       | 87/281 [00:12<00:27,  7.03it/s][A
+ 31%|███▏      | 88/281 [00:12<00:26,  7.35it/s][A
+ 32%|███▏      | 89/281 [00:12<00:26,  7.27it/s][A
+ 32%|███▏      | 90/281 [00:12<00:27,  7.02it/s][A
+ 32%|███▏      | 91/281 [00:12<00:27,  6.80it/s][A
+ 33%|███▎      | 92/281 [00:13<00:27,  6.88it/s][A
+ 33%|███▎      | 93/281 [00:13<00:27,  6.77it/s][A
+ 33%|███▎      | 94/281 [00:13<00:28,  6.62it/s][A
+ 34%|███▍      | 95/281 [00:13<00:27,  6.68it/s][A
+ 34%|███▍      | 96/281 [00:13<00:27,  6.80it/s][A
+ 35%|███▍      | 97/281 [00:13<00:25,  7.18it/s][A
+ 35%|███▍      | 98/281 [00:13<00:26,  6.98it/s][A
+ 35%|███▌      | 99/281 [00:14<00:26,  6.95it/s][A
+ 36%|███▌      | 100/281 [00:14<00:25,  7.00it/s][A
+ 36%|███▌      | 101/281 [00:14<00:26,  6.84it/s][A
+ 36%|███▋      | 102/281 [00:14<00:26,  6.85it/s][A
+ 37%|███▋      | 103/281 [00:14<00:25,  6.90it/s][A
+ 37%|███▋      | 104/281 [00:14<00:26,  6.77it/s][A
+ 37%|███▋      | 105/281 [00:14<00:26,  6.64it/s][A
+ 38%|███▊      | 106/281 [00:15<00:26,  6.58it/s][A
+ 38%|███▊      | 107/281 [00:15<00:25,  6.71it/s][A
+ 38%|███▊      | 108/281 [00:15<00:25,  6.75it/s][A
+ 39%|███▉      | 109/281 [00:15<00:24,  7.13it/s][A
+ 39%|███▉      | 110/281 [00:15<00:24,  7.05it/s][A
+ 40%|███▉      | 111/281 [00:15<00:24,  7.00it/s][A
+ 40%|███▉      | 112/281 [00:15<00:23,  7.05it/s][A
+ 40%|████      | 113/281 [00:16<00:24,  6.99it/s][A
+ 41%|████      | 114/281 [00:16<00:22,  7.33it/s][A
+ 41%|████      | 115/281 [00:16<00:23,  7.05it/s][A
+ 41%|████▏     | 116/281 [00:16<00:23,  7.08it/s][A
+ 42%|████▏     | 117/281 [00:16<00:23,  7.10it/s][A
+ 42%|████▏     | 118/281 [00:16<00:23,  6.89it/s][A
+ 42%|████▏     | 119/281 [00:16<00:23,  6.88it/s][A
+[Step 100] soft_loss: 1.5247, hard_loss: 1.3764, total_loss: 1.4505
+
+[Step 100] soft_loss: 1.7495, hard_loss: 1.1320, total_loss: 1.4408
+
+[Step 100] soft_loss: 1.7880, hard_loss: 1.9674, total_loss: 1.8777
+
+[Step 100] soft_loss: 2.1015, hard_loss: 1.8828, total_loss: 1.9922
+
+[Step 100] soft_loss: 2.0056, hard_loss: 1.7847, total_loss: 1.8951
+
+[Step 100] soft_loss: 1.7303, hard_loss: 1.9826, total_loss: 1.8565
+
+[Step 100] soft_loss: 2.1922, hard_loss: 2.4248, total_loss: 2.3085
+
+[Step 100] soft_loss: 2.2248, hard_loss: 1.7175, total_loss: 1.9711
+
+[Step 100] soft_loss: 1.9104, hard_loss: 2.8825, total_loss: 2.3965
+
+[Step 100] soft_loss: 1.6686, hard_loss: 1.8296, total_loss: 1.7491
+
+[Step 100] soft_loss: 2.3486, hard_loss: 1.6467, total_loss: 1.9976
+
+[Step 100] soft_loss: 2.0423, hard_loss: 2.5757, total_loss: 2.3090
+
+[Step 100] soft_loss: 1.7096, hard_loss: 1.3317, total_loss: 1.5206
+
+[Step 100] soft_loss: 1.4531, hard_loss: 2.7408, total_loss: 2.0969
+
+[Step 100] soft_loss: 1.3359, hard_loss: 1.5344, total_loss: 1.4351
+
+[Step 100] soft_loss: 1.6671, hard_loss: 1.9813, total_loss: 1.8242
+
+[Step 100] soft_loss: 1.5898, hard_loss: 0.9394, total_loss: 1.2646
+
+[Step 100] soft_loss: 2.1179, hard_loss: 3.0068, total_loss: 2.5623
+
+[Step 100] soft_loss: 1.8975, hard_loss: 1.9042, total_loss: 1.9008
+
+[Step 100] soft_loss: 1.9710, hard_loss: 1.9919, total_loss: 1.9814
+
+[Step 100] soft_loss: 1.8198, hard_loss: 1.8748, total_loss: 1.8473
+
+[Step 100] soft_loss: 1.7925, hard_loss: 1.9615, total_loss: 1.8770
+
+[Step 100] soft_loss: 1.6666, hard_loss: 1.3715, total_loss: 1.5191
+
+[Step 100] soft_loss: 1.5480, hard_loss: 1.6345, total_loss: 1.5912
+
+[Step 100] soft_loss: 1.6706, hard_loss: 1.5660, total_loss: 1.6183
+
+[Step 100] soft_loss: 1.5559, hard_loss: 1.8616, total_loss: 1.7088
+
+[Step 100] soft_loss: 2.0773, hard_loss: 2.0643, total_loss: 2.0708
+
+[Step 100] soft_loss: 1.5431, hard_loss: 1.4840, total_loss: 1.5135
+
+[Step 100] soft_loss: 1.9841, hard_loss: 2.1325, total_loss: 2.0583
+
+[Step 100] soft_loss: 1.5767, hard_loss: 1.3512, total_loss: 1.4640
+
+[Step 100] soft_loss: 2.0685, hard_loss: 2.2869, total_loss: 2.1777
+
+[Step 100] soft_loss: 1.8428, hard_loss: 1.1753, total_loss: 1.5090
+
+[Step 100] soft_loss: 1.8942, hard_loss: 1.6900, total_loss: 1.7921
+
+[Step 100] soft_loss: 1.9164, hard_loss: 1.3378, total_loss: 1.6271
+
+[Step 100] soft_loss: 1.8768, hard_loss: 0.9561, total_loss: 1.4164
+
+[Step 100] soft_loss: 1.8642, hard_loss: 1.8484, total_loss: 1.8563
+
+[Step 100] soft_loss: 1.5001, hard_loss: 1.7742, total_loss: 1.6372
+
+[Step 100] soft_loss: 1.4639, hard_loss: 1.4058, total_loss: 1.4348
+
+[Step 100] soft_loss: 1.5322, hard_loss: 1.5528, total_loss: 1.5425
+
+[Step 100] soft_loss: 1.9364, hard_loss: 1.8753, total_loss: 1.9059
+
+[Step 100] soft_loss: 1.8766, hard_loss: 1.7263, total_loss: 1.8014
+
+[Step 100] soft_loss: 1.7499, hard_loss: 1.8699, total_loss: 1.8099
+
+[Step 100] soft_loss: 1.9981, hard_loss: 1.9225, total_loss: 1.9603
+
+[Step 100] soft_loss: 1.5113, hard_loss: 1.9260, total_loss: 1.7187
+
+[Step 100] soft_loss: 1.7484, hard_loss: 1.8228, total_loss: 1.7856
+
+[Step 100] soft_loss: 2.0131, hard_loss: 1.3077, total_loss: 1.6604
+
+[Step 100] soft_loss: 1.9230, hard_loss: 1.4898, total_loss: 1.7064
+
+[Step 100] soft_loss: 1.8116, hard_loss: 1.9270, total_loss: 1.8693
+
+[Step 100] soft_loss: 2.2086, hard_loss: 1.6425, total_loss: 1.9256
+
+[Step 100] soft_loss: 1.6909, hard_loss: 1.7524, total_loss: 1.7217
+
+[Step 100] soft_loss: 1.6567, hard_loss: 2.1364, total_loss: 1.8966
+
+[Step 100] soft_loss: 2.1849, hard_loss: 1.7076, total_loss: 1.9462
+
+[Step 100] soft_loss: 1.6088, hard_loss: 2.0417, total_loss: 1.8253
+
+[Step 100] soft_loss: 1.9329, hard_loss: 2.4798, total_loss: 2.2063
+
+[Step 100] soft_loss: 1.7000, hard_loss: 3.0182, total_loss: 2.3591
+
+[Step 100] soft_loss: 1.8102, hard_loss: 1.9198, total_loss: 1.8650
+
+[Step 100] soft_loss: 1.5777, hard_loss: 1.4179, total_loss: 1.4978
+
+[Step 100] soft_loss: 1.8219, hard_loss: 0.7842, total_loss: 1.3031
+
+[Step 100] soft_loss: 1.6220, hard_loss: 1.7995, total_loss: 1.7107
+
+[Step 100] soft_loss: 2.1207, hard_loss: 2.0180, total_loss: 2.0694
+
+[Step 100] soft_loss: 2.0940, hard_loss: 1.0088, total_loss: 1.5514
+
+[Step 100] soft_loss: 2.2599, hard_loss: 1.6676, total_loss: 1.9638
+
+[Step 100] soft_loss: 2.7085, hard_loss: 2.4026, total_loss: 2.5555
+
+[Step 100] soft_loss: 1.6742, hard_loss: 1.1018, total_loss: 1.3880
+
+[Step 100] soft_loss: 2.1756, hard_loss: 1.2804, total_loss: 1.7280
+
+[Step 100] soft_loss: 1.8249, hard_loss: 1.7848, total_loss: 1.8048
+
+[Step 100] soft_loss: 2.0469, hard_loss: 1.8058, total_loss: 1.9264
+
+[Step 100] soft_loss: 1.5685, hard_loss: 1.4592, total_loss: 1.5139
+
+[Step 100] soft_loss: 1.6657, hard_loss: 2.1930, total_loss: 1.9294
+
+[Step 100] soft_loss: 2.1099, hard_loss: 1.9033, total_loss: 2.0066
+
+[Step 100] soft_loss: 2.0145, hard_loss: 1.3422, total_loss: 1.6784
+
+[Step 100] soft_loss: 2.0358, hard_loss: 1.4583, total_loss: 1.7471
+
+[Step 100] soft_loss: 3.4171, hard_loss: 2.1374, total_loss: 2.7772
+
+[Step 100] soft_loss: 1.7086, hard_loss: 1.2888, total_loss: 1.4987
+
+[Step 100] soft_loss: 1.7757, hard_loss: 1.1500, total_loss: 1.4628
+
+[Step 100] soft_loss: 1.8329, hard_loss: 1.4872, total_loss: 1.6600
+
+[Step 100] soft_loss: 1.8052, hard_loss: 1.7306, total_loss: 1.7679
+
+[Step 100] soft_loss: 1.4129, hard_loss: 1.6676, total_loss: 1.5402
+
+[Step 100] soft_loss: 1.3874, hard_loss: 1.6606, total_loss: 1.5240
+
+[Step 100] soft_loss: 1.8897, hard_loss: 1.8897, total_loss: 1.8897
+
+[Step 100] soft_loss: 1.8878, hard_loss: 1.9037, total_loss: 1.8957
+
+[Step 100] soft_loss: 1.8558, hard_loss: 1.7545, total_loss: 1.8051
+
+[Step 100] soft_loss: 1.4167, hard_loss: 2.0318, total_loss: 1.7243
+
+[Step 100] soft_loss: 2.2341, hard_loss: 1.7737, total_loss: 2.0039
+
+[Step 100] soft_loss: 2.3710, hard_loss: 2.0807, total_loss: 2.2259
+
+[Step 100] soft_loss: 1.4357, hard_loss: 1.7060, total_loss: 1.5709
+
+[Step 100] soft_loss: 2.1739, hard_loss: 3.6674, total_loss: 2.9206
+
+[Step 100] soft_loss: 1.8011, hard_loss: 1.7781, total_loss: 1.7896
+
+[Step 100] soft_loss: 1.6230, hard_loss: 1.4663, total_loss: 1.5446
+
+[Step 100] soft_loss: 1.9196, hard_loss: 2.2828, total_loss: 2.1012
+
+[Step 100] soft_loss: 2.3185, hard_loss: 2.4995, total_loss: 2.4090
+
+[Step 100] soft_loss: 1.5425, hard_loss: 1.3694, total_loss: 1.4560
+
+[Step 100] soft_loss: 1.9543, hard_loss: 1.8518, total_loss: 1.9030
+
+[Step 100] soft_loss: 1.3845, hard_loss: 2.0396, total_loss: 1.7121
+
+[Step 100] soft_loss: 1.5982, hard_loss: 1.6146, total_loss: 1.6064
+
+[Step 100] soft_loss: 2.1911, hard_loss: 1.4295, total_loss: 1.8103
+
+[Step 100] soft_loss: 2.2346, hard_loss: 1.7817, total_loss: 2.0082
+
+[Step 100] soft_loss: 1.7723, hard_loss: 2.2453, total_loss: 2.0088
+
+[Step 100] soft_loss: 1.3559, hard_loss: 1.1554, total_loss: 1.2556
+
+[Step 100] soft_loss: 1.9993, hard_loss: 1.4440, total_loss: 1.7216
+
+[Step 100] soft_loss: 1.7074, hard_loss: 1.1900, total_loss: 1.4487
+
+[Step 100] soft_loss: 1.8756, hard_loss: 2.2741, total_loss: 2.0749
+
+[Step 100] soft_loss: 2.2177, hard_loss: 2.2637, total_loss: 2.2407
+
+[Step 100] soft_loss: 1.5168, hard_loss: 1.7714, total_loss: 1.6441
+
+[Step 100] soft_loss: 1.7495, hard_loss: 1.5701, total_loss: 1.6598
+
+[Step 100] soft_loss: 1.8765, hard_loss: 1.7059, total_loss: 1.7912
+
+[Step 100] soft_loss: 1.7593, hard_loss: 1.6568, total_loss: 1.7081
+
+[Step 100] soft_loss: 1.9670, hard_loss: 2.1304, total_loss: 2.0487
+
+[Step 100] soft_loss: 2.2064, hard_loss: 2.2812, total_loss: 2.2438
+
+[Step 100] soft_loss: 2.0987, hard_loss: 1.6580, total_loss: 1.8784
+
+[Step 100] soft_loss: 1.9589, hard_loss: 1.9875, total_loss: 1.9732
+
+[Step 100] soft_loss: 1.8304, hard_loss: 1.7006, total_loss: 1.7655
+
+[Step 100] soft_loss: 2.0422, hard_loss: 2.0273, total_loss: 2.0348
+
+[Step 100] soft_loss: 1.6271, hard_loss: 0.9745, total_loss: 1.3008
+
+[Step 100] soft_loss: 1.9576, hard_loss: 1.6143, total_loss: 1.7859
+
+[Step 100] soft_loss: 1.8032, hard_loss: 1.9415, total_loss: 1.8724
+
+[Step 100] soft_loss: 1.8841, hard_loss: 1.5303, total_loss: 1.7072
+
+[Step 100] soft_loss: 1.9999, hard_loss: 1.4114, total_loss: 1.7056
+
+[Step 100] soft_loss: 2.3959, hard_loss: 2.1930, total_loss: 2.2945
+ 43%|████▎     | 120/281 [00:17<00:23,  6.90it/s][A
+ 43%|████▎     | 121/281 [00:17<00:23,  6.86it/s][A
+ 43%|████▎     | 122/281 [00:17<00:24,  6.39it/s][A
+ 44%|████▍     | 123/281 [00:17<00:24,  6.43it/s][A
+ 44%|████▍     | 124/281 [00:17<00:23,  6.56it/s][A
+ 44%|████▍     | 125/281 [00:17<00:23,  6.64it/s][A
+ 45%|████▍     | 126/281 [00:18<00:23,  6.61it/s][A
+ 45%|████▌     | 127/281 [00:18<00:23,  6.59it/s][A
+ 46%|████▌     | 128/281 [00:18<00:22,  6.68it/s][A
+ 46%|████▌     | 129/281 [00:18<00:22,  6.80it/s][A
+ 46%|████▋     | 130/281 [00:18<00:21,  6.87it/s][A
+ 47%|████▋     | 131/281 [00:18<00:22,  6.75it/s][A
+ 47%|████▋     | 132/281 [00:18<00:23,  6.27it/s][A
+ 47%|████▋     | 133/281 [00:19<00:23,  6.42it/s][A
+ 48%|████▊     | 134/281 [00:19<00:22,  6.59it/s][A
+ 48%|████▊     | 135/281 [00:19<00:21,  6.67it/s][A
+ 48%|████▊     | 136/281 [00:19<00:21,  6.72it/s][A
+ 49%|████▉     | 137/281 [00:19<00:21,  6.62it/s][A
+ 49%|████▉     | 138/281 [00:19<00:21,  6.67it/s][A
+ 49%|████▉     | 139/281 [00:19<00:20,  7.08it/s][A
+ 50%|████▉     | 140/281 [00:20<00:20,  7.00it/s][A
+ 50%|█████     | 141/281 [00:20<00:20,  6.84it/s][A
+ 51%|█████     | 142/281 [00:20<00:20,  6.93it/s][A
+ 51%|█████     | 143/281 [00:20<00:19,  6.92it/s][A
+ 51%|█████     | 144/281 [00:20<00:19,  6.98it/s][A
+ 52%|█████▏    | 145/281 [00:20<00:19,  6.81it/s][A
+ 52%|█████▏    | 146/281 [00:21<00:19,  6.84it/s][A
+ 52%|█████▏    | 147/281 [00:21<00:19,  6.83it/s][A
+ 53%|█████▎    | 148/281 [00:21<00:19,  6.89it/s][A
+ 53%|█████▎    | 149/281 [00:21<00:19,  6.69it/s][A
+ 53%|█████▎    | 150/281 [00:21<00:19,  6.75it/s][A
+ 54%|█████▎    | 151/281 [00:21<00:18,  6.85it/s][A
+ 54%|█████▍    | 152/281 [00:21<00:21,  6.00it/s][A
+ 54%|█████▍    | 153/281 [00:22<00:20,  6.23it/s][A
+ 55%|█████▍    | 154/281 [00:22<00:21,  5.99it/s][A
+ 55%|█████▌    | 155/281 [00:22<00:20,  6.28it/s][A
+ 56%|█████▌    | 156/281 [00:22<00:19,  6.38it/s][A
+ 56%|█████▌    | 157/281 [00:22<00:18,  6.85it/s][A
+ 56%|█████▌    | 158/281 [00:22<00:17,  6.86it/s][A
+ 57%|█████▋    | 159/281 [00:22<00:16,  7.24it/s][A
+ 57%|█████▋    | 160/281 [00:23<00:16,  7.22it/s][A
+ 57%|█████▋    | 161/281 [00:23<00:15,  7.50it/s][A
+ 58%|█████▊    | 162/281 [00:23<00:16,  7.27it/s][A
+ 58%|█████▊    | 163/281 [00:23<00:16,  7.10it/s][A
+ 58%|█████▊    | 164/281 [00:23<00:16,  7.07it/s][A
+ 59%|█████▊    | 165/281 [00:23<00:16,  6.90it/s][A
+ 59%|█████▉    | 166/281 [00:23<00:15,  7.32it/s][A
+ 59%|█████▉    | 167/281 [00:24<00:15,  7.25it/s][A
+ 60%|█████▉    | 168/281 [00:24<00:15,  7.21it/s][A
+ 60%|██████    | 169/281 [00:24<00:16,  6.99it/s][A
+ 60%|██████    | 170/281 [00:24<00:16,  6.85it/s][A
+ 61%|██████    | 171/281 [00:24<00:15,  7.24it/s][A
+ 61%|██████    | 172/281 [00:24<00:15,  7.02it/s][A
+ 62%|██████▏   | 173/281 [00:24<00:14,  7.41it/s][A
+ 62%|██████▏   | 174/281 [00:25<00:15,  6.72it/s][A
+ 62%|██████▏   | 175/281 [00:25<00:15,  6.64it/s][A
+ 63%|██████▎   | 176/281 [00:25<00:15,  6.59it/s][A
+ 63%|██████▎   | 177/281 [00:25<00:15,  6.72it/s][A
+ 63%|██████▎   | 178/281 [00:25<00:15,  6.82it/s][A
+ 64%|██████▎   | 179/281 [00:25<00:14,  6.82it/s][A
+ 64%|██████▍   | 180/281 [00:25<00:14,  6.90it/s][A
+ 64%|██████▍   | 181/281 [00:26<00:14,  6.96it/s][A
+ 65%|██████▍   | 182/281 [00:26<00:14,  6.99it/s][A
+ 65%|██████▌   | 183/281 [00:26<00:13,  7.02it/s][A
+ 65%|██████▌   | 184/281 [00:26<00:13,  7.36it/s][A
+ 66%|██████▌   | 185/281 [00:26<00:13,  7.19it/s][A
+ 66%|██████▌   | 186/281 [00:26<00:13,  6.93it/s][A
+ 67%|██████▋   | 187/281 [00:26<00:13,  6.91it/s][A
+ 67%|██████▋   | 188/281 [00:27<00:13,  6.78it/s][A
+ 67%|██████▋   | 189/281 [00:27<00:13,  6.82it/s][A
+ 68%|██████▊   | 190/281 [00:27<00:13,  6.73it/s][A
+ 68%|██████▊   | 191/281 [00:27<00:13,  6.73it/s][A
+ 68%|██████▊   | 192/281 [00:27<00:13,  6.59it/s][A
+ 69%|██████▊   | 193/281 [00:27<00:13,  6.65it/s][A
+ 69%|██████▉   | 194/281 [00:28<00:12,  6.77it/s][A
+ 69%|██████▉   | 195/281 [00:28<00:12,  6.87it/s][A
+ 70%|██████▉   | 196/281 [00:28<00:11,  7.25it/s][A
+ 70%|███████   | 197/281 [00:28<00:12,  6.97it/s][A
+ 70%|███████   | 198/281 [00:28<00:11,  7.31it/s][A
+ 71%|███████   | 199/281 [00:28<00:11,  7.14it/s][A
+ 71%|███████   | 200/281 [00:28<00:11,  7.12it/s][A
+ 72%|███████▏  | 201/281 [00:28<00:11,  7.11it/s][A
+ 72%|███████▏  | 202/281 [00:29<00:11,  7.02it/s][A
+ 72%|███████▏  | 203/281 [00:29<00:11,  6.97it/s][A
+ 73%|███████▎  | 204/281 [00:29<00:11,  6.94it/s][A
+ 73%|███████▎  | 205/281 [00:29<00:10,  7.26it/s][A
+ 73%|███████▎  | 206/281 [00:29<00:10,  7.13it/s][A
+ 74%|███████▎  | 207/281 [00:29<00:10,  7.04it/s][A
+ 74%|███████▍  | 208/281 [00:29<00:09,  7.36it/s][A
+ 74%|███████▍  | 209/281 [00:30<00:10,  7.19it/s][A
+ 75%|███████▍  | 210/281 [00:30<00:10,  6.97it/s][A
+ 75%|███████▌  | 211/281 [00:30<00:10,  6.97it/s][A
+ 75%|███████▌  | 212/281 [00:30<00:10,  6.84it/s][A
+ 76%|███████▌  | 213/281 [00:30<00:09,  6.86it/s][A
+ 76%|███████▌  | 214/281 [00:30<00:09,  6.83it/s][A
+ 77%|███████▋  | 215/281 [00:31<00:09,  6.90it/s][A
+ 77%|███████▋  | 216/281 [00:31<00:08,  7.25it/s][A
+ 77%|███████▋  | 217/281 [00:31<00:09,  6.99it/s][A
+ 78%|███████▊  | 218/281 [00:31<00:08,  7.37it/s][A
+ 78%|███████▊  | 219/281 [00:31<00:08,  7.17it/s][A
+ 78%|███████▊  | 220/281 [00:31<00:09,  6.54it/s][A
+ 79%|███████▊  | 221/281 [00:31<00:09,  6.53it/s][A
+ 79%|███████▉  | 222/281 [00:32<00:08,  6.61it/s][A
+ 79%|███████▉  | 223/281 [00:32<00:08,  6.76it/s][A
+ 80%|███████▉  | 224/281 [00:32<00:08,  6.34it/s][A
+ 80%|████████  | 225/281 [00:32<00:08,  6.49it/s][A
+ 80%|████████  | 226/281 [00:32<00:08,  6.59it/s][A
+ 81%|████████  | 227/281 [00:32<00:07,  6.99it/s][A
+ 81%|████████  | 228/281 [00:32<00:07,  7.02it/s][A
+ 81%|████████▏ | 229/281 [00:33<00:07,  7.03it/s][A
+ 82%|████████▏ | 230/281 [00:33<00:07,  6.98it/s][A
+ 82%|████████▏ | 231/281 [00:33<00:07,  6.93it/s][A
+ 83%|████████▎ | 232/281 [00:33<00:07,  6.73it/s][A
+ 83%|████████▎ | 233/281 [00:33<00:07,  6.85it/s][A
+ 83%|████████▎ | 234/281 [00:33<00:06,  6.85it/s][A
+ 84%|████████▎ | 235/281 [00:33<00:07,  6.40it/s][A
+ 84%|████████▍ | 236/281 [00:34<00:06,  6.56it/s][A
+ 84%|████████▍ | 237/281 [00:34<00:06,  6.63it/s][A
+ 85%|████████▍ | 238/281 [00:34<00:06,  6.77it/s][A
+
+[Step 100] soft_loss: 1.9097, hard_loss: 1.7403, total_loss: 1.8250
+
+[Step 100] soft_loss: 1.6973, hard_loss: 2.4004, total_loss: 2.0488
+
+[Step 100] soft_loss: 1.3452, hard_loss: 2.2590, total_loss: 1.8021
+
+[Step 100] soft_loss: 1.5423, hard_loss: 0.8724, total_loss: 1.2073
+
+[Step 100] soft_loss: 1.2632, hard_loss: 1.3578, total_loss: 1.3105
+
+[Step 100] soft_loss: 1.6738, hard_loss: 1.3032, total_loss: 1.4885
+
+[Step 100] soft_loss: 1.7876, hard_loss: 1.7112, total_loss: 1.7494
+
+[Step 100] soft_loss: 1.6021, hard_loss: 1.3828, total_loss: 1.4925
+
+[Step 100] soft_loss: 1.9212, hard_loss: 2.0467, total_loss: 1.9840
+
+[Step 100] soft_loss: 2.1589, hard_loss: 1.7626, total_loss: 1.9608
+
+[Step 100] soft_loss: 1.5698, hard_loss: 1.3528, total_loss: 1.4613
+
+[Step 100] soft_loss: 2.0207, hard_loss: 2.0474, total_loss: 2.0340
+
+[Step 100] soft_loss: 1.3277, hard_loss: 1.4325, total_loss: 1.3801
+
+[Step 100] soft_loss: 1.5424, hard_loss: 1.5655, total_loss: 1.5539
+
+[Step 100] soft_loss: 2.2711, hard_loss: 2.4068, total_loss: 2.3390
+
+[Step 100] soft_loss: 2.4643, hard_loss: 3.0186, total_loss: 2.7415
+
+[Step 100] soft_loss: 1.6921, hard_loss: 1.1902, total_loss: 1.4411
+
+[Step 100] soft_loss: 1.9960, hard_loss: 1.7349, total_loss: 1.8654
+
+[Step 100] soft_loss: 2.3317, hard_loss: 2.2026, total_loss: 2.2672
+
+[Step 100] soft_loss: 1.8913, hard_loss: 1.7403, total_loss: 1.8158
+
+[Step 100] soft_loss: 1.5608, hard_loss: 1.0069, total_loss: 1.2838
+
+[Step 100] soft_loss: 1.7093, hard_loss: 1.8647, total_loss: 1.7870
+
+[Step 100] soft_loss: 1.8386, hard_loss: 1.7545, total_loss: 1.7966
+
+[Step 100] soft_loss: 1.4224, hard_loss: 2.0197, total_loss: 1.7211
+
+[Step 100] soft_loss: 2.5966, hard_loss: 2.4271, total_loss: 2.5119
+
+[Step 100] soft_loss: 1.3956, hard_loss: 2.3359, total_loss: 1.8658
+
+[Step 100] soft_loss: 1.8528, hard_loss: 2.3358, total_loss: 2.0943
+
+[Step 100] soft_loss: 1.7602, hard_loss: 2.0646, total_loss: 1.9124
+
+[Step 100] soft_loss: 1.8387, hard_loss: 2.0746, total_loss: 1.9567
+
+[Step 100] soft_loss: 1.3956, hard_loss: 1.1488, total_loss: 1.2722
+
+[Step 100] soft_loss: 1.7861, hard_loss: 1.9377, total_loss: 1.8619
+
+[Step 100] soft_loss: 1.8246, hard_loss: 2.1223, total_loss: 1.9735
+
+[Step 100] soft_loss: 2.3656, hard_loss: 2.4026, total_loss: 2.3841
+
+[Step 100] soft_loss: 2.0032, hard_loss: 1.2461, total_loss: 1.6246
+
+[Step 100] soft_loss: 1.8065, hard_loss: 2.3021, total_loss: 2.0543
+
+[Step 100] soft_loss: 1.6652, hard_loss: 1.3928, total_loss: 1.5290
+
+[Step 100] soft_loss: 1.3272, hard_loss: 2.3019, total_loss: 1.8145
+
+[Step 100] soft_loss: 1.5160, hard_loss: 1.1743, total_loss: 1.3452
+
+[Step 100] soft_loss: 2.3195, hard_loss: 2.0430, total_loss: 2.1813
+
+[Step 100] soft_loss: 2.1147, hard_loss: 1.4930, total_loss: 1.8039
+
+[Step 100] soft_loss: 2.2769, hard_loss: 1.2297, total_loss: 1.7533
+
+[Step 100] soft_loss: 1.9855, hard_loss: 1.5399, total_loss: 1.7627
+
+[Step 100] soft_loss: 2.7851, hard_loss: 2.1834, total_loss: 2.4843
+
+[Step 100] soft_loss: 1.5628, hard_loss: 1.8451, total_loss: 1.7039
+
+[Step 100] soft_loss: 1.7184, hard_loss: 1.5235, total_loss: 1.6210
+
+[Step 100] soft_loss: 1.9067, hard_loss: 4.3119, total_loss: 3.1093
+
+[Step 100] soft_loss: 1.4244, hard_loss: 1.3423, total_loss: 1.3833
+
+[Step 100] soft_loss: 1.9067, hard_loss: 1.5215, total_loss: 1.7141
+
+[Step 100] soft_loss: 1.8006, hard_loss: 1.9654, total_loss: 1.8830
+
+[Step 100] soft_loss: 2.5140, hard_loss: 2.3680, total_loss: 2.4410
+
+[Step 100] soft_loss: 2.9331, hard_loss: 2.5226, total_loss: 2.7278
+
+[Step 100] soft_loss: 1.8918, hard_loss: 1.8812, total_loss: 1.8865
+
+[Step 100] soft_loss: 1.5276, hard_loss: 1.9898, total_loss: 1.7587
+
+[Step 100] soft_loss: 2.8130, hard_loss: 1.2147, total_loss: 2.0139
+
+[Step 100] soft_loss: 2.4772, hard_loss: 1.6599, total_loss: 2.0686
+
+[Step 100] soft_loss: 1.8171, hard_loss: 1.2822, total_loss: 1.5497
+
+[Step 100] soft_loss: 1.4252, hard_loss: 2.5958, total_loss: 2.0105
+
+[Step 100] soft_loss: 1.6468, hard_loss: 1.5796, total_loss: 1.6132
+
+[Step 100] soft_loss: 1.5322, hard_loss: 1.8966, total_loss: 1.7144
+
+[Step 100] soft_loss: 1.7031, hard_loss: 1.6630, total_loss: 1.6831
+
+[Step 100] soft_loss: 1.4365, hard_loss: 1.4590, total_loss: 1.4477
+
+[Step 100] soft_loss: 1.7025, hard_loss: 1.8466, total_loss: 1.7745
+
+[Step 100] soft_loss: 2.0439, hard_loss: 1.4627, total_loss: 1.7533
+
+[Step 100] soft_loss: 1.5443, hard_loss: 1.7620, total_loss: 1.6531
+
+[Step 100] soft_loss: 1.8018, hard_loss: 2.1957, total_loss: 1.9988
+
+[Step 100] soft_loss: 2.5500, hard_loss: 2.3477, total_loss: 2.4488
+
+[Step 100] soft_loss: 1.8165, hard_loss: 1.6499, total_loss: 1.7332
+
+[Step 100] soft_loss: 1.9215, hard_loss: 1.5560, total_loss: 1.7387
+
+[Step 100] soft_loss: 1.8600, hard_loss: 1.9783, total_loss: 1.9191
+
+[Step 100] soft_loss: 1.6013, hard_loss: 1.5478, total_loss: 1.5746
+
+[Step 100] soft_loss: 1.5228, hard_loss: 1.8615, total_loss: 1.6921
+
+[Step 100] soft_loss: 2.1719, hard_loss: 1.9759, total_loss: 2.0739
+
+[Step 100] soft_loss: 1.7875, hard_loss: 2.1380, total_loss: 1.9627
+
+[Step 100] soft_loss: 1.6152, hard_loss: 2.2212, total_loss: 1.9182
+
+[Step 100] soft_loss: 1.7813, hard_loss: 1.3374, total_loss: 1.5594
+
+[Step 100] soft_loss: 2.1923, hard_loss: 2.4959, total_loss: 2.3441
+
+[Step 100] soft_loss: 1.8098, hard_loss: 1.3373, total_loss: 1.5735
+
+[Step 100] soft_loss: 1.8735, hard_loss: 2.4925, total_loss: 2.1830
+
+[Step 100] soft_loss: 1.7679, hard_loss: 2.1986, total_loss: 1.9832
+
+[Step 100] soft_loss: 1.5158, hard_loss: 2.1295, total_loss: 1.8227
+
+[Step 100] soft_loss: 1.5858, hard_loss: 2.0663, total_loss: 1.8260
+
+[Step 100] soft_loss: 1.8247, hard_loss: 1.6348, total_loss: 1.7297
+
+[Step 100] soft_loss: 1.6940, hard_loss: 1.6062, total_loss: 1.6501
+
+[Step 100] soft_loss: 1.6726, hard_loss: 1.4623, total_loss: 1.5675
+
+[Step 100] soft_loss: 1.8915, hard_loss: 2.0318, total_loss: 1.9617
+
+[Step 100] soft_loss: 1.5144, hard_loss: 1.6445, total_loss: 1.5794
+
+[Step 100] soft_loss: 1.9626, hard_loss: 2.1328, total_loss: 2.0477
+
+[Step 100] soft_loss: 1.4900, hard_loss: 2.0770, total_loss: 1.7835
+
+[Step 100] soft_loss: 2.0447, hard_loss: 1.6390, total_loss: 1.8418
+
+[Step 100] soft_loss: 2.3743, hard_loss: 1.9815, total_loss: 2.1779
+
+[Step 100] soft_loss: 1.9858, hard_loss: 1.3118, total_loss: 1.6488
+
+[Step 100] soft_loss: 1.8732, hard_loss: 1.6542, total_loss: 1.7637
+
+[Step 100] soft_loss: 1.6105, hard_loss: 1.9428, total_loss: 1.7767
+
+[Step 100] soft_loss: 2.0492, hard_loss: 1.1534, total_loss: 1.6013
+
+[Step 100] soft_loss: 2.0201, hard_loss: 0.9796, total_loss: 1.4998
+
+[Step 100] soft_loss: 1.6823, hard_loss: 1.7225, total_loss: 1.7024
+
+[Step 100] soft_loss: 1.7580, hard_loss: 1.9359, total_loss: 1.8470
+
+[Step 100] soft_loss: 1.6883, hard_loss: 2.7918, total_loss: 2.2401
+
+[Step 100] soft_loss: 1.4598, hard_loss: 2.1760, total_loss: 1.8179
+
+[Step 100] soft_loss: 1.6822, hard_loss: 2.1656, total_loss: 1.9239
+
+[Step 100] soft_loss: 1.6470, hard_loss: 1.2756, total_loss: 1.4613
+
+[Step 100] soft_loss: 2.2838, hard_loss: 1.5308, total_loss: 1.9073
+
+[Step 100] soft_loss: 1.9537, hard_loss: 2.1255, total_loss: 2.0396
+
+[Step 100] soft_loss: 1.8521, hard_loss: 1.4472, total_loss: 1.6497
+
+[Step 100] soft_loss: 2.4253, hard_loss: 2.1215, total_loss: 2.2734
+
+[Step 100] soft_loss: 1.7143, hard_loss: 2.5070, total_loss: 2.1107
+
+[Step 100] soft_loss: 1.9925, hard_loss: 3.0614, total_loss: 2.5270
+
+[Step 100] soft_loss: 1.7137, hard_loss: 1.2720, total_loss: 1.4928
+
+[Step 100] soft_loss: 1.7712, hard_loss: 1.7270, total_loss: 1.7491
+
+[Step 100] soft_loss: 1.8710, hard_loss: 1.9258, total_loss: 1.8984
+
+[Step 100] soft_loss: 1.4464, hard_loss: 1.2713, total_loss: 1.3589
+
+[Step 100] soft_loss: 1.7835, hard_loss: 1.3661, total_loss: 1.5748
+
+[Step 100] soft_loss: 1.5827, hard_loss: 1.6165, total_loss: 1.5996
+
+[Step 100] soft_loss: 2.1661, hard_loss: 1.8122, total_loss: 1.9891
+
+[Step 100] soft_loss: 1.8854, hard_loss: 1.5824, total_loss: 1.7339
+
+[Step 100] soft_loss: 1.6903, hard_loss: 2.6357, total_loss: 2.1630
+
+[Step 100] soft_loss: 1.5508, hard_loss: 1.3221, total_loss: 1.4365
+
+[Step 100] soft_loss: 2.8825, hard_loss: 2.3620, total_loss: 2.6223
+
+[Step 100] soft_loss: 1.8180, hard_loss: 2.0972, total_loss: 1.9576
+ 85%|████████▌ | 239/281 [00:34<00:06,  6.87it/s][A
+ 85%|████████▌ | 240/281 [00:34<00:06,  6.79it/s][A
+ 86%|████████▌ | 241/281 [00:34<00:05,  6.88it/s][A
+ 86%|████████▌ | 242/281 [00:34<00:05,  7.25it/s][A
+ 86%|████████▋ | 243/281 [00:35<00:05,  6.69it/s][A
+ 87%|████████▋ | 244/281 [00:35<00:05,  6.73it/s][A
+ 87%|████████▋ | 245/281 [00:35<00:05,  6.82it/s][A
+ 88%|████████▊ | 246/281 [00:35<00:05,  6.92it/s][A
+ 88%|████████▊ | 247/281 [00:35<00:05,  6.80it/s][A
+ 88%|████████▊ | 248/281 [00:35<00:04,  6.86it/s][A
+ 89%|████████▊ | 249/281 [00:36<00:04,  6.70it/s][A
+ 89%|████████▉ | 250/281 [00:36<00:04,  6.81it/s][A
+ 89%|████████▉ | 251/281 [00:36<00:04,  6.71it/s][A
+ 90%|████████▉ | 252/281 [00:36<00:04,  6.66it/s][A
+ 90%|█████████ | 253/281 [00:36<00:04,  6.64it/s][A
+ 90%|█████████ | 254/281 [00:36<00:04,  6.56it/s][A
+ 91%|█████████ | 255/281 [00:36<00:03,  6.99it/s][A
+ 91%|█████████ | 256/281 [00:37<00:03,  7.35it/s][A
+ 91%|█████████▏| 257/281 [00:37<00:03,  6.73it/s][A
+ 92%|█████████▏| 258/281 [00:37<00:03,  6.75it/s][A
+ 92%|█████████▏| 259/281 [00:37<00:03,  6.85it/s][A
+ 93%|█████████▎| 260/281 [00:37<00:03,  6.85it/s][A
+ 93%|█████████▎| 261/281 [00:37<00:02,  7.19it/s][A
+ 93%|█████████▎| 262/281 [00:37<00:02,  6.87it/s][A
+ 94%|█████████▎| 263/281 [00:38<00:02,  6.86it/s][A
+ 94%|█████████▍| 264/281 [00:38<00:02,  6.68it/s][A
+ 94%|█████████▍| 265/281 [00:38<00:02,  6.76it/s][A
+ 95%|█████████▍| 266/281 [00:38<00:02,  6.61it/s][A
+ 95%|█████████▌| 267/281 [00:38<00:02,  6.73it/s][A
+ 95%|█████████▌| 268/281 [00:38<00:01,  6.66it/s][A
+ 96%|█████████▌| 269/281 [00:38<00:01,  6.60it/s][A
+ 96%|█████████▌| 270/281 [00:39<00:01,  6.72it/s][A
+ 96%|█████████▋| 271/281 [00:39<00:01,  6.81it/s][A
+ 97%|█████████▋| 272/281 [00:39<00:01,  6.82it/s][A
+ 97%|█████████▋| 273/281 [00:39<00:01,  6.90it/s][A
+ 98%|█████████▊| 274/281 [00:39<00:01,  6.89it/s][A
+ 98%|█████████▊| 275/281 [00:39<00:00,  6.86it/s][A
+ 98%|█████████▊| 276/281 [00:39<00:00,  6.86it/s][A
+ 99%|█████████▊| 277/281 [00:40<00:00,  6.93it/s][A
+ 99%|█████████▉| 278/281 [00:40<00:00,  6.79it/s][A
+ 99%|█████████▉| 279/281 [00:40<00:00,  7.18it/s][A
+100%|█████████▉| 280/281 [00:40<00:00,  7.16it/s][A
+100%|██████████| 281/281 [00:40<00:00,  7.48it/s][A                                                 
+                                                 [A 45%|████▌     | 100/222 [17:39<20:43, 10.20s/it]
+100%|██████████| 281/281 [00:40<00:00,  7.48it/s][A
+                                                 [A 45%|████▌     | 101/222 [17:50<45:24, 22.52s/it] 46%|████▌     | 102/222 [18:00<37:36, 18.81s/it] 46%|████▋     | 103/222 [18:10<32:07, 16.20s/it] 47%|████▋     | 104/222 [18:20<28:15, 14.37s/it] 47%|████▋     | 105/222 [18:30<25:23, 13.02s/it] 48%|████▊     | 106/222 [18:40<23:29, 12.15s/it] 48%|████▊     | 107/222 [18:51<22:12, 11.58s/it] 49%|████▊     | 108/222 [19:01<21:09, 11.13s/it] 49%|████▉     | 109/222 [19:11<20:27, 10.87s/it] 50%|████▉     | 110/222 [19:21<19:55, 10.67s/it]                                                  50%|████▉     | 110/222 [19:21<19:55, 10.67s/it] 50%|█████     | 111/222 [19:31<19:33, 10.57s/it] 50%|█████     | 112/222 [19:41<19:06, 10.42s/it] 51%|█████     | 113/222 [19:52<18:48, 10.35s/it] 51%|█████▏    | 114/222 [20:02<18:34, 10.32s/it] 52%|█████▏    | 115/222 [20:12<18:22, 10.30s/it] 52%|█████▏    | 116/222 [20:22<18:08, 10.27s/it] 53%|█████▎    | 117/222 [20:32<17:52, 10.22s/it] 53%|█████▎    | 118/222 [20:43<17:43, 10.23s/it] 54%|█████▎    | 119/222 [20:53<17:34, 10.24s/it] 54%|█████▍    | 120/222 [21:03<17:30, 10.30s/it]                                                  54%|█████▍    | 120/222 [21:03<17:30, 10.30s/it]
+
+[Step 100] soft_loss: 1.9932, hard_loss: 1.9227, total_loss: 1.9580
+
+[Step 100] soft_loss: 1.5249, hard_loss: 1.5017, total_loss: 1.5133
+
+[Step 100] soft_loss: 1.7941, hard_loss: 2.4549, total_loss: 2.1245
+
+[Step 100] soft_loss: 1.9515, hard_loss: 1.3549, total_loss: 1.6532
+
+[Step 100] soft_loss: 1.8056, hard_loss: 1.9365, total_loss: 1.8710
+
+[Step 100] soft_loss: 2.4298, hard_loss: 1.4529, total_loss: 1.9414
+
+[Step 100] soft_loss: 1.4802, hard_loss: 1.6893, total_loss: 1.5847
+
+[Step 100] soft_loss: 1.9246, hard_loss: 1.5520, total_loss: 1.7383
+
+[Step 100] soft_loss: 1.9309, hard_loss: 1.6534, total_loss: 1.7921
+
+[Step 100] soft_loss: 1.8086, hard_loss: 2.0526, total_loss: 1.9306
+
+[Step 100] soft_loss: 1.8124, hard_loss: 2.4808, total_loss: 2.1466
+
+[Step 100] soft_loss: 1.9722, hard_loss: 1.6730, total_loss: 1.8226
+
+[Step 100] soft_loss: 1.7693, hard_loss: 1.0195, total_loss: 1.3944
+
+[Step 100] soft_loss: 2.2827, hard_loss: 1.9590, total_loss: 2.1209
+
+[Step 100] soft_loss: 1.7825, hard_loss: 1.4006, total_loss: 1.5916
+
+[Step 100] soft_loss: 1.6127, hard_loss: 1.5632, total_loss: 1.5879
+
+[Step 100] soft_loss: 1.6516, hard_loss: 1.9154, total_loss: 1.7835
+
+[Step 100] soft_loss: 2.2413, hard_loss: 2.8735, total_loss: 2.5574
+
+[Step 100] soft_loss: 1.8317, hard_loss: 2.2590, total_loss: 2.0453
+
+[Step 100] soft_loss: 1.6843, hard_loss: 1.4635, total_loss: 1.5739
+
+[Step 100] soft_loss: 1.7655, hard_loss: 1.4151, total_loss: 1.5903
+
+[Step 100] soft_loss: 1.5757, hard_loss: 1.6734, total_loss: 1.6245
+
+[Step 100] soft_loss: 2.0069, hard_loss: 1.2428, total_loss: 1.6248
+
+[Step 100] soft_loss: 1.9142, hard_loss: 1.1035, total_loss: 1.5088
+
+[Step 100] soft_loss: 1.9194, hard_loss: 1.6161, total_loss: 1.7678
+
+[Step 100] soft_loss: 1.8665, hard_loss: 1.2522, total_loss: 1.5593
+
+[Step 100] soft_loss: 1.8231, hard_loss: 1.9411, total_loss: 1.8821
+
+[Step 100] soft_loss: 2.2232, hard_loss: 2.0129, total_loss: 2.1180
+
+[Step 100] soft_loss: 1.5980, hard_loss: 1.9334, total_loss: 1.7657
+
+[Step 100] soft_loss: 1.6969, hard_loss: 1.1519, total_loss: 1.4244
+
+[Step 100] soft_loss: 1.7227, hard_loss: 2.5097, total_loss: 2.1162
+
+[Step 100] soft_loss: 1.9953, hard_loss: 1.5169, total_loss: 1.7561
+
+[Step 100] soft_loss: 1.8473, hard_loss: 1.2987, total_loss: 1.5730
+
+[Step 100] soft_loss: 2.1107, hard_loss: 1.7866, total_loss: 1.9487
+
+[Step 100] soft_loss: 1.9604, hard_loss: 2.0110, total_loss: 1.9857
+
+[Step 100] soft_loss: 3.5777, hard_loss: 2.4222, total_loss: 3.0000
+
+[Step 100] soft_loss: 1.8717, hard_loss: 1.3531, total_loss: 1.6124
+
+[Step 100] soft_loss: 2.4777, hard_loss: 1.6183, total_loss: 2.0480
+
+[Step 100] soft_loss: 1.6294, hard_loss: 1.4094, total_loss: 1.5194
+
+[Step 100] soft_loss: 1.8324, hard_loss: 2.1689, total_loss: 2.0006
+
+[Step 100] soft_loss: 2.1765, hard_loss: 1.9870, total_loss: 2.0818
+
+[Step 100] soft_loss: 1.7983, hard_loss: 1.7762, total_loss: 1.7873
+{'eval_loss': '1.836', 'eval_runtime': '40.8', 'eval_samples_per_second': '27.55', 'eval_steps_per_second': '6.888', 'epoch': '1.352'}
+
+[Step 100] soft_loss: 1.8804, hard_loss: 1.5435, total_loss: 1.7119
+
+[Step 100] soft_loss: 1.6143, hard_loss: 1.4171, total_loss: 1.5157
+
+[Step 100] soft_loss: 1.7743, hard_loss: 2.1475, total_loss: 1.9609
+
+[Step 100] soft_loss: 1.4176, hard_loss: 1.8739, total_loss: 1.6458
+
+[Step 100] soft_loss: 2.2313, hard_loss: 1.7393, total_loss: 1.9853
+
+[Step 100] soft_loss: 1.6626, hard_loss: 1.8459, total_loss: 1.7543
+
+[Step 100] soft_loss: 1.9479, hard_loss: 2.5865, total_loss: 2.2672
+
+[Step 100] soft_loss: 2.1139, hard_loss: 2.2857, total_loss: 2.1998
+
+[Step 100] soft_loss: 1.7775, hard_loss: 1.9506, total_loss: 1.8641
+
+[Step 100] soft_loss: 1.9399, hard_loss: 2.4817, total_loss: 2.2108
+
+[Step 100] soft_loss: 2.0166, hard_loss: 2.0731, total_loss: 2.0448
+
+[Step 100] soft_loss: 1.3522, hard_loss: 1.4458, total_loss: 1.3990
+
+[Step 100] soft_loss: 1.6485, hard_loss: 1.8178, total_loss: 1.7331
+
+[Step 100] soft_loss: 2.1512, hard_loss: 1.9496, total_loss: 2.0504
+
+[Step 100] soft_loss: 1.6616, hard_loss: 1.7974, total_loss: 1.7295
+
+[Step 100] soft_loss: 1.5731, hard_loss: 1.6316, total_loss: 1.6023
+
+[Step 100] soft_loss: 1.5555, hard_loss: 1.0755, total_loss: 1.3155
+
+[Step 100] soft_loss: 2.1550, hard_loss: 2.2964, total_loss: 2.2257
+
+[Step 100] soft_loss: 1.6312, hard_loss: 2.4767, total_loss: 2.0539
+
+[Step 100] soft_loss: 2.1855, hard_loss: 1.5550, total_loss: 1.8703
+
+[Step 100] soft_loss: 1.8596, hard_loss: 2.2248, total_loss: 2.0422
+
+[Step 100] soft_loss: 1.4592, hard_loss: 3.2725, total_loss: 2.3659
+
+[Step 100] soft_loss: 2.2157, hard_loss: 1.4746, total_loss: 1.8451
+
+[Step 100] soft_loss: 2.5200, hard_loss: 1.9263, total_loss: 2.2232
+
+[Step 100] soft_loss: 1.9605, hard_loss: 2.6460, total_loss: 2.3033
+
+[Step 100] soft_loss: 1.8144, hard_loss: 1.5958, total_loss: 1.7051
+
+[Step 100] soft_loss: 2.3128, hard_loss: 2.0410, total_loss: 2.1769
+
+[Step 100] soft_loss: 1.7177, hard_loss: 1.3976, total_loss: 1.5577
+
+[Step 100] soft_loss: 1.6694, hard_loss: 1.6632, total_loss: 1.6663
+
+[Step 100] soft_loss: 1.8637, hard_loss: 1.4050, total_loss: 1.6344
+
+[Step 100] soft_loss: 1.6445, hard_loss: 1.9213, total_loss: 1.7829
+
+[Step 100] soft_loss: 1.9489, hard_loss: 1.3257, total_loss: 1.6373
+{'loss': '58.08', 'grad_norm': '0.8441', 'learning_rate': '5.678e-05', 'epoch': '1.487'}
+
+[Step 110] soft_loss: 1.3837, hard_loss: 1.1598, total_loss: 1.2717
+
+[Step 110] soft_loss: 2.2886, hard_loss: 2.8987, total_loss: 2.5936
+
+[Step 110] soft_loss: 2.2028, hard_loss: 0.7954, total_loss: 1.4991
+
+[Step 110] soft_loss: 1.4684, hard_loss: 1.5090, total_loss: 1.4887
+
+[Step 110] soft_loss: 1.7841, hard_loss: 1.9242, total_loss: 1.8542
+
+[Step 110] soft_loss: 1.8311, hard_loss: 1.8601, total_loss: 1.8456
+
+[Step 110] soft_loss: 1.8513, hard_loss: 1.8550, total_loss: 1.8531
+
+[Step 110] soft_loss: 1.6305, hard_loss: 2.3315, total_loss: 1.9810
+
+[Step 110] soft_loss: 2.3778, hard_loss: 1.5613, total_loss: 1.9696
+
+[Step 110] soft_loss: 1.6068, hard_loss: 2.2583, total_loss: 1.9326
+
+[Step 110] soft_loss: 1.9963, hard_loss: 1.2626, total_loss: 1.6294
+
+[Step 110] soft_loss: 1.7684, hard_loss: 1.0690, total_loss: 1.4187
+
+[Step 110] soft_loss: 1.6984, hard_loss: 1.4086, total_loss: 1.5535
+
+[Step 110] soft_loss: 1.7242, hard_loss: 1.4455, total_loss: 1.5848
+
+[Step 110] soft_loss: 2.2430, hard_loss: 2.5580, total_loss: 2.4005
+
+[Step 110] soft_loss: 1.7139, hard_loss: 1.6327, total_loss: 1.6733
+
+[Step 110] soft_loss: 1.7686, hard_loss: 1.5891, total_loss: 1.6788
+
+[Step 110] soft_loss: 1.8308, hard_loss: 2.0986, total_loss: 1.9647
+
+[Step 110] soft_loss: 1.7762, hard_loss: 1.3469, total_loss: 1.5615
+
+[Step 110] soft_loss: 1.6525, hard_loss: 1.4461, total_loss: 1.5493
+
+[Step 110] soft_loss: 2.6858, hard_loss: 1.8833, total_loss: 2.2846
+
+[Step 110] soft_loss: 1.9572, hard_loss: 2.1089, total_loss: 2.0331
+
+[Step 110] soft_loss: 1.7281, hard_loss: 1.2828, total_loss: 1.5054
+
+[Step 110] soft_loss: 1.4879, hard_loss: 1.8774, total_loss: 1.6826
+
+[Step 110] soft_loss: 1.2302, hard_loss: 1.2552, total_loss: 1.2427
+
+[Step 110] soft_loss: 2.4732, hard_loss: 1.5398, total_loss: 2.0065
+
+[Step 110] soft_loss: 1.5437, hard_loss: 1.3842, total_loss: 1.4639
+
+[Step 110] soft_loss: 1.7123, hard_loss: 0.8970, total_loss: 1.3046
+
+[Step 110] soft_loss: 1.6316, hard_loss: 1.4210, total_loss: 1.5263
+
+[Step 110] soft_loss: 1.3928, hard_loss: 2.0146, total_loss: 1.7037
+
+[Step 110] soft_loss: 1.8938, hard_loss: 1.8773, total_loss: 1.8856
+
+[Step 110] soft_loss: 1.4103, hard_loss: 1.7392, total_loss: 1.5748
+{'loss': '57.51', 'grad_norm': '0.7819', 'learning_rate': '5.176e-05', 'epoch': '1.622'}
+
+[Step 120] soft_loss: 1.9051, hard_loss: 1.0383, total_loss: 1.4717
+
+[Step 120] soft_loss: 1.5104, hard_loss: 1.2723, total_loss: 1.3914
+
+[Step 120] soft_loss: 2.0258, hard_loss: 1.3309, total_loss: 1.6784
+
+[Step 120] soft_loss: 2.6923, hard_loss: 1.7483, total_loss: 2.2203
+
+[Step 120] soft_loss: 1.5418, hard_loss: 1.9616, total_loss: 1.7517
+
+[Step 120] soft_loss: 2.1261, hard_loss: 2.4435, total_loss: 2.2848
+
+[Step 120] soft_loss: 1.5595, hard_loss: 1.6357, total_loss: 1.5976
+
+[Step 120] soft_loss: 2.6255, hard_loss: 1.8087, total_loss: 2.2171
+
+[Step 120] soft_loss: 1.7623, hard_loss: 1.6268, total_loss: 1.6945 55%|█████▍    | 121/222 [21:14<17:22, 10.32s/it] 55%|█████▍    | 122/222 [21:24<17:11, 10.31s/it] 55%|█████▌    | 123/222 [21:35<17:04, 10.35s/it] 56%|█████▌    | 124/222 [21:45<16:46, 10.27s/it] 56%|█████▋    | 125/222 [21:55<16:31, 10.22s/it] 57%|█████▋    | 126/222 [22:05<16:15, 10.16s/it] 57%|█████▋    | 127/222 [22:15<16:00, 10.11s/it] 58%|█████▊    | 128/222 [22:25<15:51, 10.12s/it] 58%|█████▊    | 129/222 [22:35<15:45, 10.17s/it] 59%|█████▊    | 130/222 [22:45<15:35, 10.17s/it]                                                  59%|█████▊    | 130/222 [22:45<15:35, 10.17s/it] 59%|█████▉    | 131/222 [22:55<15:22, 10.14s/it] 59%|█████▉    | 132/222 [23:06<15:16, 10.19s/it] 60%|█████▉    | 133/222 [23:16<15:00, 10.11s/it] 60%|██████    | 134/222 [23:26<14:49, 10.11s/it] 61%|██████    | 135/222 [23:36<14:39, 10.11s/it] 61%|██████▏   | 136/222 [23:46<14:32, 10.15s/it] 62%|██████▏   | 137/222 [23:56<14:23, 10.15s/it] 62%|██████▏   | 138/222 [24:06<14:14, 10.17s/it] 63%|██████▎   | 139/222 [24:17<14:09, 10.23s/it] 63%|██████▎   | 140/222 [24:27<14:00, 10.25s/it]                                                  63%|██████▎   | 140/222 [24:27<14:00, 10.25s/it] 64%|██████▎   | 141/222 [24:37<13:50, 10.26s/it] 64%|██████▍   | 142/222 [24:48<13:42, 10.28s/it] 64%|██████▍   | 143/222 [24:58<13:33, 10.30s/it] 65%|██████▍   | 144/222 [25:09<13:28, 10.36s/it] 65%|██████▌   | 145/222 [25:19<13:12, 10.29s/it] 66%|██████▌   | 146/222 [25:29<12:56, 10.22s/it] 66%|██████▌   | 147/222 [25:39<12:44, 10.19s/it] 67%|██████▋   | 148/222 [25:49<12:24, 10.05s/it] 67%|██████▋   | 149/222 [25:59<12:16, 10.08s/it] 68%|██████▊   | 150/222 [26:09<12:07, 10.11s/it]                                                  68%|██████▊   | 150/222 [26:09<12:07, 10.11s/it]
+
+[Step 120] soft_loss: 1.9556, hard_loss: 1.1600, total_loss: 1.5578
+
+[Step 120] soft_loss: 1.6412, hard_loss: 2.0787, total_loss: 1.8599
+
+[Step 120] soft_loss: 1.9477, hard_loss: 1.5223, total_loss: 1.7350
+
+[Step 120] soft_loss: 1.9282, hard_loss: 2.3281, total_loss: 2.1282
+
+[Step 120] soft_loss: 1.5625, hard_loss: 0.7545, total_loss: 1.1585
+
+[Step 120] soft_loss: 2.8443, hard_loss: 1.3312, total_loss: 2.0878
+
+[Step 120] soft_loss: 1.7901, hard_loss: 2.4268, total_loss: 2.1084
+
+[Step 120] soft_loss: 1.9159, hard_loss: 1.4707, total_loss: 1.6933
+
+[Step 120] soft_loss: 1.8084, hard_loss: 1.5426, total_loss: 1.6755
+
+[Step 120] soft_loss: 1.9768, hard_loss: 1.0953, total_loss: 1.5361
+
+[Step 120] soft_loss: 1.4362, hard_loss: 0.9180, total_loss: 1.1771
+
+[Step 120] soft_loss: 2.6838, hard_loss: 3.4333, total_loss: 3.0586
+
+[Step 120] soft_loss: 1.9341, hard_loss: 1.3847, total_loss: 1.6594
+
+[Step 120] soft_loss: 2.0090, hard_loss: 1.1623, total_loss: 1.5856
+
+[Step 120] soft_loss: 1.5684, hard_loss: 2.5248, total_loss: 2.0466
+
+[Step 120] soft_loss: 2.0790, hard_loss: 1.4808, total_loss: 1.7799
+
+[Step 120] soft_loss: 2.0483, hard_loss: 1.7359, total_loss: 1.8921
+
+[Step 120] soft_loss: 1.8396, hard_loss: 1.2785, total_loss: 1.5591
+
+[Step 120] soft_loss: 2.1645, hard_loss: 1.4995, total_loss: 1.8320
+
+[Step 120] soft_loss: 1.5245, hard_loss: 1.2624, total_loss: 1.3935
+
+[Step 120] soft_loss: 1.5799, hard_loss: 1.1680, total_loss: 1.3740
+
+[Step 120] soft_loss: 1.5134, hard_loss: 1.0806, total_loss: 1.2970
+
+[Step 120] soft_loss: 1.7670, hard_loss: 1.8045, total_loss: 1.7858
+{'loss': '56.57', 'grad_norm': '0.8686', 'learning_rate': '4.673e-05', 'epoch': '1.757'}
+
+[Step 130] soft_loss: 1.4795, hard_loss: 1.8735, total_loss: 1.6765
+
+[Step 130] soft_loss: 1.6615, hard_loss: 1.5265, total_loss: 1.5940
+
+[Step 130] soft_loss: 1.7132, hard_loss: 1.4517, total_loss: 1.5824
+
+[Step 130] soft_loss: 1.6013, hard_loss: 1.4922, total_loss: 1.5467
+
+[Step 130] soft_loss: 2.2909, hard_loss: 1.6710, total_loss: 1.9810
+
+[Step 130] soft_loss: 1.3142, hard_loss: 2.3735, total_loss: 1.8438
+
+[Step 130] soft_loss: 2.0703, hard_loss: 1.9388, total_loss: 2.0046
+
+[Step 130] soft_loss: 1.7511, hard_loss: 2.4402, total_loss: 2.0956
+
+[Step 130] soft_loss: 2.0585, hard_loss: 1.7060, total_loss: 1.8822
+
+[Step 130] soft_loss: 2.0623, hard_loss: 2.6180, total_loss: 2.3401
+
+[Step 130] soft_loss: 1.2678, hard_loss: 1.7685, total_loss: 1.5181
+
+[Step 130] soft_loss: 1.6730, hard_loss: 1.7397, total_loss: 1.7064
+
+[Step 130] soft_loss: 2.0146, hard_loss: 1.6795, total_loss: 1.8471
+
+[Step 130] soft_loss: 1.8335, hard_loss: 1.5157, total_loss: 1.6746
+
+[Step 130] soft_loss: 1.4626, hard_loss: 2.3675, total_loss: 1.9151
+
+[Step 130] soft_loss: 1.8196, hard_loss: 1.1242, total_loss: 1.4719
+
+[Step 130] soft_loss: 1.8731, hard_loss: 1.3532, total_loss: 1.6132
+
+[Step 130] soft_loss: 1.6320, hard_loss: 1.6885, total_loss: 1.6603
+
+[Step 130] soft_loss: 2.0435, hard_loss: 2.0387, total_loss: 2.0411
+
+[Step 130] soft_loss: 1.8008, hard_loss: 2.4012, total_loss: 2.1010
+
+[Step 130] soft_loss: 2.1645, hard_loss: 1.1233, total_loss: 1.6439
+
+[Step 130] soft_loss: 2.4012, hard_loss: 1.4370, total_loss: 1.9191
+
+[Step 130] soft_loss: 1.6674, hard_loss: 1.8916, total_loss: 1.7795
+
+[Step 130] soft_loss: 1.8598, hard_loss: 1.3492, total_loss: 1.6045
+
+[Step 130] soft_loss: 1.6620, hard_loss: 1.7942, total_loss: 1.7281
+
+[Step 130] soft_loss: 1.5784, hard_loss: 1.4824, total_loss: 1.5304
+
+[Step 130] soft_loss: 2.1843, hard_loss: 1.8454, total_loss: 2.0149
+
+[Step 130] soft_loss: 1.8356, hard_loss: 1.6993, total_loss: 1.7675
+
+[Step 130] soft_loss: 1.8299, hard_loss: 1.7087, total_loss: 1.7693
+
+[Step 130] soft_loss: 1.5153, hard_loss: 1.3015, total_loss: 1.4084
+
+[Step 130] soft_loss: 1.7453, hard_loss: 1.2754, total_loss: 1.5103
+
+[Step 130] soft_loss: 2.2507, hard_loss: 2.3099, total_loss: 2.2803
+{'loss': '57.06', 'grad_norm': '0.6657', 'learning_rate': '4.171e-05', 'epoch': '1.893'}
+
+[Step 140] soft_loss: 1.5110, hard_loss: 1.5488, total_loss: 1.5299
+
+[Step 140] soft_loss: 1.6942, hard_loss: 1.2073, total_loss: 1.4507
+
+[Step 140] soft_loss: 1.4443, hard_loss: 2.2667, total_loss: 1.8555
+
+[Step 140] soft_loss: 1.6944, hard_loss: 2.1583, total_loss: 1.9263
+
+[Step 140] soft_loss: 1.9229, hard_loss: 1.1220, total_loss: 1.5224
+
+[Step 140] soft_loss: 1.9332, hard_loss: 1.4418, total_loss: 1.6875
+
+[Step 140] soft_loss: 1.6639, hard_loss: 1.4298, total_loss: 1.5468
+
+[Step 140] soft_loss: 2.0184, hard_loss: 1.4525, total_loss: 1.7355
+
+[Step 140] soft_loss: 1.4807, hard_loss: 1.1055, total_loss: 1.2931
+
+[Step 140] soft_loss: 1.4915, hard_loss: 1.5951, total_loss: 1.5433
+
+[Step 140] soft_loss: 1.5685, hard_loss: 1.4414, total_loss: 1.5050
+
+[Step 140] soft_loss: 1.6663, hard_loss: 1.3796, total_loss: 1.5230
+
+[Step 140] soft_loss: 1.7102, hard_loss: 2.1389, total_loss: 1.9245
+
+[Step 140] soft_loss: 2.7855, hard_loss: 2.1415, total_loss: 2.4635
+
+[Step 140] soft_loss: 1.9068, hard_loss: 2.4379, total_loss: 2.1724
+
+[Step 140] soft_loss: 1.3868, hard_loss: 2.1036, total_loss: 1.7452
+
+[Step 140] soft_loss: 2.1809, hard_loss: 1.4575, total_loss: 1.8192
+
+[Step 140] soft_loss: 1.9722, hard_loss: 2.1916, total_loss: 2.0819
+
+[Step 140] soft_loss: 1.5662, hard_loss: 1.9863, total_loss: 1.7763
+
+[Step 140] soft_loss: 1.8827, hard_loss: 1.3506, total_loss: 1.6166
+
+[Step 140] soft_loss: 1.5349, hard_loss: 1.4906, total_loss: 1.5127
+
+[Step 140] soft_loss: 1.9398, hard_loss: 2.1793, total_loss: 2.0596
+
+[Step 140] soft_loss: 1.4619, hard_loss: 1.3781, total_loss: 1.4200
+
+[Step 140] soft_loss: 1.9036, hard_loss: 1.4840, total_loss: 1.6938
+
+[Step 140] soft_loss: 1.4561, hard_loss: 2.0031, total_loss: 1.7296
+
+[Step 140] soft_loss: 1.5072, hard_loss: 1.4715, total_loss: 1.4894
+
+[Step 140] soft_loss: 1.4728, hard_loss: 1.4962, total_loss: 1.4845
+
+[Step 140] soft_loss: 1.8691, hard_loss: 1.3303, total_loss: 1.5997
+
+[Step 140] soft_loss: 1.6911, hard_loss: 1.3727, total_loss: 1.5319
+
+[Step 140] soft_loss: 1.8758, hard_loss: 1.6600, total_loss: 1.7679
+
+[Step 140] soft_loss: 2.2668, hard_loss: 2.8147, total_loss: 2.5408
+
+[Step 140] soft_loss: 2.1171, hard_loss: 1.6249, total_loss: 1.8710
+{'loss': '55.51', 'grad_norm': '0.7553', 'learning_rate': '3.668e-05', 'epoch': '2.027'}
+
+[Step 150] soft_loss: 1.5344, hard_loss: 1.3799, total_loss: 1.4572
+
+[Step 150] soft_loss: 1.2955, hard_loss: 1.7094, total_loss: 1.5024
+
+[Step 150] soft_loss: 1.6042, hard_loss: 1.5772, total_loss: 1.5907
+
+[Step 150] soft_loss: 1.6583, hard_loss: 1.5597, total_loss: 1.6090
+
+[Step 150] soft_loss: 1.4849, hard_loss: 1.5943, total_loss: 1.5396
+
+[Step 150] soft_loss: 1.7895, hard_loss: 1.6364, total_loss: 1.7129
+
+[Step 150] soft_loss: 1.8887, hard_loss: 2.2428, total_loss: 2.0658
+
+[Step 150] soft_loss: 1.7233, hard_loss: 1.7010, total_loss: 1.7121
+
+[Step 150] soft_loss: 2.0270, hard_loss: 2.6670, total_loss: 2.3470
+
+[Step 150] soft_loss: 1.5799, hard_loss: 1.4507, total_loss: 1.5153
+
+[Step 150] soft_loss: 2.0928, hard_loss: 1.1625, total_loss: 1.6277
+
+[Step 150] soft_loss: 1.9919, hard_loss: 1.2311, total_loss: 1.6115
+
+[Step 150] soft_loss: 1.3503, hard_loss: 1.7846, total_loss: 1.5674
+
+[Step 150] soft_loss: 1.9061, hard_loss: 1.2047, total_loss: 1.5554
+
+[Step 150] soft_loss: 1.5948, hard_loss: 1.0050, total_loss: 1.2999
+
+[Step 150] soft_loss: 2.0703, hard_loss: 0.9706, total_loss: 1.5205
+
+[Step 150] soft_loss: 1.3721, hard_loss: 1.2898, total_loss: 1.3309
+
+[Step 150] soft_loss: 2.2350, hard_loss: 1.3399, total_loss: 1.7875
+
+[Step 150] soft_loss: 1.5679, hard_loss: 1.6052, total_loss: 1.5866
+
+[Step 150] soft_loss: 1.8446, hard_loss: 1.9766, total_loss: 1.9106
+
+[Step 150] soft_loss: 1.7090, hard_loss: 1.5964, total_loss: 1.6527
+
+[Step 150] soft_loss: 2.1010, hard_loss: 2.5649, total_loss: 2.3330
+
+[Step 150] soft_loss: 1.6837, hard_loss: 1.9120, total_loss: 1.7978
+
+[Step 150] soft_loss: 1.5847, hard_loss: 1.6860, total_loss: 1.6353
+
+[Step 150] soft_loss: 1.6607, hard_loss: 1.6228, total_loss: 1.6417
+
+[Step 150] soft_loss: 1.4729, hard_loss: 1.3581, total_loss: 1.4155
+
+[Step 150] soft_loss: 1.3041, hard_loss: 1.7320, total_loss: 1.5180
+
+[Step 150] soft_loss: 1.5490, hard_loss: 1.1901, total_loss: 1.3696 68%|██████▊   | 151/222 [26:19<12:02, 10.17s/it] 68%|██████▊   | 152/222 [26:29<11:51, 10.16s/it] 69%|██████▉   | 153/222 [26:40<11:43, 10.19s/it] 69%|██████▉   | 154/222 [26:50<11:35, 10.22s/it] 70%|██████▉   | 155/222 [27:00<11:22, 10.19s/it] 70%|███████   | 156/222 [27:10<11:10, 10.15s/it] 71%|███████   | 157/222 [27:20<11:02, 10.18s/it] 71%|███████   | 158/222 [27:31<10:55, 10.24s/it] 72%|███████▏  | 159/222 [27:41<10:42, 10.20s/it] 72%|███████▏  | 160/222 [27:51<10:35, 10.25s/it]                                                  72%|███████▏  | 160/222 [27:51<10:35, 10.25s/it] 73%|███████▎  | 161/222 [28:02<10:26, 10.26s/it] 73%|███████▎  | 162/222 [28:12<10:14, 10.25s/it] 73%|███████▎  | 163/222 [28:22<10:06, 10.28s/it] 74%|███████▍  | 164/222 [28:32<09:57, 10.30s/it] 74%|███████▍  | 165/222 [28:43<09:49, 10.34s/it] 75%|███████▍  | 166/222 [28:53<09:37, 10.32s/it] 75%|███████▌  | 167/222 [29:03<09:25, 10.28s/it] 76%|███████▌  | 168/222 [29:13<09:12, 10.23s/it] 76%|███████▌  | 169/222 [29:24<09:02, 10.23s/it] 77%|███████▋  | 170/222 [29:34<08:47, 10.14s/it]                                                  77%|███████▋  | 170/222 [29:34<08:47, 10.14s/it] 77%|███████▋  | 171/222 [29:44<08:34, 10.10s/it] 77%|███████▋  | 172/222 [29:54<08:24, 10.08s/it] 78%|███████▊  | 173/222 [30:04<08:16, 10.14s/it] 78%|███████▊  | 174/222 [30:14<08:06, 10.14s/it] 79%|███████▉  | 175/222 [30:24<07:56, 10.14s/it] 79%|███████▉  | 176/222 [30:35<07:48, 10.19s/it] 80%|███████▉  | 177/222 [30:45<07:36, 10.15s/it] 80%|████████  | 178/222 [30:55<07:29, 10.22s/it] 81%|████████  | 179/222 [31:05<07:17, 10.18s/it] 81%|████████  | 180/222 [31:15<07:09, 10.23s/it]                                                  81%|████████  | 180/222 [31:15<07:09, 10.23s/it] 82%|████████▏ | 181/222 [31:26<06:58, 10.20s/it] 82%|████████▏ | 182/222 [31:36<06:47, 10.19s/it] 82%|████████▏ | 183/222 [31:46<06:39, 10.25s/it] 83%|████████▎ | 184/222 [31:56<06:30, 10.28s/it] 83%|████████▎ | 185/222 [32:07<06:21, 10.32s/it] 84%|████████▍ | 186/222 [32:17<06:10, 10.30s/it] 84%|████████▍ | 187/222 [32:28<06:04, 10.42s/it] 85%|████████▍ | 188/222 [32:38<05:53, 10.38s/it] 85%|████████▌ | 189/222 [32:48<05:39, 10.28s/it] 86%|████████▌ | 190/222 [32:58<05:27, 10.25s/it]                                                  86%|████████▌ | 190/222 [32:58<05:27, 10.25s/it]
+
+[Step 150] soft_loss: 1.9960, hard_loss: 1.9675, total_loss: 1.9817
+
+[Step 150] soft_loss: 1.9319, hard_loss: 1.5972, total_loss: 1.7645
+
+[Step 150] soft_loss: 1.7709, hard_loss: 1.9209, total_loss: 1.8459
+
+[Step 150] soft_loss: 1.6787, hard_loss: 1.2284, total_loss: 1.4536
+{'loss': '55.3', 'grad_norm': '0.7382', 'learning_rate': '3.166e-05', 'epoch': '2.162'}
+
+[Step 160] soft_loss: 1.6589, hard_loss: 1.2026, total_loss: 1.4307
+
+[Step 160] soft_loss: 1.5860, hard_loss: 2.2458, total_loss: 1.9159
+
+[Step 160] soft_loss: 1.8922, hard_loss: 2.0861, total_loss: 1.9891
+
+[Step 160] soft_loss: 1.3242, hard_loss: 1.3638, total_loss: 1.3440
+
+[Step 160] soft_loss: 1.3364, hard_loss: 1.6266, total_loss: 1.4815
+
+[Step 160] soft_loss: 1.8566, hard_loss: 1.7816, total_loss: 1.8191
+
+[Step 160] soft_loss: 2.1859, hard_loss: 1.1915, total_loss: 1.6887
+
+[Step 160] soft_loss: 1.5483, hard_loss: 1.3301, total_loss: 1.4392
+
+[Step 160] soft_loss: 2.2987, hard_loss: 1.6171, total_loss: 1.9579
+
+[Step 160] soft_loss: 2.1113, hard_loss: 1.7887, total_loss: 1.9500
+
+[Step 160] soft_loss: 1.3520, hard_loss: 0.9855, total_loss: 1.1688
+
+[Step 160] soft_loss: 1.5608, hard_loss: 1.4940, total_loss: 1.5274
+
+[Step 160] soft_loss: 1.7809, hard_loss: 1.6556, total_loss: 1.7182
+
+[Step 160] soft_loss: 1.9186, hard_loss: 1.5643, total_loss: 1.7414
+
+[Step 160] soft_loss: 1.5976, hard_loss: 1.9098, total_loss: 1.7537
+
+[Step 160] soft_loss: 1.7743, hard_loss: 1.4204, total_loss: 1.5973
+
+[Step 160] soft_loss: 1.6684, hard_loss: 1.6832, total_loss: 1.6758
+
+[Step 160] soft_loss: 1.8556, hard_loss: 0.9413, total_loss: 1.3985
+
+[Step 160] soft_loss: 2.2273, hard_loss: 2.7354, total_loss: 2.4814
+
+[Step 160] soft_loss: 1.9161, hard_loss: 1.2501, total_loss: 1.5831
+
+[Step 160] soft_loss: 1.7067, hard_loss: 1.5293, total_loss: 1.6180
+
+[Step 160] soft_loss: 1.5308, hard_loss: 1.4819, total_loss: 1.5064
+
+[Step 160] soft_loss: 1.9154, hard_loss: 1.2136, total_loss: 1.5645
+
+[Step 160] soft_loss: 1.7367, hard_loss: 1.3545, total_loss: 1.5456
+
+[Step 160] soft_loss: 1.9217, hard_loss: 1.8379, total_loss: 1.8798
+
+[Step 160] soft_loss: 1.8289, hard_loss: 2.2696, total_loss: 2.0492
+
+[Step 160] soft_loss: 1.6996, hard_loss: 1.7533, total_loss: 1.7265
+
+[Step 160] soft_loss: 1.9178, hard_loss: 2.1203, total_loss: 2.0190
+
+[Step 160] soft_loss: 1.4724, hard_loss: 1.6946, total_loss: 1.5835
+
+[Step 160] soft_loss: 1.4264, hard_loss: 2.0332, total_loss: 1.7298
+
+[Step 160] soft_loss: 2.1512, hard_loss: 0.8792, total_loss: 1.5152
+
+[Step 160] soft_loss: 2.0813, hard_loss: 1.6648, total_loss: 1.8731
+{'loss': '55.38', 'grad_norm': '0.7548', 'learning_rate': '2.663e-05', 'epoch': '2.298'}
+
+[Step 170] soft_loss: 2.3597, hard_loss: 2.7372, total_loss: 2.5485
+
+[Step 170] soft_loss: 1.6929, hard_loss: 2.0218, total_loss: 1.8574
+
+[Step 170] soft_loss: 1.7715, hard_loss: 1.6718, total_loss: 1.7216
+
+[Step 170] soft_loss: 2.1477, hard_loss: 1.7823, total_loss: 1.9650
+
+[Step 170] soft_loss: 1.9493, hard_loss: 1.9144, total_loss: 1.9319
+
+[Step 170] soft_loss: 1.8821, hard_loss: 1.1460, total_loss: 1.5141
+
+[Step 170] soft_loss: 1.7258, hard_loss: 1.3029, total_loss: 1.5144
+
+[Step 170] soft_loss: 1.6317, hard_loss: 1.8007, total_loss: 1.7162
+
+[Step 170] soft_loss: 1.5207, hard_loss: 1.7846, total_loss: 1.6526
+
+[Step 170] soft_loss: 1.6156, hard_loss: 1.6215, total_loss: 1.6186
+
+[Step 170] soft_loss: 1.7056, hard_loss: 1.6119, total_loss: 1.6588
+
+[Step 170] soft_loss: 1.4424, hard_loss: 1.5625, total_loss: 1.5024
+
+[Step 170] soft_loss: 1.7305, hard_loss: 1.6418, total_loss: 1.6862
+
+[Step 170] soft_loss: 2.4454, hard_loss: 1.7637, total_loss: 2.1045
+
+[Step 170] soft_loss: 1.2646, hard_loss: 2.2402, total_loss: 1.7524
+
+[Step 170] soft_loss: 1.5000, hard_loss: 1.0976, total_loss: 1.2988
+
+[Step 170] soft_loss: 1.6613, hard_loss: 2.6408, total_loss: 2.1511
+
+[Step 170] soft_loss: 1.3658, hard_loss: 2.2421, total_loss: 1.8039
+
+[Step 170] soft_loss: 1.7189, hard_loss: 1.6512, total_loss: 1.6851
+
+[Step 170] soft_loss: 1.7098, hard_loss: 1.4902, total_loss: 1.6000
+
+[Step 170] soft_loss: 1.5674, hard_loss: 1.7209, total_loss: 1.6442
+
+[Step 170] soft_loss: 2.1218, hard_loss: 1.3992, total_loss: 1.7605
+
+[Step 170] soft_loss: 1.8016, hard_loss: 1.1827, total_loss: 1.4921
+
+[Step 170] soft_loss: 1.5490, hard_loss: 1.6628, total_loss: 1.6059
+
+[Step 170] soft_loss: 1.6600, hard_loss: 1.6397, total_loss: 1.6499
+
+[Step 170] soft_loss: 1.8828, hard_loss: 1.6878, total_loss: 1.7853
+
+[Step 170] soft_loss: 1.3576, hard_loss: 1.7326, total_loss: 1.5451
+
+[Step 170] soft_loss: 1.4538, hard_loss: 2.0348, total_loss: 1.7443
+
+[Step 170] soft_loss: 1.4884, hard_loss: 1.8528, total_loss: 1.6706
+
+[Step 170] soft_loss: 2.0582, hard_loss: 1.4740, total_loss: 1.7661
+
+[Step 170] soft_loss: 1.8029, hard_loss: 1.1493, total_loss: 1.4761
+
+[Step 170] soft_loss: 1.4426, hard_loss: 0.9513, total_loss: 1.1970
+{'loss': '55.81', 'grad_norm': '0.6231', 'learning_rate': '2.161e-05', 'epoch': '2.433'}
+
+[Step 180] soft_loss: 1.7285, hard_loss: 1.5717, total_loss: 1.6501
+
+[Step 180] soft_loss: 1.9486, hard_loss: 2.0811, total_loss: 2.0148
+
+[Step 180] soft_loss: 1.6213, hard_loss: 1.4577, total_loss: 1.5395
+
+[Step 180] soft_loss: 1.6627, hard_loss: 1.4305, total_loss: 1.5466
+
+[Step 180] soft_loss: 1.6521, hard_loss: 1.9965, total_loss: 1.8243
+
+[Step 180] soft_loss: 2.0437, hard_loss: 1.3747, total_loss: 1.7092
+
+[Step 180] soft_loss: 1.5169, hard_loss: 1.1162, total_loss: 1.3165
+
+[Step 180] soft_loss: 1.6881, hard_loss: 1.7209, total_loss: 1.7045
+
+[Step 180] soft_loss: 2.0749, hard_loss: 1.7451, total_loss: 1.9100
+
+[Step 180] soft_loss: 1.7032, hard_loss: 2.0400, total_loss: 1.8716
+
+[Step 180] soft_loss: 1.4271, hard_loss: 1.2600, total_loss: 1.3436
+
+[Step 180] soft_loss: 1.4296, hard_loss: 1.6967, total_loss: 1.5632
+
+[Step 180] soft_loss: 1.4989, hard_loss: 2.2723, total_loss: 1.8856
+
+[Step 180] soft_loss: 1.4193, hard_loss: 0.9649, total_loss: 1.1921
+
+[Step 180] soft_loss: 1.7818, hard_loss: 1.2228, total_loss: 1.5023
+
+[Step 180] soft_loss: 1.6121, hard_loss: 1.7181, total_loss: 1.6651
+
+[Step 180] soft_loss: 2.1251, hard_loss: 1.4737, total_loss: 1.7994
+
+[Step 180] soft_loss: 2.1331, hard_loss: 1.8603, total_loss: 1.9967
+
+[Step 180] soft_loss: 2.1564, hard_loss: 2.5175, total_loss: 2.3369
+
+[Step 180] soft_loss: 1.5901, hard_loss: 1.7570, total_loss: 1.6735
+
+[Step 180] soft_loss: 1.5082, hard_loss: 1.6023, total_loss: 1.5553
+
+[Step 180] soft_loss: 1.4135, hard_loss: 1.7597, total_loss: 1.5866
+
+[Step 180] soft_loss: 1.6511, hard_loss: 1.2325, total_loss: 1.4418
+
+[Step 180] soft_loss: 1.9016, hard_loss: 1.4897, total_loss: 1.6957
+
+[Step 180] soft_loss: 1.6462, hard_loss: 1.5015, total_loss: 1.5738
+
+[Step 180] soft_loss: 1.8354, hard_loss: 1.7958, total_loss: 1.8156
+
+[Step 180] soft_loss: 2.1853, hard_loss: 1.9306, total_loss: 2.0579
+
+[Step 180] soft_loss: 1.3511, hard_loss: 1.7576, total_loss: 1.5544
+
+[Step 180] soft_loss: 2.0857, hard_loss: 2.2741, total_loss: 2.1799
+
+[Step 180] soft_loss: 2.0396, hard_loss: 2.6325, total_loss: 2.3360
+
+[Step 180] soft_loss: 1.8436, hard_loss: 1.8316, total_loss: 1.8376
+
+[Step 180] soft_loss: 1.5083, hard_loss: 1.3639, total_loss: 1.4361
+{'loss': '54.51', 'grad_norm': '0.7213', 'learning_rate': '1.658e-05', 'epoch': '2.568'}
+
+[Step 190] soft_loss: 1.9082, hard_loss: 1.5170, total_loss: 1.7126
+
+[Step 190] soft_loss: 1.6940, hard_loss: 1.4659, total_loss: 1.5800
+
+[Step 190] soft_loss: 1.8285, hard_loss: 1.3044, total_loss: 1.5665
+
+[Step 190] soft_loss: 1.7370, hard_loss: 1.5042, total_loss: 1.6206
+
+[Step 190] soft_loss: 1.8585, hard_loss: 2.1586, total_loss: 2.0085
+
+[Step 190] soft_loss: 1.4215, hard_loss: 0.9688, total_loss: 1.1952
+
+[Step 190] soft_loss: 2.0002, hard_loss: 1.8817, total_loss: 1.9410
+
+[Step 190] soft_loss: 1.4206, hard_loss: 1.8472, total_loss: 1.6339
+
+[Step 190] soft_loss: 2.0183, hard_loss: 1.1108, total_loss: 1.5646
+
+[Step 190] soft_loss: 2.1264, hard_loss: 1.3209, total_loss: 1.7236
+
+[Step 190] soft_loss: 1.3905, hard_loss: 1.9263, total_loss: 1.6584
+
+[Step 190] soft_loss: 1.6461, hard_loss: 1.3186, total_loss: 1.4824
+
+[Step 190] soft_loss: 1.5367, hard_loss: 1.4889, total_loss: 1.5128
+
+[Step 190] soft_loss: 2.2300, hard_loss: 1.6402, total_loss: 1.9351 86%|████████▌ | 191/222 [33:09<05:17, 10.25s/it] 86%|████████▋ | 192/222 [33:19<05:06, 10.23s/it] 87%|████████▋ | 193/222 [33:29<04:56, 10.22s/it] 87%|████████▋ | 194/222 [33:39<04:46, 10.25s/it] 88%|████████▊ | 195/222 [33:49<04:35, 10.22s/it] 88%|████████▊ | 196/222 [34:00<04:26, 10.25s/it] 89%|████████▊ | 197/222 [34:10<04:15, 10.21s/it] 89%|████████▉ | 198/222 [34:20<04:05, 10.22s/it] 90%|████████▉ | 199/222 [34:30<03:53, 10.16s/it] 90%|█████████ | 200/222 [34:40<03:44, 10.19s/it]                                                  90%|█████████ | 200/222 [34:40<03:44, 10.19s/it]
+
+[Step 190] soft_loss: 1.8692, hard_loss: 1.1918, total_loss: 1.5305
+
+[Step 190] soft_loss: 1.5232, hard_loss: 2.3952, total_loss: 1.9592
+
+[Step 190] soft_loss: 1.9069, hard_loss: 1.6518, total_loss: 1.7793
+
+[Step 190] soft_loss: 2.0194, hard_loss: 1.8012, total_loss: 1.9103
+
+[Step 190] soft_loss: 1.5679, hard_loss: 2.9762, total_loss: 2.2720
+
+[Step 190] soft_loss: 1.6289, hard_loss: 1.9663, total_loss: 1.7976
+
+[Step 190] soft_loss: 2.4538, hard_loss: 2.0175, total_loss: 2.2356
+
+[Step 190] soft_loss: 1.7065, hard_loss: 1.6361, total_loss: 1.6713
+
+[Step 190] soft_loss: 1.6621, hard_loss: 1.6121, total_loss: 1.6371
+
+[Step 190] soft_loss: 2.1191, hard_loss: 1.4514, total_loss: 1.7853
+
+[Step 190] soft_loss: 1.8308, hard_loss: 1.8648, total_loss: 1.8478
+
+[Step 190] soft_loss: 1.3146, hard_loss: 1.2218, total_loss: 1.2682
+
+[Step 190] soft_loss: 1.6258, hard_loss: 1.0908, total_loss: 1.3583
+
+[Step 190] soft_loss: 1.5160, hard_loss: 1.7023, total_loss: 1.6091
+
+[Step 190] soft_loss: 2.2313, hard_loss: 1.1803, total_loss: 1.7058
+
+[Step 190] soft_loss: 2.6617, hard_loss: 1.3097, total_loss: 1.9857
+
+[Step 190] soft_loss: 2.0877, hard_loss: 2.7435, total_loss: 2.4156
+
+[Step 190] soft_loss: 1.6916, hard_loss: 1.5815, total_loss: 1.6366
+{'loss': '54.88', 'grad_norm': '0.8632', 'learning_rate': '1.156e-05', 'epoch': '2.703'}
+
+[Step 200] soft_loss: 1.8315, hard_loss: 1.0927, total_loss: 1.4621
+
+  0%|          | 0/281 [00:00<?, ?it/s][A
+  1%|          | 2/281 [00:00<00:19, 14.05it/s][A
+  1%|▏         | 4/281 [00:00<00:32,  8.59it/s][A
+  2%|▏         | 5/281 [00:00<00:34,  8.06it/s][A
+  2%|▏         | 6/281 [00:00<00:35,  7.70it/s][A
+  2%|▏         | 7/281 [00:00<00:38,  7.20it/s][A
+  3%|▎         | 8/281 [00:01<00:36,  7.49it/s][A
+  3%|▎         | 9/281 [00:01<00:36,  7.35it/s][A
+  4%|▎         | 10/281 [00:01<00:35,  7.61it/s][A
+  4%|▍         | 11/281 [00:01<00:36,  7.46it/s][A
+  4%|▍         | 12/281 [00:01<00:37,  7.27it/s][A
+  5%|▍         | 13/281 [00:01<00:38,  6.98it/s][A
+  5%|▍         | 14/281 [00:01<00:41,  6.48it/s][A
+  5%|▌         | 15/281 [00:02<00:38,  6.93it/s][A
+  6%|▌         | 16/281 [00:02<00:38,  6.89it/s][A
+  6%|▌         | 17/281 [00:02<00:38,  6.94it/s][A
+  6%|▋         | 18/281 [00:02<00:37,  6.99it/s][A
+  7%|▋         | 19/281 [00:02<00:37,  7.02it/s][A
+  7%|▋         | 20/281 [00:02<00:37,  6.95it/s][A
+  7%|▋         | 21/281 [00:02<00:38,  6.75it/s][A
+  8%|▊         | 22/281 [00:03<00:37,  6.88it/s][A
+  8%|▊         | 23/281 [00:03<00:37,  6.92it/s][A
+  9%|▊         | 24/281 [00:03<00:37,  6.80it/s][A
+  9%|▉         | 25/281 [00:03<00:38,  6.69it/s][A
+  9%|▉         | 26/281 [00:03<00:37,  6.79it/s][A
+ 10%|▉         | 27/281 [00:03<00:37,  6.77it/s][A
+ 10%|▉         | 28/281 [00:03<00:36,  6.87it/s][A
+ 10%|█         | 29/281 [00:04<00:36,  6.93it/s][A
+ 11%|█         | 30/281 [00:04<00:34,  7.26it/s][A
+ 11%|█         | 31/281 [00:04<00:34,  7.15it/s][A
+ 11%|█▏        | 32/281 [00:04<00:34,  7.12it/s][A
+ 12%|█▏        | 33/281 [00:04<00:34,  7.10it/s][A
+ 12%|█▏        | 34/281 [00:04<00:33,  7.40it/s][A
+ 12%|█▏        | 35/281 [00:04<00:33,  7.26it/s][A
+ 13%|█▎        | 36/281 [00:05<00:34,  7.10it/s][A
+ 13%|█▎        | 37/281 [00:05<00:32,  7.47it/s][A
+ 14%|█▎        | 38/281 [00:05<00:33,  7.26it/s][A
+ 14%|█▍        | 39/281 [00:05<00:33,  7.22it/s][A
+ 14%|█▍        | 40/281 [00:05<00:34,  7.06it/s][A
+ 15%|█▍        | 41/281 [00:05<00:35,  6.83it/s][A
+ 15%|█▍        | 42/281 [00:05<00:34,  6.90it/s][A
+ 15%|█▌        | 43/281 [00:06<00:35,  6.78it/s][A
+ 16%|█▌        | 44/281 [00:06<00:34,  6.85it/s][A
+ 16%|█▌        | 45/281 [00:06<00:34,  6.86it/s][A
+ 16%|█▋        | 46/281 [00:06<00:36,  6.39it/s][A
+ 17%|█▋        | 47/281 [00:06<00:35,  6.57it/s][A
+ 17%|█▋        | 48/281 [00:06<00:35,  6.55it/s][A
+ 17%|█▋        | 49/281 [00:06<00:33,  7.00it/s][A
+ 18%|█▊        | 50/281 [00:07<00:32,  7.03it/s][A
+ 18%|█▊        | 51/281 [00:07<00:33,  6.86it/s][A
+ 19%|█▊        | 52/281 [00:07<00:31,  7.23it/s][A
+ 19%|█▉        | 53/281 [00:07<00:32,  6.96it/s][A
+ 19%|█▉        | 54/281 [00:07<00:33,  6.82it/s][A
+ 20%|█▉        | 55/281 [00:07<00:32,  6.86it/s][A
+ 20%|█▉        | 56/281 [00:07<00:31,  7.21it/s][A
+ 20%|██        | 57/281 [00:08<00:31,  7.12it/s][A
+ 21%|██        | 58/281 [00:08<00:31,  7.00it/s][A
+ 21%|██        | 59/281 [00:08<00:31,  7.03it/s][A
+ 21%|██▏       | 60/281 [00:08<00:31,  7.06it/s][A
+ 22%|██▏       | 61/281 [00:08<00:29,  7.37it/s][A
+ 22%|██▏       | 62/281 [00:08<00:28,  7.61it/s][A
+ 22%|██▏       | 63/281 [00:08<00:29,  7.38it/s][A
+ 23%|██▎       | 64/281 [00:08<00:28,  7.60it/s][A
+ 23%|██▎       | 65/281 [00:09<00:31,  6.86it/s][A
+ 23%|██▎       | 66/281 [00:09<00:31,  6.85it/s][A
+ 24%|██▍       | 67/281 [00:09<00:31,  6.85it/s][A
+ 24%|██▍       | 68/281 [00:09<00:31,  6.73it/s][A
+ 25%|██▍       | 69/281 [00:09<00:32,  6.59it/s][A
+ 25%|██▍       | 70/281 [00:09<00:31,  6.67it/s][A
+ 25%|██▌       | 71/281 [00:10<00:31,  6.60it/s][A
+ 26%|██▌       | 72/281 [00:10<00:32,  6.49it/s][A
+ 26%|██▌       | 73/281 [00:10<00:31,  6.63it/s][A
+ 26%|██▋       | 74/281 [00:10<00:32,  6.28it/s][A
+ 27%|██▋       | 75/281 [00:10<00:32,  6.30it/s][A
+ 27%|██▋       | 76/281 [00:10<00:31,  6.50it/s][A
+ 27%|██▋       | 77/281 [00:10<00:30,  6.62it/s][A
+ 28%|██▊       | 78/281 [00:11<00:30,  6.73it/s][A
+ 28%|██▊       | 79/281 [00:11<00:28,  7.12it/s][A
+ 28%|██▊       | 80/281 [00:11<00:28,  7.12it/s][A
+ 29%|██▉       | 81/281 [00:11<00:28,  6.91it/s][A
+ 29%|██▉       | 82/281 [00:11<00:28,  6.88it/s][A
+ 30%|██▉       | 83/281 [00:11<00:27,  7.30it/s][A
+ 30%|██▉       | 84/281 [00:11<00:27,  7.19it/s][A
+ 30%|███       | 85/281 [00:12<00:27,  7.10it/s][A
+ 31%|███       | 86/281 [00:12<00:27,  7.02it/s][A
+ 31%|███       | 87/281 [00:12<00:27,  7.04it/s][A
+ 31%|███▏      | 88/281 [00:12<00:26,  7.37it/s][A
+ 32%|███▏      | 89/281 [00:12<00:26,  7.23it/s][A
+ 32%|███▏      | 90/281 [00:12<00:27,  6.99it/s][A
+ 32%|███▏      | 91/281 [00:12<00:27,  6.79it/s][A
+ 33%|███▎      | 92/281 [00:13<00:27,  6.88it/s][A
+ 33%|███▎      | 93/281 [00:13<00:27,  6.76it/s][A
+ 33%|███▎      | 94/281 [00:13<00:28,  6.62it/s][A
+ 34%|███▍      | 95/281 [00:13<00:27,  6.66it/s][A
+ 34%|███▍      | 96/281 [00:13<00:27,  6.77it/s][A
+ 35%|███▍      | 97/281 [00:13<00:25,  7.15it/s][A
+ 35%|███▍      | 98/281 [00:13<00:26,  6.90it/s][A
+ 35%|███▌      | 99/281 [00:14<00:26,  6.91it/s][A
+ 36%|███▌      | 100/281 [00:14<00:26,  6.93it/s][A
+ 36%|███▌      | 101/281 [00:14<00:26,  6.79it/s][A
+ 36%|███▋      | 102/281 [00:14<00:26,  6.77it/s][A
+ 37%|███▋      | 103/281 [00:14<00:26,  6.83it/s][A
+ 37%|███▋      | 104/281 [00:14<00:26,  6.70it/s][A
+ 37%|███▋      | 105/281 [00:15<00:26,  6.60it/s][A
+ 38%|███▊      | 106/281 [00:15<00:26,  6.55it/s][A
+ 38%|███▊      | 107/281 [00:15<00:25,  6.71it/s][A
+ 38%|███▊      | 108/281 [00:15<00:25,  6.75it/s][A
+ 39%|███▉      | 109/281 [00:15<00:24,  7.14it/s][A
+ 39%|███▉      | 110/281 [00:15<00:24,  7.06it/s][A
+ 40%|███▉      | 111/281 [00:15<00:24,  6.99it/s][A
+ 40%|███▉      | 112/281 [00:16<00:24,  7.01it/s][A
+ 40%|████      | 113/281 [00:16<00:24,  6.92it/s][A
+ 41%|████      | 114/281 [00:16<00:23,  7.26it/s][A
+ 41%|████      | 115/281 [00:16<00:23,  7.04it/s][A
+ 41%|████▏     | 116/281 [00:16<00:23,  7.04it/s][A
+ 42%|████▏     | 117/281 [00:16<00:23,  7.06it/s][A
+ 42%|████▏     | 118/281 [00:16<00:23,  6.88it/s][A
+ 42%|████▏     | 119/281 [00:17<00:23,  6.88it/s][A
+[Step 200] soft_loss: 1.4962, hard_loss: 1.2748, total_loss: 1.3855
+
+[Step 200] soft_loss: 1.6357, hard_loss: 1.0519, total_loss: 1.3438
+
+[Step 200] soft_loss: 1.7844, hard_loss: 1.7288, total_loss: 1.7566
+
+[Step 200] soft_loss: 2.0204, hard_loss: 1.8171, total_loss: 1.9187
+
+[Step 200] soft_loss: 1.9207, hard_loss: 1.6155, total_loss: 1.7681
+
+[Step 200] soft_loss: 1.6654, hard_loss: 1.8040, total_loss: 1.7347
+
+[Step 200] soft_loss: 2.0805, hard_loss: 2.3347, total_loss: 2.2076
+
+[Step 200] soft_loss: 2.1298, hard_loss: 1.6711, total_loss: 1.9004
+
+[Step 200] soft_loss: 1.8675, hard_loss: 2.6664, total_loss: 2.2670
+
+[Step 200] soft_loss: 1.5772, hard_loss: 1.7206, total_loss: 1.6489
+
+[Step 200] soft_loss: 2.2348, hard_loss: 1.5314, total_loss: 1.8831
+
+[Step 200] soft_loss: 2.0279, hard_loss: 2.4036, total_loss: 2.2157
+
+[Step 200] soft_loss: 1.6047, hard_loss: 1.2831, total_loss: 1.4439
+
+[Step 200] soft_loss: 1.3722, hard_loss: 2.5838, total_loss: 1.9780
+
+[Step 200] soft_loss: 1.2458, hard_loss: 1.4955, total_loss: 1.3706
+
+[Step 200] soft_loss: 1.5890, hard_loss: 1.8883, total_loss: 1.7387
+
+[Step 200] soft_loss: 1.5146, hard_loss: 0.9599, total_loss: 1.2372
+
+[Step 200] soft_loss: 2.0830, hard_loss: 2.9243, total_loss: 2.5036
+
+[Step 200] soft_loss: 1.8085, hard_loss: 1.8560, total_loss: 1.8323
+
+[Step 200] soft_loss: 1.8771, hard_loss: 1.9505, total_loss: 1.9138
+
+[Step 200] soft_loss: 1.8207, hard_loss: 1.7036, total_loss: 1.7622
+
+[Step 200] soft_loss: 1.7700, hard_loss: 1.8581, total_loss: 1.8141
+
+[Step 200] soft_loss: 1.5715, hard_loss: 1.3405, total_loss: 1.4560
+
+[Step 200] soft_loss: 1.4536, hard_loss: 1.5478, total_loss: 1.5007
+
+[Step 200] soft_loss: 1.6386, hard_loss: 1.4886, total_loss: 1.5636
+
+[Step 200] soft_loss: 1.4962, hard_loss: 1.7354, total_loss: 1.6158
+
+[Step 200] soft_loss: 1.9365, hard_loss: 2.0240, total_loss: 1.9802
+
+[Step 200] soft_loss: 1.4758, hard_loss: 1.4244, total_loss: 1.4501
+
+[Step 200] soft_loss: 1.9186, hard_loss: 2.0644, total_loss: 1.9915
+
+[Step 200] soft_loss: 1.4419, hard_loss: 1.3772, total_loss: 1.4096
+
+[Step 200] soft_loss: 2.0175, hard_loss: 2.1682, total_loss: 2.0929
+
+[Step 200] soft_loss: 1.8498, hard_loss: 1.1157, total_loss: 1.4827
+
+[Step 200] soft_loss: 1.8288, hard_loss: 1.5294, total_loss: 1.6791
+
+[Step 200] soft_loss: 1.7298, hard_loss: 1.3291, total_loss: 1.5295
+
+[Step 200] soft_loss: 1.8026, hard_loss: 0.9479, total_loss: 1.3752
+
+[Step 200] soft_loss: 1.9713, hard_loss: 1.6404, total_loss: 1.8059
+
+[Step 200] soft_loss: 1.4404, hard_loss: 1.6970, total_loss: 1.5687
+
+[Step 200] soft_loss: 1.4373, hard_loss: 1.2321, total_loss: 1.3347
+
+[Step 200] soft_loss: 1.4505, hard_loss: 1.4998, total_loss: 1.4752
+
+[Step 200] soft_loss: 1.8807, hard_loss: 1.8504, total_loss: 1.8655
+
+[Step 200] soft_loss: 1.7467, hard_loss: 1.6229, total_loss: 1.6848
+
+[Step 200] soft_loss: 1.6486, hard_loss: 1.7913, total_loss: 1.7199
+
+[Step 200] soft_loss: 1.9644, hard_loss: 1.8870, total_loss: 1.9257
+
+[Step 200] soft_loss: 1.3565, hard_loss: 1.9178, total_loss: 1.6371
+
+[Step 200] soft_loss: 1.8052, hard_loss: 1.6972, total_loss: 1.7512
+
+[Step 200] soft_loss: 1.8492, hard_loss: 1.2882, total_loss: 1.5687
+
+[Step 200] soft_loss: 1.8587, hard_loss: 1.4438, total_loss: 1.6513
+
+[Step 200] soft_loss: 1.6726, hard_loss: 1.8695, total_loss: 1.7710
+
+[Step 200] soft_loss: 2.1366, hard_loss: 1.5314, total_loss: 1.8340
+
+[Step 200] soft_loss: 1.6457, hard_loss: 1.5889, total_loss: 1.6173
+
+[Step 200] soft_loss: 1.5577, hard_loss: 2.0686, total_loss: 1.8131
+
+[Step 200] soft_loss: 2.1823, hard_loss: 1.5723, total_loss: 1.8773
+
+[Step 200] soft_loss: 1.5698, hard_loss: 2.0091, total_loss: 1.7894
+
+[Step 200] soft_loss: 1.8433, hard_loss: 2.3600, total_loss: 2.1017
+
+[Step 200] soft_loss: 1.6150, hard_loss: 2.9018, total_loss: 2.2584
+
+[Step 200] soft_loss: 1.7259, hard_loss: 1.8814, total_loss: 1.8037
+
+[Step 200] soft_loss: 1.4902, hard_loss: 1.3345, total_loss: 1.4123
+
+[Step 200] soft_loss: 1.7021, hard_loss: 0.7455, total_loss: 1.2238
+
+[Step 200] soft_loss: 1.6160, hard_loss: 1.7068, total_loss: 1.6614
+
+[Step 200] soft_loss: 2.0969, hard_loss: 1.8712, total_loss: 1.9841
+
+[Step 200] soft_loss: 2.0707, hard_loss: 0.9193, total_loss: 1.4950
+
+[Step 200] soft_loss: 2.2515, hard_loss: 1.5706, total_loss: 1.9110
+
+[Step 200] soft_loss: 2.6754, hard_loss: 2.2861, total_loss: 2.4807
+
+[Step 200] soft_loss: 1.5545, hard_loss: 1.0546, total_loss: 1.3045
+
+[Step 200] soft_loss: 1.9858, hard_loss: 1.2550, total_loss: 1.6204
+
+[Step 200] soft_loss: 1.7521, hard_loss: 1.7235, total_loss: 1.7378
+
+[Step 200] soft_loss: 1.9808, hard_loss: 1.7168, total_loss: 1.8488
+
+[Step 200] soft_loss: 1.5066, hard_loss: 1.4125, total_loss: 1.4596
+
+[Step 200] soft_loss: 1.5670, hard_loss: 2.0710, total_loss: 1.8190
+
+[Step 200] soft_loss: 2.0660, hard_loss: 1.9126, total_loss: 1.9893
+
+[Step 200] soft_loss: 1.7081, hard_loss: 1.2578, total_loss: 1.4830
+
+[Step 200] soft_loss: 1.9265, hard_loss: 1.4218, total_loss: 1.6742
+
+[Step 200] soft_loss: 3.1772, hard_loss: 2.1231, total_loss: 2.6502
+
+[Step 200] soft_loss: 1.6208, hard_loss: 1.2316, total_loss: 1.4262
+
+[Step 200] soft_loss: 1.7694, hard_loss: 1.1374, total_loss: 1.4534
+
+[Step 200] soft_loss: 1.7024, hard_loss: 1.3867, total_loss: 1.5445
+
+[Step 200] soft_loss: 1.7426, hard_loss: 1.7146, total_loss: 1.7286
+
+[Step 200] soft_loss: 1.3313, hard_loss: 1.6005, total_loss: 1.4659
+
+[Step 200] soft_loss: 1.3533, hard_loss: 1.5526, total_loss: 1.4530
+
+[Step 200] soft_loss: 1.8020, hard_loss: 1.7835, total_loss: 1.7928
+
+[Step 200] soft_loss: 1.7870, hard_loss: 1.8441, total_loss: 1.8156
+
+[Step 200] soft_loss: 1.6683, hard_loss: 1.5405, total_loss: 1.6044
+
+[Step 200] soft_loss: 1.4001, hard_loss: 1.9400, total_loss: 1.6700
+
+[Step 200] soft_loss: 2.1619, hard_loss: 1.7323, total_loss: 1.9471
+
+[Step 200] soft_loss: 2.2827, hard_loss: 1.9407, total_loss: 2.1117
+
+[Step 200] soft_loss: 1.4327, hard_loss: 1.5474, total_loss: 1.4901
+
+[Step 200] soft_loss: 2.2105, hard_loss: 3.3751, total_loss: 2.7928
+
+[Step 200] soft_loss: 1.6938, hard_loss: 1.7314, total_loss: 1.7126
+
+[Step 200] soft_loss: 1.6559, hard_loss: 1.3050, total_loss: 1.4804
+
+[Step 200] soft_loss: 1.8299, hard_loss: 2.1460, total_loss: 1.9880
+
+[Step 200] soft_loss: 2.3089, hard_loss: 2.4476, total_loss: 2.3782
+
+[Step 200] soft_loss: 1.4942, hard_loss: 1.3022, total_loss: 1.3982
+
+[Step 200] soft_loss: 1.8167, hard_loss: 1.7911, total_loss: 1.8039
+
+[Step 200] soft_loss: 1.3286, hard_loss: 1.8346, total_loss: 1.5816
+
+[Step 200] soft_loss: 1.5261, hard_loss: 1.5502, total_loss: 1.5382
+
+[Step 200] soft_loss: 2.0597, hard_loss: 1.3212, total_loss: 1.6904
+
+[Step 200] soft_loss: 2.1174, hard_loss: 1.7189, total_loss: 1.9182
+
+[Step 200] soft_loss: 1.4814, hard_loss: 2.1520, total_loss: 1.8167
+
+[Step 200] soft_loss: 1.3180, hard_loss: 1.0688, total_loss: 1.1934
+
+[Step 200] soft_loss: 1.9093, hard_loss: 1.3736, total_loss: 1.6414
+
+[Step 200] soft_loss: 1.6809, hard_loss: 1.1572, total_loss: 1.4190
+
+[Step 200] soft_loss: 1.7815, hard_loss: 2.2339, total_loss: 2.0077
+
+[Step 200] soft_loss: 2.1492, hard_loss: 2.1728, total_loss: 2.1610
+
+[Step 200] soft_loss: 1.4753, hard_loss: 1.6580, total_loss: 1.5666
+
+[Step 200] soft_loss: 1.6182, hard_loss: 1.5483, total_loss: 1.5833
+
+[Step 200] soft_loss: 1.8244, hard_loss: 1.6465, total_loss: 1.7355
+
+[Step 200] soft_loss: 1.7534, hard_loss: 1.5739, total_loss: 1.6637
+
+[Step 200] soft_loss: 1.8327, hard_loss: 2.0025, total_loss: 1.9176
+
+[Step 200] soft_loss: 2.0915, hard_loss: 2.1405, total_loss: 2.1160
+
+[Step 200] soft_loss: 1.9866, hard_loss: 1.5275, total_loss: 1.7570
+
+[Step 200] soft_loss: 1.8503, hard_loss: 1.8548, total_loss: 1.8525
+
+[Step 200] soft_loss: 1.7749, hard_loss: 1.6165, total_loss: 1.6957
+
+[Step 200] soft_loss: 2.0435, hard_loss: 1.9078, total_loss: 1.9757
+
+[Step 200] soft_loss: 1.5227, hard_loss: 0.9537, total_loss: 1.2382
+
+[Step 200] soft_loss: 1.8653, hard_loss: 1.5586, total_loss: 1.7120
+
+[Step 200] soft_loss: 1.7255, hard_loss: 1.8193, total_loss: 1.7724
+
+[Step 200] soft_loss: 1.8434, hard_loss: 1.5073, total_loss: 1.6753
+
+[Step 200] soft_loss: 1.8690, hard_loss: 1.3712, total_loss: 1.6201
+
+[Step 200] soft_loss: 2.3478, hard_loss: 2.0616, total_loss: 2.2047
+ 43%|████▎     | 120/281 [00:17<00:23,  6.83it/s][A
+ 43%|████▎     | 121/281 [00:17<00:23,  6.84it/s][A
+ 43%|████▎     | 122/281 [00:17<00:24,  6.38it/s][A
+ 44%|████▍     | 123/281 [00:17<00:24,  6.40it/s][A
+ 44%|████▍     | 124/281 [00:17<00:23,  6.57it/s][A
+ 44%|████▍     | 125/281 [00:17<00:23,  6.63it/s][A
+ 45%|████▍     | 126/281 [00:18<00:23,  6.57it/s][A
+ 45%|████▌     | 127/281 [00:18<00:23,  6.54it/s][A
+ 46%|████▌     | 128/281 [00:18<00:23,  6.62it/s][A
+ 46%|████▌     | 129/281 [00:18<00:22,  6.74it/s][A
+ 46%|████▋     | 130/281 [00:18<00:22,  6.84it/s][A
+ 47%|████▋     | 131/281 [00:18<00:22,  6.73it/s][A
+ 47%|████▋     | 132/281 [00:19<00:23,  6.25it/s][A
+ 47%|████▋     | 133/281 [00:19<00:23,  6.33it/s][A
+ 48%|████▊     | 134/281 [00:19<00:22,  6.51it/s][A
+ 48%|████▊     | 135/281 [00:19<00:22,  6.60it/s][A
+ 48%|████▊     | 136/281 [00:19<00:21,  6.68it/s][A
+ 49%|████▉     | 137/281 [00:19<00:21,  6.56it/s][A
+ 49%|████▉     | 138/281 [00:19<00:21,  6.63it/s][A
+ 49%|████▉     | 139/281 [00:20<00:20,  7.04it/s][A
+ 50%|████▉     | 140/281 [00:20<00:20,  6.95it/s][A
+ 50%|█████     | 141/281 [00:20<00:20,  6.81it/s][A
+ 51%|█████     | 142/281 [00:20<00:20,  6.90it/s][A
+ 51%|█████     | 143/281 [00:20<00:20,  6.87it/s][A
+ 51%|█████     | 144/281 [00:20<00:19,  6.91it/s][A
+ 52%|█████▏    | 145/281 [00:20<00:20,  6.78it/s][A
+ 52%|█████▏    | 146/281 [00:21<00:19,  6.82it/s][A
+ 52%|█████▏    | 147/281 [00:21<00:19,  6.80it/s][A
+ 53%|█████▎    | 148/281 [00:21<00:19,  6.86it/s][A
+ 53%|█████▎    | 149/281 [00:21<00:19,  6.74it/s][A
+ 53%|█████▎    | 150/281 [00:21<00:19,  6.77it/s][A
+ 54%|█████▎    | 151/281 [00:21<00:18,  6.87it/s][A
+ 54%|█████▍    | 152/281 [00:22<00:21,  5.98it/s][A
+ 54%|█████▍    | 153/281 [00:22<00:20,  6.12it/s][A
+ 55%|█████▍    | 154/281 [00:22<00:21,  5.93it/s][A
+ 55%|█████▌    | 155/281 [00:22<00:20,  6.21it/s][A
+ 56%|█████▌    | 156/281 [00:22<00:19,  6.39it/s][A
+ 56%|█████▌    | 157/281 [00:22<00:18,  6.85it/s][A
+ 56%|█████▌    | 158/281 [00:22<00:17,  6.89it/s][A
+ 57%|█████▋    | 159/281 [00:23<00:16,  7.24it/s][A
+ 57%|█████▋    | 160/281 [00:23<00:16,  7.21it/s][A
+ 57%|█████▋    | 161/281 [00:23<00:16,  7.48it/s][A
+ 58%|█████▊    | 162/281 [00:23<00:16,  7.23it/s][A
+ 58%|█████▊    | 163/281 [00:23<00:16,  7.02it/s][A
+ 58%|█████▊    | 164/281 [00:23<00:16,  7.02it/s][A
+ 59%|█████▊    | 165/281 [00:23<00:16,  6.87it/s][A
+ 59%|█████▉    | 166/281 [00:24<00:15,  7.31it/s][A
+ 59%|█████▉    | 167/281 [00:24<00:15,  7.21it/s][A
+ 60%|█████▉    | 168/281 [00:24<00:15,  7.15it/s][A
+ 60%|██████    | 169/281 [00:24<00:16,  6.86it/s][A
+ 60%|██████    | 170/281 [00:24<00:16,  6.73it/s][A
+ 61%|██████    | 171/281 [00:24<00:15,  7.10it/s][A
+ 61%|██████    | 172/281 [00:24<00:15,  6.88it/s][A
+ 62%|██████▏   | 173/281 [00:25<00:14,  7.30it/s][A
+ 62%|██████▏   | 174/281 [00:25<00:16,  6.64it/s][A
+ 62%|██████▏   | 175/281 [00:25<00:15,  6.64it/s][A
+ 63%|██████▎   | 176/281 [00:25<00:15,  6.58it/s][A
+ 63%|██████▎   | 177/281 [00:25<00:15,  6.70it/s][A
+ 63%|██████▎   | 178/281 [00:25<00:15,  6.80it/s][A
+ 64%|██████▎   | 179/281 [00:25<00:14,  6.80it/s][A
+ 64%|██████▍   | 180/281 [00:26<00:14,  6.87it/s][A
+ 64%|██████▍   | 181/281 [00:26<00:14,  6.92it/s][A
+ 65%|██████▍   | 182/281 [00:26<00:14,  6.97it/s][A
+ 65%|██████▌   | 183/281 [00:26<00:14,  7.00it/s][A
+ 65%|██████▌   | 184/281 [00:26<00:13,  7.32it/s][A
+ 66%|██████▌   | 185/281 [00:26<00:13,  7.15it/s][A
+ 66%|██████▌   | 186/281 [00:26<00:13,  6.91it/s][A
+ 67%|██████▋   | 187/281 [00:27<00:13,  6.88it/s][A
+ 67%|██████▋   | 188/281 [00:27<00:13,  6.75it/s][A
+ 67%|██████▋   | 189/281 [00:27<00:13,  6.78it/s][A
+ 68%|██████▊   | 190/281 [00:27<00:13,  6.70it/s][A
+ 68%|██████▊   | 191/281 [00:27<00:13,  6.75it/s][A
+ 68%|██████▊   | 192/281 [00:27<00:13,  6.62it/s][A
+ 69%|██████▊   | 193/281 [00:27<00:13,  6.67it/s][A
+ 69%|██████▉   | 194/281 [00:28<00:12,  6.78it/s][A
+ 69%|██████▉   | 195/281 [00:28<00:12,  6.85it/s][A
+ 70%|██████▉   | 196/281 [00:28<00:11,  7.20it/s][A
+ 70%|███████   | 197/281 [00:28<00:12,  6.95it/s][A
+ 70%|███████   | 198/281 [00:28<00:11,  7.30it/s][A
+ 71%|███████   | 199/281 [00:28<00:11,  7.15it/s][A
+ 71%|███████   | 200/281 [00:28<00:11,  7.11it/s][A
+ 72%|███████▏  | 201/281 [00:29<00:11,  7.12it/s][A
+ 72%|███████▏  | 202/281 [00:29<00:11,  6.97it/s][A
+ 72%|███████▏  | 203/281 [00:29<00:11,  6.91it/s][A
+ 73%|███████▎  | 204/281 [00:29<00:11,  6.88it/s][A
+ 73%|███████▎  | 205/281 [00:29<00:10,  7.24it/s][A
+ 73%|███████▎  | 206/281 [00:29<00:10,  7.12it/s][A
+ 74%|███████▎  | 207/281 [00:29<00:10,  7.03it/s][A
+ 74%|███████▍  | 208/281 [00:30<00:09,  7.33it/s][A
+ 74%|███████▍  | 209/281 [00:30<00:10,  7.14it/s][A
+ 75%|███████▍  | 210/281 [00:30<00:10,  6.88it/s][A
+ 75%|███████▌  | 211/281 [00:30<00:10,  6.88it/s][A
+ 75%|███████▌  | 212/281 [00:30<00:10,  6.75it/s][A
+ 76%|███████▌  | 213/281 [00:30<00:10,  6.78it/s][A
+ 76%|███████▌  | 214/281 [00:30<00:09,  6.76it/s][A
+ 77%|███████▋  | 215/281 [00:31<00:09,  6.84it/s][A
+ 77%|███████▋  | 216/281 [00:31<00:09,  7.20it/s][A
+ 77%|███████▋  | 217/281 [00:31<00:09,  6.91it/s][A
+ 78%|███████▊  | 218/281 [00:31<00:08,  7.33it/s][A
+ 78%|███████▊  | 219/281 [00:31<00:08,  7.22it/s][A
+ 78%|███████▊  | 220/281 [00:31<00:09,  6.59it/s][A
+ 79%|███████▊  | 221/281 [00:31<00:09,  6.57it/s][A
+ 79%|███████▉  | 222/281 [00:32<00:08,  6.63it/s][A
+ 79%|███████▉  | 223/281 [00:32<00:08,  6.76it/s][A
+ 80%|███████▉  | 224/281 [00:32<00:09,  6.31it/s][A
+ 80%|████████  | 225/281 [00:32<00:08,  6.44it/s][A
+ 80%|████████  | 226/281 [00:32<00:08,  6.55it/s][A
+ 81%|████████  | 227/281 [00:32<00:07,  6.94it/s][A
+ 81%|████████  | 228/281 [00:33<00:07,  6.95it/s][A
+ 81%|████████▏ | 229/281 [00:33<00:07,  6.97it/s][A
+ 82%|████████▏ | 230/281 [00:33<00:07,  6.94it/s][A
+ 82%|████████▏ | 231/281 [00:33<00:07,  6.90it/s][A
+ 83%|████████▎ | 232/281 [00:33<00:07,  6.70it/s][A
+ 83%|████████▎ | 233/281 [00:33<00:07,  6.78it/s][A
+ 83%|████████▎ | 234/281 [00:33<00:06,  6.79it/s][A
+ 84%|████████▎ | 235/281 [00:34<00:07,  6.35it/s][A
+ 84%|████████▍ | 236/281 [00:34<00:06,  6.55it/s][A
+ 84%|████████▍ | 237/281 [00:34<00:06,  6.60it/s][A
+ 85%|████████▍ | 238/281 [00:34<00:06,  6.72it/s][A
+
+[Step 200] soft_loss: 1.7927, hard_loss: 1.6715, total_loss: 1.7321
+
+[Step 200] soft_loss: 1.6700, hard_loss: 2.3492, total_loss: 2.0096
+
+[Step 200] soft_loss: 1.3269, hard_loss: 2.1797, total_loss: 1.7533
+
+[Step 200] soft_loss: 1.4664, hard_loss: 0.8223, total_loss: 1.1444
+
+[Step 200] soft_loss: 1.1740, hard_loss: 1.3409, total_loss: 1.2574
+
+[Step 200] soft_loss: 1.6291, hard_loss: 1.2351, total_loss: 1.4321
+
+[Step 200] soft_loss: 1.7518, hard_loss: 1.6578, total_loss: 1.7048
+
+[Step 200] soft_loss: 1.5106, hard_loss: 1.3853, total_loss: 1.4480
+
+[Step 200] soft_loss: 1.9048, hard_loss: 1.7984, total_loss: 1.8516
+
+[Step 200] soft_loss: 2.1130, hard_loss: 1.7426, total_loss: 1.9278
+
+[Step 200] soft_loss: 1.4492, hard_loss: 1.3360, total_loss: 1.3926
+
+[Step 200] soft_loss: 1.9306, hard_loss: 2.0250, total_loss: 1.9778
+
+[Step 200] soft_loss: 1.2429, hard_loss: 1.4075, total_loss: 1.3252
+
+[Step 200] soft_loss: 1.4313, hard_loss: 1.4749, total_loss: 1.4531
+
+[Step 200] soft_loss: 2.2496, hard_loss: 2.2964, total_loss: 2.2730
+
+[Step 200] soft_loss: 2.3295, hard_loss: 2.8418, total_loss: 2.5857
+
+[Step 200] soft_loss: 1.5921, hard_loss: 1.0979, total_loss: 1.3450
+
+[Step 200] soft_loss: 1.9047, hard_loss: 1.6805, total_loss: 1.7926
+
+[Step 200] soft_loss: 2.2055, hard_loss: 2.0504, total_loss: 2.1280
+
+[Step 200] soft_loss: 1.7996, hard_loss: 1.6507, total_loss: 1.7251
+
+[Step 200] soft_loss: 1.4627, hard_loss: 0.9819, total_loss: 1.2223
+
+[Step 200] soft_loss: 1.6781, hard_loss: 1.7631, total_loss: 1.7206
+
+[Step 200] soft_loss: 1.7434, hard_loss: 1.6751, total_loss: 1.7093
+
+[Step 200] soft_loss: 1.4161, hard_loss: 1.9440, total_loss: 1.6800
+
+[Step 200] soft_loss: 2.4911, hard_loss: 2.2914, total_loss: 2.3912
+
+[Step 200] soft_loss: 1.3289, hard_loss: 2.2287, total_loss: 1.7788
+
+[Step 200] soft_loss: 1.7811, hard_loss: 2.1463, total_loss: 1.9637
+
+[Step 200] soft_loss: 1.8683, hard_loss: 1.8896, total_loss: 1.8790
+
+[Step 200] soft_loss: 1.5139, hard_loss: 1.9349, total_loss: 1.7244
+
+[Step 200] soft_loss: 1.3094, hard_loss: 1.1335, total_loss: 1.2214
+
+[Step 200] soft_loss: 1.6497, hard_loss: 1.7877, total_loss: 1.7187
+
+[Step 200] soft_loss: 1.7600, hard_loss: 1.9357, total_loss: 1.8479
+
+[Step 200] soft_loss: 2.2426, hard_loss: 2.1776, total_loss: 2.2101
+
+[Step 200] soft_loss: 2.0044, hard_loss: 1.1317, total_loss: 1.5680
+
+[Step 200] soft_loss: 1.7947, hard_loss: 2.1444, total_loss: 1.9695
+
+[Step 200] soft_loss: 1.5793, hard_loss: 1.3766, total_loss: 1.4779
+
+[Step 200] soft_loss: 1.3153, hard_loss: 2.1416, total_loss: 1.7285
+
+[Step 200] soft_loss: 1.4605, hard_loss: 1.1650, total_loss: 1.3127
+
+[Step 200] soft_loss: 2.3664, hard_loss: 1.9869, total_loss: 2.1766
+
+[Step 200] soft_loss: 1.9143, hard_loss: 1.6507, total_loss: 1.7825
+
+[Step 200] soft_loss: 2.1468, hard_loss: 1.1486, total_loss: 1.6477
+
+[Step 200] soft_loss: 1.8733, hard_loss: 1.5250, total_loss: 1.6992
+
+[Step 200] soft_loss: 2.6523, hard_loss: 2.2292, total_loss: 2.4407
+
+[Step 200] soft_loss: 1.5759, hard_loss: 1.7671, total_loss: 1.6715
+
+[Step 200] soft_loss: 1.6772, hard_loss: 1.4261, total_loss: 1.5516
+
+[Step 200] soft_loss: 2.0709, hard_loss: 4.1532, total_loss: 3.1120
+
+[Step 200] soft_loss: 1.4180, hard_loss: 1.2218, total_loss: 1.3199
+
+[Step 200] soft_loss: 1.7063, hard_loss: 1.4308, total_loss: 1.5685
+
+[Step 200] soft_loss: 1.7359, hard_loss: 1.8016, total_loss: 1.7688
+
+[Step 200] soft_loss: 2.4167, hard_loss: 2.3358, total_loss: 2.3763
+
+[Step 200] soft_loss: 2.6309, hard_loss: 2.3294, total_loss: 2.4801
+
+[Step 200] soft_loss: 1.7729, hard_loss: 1.8506, total_loss: 1.8117
+
+[Step 200] soft_loss: 1.4547, hard_loss: 1.9767, total_loss: 1.7157
+
+[Step 200] soft_loss: 2.7267, hard_loss: 1.2046, total_loss: 1.9657
+
+[Step 200] soft_loss: 2.4272, hard_loss: 1.6075, total_loss: 2.0174
+
+[Step 200] soft_loss: 1.7440, hard_loss: 1.2970, total_loss: 1.5205
+
+[Step 200] soft_loss: 1.3509, hard_loss: 2.4838, total_loss: 1.9174
+
+[Step 200] soft_loss: 1.6079, hard_loss: 1.5069, total_loss: 1.5574
+
+[Step 200] soft_loss: 1.5273, hard_loss: 1.7751, total_loss: 1.6512
+
+[Step 200] soft_loss: 1.6713, hard_loss: 1.6239, total_loss: 1.6476
+
+[Step 200] soft_loss: 1.3419, hard_loss: 1.3207, total_loss: 1.3313
+
+[Step 200] soft_loss: 1.6801, hard_loss: 1.7067, total_loss: 1.6934
+
+[Step 200] soft_loss: 1.9667, hard_loss: 1.4392, total_loss: 1.7029
+
+[Step 200] soft_loss: 1.5149, hard_loss: 1.6780, total_loss: 1.5964
+
+[Step 200] soft_loss: 1.7752, hard_loss: 2.1728, total_loss: 1.9740
+
+[Step 200] soft_loss: 2.4910, hard_loss: 2.2629, total_loss: 2.3770
+
+[Step 200] soft_loss: 1.7419, hard_loss: 1.6388, total_loss: 1.6903
+
+[Step 200] soft_loss: 1.8411, hard_loss: 1.4707, total_loss: 1.6559
+
+[Step 200] soft_loss: 1.6906, hard_loss: 1.9157, total_loss: 1.8032
+
+[Step 200] soft_loss: 1.5466, hard_loss: 1.4456, total_loss: 1.4961
+
+[Step 200] soft_loss: 1.5102, hard_loss: 1.7372, total_loss: 1.6237
+
+[Step 200] soft_loss: 2.0633, hard_loss: 1.8514, total_loss: 1.9573
+
+[Step 200] soft_loss: 1.7695, hard_loss: 2.0423, total_loss: 1.9059
+
+[Step 200] soft_loss: 1.5676, hard_loss: 2.1274, total_loss: 1.8475
+
+[Step 200] soft_loss: 1.6741, hard_loss: 1.2430, total_loss: 1.4585
+
+[Step 200] soft_loss: 2.1911, hard_loss: 2.3050, total_loss: 2.2480
+
+[Step 200] soft_loss: 1.7220, hard_loss: 1.2436, total_loss: 1.4828
+
+[Step 200] soft_loss: 1.8093, hard_loss: 2.3640, total_loss: 2.0866
+
+[Step 200] soft_loss: 1.7619, hard_loss: 2.0062, total_loss: 1.8840
+
+[Step 200] soft_loss: 1.4558, hard_loss: 2.0529, total_loss: 1.7543
+
+[Step 200] soft_loss: 1.5721, hard_loss: 1.9196, total_loss: 1.7459
+
+[Step 200] soft_loss: 1.7035, hard_loss: 1.5417, total_loss: 1.6226
+
+[Step 200] soft_loss: 1.5907, hard_loss: 1.5433, total_loss: 1.5670
+
+[Step 200] soft_loss: 1.5234, hard_loss: 1.4358, total_loss: 1.4796
+
+[Step 200] soft_loss: 1.8229, hard_loss: 1.9774, total_loss: 1.9002
+
+[Step 200] soft_loss: 1.4861, hard_loss: 1.5078, total_loss: 1.4970
+
+[Step 200] soft_loss: 1.8763, hard_loss: 2.0650, total_loss: 1.9707
+
+[Step 200] soft_loss: 1.4621, hard_loss: 1.9623, total_loss: 1.7122
+
+[Step 200] soft_loss: 2.0397, hard_loss: 1.4858, total_loss: 1.7628
+
+[Step 200] soft_loss: 2.5108, hard_loss: 1.9895, total_loss: 2.2501
+
+[Step 200] soft_loss: 1.9123, hard_loss: 1.2482, total_loss: 1.5803
+
+[Step 200] soft_loss: 1.6754, hard_loss: 1.6562, total_loss: 1.6658
+
+[Step 200] soft_loss: 1.5275, hard_loss: 1.9423, total_loss: 1.7349
+
+[Step 200] soft_loss: 1.9522, hard_loss: 1.1452, total_loss: 1.5487
+
+[Step 200] soft_loss: 1.9172, hard_loss: 0.9538, total_loss: 1.4355
+
+[Step 200] soft_loss: 1.5993, hard_loss: 1.7125, total_loss: 1.6559
+
+[Step 200] soft_loss: 1.5902, hard_loss: 1.9112, total_loss: 1.7507
+
+[Step 200] soft_loss: 1.6250, hard_loss: 2.6699, total_loss: 2.1474
+
+[Step 200] soft_loss: 1.4203, hard_loss: 2.0229, total_loss: 1.7216
+
+[Step 200] soft_loss: 1.7138, hard_loss: 2.0641, total_loss: 1.8890
+
+[Step 200] soft_loss: 1.5487, hard_loss: 1.1952, total_loss: 1.3720
+
+[Step 200] soft_loss: 2.1767, hard_loss: 1.4785, total_loss: 1.8276
+
+[Step 200] soft_loss: 1.8488, hard_loss: 2.0050, total_loss: 1.9269
+
+[Step 200] soft_loss: 1.7984, hard_loss: 1.4436, total_loss: 1.6210
+
+[Step 200] soft_loss: 2.3171, hard_loss: 2.0341, total_loss: 2.1756
+
+[Step 200] soft_loss: 1.6876, hard_loss: 2.2196, total_loss: 1.9536
+
+[Step 200] soft_loss: 1.8395, hard_loss: 2.8948, total_loss: 2.3671
+
+[Step 200] soft_loss: 1.6100, hard_loss: 1.1817, total_loss: 1.3959
+
+[Step 200] soft_loss: 1.7267, hard_loss: 1.6356, total_loss: 1.6811
+
+[Step 200] soft_loss: 1.8245, hard_loss: 1.8618, total_loss: 1.8432
+
+[Step 200] soft_loss: 1.3658, hard_loss: 1.2254, total_loss: 1.2956
+
+[Step 200] soft_loss: 1.7301, hard_loss: 1.3806, total_loss: 1.5554
+
+[Step 200] soft_loss: 1.5486, hard_loss: 1.4982, total_loss: 1.5234
+
+[Step 200] soft_loss: 2.0907, hard_loss: 1.7023, total_loss: 1.8965
+
+[Step 200] soft_loss: 1.7908, hard_loss: 1.5518, total_loss: 1.6713
+
+[Step 200] soft_loss: 1.6748, hard_loss: 2.4768, total_loss: 2.0758
+
+[Step 200] soft_loss: 1.4589, hard_loss: 1.2501, total_loss: 1.3545
+
+[Step 200] soft_loss: 2.7952, hard_loss: 2.2949, total_loss: 2.5451
+
+[Step 200] soft_loss: 1.8317, hard_loss: 1.9849, total_loss: 1.9083
+ 85%|████████▌ | 239/281 [00:34<00:06,  6.81it/s][A
+ 85%|████████▌ | 240/281 [00:34<00:06,  6.73it/s][A
+ 86%|████████▌ | 241/281 [00:34<00:05,  6.82it/s][A
+ 86%|████████▌ | 242/281 [00:35<00:05,  7.17it/s][A
+ 86%|████████▋ | 243/281 [00:35<00:05,  6.62it/s][A
+ 87%|████████▋ | 244/281 [00:35<00:05,  6.68it/s][A
+ 87%|████████▋ | 245/281 [00:35<00:05,  6.79it/s][A
+ 88%|████████▊ | 246/281 [00:35<00:05,  6.89it/s][A
+ 88%|████████▊ | 247/281 [00:35<00:05,  6.79it/s][A
+ 88%|████████▊ | 248/281 [00:35<00:04,  6.84it/s][A
+ 89%|████████▊ | 249/281 [00:36<00:04,  6.68it/s][A
+ 89%|████████▉ | 250/281 [00:36<00:04,  6.79it/s][A
+ 89%|████████▉ | 251/281 [00:36<00:04,  6.69it/s][A
+ 90%|████████▉ | 252/281 [00:36<00:04,  6.60it/s][A
+ 90%|█████████ | 253/281 [00:36<00:04,  6.57it/s][A
+ 90%|█████████ | 254/281 [00:36<00:04,  6.48it/s][A
+ 91%|█████████ | 255/281 [00:37<00:03,  6.93it/s][A
+ 91%|█████████ | 256/281 [00:37<00:03,  7.27it/s][A
+ 91%|█████████▏| 257/281 [00:37<00:03,  6.72it/s][A
+ 92%|█████████▏| 258/281 [00:37<00:03,  6.75it/s][A
+ 92%|█████████▏| 259/281 [00:37<00:03,  6.87it/s][A
+ 93%|█████████▎| 260/281 [00:37<00:03,  6.87it/s][A
+ 93%|█████████▎| 261/281 [00:37<00:02,  7.22it/s][A
+ 93%|█████████▎| 262/281 [00:38<00:02,  6.92it/s][A
+ 94%|█████████▎| 263/281 [00:38<00:02,  6.88it/s][A
+ 94%|█████████▍| 264/281 [00:38<00:02,  6.68it/s][A
+ 94%|█████████▍| 265/281 [00:38<00:02,  6.75it/s][A
+ 95%|█████████▍| 266/281 [00:38<00:02,  6.63it/s][A
+ 95%|█████████▌| 267/281 [00:38<00:02,  6.75it/s][A
+ 95%|█████████▌| 268/281 [00:38<00:01,  6.69it/s][A
+ 96%|█████████▌| 269/281 [00:39<00:01,  6.64it/s][A
+ 96%|█████████▌| 270/281 [00:39<00:01,  6.76it/s][A
+ 96%|█████████▋| 271/281 [00:39<00:01,  6.81it/s][A
+ 97%|█████████▋| 272/281 [00:39<00:01,  6.81it/s][A
+ 97%|█████████▋| 273/281 [00:39<00:01,  6.88it/s][A
+ 98%|█████████▊| 274/281 [00:39<00:01,  6.87it/s][A
+ 98%|█████████▊| 275/281 [00:39<00:00,  6.87it/s][A
+ 98%|█████████▊| 276/281 [00:40<00:00,  6.85it/s][A
+ 99%|█████████▊| 277/281 [00:40<00:00,  6.93it/s][A
+ 99%|█████████▉| 278/281 [00:40<00:00,  6.76it/s][A
+ 99%|█████████▉| 279/281 [00:40<00:00,  7.15it/s][A
+100%|█████████▉| 280/281 [00:40<00:00,  7.13it/s][A
+100%|██████████| 281/281 [00:40<00:00,  7.46it/s][A                                                 
+                                                 [A 90%|█████████ | 200/222 [35:21<03:44, 10.19s/it]
+100%|██████████| 281/281 [00:40<00:00,  7.46it/s][A
+                                                 [A 91%|█████████ | 201/222 [35:32<07:53, 22.54s/it] 91%|█████████ | 202/222 [35:42<06:15, 18.80s/it] 91%|█████████▏| 203/222 [35:52<05:07, 16.20s/it] 92%|█████████▏| 204/222 [36:02<04:18, 14.39s/it] 92%|█████████▏| 205/222 [36:12<03:42, 13.06s/it] 93%|█████████▎| 206/222 [36:22<03:14, 12.18s/it] 93%|█████████▎| 207/222 [36:32<02:53, 11.57s/it] 94%|█████████▎| 208/222 [36:42<02:36, 11.15s/it] 94%|█████████▍| 209/222 [36:53<02:21, 10.88s/it] 95%|█████████▍| 210/222 [37:03<02:08, 10.70s/it]                                                  95%|█████████▍| 210/222 [37:03<02:08, 10.70s/it] 95%|█████████▌| 211/222 [37:13<01:56, 10.56s/it] 95%|█████████▌| 212/222 [37:23<01:44, 10.46s/it] 96%|█████████▌| 213/222 [37:34<01:33, 10.36s/it] 96%|█████████▋| 214/222 [37:44<01:22, 10.33s/it] 97%|█████████▋| 215/222 [37:54<01:12, 10.33s/it] 97%|█████████▋| 216/222 [38:04<01:01, 10.30s/it] 98%|█████████▊| 217/222 [38:15<00:51, 10.29s/it] 98%|█████████▊| 218/222 [38:25<00:41, 10.28s/it] 99%|█████████▊| 219/222 [38:35<00:30, 10.28s/it] 99%|█████████▉| 220/222 [38:45<00:20, 10.27s/it]                                                  99%|█████████▉| 220/222 [38:45<00:20, 10.27s/it]
+
+[Step 200] soft_loss: 1.9272, hard_loss: 1.8669, total_loss: 1.8970
+
+[Step 200] soft_loss: 1.3962, hard_loss: 1.4888, total_loss: 1.4425
+
+[Step 200] soft_loss: 1.8030, hard_loss: 2.3112, total_loss: 2.0571
+
+[Step 200] soft_loss: 1.9266, hard_loss: 1.3569, total_loss: 1.6417
+
+[Step 200] soft_loss: 1.7375, hard_loss: 1.8604, total_loss: 1.7989
+
+[Step 200] soft_loss: 2.1448, hard_loss: 1.3368, total_loss: 1.7408
+
+[Step 200] soft_loss: 1.4470, hard_loss: 1.4232, total_loss: 1.4351
+
+[Step 200] soft_loss: 2.1911, hard_loss: 1.4919, total_loss: 1.8415
+
+[Step 200] soft_loss: 1.9528, hard_loss: 1.3334, total_loss: 1.6431
+
+[Step 200] soft_loss: 1.6966, hard_loss: 1.9751, total_loss: 1.8359
+
+[Step 200] soft_loss: 1.7074, hard_loss: 2.4626, total_loss: 2.0850
+
+[Step 200] soft_loss: 1.9191, hard_loss: 1.6389, total_loss: 1.7790
+
+[Step 200] soft_loss: 1.6996, hard_loss: 0.9557, total_loss: 1.3276
+
+[Step 200] soft_loss: 2.3488, hard_loss: 1.8346, total_loss: 2.0917
+
+[Step 200] soft_loss: 1.7065, hard_loss: 1.3366, total_loss: 1.5215
+
+[Step 200] soft_loss: 1.5780, hard_loss: 1.4667, total_loss: 1.5223
+
+[Step 200] soft_loss: 1.5469, hard_loss: 1.8497, total_loss: 1.6983
+
+[Step 200] soft_loss: 2.1240, hard_loss: 2.6857, total_loss: 2.4048
+
+[Step 200] soft_loss: 1.7468, hard_loss: 2.1656, total_loss: 1.9562
+
+[Step 200] soft_loss: 1.5207, hard_loss: 1.4662, total_loss: 1.4934
+
+[Step 200] soft_loss: 1.6253, hard_loss: 1.3955, total_loss: 1.5104
+
+[Step 200] soft_loss: 1.4431, hard_loss: 1.6420, total_loss: 1.5425
+
+[Step 200] soft_loss: 1.9008, hard_loss: 1.1889, total_loss: 1.5449
+
+[Step 200] soft_loss: 1.8175, hard_loss: 1.1157, total_loss: 1.4666
+
+[Step 200] soft_loss: 1.7583, hard_loss: 1.5980, total_loss: 1.6782
+
+[Step 200] soft_loss: 1.7396, hard_loss: 1.1967, total_loss: 1.4682
+
+[Step 200] soft_loss: 1.7432, hard_loss: 1.8287, total_loss: 1.7859
+
+[Step 200] soft_loss: 2.1022, hard_loss: 1.8539, total_loss: 1.9780
+
+[Step 200] soft_loss: 1.5321, hard_loss: 1.8825, total_loss: 1.7073
+
+[Step 200] soft_loss: 1.7489, hard_loss: 1.1140, total_loss: 1.4314
+
+[Step 200] soft_loss: 1.7877, hard_loss: 2.3674, total_loss: 2.0776
+
+[Step 200] soft_loss: 1.8660, hard_loss: 1.4803, total_loss: 1.6731
+
+[Step 200] soft_loss: 1.8110, hard_loss: 1.2476, total_loss: 1.5293
+
+[Step 200] soft_loss: 1.7603, hard_loss: 1.6598, total_loss: 1.7101
+
+[Step 200] soft_loss: 1.8869, hard_loss: 1.9140, total_loss: 1.9005
+
+[Step 200] soft_loss: 3.3267, hard_loss: 2.1468, total_loss: 2.7368
+
+[Step 200] soft_loss: 1.7367, hard_loss: 1.3230, total_loss: 1.5299
+
+[Step 200] soft_loss: 2.3576, hard_loss: 1.5517, total_loss: 1.9547
+
+[Step 200] soft_loss: 1.5302, hard_loss: 1.3821, total_loss: 1.4561
+
+[Step 200] soft_loss: 1.8765, hard_loss: 1.7717, total_loss: 1.8241
+
+[Step 200] soft_loss: 2.0953, hard_loss: 1.9132, total_loss: 2.0042
+
+[Step 200] soft_loss: 1.7425, hard_loss: 1.6270, total_loss: 1.6847
+{'eval_loss': '1.756', 'eval_runtime': '40.95', 'eval_samples_per_second': '27.45', 'eval_steps_per_second': '6.863', 'epoch': '2.703'}
+
+[Step 200] soft_loss: 1.3533, hard_loss: 2.0141, total_loss: 1.6837
+
+[Step 200] soft_loss: 1.9525, hard_loss: 1.7338, total_loss: 1.8431
+
+[Step 200] soft_loss: 1.6095, hard_loss: 1.5772, total_loss: 1.5933
+
+[Step 200] soft_loss: 2.1778, hard_loss: 2.2708, total_loss: 2.2243
+
+[Step 200] soft_loss: 1.7198, hard_loss: 1.4147, total_loss: 1.5673
+
+[Step 200] soft_loss: 1.6075, hard_loss: 1.4529, total_loss: 1.5302
+
+[Step 200] soft_loss: 1.6035, hard_loss: 1.2317, total_loss: 1.4176
+
+[Step 200] soft_loss: 1.8556, hard_loss: 1.1694, total_loss: 1.5125
+
+[Step 200] soft_loss: 1.4098, hard_loss: 1.0233, total_loss: 1.2165
+
+[Step 200] soft_loss: 1.9779, hard_loss: 1.3806, total_loss: 1.6792
+
+[Step 200] soft_loss: 1.1662, hard_loss: 1.1014, total_loss: 1.1338
+
+[Step 200] soft_loss: 2.2789, hard_loss: 2.1822, total_loss: 2.2306
+
+[Step 200] soft_loss: 1.5605, hard_loss: 1.7312, total_loss: 1.6459
+
+[Step 200] soft_loss: 1.6215, hard_loss: 1.2103, total_loss: 1.4159
+
+[Step 200] soft_loss: 2.1615, hard_loss: 1.5267, total_loss: 1.8441
+
+[Step 200] soft_loss: 2.4339, hard_loss: 2.4206, total_loss: 2.4272
+
+[Step 200] soft_loss: 1.6241, hard_loss: 1.2699, total_loss: 1.4470
+
+[Step 200] soft_loss: 1.6266, hard_loss: 1.4136, total_loss: 1.5201
+
+[Step 200] soft_loss: 1.4148, hard_loss: 1.0666, total_loss: 1.2407
+
+[Step 200] soft_loss: 1.5967, hard_loss: 1.7589, total_loss: 1.6778
+
+[Step 200] soft_loss: 1.7277, hard_loss: 1.7529, total_loss: 1.7403
+
+[Step 200] soft_loss: 1.1746, hard_loss: 2.2033, total_loss: 1.6889
+
+[Step 200] soft_loss: 1.7171, hard_loss: 1.4557, total_loss: 1.5864
+
+[Step 200] soft_loss: 1.5547, hard_loss: 1.9850, total_loss: 1.7698
+
+[Step 200] soft_loss: 2.0239, hard_loss: 2.4574, total_loss: 2.2406
+
+[Step 200] soft_loss: 1.6533, hard_loss: 0.9691, total_loss: 1.3112
+
+[Step 200] soft_loss: 1.9146, hard_loss: 1.6223, total_loss: 1.7684
+
+[Step 200] soft_loss: 1.6663, hard_loss: 1.5160, total_loss: 1.5911
+
+[Step 200] soft_loss: 1.9116, hard_loss: 1.6957, total_loss: 1.8036
+
+[Step 200] soft_loss: 1.4032, hard_loss: 1.3110, total_loss: 1.3571
+
+[Step 200] soft_loss: 2.1714, hard_loss: 2.2307, total_loss: 2.2011
+
+[Step 200] soft_loss: 1.1987, hard_loss: 1.3357, total_loss: 1.2672
+{'loss': '55.02', 'grad_norm': '0.7346', 'learning_rate': '6.533e-06', 'epoch': '2.839'}
+
+[Step 210] soft_loss: 1.5603, hard_loss: 1.4946, total_loss: 1.5274
+
+[Step 210] soft_loss: 1.4707, hard_loss: 1.8229, total_loss: 1.6468
+
+[Step 210] soft_loss: 1.8067, hard_loss: 1.8231, total_loss: 1.8149
+
+[Step 210] soft_loss: 1.6296, hard_loss: 1.0562, total_loss: 1.3429
+
+[Step 210] soft_loss: 1.8776, hard_loss: 1.3648, total_loss: 1.6212
+
+[Step 210] soft_loss: 1.8227, hard_loss: 1.9554, total_loss: 1.8890
+
+[Step 210] soft_loss: 1.3862, hard_loss: 1.4944, total_loss: 1.4403
+
+[Step 210] soft_loss: 1.4774, hard_loss: 0.8694, total_loss: 1.1734
+
+[Step 210] soft_loss: 2.0161, hard_loss: 1.8910, total_loss: 1.9535
+
+[Step 210] soft_loss: 1.5066, hard_loss: 1.5877, total_loss: 1.5471
+
+[Step 210] soft_loss: 2.2568, hard_loss: 2.3414, total_loss: 2.2991
+
+[Step 210] soft_loss: 1.6834, hard_loss: 1.5315, total_loss: 1.6074
+
+[Step 210] soft_loss: 2.1241, hard_loss: 1.4439, total_loss: 1.7840
+
+[Step 210] soft_loss: 1.8244, hard_loss: 1.4030, total_loss: 1.6137
+
+[Step 210] soft_loss: 1.7560, hard_loss: 1.5798, total_loss: 1.6679
+
+[Step 210] soft_loss: 1.5763, hard_loss: 1.3373, total_loss: 1.4568
+
+[Step 210] soft_loss: 1.5271, hard_loss: 1.4370, total_loss: 1.4821
+
+[Step 210] soft_loss: 1.5638, hard_loss: 1.8447, total_loss: 1.7042
+
+[Step 210] soft_loss: 1.5954, hard_loss: 1.1722, total_loss: 1.3838
+
+[Step 210] soft_loss: 1.7850, hard_loss: 1.8583, total_loss: 1.8216
+
+[Step 210] soft_loss: 2.4197, hard_loss: 1.9719, total_loss: 2.1958
+
+[Step 210] soft_loss: 1.6449, hard_loss: 1.6398, total_loss: 1.6424
+
+[Step 210] soft_loss: 1.4473, hard_loss: 0.8187, total_loss: 1.1330
+
+[Step 210] soft_loss: 1.3690, hard_loss: 1.8963, total_loss: 1.6326
+
+[Step 210] soft_loss: 1.7394, hard_loss: 1.2035, total_loss: 1.4715
+
+[Step 210] soft_loss: 1.5299, hard_loss: 2.1065, total_loss: 1.8182
+
+[Step 210] soft_loss: 1.4274, hard_loss: 0.8361, total_loss: 1.1317
+
+[Step 210] soft_loss: 1.7482, hard_loss: 1.4192, total_loss: 1.5837
+
+[Step 210] soft_loss: 1.7431, hard_loss: 3.2713, total_loss: 2.5072
+
+[Step 210] soft_loss: 1.6061, hard_loss: 1.4246, total_loss: 1.5153
+
+[Step 210] soft_loss: 2.4928, hard_loss: 2.3971, total_loss: 2.4449
+
+[Step 210] soft_loss: 1.6811, hard_loss: 1.3433, total_loss: 1.5122
+{'loss': '54.98', 'grad_norm': '0.6315', 'learning_rate': '1.508e-06', 'epoch': '2.974'}
+
+[Step 220] soft_loss: 2.1585, hard_loss: 1.6183, total_loss: 1.8884
+
+[Step 220] soft_loss: 1.5022, hard_loss: 0.7643, total_loss: 1.1333
+
+[Step 220] soft_loss: 1.7541, hard_loss: 1.5863, total_loss: 1.6702
+
+[Step 220] soft_loss: 1.6695, hard_loss: 1.9524, total_loss: 1.8110
+
+[Step 220] soft_loss: 2.0128, hard_loss: 1.3553, total_loss: 1.6840
+
+[Step 220] soft_loss: 1.4791, hard_loss: 1.8989, total_loss: 1.6890
+
+[Step 220] soft_loss: 1.4539, hard_loss: 1.7935, total_loss: 1.6237
+
+[Step 220] soft_loss: 1.8490, hard_loss: 1.2254, total_loss: 1.5372
+
+[Step 220] soft_loss: 1.8222, hard_loss: 1.6611, total_loss: 1.7417100%|█████████▉| 221/222 [38:56<00:10, 10.33s/it]100%|██████████| 222/222 [39:05<00:00, 10.06s/it]
+
+[Step 220] soft_loss: 1.8053, hard_loss: 2.8182, total_loss: 2.3118
+
+[Step 220] soft_loss: 1.5297, hard_loss: 1.2075, total_loss: 1.3686
+
+[Step 220] soft_loss: 1.6081, hard_loss: 1.7600, total_loss: 1.6841
+
+[Step 220] soft_loss: 1.6080, hard_loss: 1.1760, total_loss: 1.3920
+
+[Step 220] soft_loss: 2.1265, hard_loss: 2.6667, total_loss: 2.3966
+
+[Step 220] soft_loss: 1.6108, hard_loss: 1.0881, total_loss: 1.3494
+
+[Step 220] soft_loss: 1.7486, hard_loss: 1.7003, total_loss: 1.7245
+
+[Step 220] soft_loss: 2.0493, hard_loss: 1.5318, total_loss: 1.7906
+
+[Step 220] soft_loss: 1.9563, hard_loss: 0.8449, total_loss: 1.4006
+
+[Step 220] soft_loss: 1.9250, hard_loss: 1.7751, total_loss: 1.8500
+
+[Step 220] soft_loss: 1.5752, hard_loss: 1.4489, total_loss: 1.5121
+
+[Step 220] soft_loss: 1.7809, hard_loss: 2.5121, total_loss: 2.1465
+
+[Step 220] soft_loss: 1.6121, hard_loss: 1.7215, total_loss: 1.6668
+
+[Step 220] soft_loss: 2.3494, hard_loss: 2.0314, total_loss: 2.1904
+
+[Step 220] soft_loss: 1.8405, hard_loss: 1.0257, total_loss: 1.4331
+
+[Step 220] soft_loss: 1.8106, hard_loss: 2.0781, total_loss: 1.9443
+
+[Step 220] soft_loss: 1.8739, hard_loss: 1.7876, total_loss: 1.8307
+
+[Step 220] soft_loss: 1.7707, hard_loss: 1.9394, total_loss: 1.8551
+
+[Step 220] soft_loss: 2.2137, hard_loss: 1.9684, total_loss: 2.0910
+
+[Step 220] soft_loss: 1.8786, hard_loss: 1.8706, total_loss: 1.8746
+
+[Step 220] soft_loss: 1.4079, hard_loss: 1.2121, total_loss: 1.3100
+
+[Step 220] soft_loss: 1.7438, hard_loss: 1.0081, total_loss: 1.3760
+
+[Step 220] soft_loss: 1.6551, hard_loss: 1.5039, total_loss: 1.5795
+
+  0%|          | 0/281 [00:00<?, ?it/s][A
+  1%|          | 2/281 [00:00<00:19, 14.27it/s][A
+  1%|▏         | 4/281 [00:00<00:32,  8.63it/s][A
+  2%|▏         | 5/281 [00:00<00:33,  8.12it/s][A
+  2%|▏         | 6/281 [00:00<00:35,  7.74it/s][A
+  2%|▏         | 7/281 [00:00<00:38,  7.19it/s][A
+  3%|▎         | 8/281 [00:01<00:36,  7.44it/s][A
+  3%|▎         | 9/281 [00:01<00:37,  7.32it/s][A
+  4%|▎         | 10/281 [00:01<00:35,  7.56it/s][A
+  4%|▍         | 11/281 [00:01<00:36,  7.41it/s][A
+  4%|▍         | 12/281 [00:01<00:37,  7.25it/s][A
+  5%|▍         | 13/281 [00:01<00:38,  7.01it/s][A
+  5%|▍         | 14/281 [00:01<00:40,  6.53it/s][A
+  5%|▌         | 15/281 [00:02<00:38,  6.93it/s][A
+  6%|▌         | 16/281 [00:02<00:38,  6.90it/s][A
+  6%|▌         | 17/281 [00:02<00:37,  6.95it/s][A
+  6%|▋         | 18/281 [00:02<00:37,  7.00it/s][A
+  7%|▋         | 19/281 [00:02<00:37,  7.02it/s][A
+  7%|▋         | 20/281 [00:02<00:37,  6.99it/s][A
+  7%|▋         | 21/281 [00:02<00:38,  6.80it/s][A
+  8%|▊         | 22/281 [00:03<00:37,  6.87it/s][A
+  8%|▊         | 23/281 [00:03<00:37,  6.93it/s][A
+  9%|▊         | 24/281 [00:03<00:37,  6.80it/s][A
+  9%|▉         | 25/281 [00:03<00:38,  6.72it/s][A
+  9%|▉         | 26/281 [00:03<00:37,  6.84it/s][A
+ 10%|▉         | 27/281 [00:03<00:37,  6.84it/s][A
+ 10%|▉         | 28/281 [00:03<00:36,  6.88it/s][A
+ 10%|█         | 29/281 [00:04<00:36,  6.95it/s][A
+ 11%|█         | 30/281 [00:04<00:34,  7.28it/s][A
+ 11%|█         | 31/281 [00:04<00:34,  7.14it/s][A
+ 11%|█▏        | 32/281 [00:04<00:35,  7.10it/s][A
+ 12%|█▏        | 33/281 [00:04<00:35,  7.08it/s][A
+ 12%|█▏        | 34/281 [00:04<00:33,  7.39it/s][A
+ 12%|█▏        | 35/281 [00:04<00:33,  7.28it/s][A
+ 13%|█▎        | 36/281 [00:05<00:34,  7.15it/s][A
+ 13%|█▎        | 37/281 [00:05<00:32,  7.48it/s][A
+ 14%|█▎        | 38/281 [00:05<00:33,  7.28it/s][A
+ 14%|█▍        | 39/281 [00:05<00:33,  7.20it/s][A
+ 14%|█▍        | 40/281 [00:05<00:33,  7.09it/s][A
+ 15%|█▍        | 41/281 [00:05<00:34,  6.86it/s][A
+ 15%|█▍        | 42/281 [00:05<00:34,  6.93it/s][A
+ 15%|█▌        | 43/281 [00:06<00:34,  6.82it/s][A
+ 16%|█▌        | 44/281 [00:06<00:34,  6.87it/s][A
+ 16%|█▌        | 45/281 [00:06<00:34,  6.87it/s][A
+ 16%|█▋        | 46/281 [00:06<00:36,  6.42it/s][A
+ 17%|█▋        | 47/281 [00:06<00:35,  6.61it/s][A
+ 17%|█▋        | 48/281 [00:06<00:35,  6.56it/s][A
+ 17%|█▋        | 49/281 [00:06<00:33,  7.00it/s][A
+ 18%|█▊        | 50/281 [00:07<00:32,  7.04it/s][A
+ 18%|█▊        | 51/281 [00:07<00:33,  6.87it/s][A
+ 19%|█▊        | 52/281 [00:07<00:31,  7.21it/s][A
+ 19%|█▉        | 53/281 [00:07<00:32,  6.94it/s][A
+ 19%|█▉        | 54/281 [00:07<00:33,  6.77it/s][A
+ 20%|█▉        | 55/281 [00:07<00:33,  6.74it/s][A
+ 20%|█▉        | 56/281 [00:07<00:31,  7.11it/s][A
+ 20%|██        | 57/281 [00:08<00:31,  7.09it/s][A
+ 21%|██        | 58/281 [00:08<00:31,  6.99it/s][A
+ 21%|██        | 59/281 [00:08<00:31,  7.01it/s][A
+ 21%|██▏       | 60/281 [00:08<00:31,  7.03it/s][A
+ 22%|██▏       | 61/281 [00:08<00:29,  7.35it/s][A
+ 22%|██▏       | 62/281 [00:08<00:28,  7.61it/s][A
+ 22%|██▏       | 63/281 [00:08<00:29,  7.38it/s][A
+ 23%|██▎       | 64/281 [00:08<00:28,  7.56it/s][A
+ 23%|██▎       | 65/281 [00:09<00:31,  6.87it/s][A
+ 23%|██▎       | 66/281 [00:09<00:31,  6.85it/s][A
+ 24%|██▍       | 67/281 [00:09<00:31,  6.84it/s][A
+ 24%|██▍       | 68/281 [00:09<00:31,  6.72it/s][A
+ 25%|██▍       | 69/281 [00:09<00:32,  6.61it/s][A
+ 25%|██▍       | 70/281 [00:09<00:31,  6.72it/s][A
+ 25%|██▌       | 71/281 [00:10<00:31,  6.65it/s][A
+ 26%|██▌       | 72/281 [00:10<00:31,  6.58it/s][A
+ 26%|██▌       | 73/281 [00:10<00:30,  6.72it/s][A
+ 26%|██▋       | 74/281 [00:10<00:32,  6.33it/s][A
+ 27%|██▋       | 75/281 [00:10<00:32,  6.35it/s][A
+ 27%|██▋       | 76/281 [00:10<00:31,  6.48it/s][A
+ 27%|██▋       | 77/281 [00:10<00:30,  6.62it/s][A
+ 28%|██▊       | 78/281 [00:11<00:30,  6.74it/s][A
+ 28%|██▊       | 79/281 [00:11<00:28,  7.09it/s][A
+ 28%|██▊       | 80/281 [00:11<00:28,  7.11it/s][A
+ 29%|██▉       | 81/281 [00:11<00:29,  6.86it/s][A
+ 29%|██▉       | 82/281 [00:11<00:29,  6.86it/s][A
+ 30%|██▉       | 83/281 [00:11<00:27,  7.28it/s][A
+ 30%|██▉       | 84/281 [00:11<00:27,  7.22it/s][A
+ 30%|███       | 85/281 [00:12<00:27,  7.14it/s][A
+ 31%|███       | 86/281 [00:12<00:27,  7.06it/s][A
+ 31%|███       | 87/281 [00:12<00:27,  7.07it/s][A
+ 31%|███▏      | 88/281 [00:12<00:26,  7.39it/s][A
+ 32%|███▏      | 89/281 [00:12<00:26,  7.25it/s][A
+ 32%|███▏      | 90/281 [00:12<00:27,  7.00it/s][A
+ 32%|███▏      | 91/281 [00:12<00:27,  6.79it/s][A
+ 33%|███▎      | 92/281 [00:13<00:27,  6.87it/s][A
+ 33%|███▎      | 93/281 [00:13<00:27,  6.78it/s][A
+ 33%|███▎      | 94/281 [00:13<00:28,  6.66it/s][A
+ 34%|███▍      | 95/281 [00:13<00:27,  6.71it/s][A
+ 34%|███▍      | 96/281 [00:13<00:27,  6.80it/s][A
+ 35%|███▍      | 97/281 [00:13<00:25,  7.18it/s][A
+ 35%|███▍      | 98/281 [00:13<00:26,  6.99it/s][A
+ 35%|███▌      | 99/281 [00:14<00:26,  6.95it/s][A
+ 36%|███▌      | 100/281 [00:14<00:25,  6.99it/s][A
+ 36%|███▌      | 101/281 [00:14<00:26,  6.85it/s][A
+ 36%|███▋      | 102/281 [00:14<00:26,  6.87it/s][A
+ 37%|███▋      | 103/281 [00:14<00:25,  6.93it/s][A
+ 37%|███▋      | 104/281 [00:14<00:25,  6.83it/s][A
+ 37%|███▋      | 105/281 [00:15<00:26,  6.71it/s][A
+ 38%|███▊      | 106/281 [00:15<00:26,  6.63it/s][A
+ 38%|███▊      | 107/281 [00:15<00:25,  6.76it/s][A
+ 38%|███▊      | 108/281 [00:15<00:25,  6.80it/s][A
+ 39%|███▉      | 109/281 [00:15<00:23,  7.18it/s][A
+ 39%|███▉      | 110/281 [00:15<00:24,  7.09it/s][A
+ 40%|███▉      | 111/281 [00:15<00:24,  7.04it/s][A
+ 40%|███▉      | 112/281 [00:15<00:23,  7.08it/s][A
+ 40%|████      | 113/281 [00:16<00:23,  7.01it/s][A
+ 41%|████      | 114/281 [00:16<00:22,  7.33it/s][A
+ 41%|████      | 115/281 [00:16<00:23,  7.07it/s][A
+ 41%|████▏     | 116/281 [00:16<00:23,  7.10it/s][A
+ 42%|████▏     | 117/281 [00:16<00:23,  7.07it/s][A
+ 42%|████▏     | 118/281 [00:16<00:23,  6.91it/s][A
+ 42%|████▏     | 119/281 [00:16<00:23,  6.93it/s][A
+ 43%|████▎     | 120/281 [00:17<00:23,  6.92it/s][A
+ 43%|████▎     | 121/281 [00:17<00:23,  6.90it/s][A
+ 43%|████▎     | 122/281 [00:17<00:24,  6.42it/s][A
+ 44%|████▍     | 123/281 [00:17<00:24,  6.43it/s][A
+ 44%|████▍     | 124/281 [00:17<00:23,  6.57it/s][A
+ 44%|████▍     | 125/281 [00:17<00:23,  6.63it/s][A
+ 45%|████▍     | 126/281 [00:18<00:23,  6.60it/s][A
+ 45%|████▌     | 127/281 [00:18<00:23,  6.60it/s][A
+ 46%|████▌     | 128/281 [00:18<00:22,  6.67it/s][A
+ 46%|████▌     | 129/281 [00:18<00:22,  6.77it/s][A
+ 46%|████▋     | 130/281 [00:18<00:21,  6.87it/s][A
+ 47%|████▋     | 131/281 [00:18<00:22,  6.76it/s][A
+ 47%|████▋     | 132/281 [00:18<00:23,  6.30it/s][A
+ 47%|████▋     | 133/281 [00:19<00:23,  6.43it/s][A
+ 48%|████▊     | 134/281 [00:19<00:22,  6.61it/s][A
+ 48%|████▊     | 135/281 [00:19<00:21,  6.68it/s][A
+ 48%|████▊     | 136/281 [00:19<00:21,  6.73it/s][A
+ 49%|████▉     | 137/281 [00:19<00:21,  6.61it/s][A
+ 49%|████▉     | 138/281 [00:19<00:21,  6.63it/s][A
+ 49%|████▉     | 139/281 [00:19<00:20,  7.03it/s][A
+ 50%|████▉     | 140/281 [00:20<00:20,  6.98it/s][A
+ 50%|█████     | 141/281 [00:20<00:20,  6.79it/s][A
+ 51%|█████     | 142/281 [00:20<00:20,  6.89it/s][A
+ 51%|█████     | 143/281 [00:20<00:20,  6.87it/s][A
+ 51%|█████     | 144/281 [00:20<00:19,  6.92it/s][A
+ 52%|█████▏    | 145/281 [00:20<00:20,  6.76it/s][A
+ 52%|█████▏    | 146/281 [00:21<00:19,  6.79it/s][A
+ 52%|█████▏    | 147/281 [00:21<00:19,  6.82it/s][A
+ 53%|█████▎    | 148/281 [00:21<00:19,  6.90it/s][A
+ 53%|█████▎    | 149/281 [00:21<00:19,  6.81it/s][A
+ 53%|█████▎    | 150/281 [00:21<00:19,  6.84it/s][A
+ 54%|█████▎    | 151/281 [00:21<00:18,  6.91it/s][A
+ 54%|█████▍    | 152/281 [00:21<00:21,  6.04it/s][A
+ 54%|█████▍    | 153/281 [00:22<00:20,  6.20it/s][A
+ 55%|█████▍    | 154/281 [00:22<00:21,  5.98it/s][A
+ 55%|█████▌    | 155/281 [00:22<00:20,  6.28it/s][A
+ 56%|█████▌    | 156/281 [00:22<00:19,  6.43it/s][A
+ 56%|█████▌    | 157/281 [00:22<00:18,  6.88it/s][A
+ 56%|█████▌    | 158/281 [00:22<00:17,  6.90it/s][A
+ 57%|█████▋    | 159/281 [00:22<00:16,  7.25it/s][A
+ 57%|█████▋    | 160/281 [00:23<00:16,  7.21it/s][A
+ 57%|█████▋    | 161/281 [00:23<00:16,  7.49it/s][A
+ 58%|█████▊    | 162/281 [00:23<00:16,  7.32it/s][A
+ 58%|█████▊    | 163/281 [00:23<00:16,  7.13it/s][A
+ 58%|█████▊    | 164/281 [00:23<00:16,  7.10it/s][A
+ 59%|█████▊    | 165/281 [00:23<00:16,  6.94it/s][A
+ 59%|█████▉    | 166/281 [00:23<00:15,  7.33it/s][A
+ 59%|█████▉    | 167/281 [00:24<00:15,  7.27it/s][A
+ 60%|█████▉    | 168/281 [00:24<00:15,  7.23it/s][A
+ 60%|██████    | 169/281 [00:24<00:15,  7.01it/s][A
+ 60%|██████    | 170/281 [00:24<00:16,  6.88it/s][A
+ 61%|██████    | 171/281 [00:24<00:15,  7.24it/s][A
+ 61%|██████    | 172/281 [00:24<00:15,  6.99it/s][A
+ 62%|██████▏   | 173/281 [00:24<00:14,  7.36it/s][A
+ 62%|██████▏   | 174/281 [00:25<00:16,  6.68it/s][A
+ 62%|██████▏   | 175/281 [00:25<00:15,  6.65it/s][A
+ 63%|██████▎   | 176/281 [00:25<00:15,  6.63it/s][A
+ 63%|██████▎   | 177/281 [00:25<00:15,  6.77it/s][A
+ 63%|██████▎   | 178/281 [00:25<00:15,  6.83it/s][A
+ 64%|██████▎   | 179/281 [00:25<00:14,  6.80it/s][A
+ 64%|██████▍   | 180/281 [00:25<00:14,  6.88it/s][A
+ 64%|██████▍   | 181/281 [00:26<00:14,  6.94it/s][A
+ 65%|██████▍   | 182/281 [00:26<00:14,  6.99it/s][A
+ 65%|██████▌   | 183/281 [00:26<00:13,  7.00it/s][A
+ 65%|██████▌   | 184/281 [00:26<00:13,  7.31it/s][A
+ 66%|██████▌   | 185/281 [00:26<00:13,  7.16it/s][A
+ 66%|██████▌   | 186/281 [00:26<00:13,  6.91it/s][A
+ 67%|██████▋   | 187/281 [00:26<00:13,  6.90it/s][A
+ 67%|██████▋   | 188/281 [00:27<00:13,  6.78it/s][A
+ 67%|██████▋   | 189/281 [00:27<00:13,  6.81it/s][A
+ 68%|██████▊   | 190/281 [00:27<00:13,  6.74it/s][A
+ 68%|██████▊   | 191/281 [00:27<00:13,  6.77it/s][A
+ 68%|██████▊   | 192/281 [00:27<00:13,  6.66it/s][A
+ 69%|██████▊   | 193/281 [00:27<00:13,  6.71it/s][A
+ 69%|██████▉   | 194/281 [00:28<00:12,  6.83it/s][A
+ 69%|██████▉   | 195/281 [00:28<00:12,  6.94it/s][A
+ 70%|██████▉   | 196/281 [00:28<00:11,  7.29it/s][A
+ 70%|███████   | 197/281 [00:28<00:11,  7.02it/s][A
+ 70%|███████   | 198/281 [00:28<00:11,  7.36it/s][A
+ 71%|███████   | 199/281 [00:28<00:11,  7.19it/s][A
+ 71%|███████   | 200/281 [00:28<00:11,  7.12it/s][A
+ 72%|███████▏  | 201/281 [00:28<00:11,  7.11it/s][A
+ 72%|███████▏  | 202/281 [00:29<00:11,  7.02it/s][A
+ 72%|███████▏  | 203/281 [00:29<00:11,  6.97it/s][A
+ 73%|███████▎  | 204/281 [00:29<00:11,  6.93it/s][A
+ 73%|███████▎  | 205/281 [00:29<00:10,  7.28it/s][A
+ 73%|███████▎  | 206/281 [00:29<00:10,  7.17it/s][A
+ 74%|███████▎  | 207/281 [00:29<00:10,  7.08it/s][A
+ 74%|███████▍  | 208/281 [00:29<00:09,  7.39it/s][A
+ 74%|███████▍  | 209/281 [00:30<00:09,  7.24it/s][A
+ 75%|███████▍  | 210/281 [00:30<00:10,  6.96it/s][A
+ 75%|███████▌  | 211/281 [00:30<00:10,  6.99it/s][A
+ 75%|███████▌  | 212/281 [00:30<00:10,  6.83it/s][A
+ 76%|███████▌  | 213/281 [00:30<00:09,  6.85it/s][A
+ 76%|███████▌  | 214/281 [00:30<00:09,  6.84it/s][A
+ 77%|███████▋  | 215/281 [00:30<00:09,  6.87it/s][A
+ 77%|███████▋  | 216/281 [00:31<00:09,  7.22it/s][A
+ 77%|███████▋  | 217/281 [00:31<00:09,  6.99it/s][A
+ 78%|███████▊  | 218/281 [00:31<00:08,  7.37it/s][A
+ 78%|███████▊  | 219/281 [00:31<00:08,  7.18it/s][A
+ 78%|███████▊  | 220/281 [00:31<00:09,  6.59it/s][A
+ 79%|███████▊  | 221/281 [00:31<00:09,  6.58it/s][A
+ 79%|███████▉  | 222/281 [00:32<00:08,  6.66it/s][A
+ 79%|███████▉  | 223/281 [00:32<00:08,  6.78it/s][A
+ 80%|███████▉  | 224/281 [00:32<00:08,  6.37it/s][A
+ 80%|████████  | 225/281 [00:32<00:08,  6.50it/s][A
+ 80%|████████  | 226/281 [00:32<00:08,  6.62it/s][A
+ 81%|████████  | 227/281 [00:32<00:07,  7.04it/s][A
+ 81%|████████  | 228/281 [00:32<00:07,  7.10it/s][A
+ 81%|████████▏ | 229/281 [00:33<00:07,  7.11it/s][A
+ 82%|████████▏ | 230/281 [00:33<00:07,  7.01it/s][A
+ 82%|████████▏ | 231/281 [00:33<00:07,  6.96it/s][A
+ 83%|████████▎ | 232/281 [00:33<00:07,  6.77it/s][A
+ 83%|████████▎ | 233/281 [00:33<00:07,  6.80it/s][A
+ 83%|████████▎ | 234/281 [00:33<00:06,  6.83it/s][A
+ 84%|████████▎ | 235/281 [00:33<00:07,  6.41it/s][A
+ 84%|████████▍ | 236/281 [00:34<00:06,  6.56it/s][A
+ 84%|████████▍ | 237/281 [00:34<00:06,  6.64it/s][A
+ 85%|████████▍ | 238/281 [00:34<00:06,  6.74it/s][A
+ 85%|████████▌ | 239/281 [00:34<00:06,  6.83it/s][A
+ 85%|████████▌ | 240/281 [00:34<00:06,  6.75it/s][A
+ 86%|████████▌ | 241/281 [00:34<00:05,  6.84it/s][A
+ 86%|████████▌ | 242/281 [00:34<00:05,  7.20it/s][A
+ 86%|████████▋ | 243/281 [00:35<00:05,  6.68it/s][A
+ 87%|████████▋ | 244/281 [00:35<00:05,  6.73it/s][A
+ 87%|████████▋ | 245/281 [00:35<00:05,  6.82it/s][A
+ 88%|████████▊ | 246/281 [00:35<00:05,  6.89it/s][A
+ 88%|████████▊ | 247/281 [00:35<00:05,  6.76it/s][A
+ 88%|████████▊ | 248/281 [00:35<00:04,  6.84it/s][A
+ 89%|████████▊ | 249/281 [00:35<00:04,  6.67it/s][A
+ 89%|████████▉ | 250/281 [00:36<00:04,  6.78it/s][A
+ 89%|████████▉ | 251/281 [00:36<00:04,  6.71it/s][A
+ 90%|████████▉ | 252/281 [00:36<00:04,  6.64it/s][A
+ 90%|█████████ | 253/281 [00:36<00:04,  6.61it/s][A
+ 90%|█████████ | 254/281 [00:36<00:04,  6.54it/s][A
+ 91%|█████████ | 255/281 [00:36<00:03,  6.97it/s][A
+ 91%|█████████ | 256/281 [00:36<00:03,  7.33it/s][A
+ 91%|█████████▏| 257/281 [00:37<00:03,  6.74it/s][A
+ 92%|█████████▏| 258/281 [00:37<00:03,  6.78it/s][A
+ 92%|█████████▏| 259/281 [00:37<00:03,  6.89it/s][A
+ 93%|█████████▎| 260/281 [00:37<00:03,  6.89it/s][A
+ 93%|█████████▎| 261/281 [00:37<00:02,  7.24it/s][A
+ 93%|█████████▎| 262/281 [00:37<00:02,  6.95it/s][A
+ 94%|█████████▎| 263/281 [00:38<00:02,  6.91it/s][A
+ 94%|█████████▍| 264/281 [00:38<00:02,  6.73it/s][A
+ 94%|█████████▍| 265/281 [00:38<00:02,  6.82it/s][A
+ 95%|█████████▍| 266/281 [00:38<00:02,  6.68it/s][A
+ 95%|█████████▌| 267/281 [00:38<00:02,  6.77it/s][A
+ 95%|█████████▌| 268/281 [00:38<00:01,  6.68it/s][A
+ 96%|█████████▌| 269/281 [00:38<00:01,  6.63it/s][A
+ 96%|█████████▌| 270/281 [00:39<00:01,  6.80it/s][A
+ 96%|█████████▋| 271/281 [00:39<00:01,  6.87it/s][A
+ 97%|█████████▋| 272/281 [00:39<00:01,  6.88it/s][A
+ 97%|█████████▋| 273/281 [00:39<00:01,  6.94it/s][A
+ 98%|█████████▊| 274/281 [00:39<00:01,  6.89it/s][A
+ 98%|█████████▊| 275/281 [00:39<00:00,  6.86it/s][A
+ 98%|█████████▊| 276/281 [00:39<00:00,  6.87it/s][A
+ 99%|█████████▊| 277/281 [00:40<00:00,  6.92it/s][A
+ 99%|█████████▉| 278/281 [00:40<00:00,  6.80it/s][A
+ 99%|█████████▉| 279/281 [00:40<00:00,  7.18it/s][A
+100%|█████████▉| 280/281 [00:40<00:00,  7.18it/s][A
+100%|██████████| 281/281 [00:40<00:00,  7.48it/s][A                                                 
+                                                 [A100%|██████████| 222/222 [39:46<00:00, 10.06s/it]
+100%|██████████| 281/281 [00:40<00:00,  7.48it/s][A
+                                                 [A                                                 100%|██████████| 222/222 [39:46<00:00, 10.06s/it]100%|██████████| 222/222 [39:46<00:00, 10.75s/it]
+{'eval_loss': '1.752', 'eval_runtime': '40.76', 'eval_samples_per_second': '27.58', 'eval_steps_per_second': '6.895', 'epoch': '3'}
+{'train_runtime': '2387', 'train_samples_per_second': '11.89', 'train_steps_per_second': '0.093', 'train_loss': '63.38', 'epoch': '3'}
+
+训练完成时间: 2026-03-31 15:49:08
+最终模型保存至: checkpoints/final_model

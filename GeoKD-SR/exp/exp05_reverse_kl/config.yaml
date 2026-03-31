@@ -1,23 +1,27 @@
-# 实验配置 - Exp5: B2+C3（逆向KL蒸馏）
-# ICLR 2024: Reverse KL更适合生成任务，减少幻觉
+# 实验配置 - Exp05: Reverse KL蒸馏 (B2+C3)
+# Reverse KL: KL(P_S || P_T)，mode-seeking，减少幻觉
+# 消融设计：与exp02仅KL方向不同，其他变量完全一致
+# 参考: MiniLLM (Gu et al., ICLR 2024)
 
 experiment:
   name: "exp05_reverse_kl"
-  description: "逆向KL蒸馏：减少幻觉，更适合生成任务"
+  description: "逆向KL蒸馏：KL(P_S || P_T)，mode-seeking，更适合生成任务"
   seed: 42
 
 model:
+  # 教师模型: Qwen2.5-7B-Instruct (bf16全量) -- 与exp02完全一致
   teacher:
     enabled: true
-    name: "Qwen/Qwen2.5-7B-Instruct"
-    quantization: "4bit"
+    name: "/home/nihao/Qwen2.5-7B-Instruct"
+    quantization: "none"
     device_map: "auto"
 
+  # 学生模型: Qwen2.5-1.5B-Instruct -- 与exp02完全一致
   student:
-    name: "Qwen/Qwen2.5-1.5B-Instruct"
+    name: "/home/nihao/Qwen2.5-1.5B-Instruct"
     lora:
-      r: 8
-      lora_alpha: 16
+      r: 16
+      lora_alpha: 32
       lora_dropout: 0.05
       target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
       bias: "none"
@@ -25,32 +29,31 @@ model:
 
 training:
   learning_rate: 1e-4
-  batch_size: 8
-  gradient_accumulation_steps: 16
+  batch_size: 4
+  gradient_accumulation_steps: 32  # effective batch=128
   num_epochs: 3
   warmup_ratio: 0.1
   weight_decay: 0.01
   max_grad_norm: 1.0
   logging_steps: 10
-  save_steps: 500
-  eval_steps: 500
+  save_steps: 100
+  eval_steps: 100
+  max_length: 1024
 
 distillation:
   enabled: true
   method: "reverse_kl"
   temperature: 2.0
-  alpha: 0.5
-  # Reverse KL: KL(P_S || P_T) 而非 KL(P_T || P_S)
+  alpha: 0.5  # L_KD = alpha * L_soft + (1-alpha) * L_hard
   reverse_kl:
-    # Forward KL vs Reverse KL 混合比例
-    forward_weight: 0.0   # 0.0表示纯逆向KL
-    reverse_weight: 1.0
+    forward_weight: 0.0   # 0.0 = 纯逆向KL
+    reverse_weight: 1.0   # 可调: 0.5/0.5为混合KL
 
 data:
-  train_path: "data/geosr_chain/final/train.jsonl"
-  dev_path: "data/geosr_chain/final/dev.jsonl"
-  test_path: "data/geosr_chain/final/test.jsonl"
-  max_length: 2048
+  train_path: "../../data/splits/train.jsonl"
+  dev_path: "../../data/splits/dev.jsonl"
+  test_path: "../../data/splits/test.jsonl"
+  max_length: 1024
 
 output:
   checkpoint_dir: "checkpoints/"
