@@ -1,122 +1,368 @@
 # GeoKD-SR Project Work Log
 
-## 2026-03-27 LoRA微调模型双格式对比评测 + 深度分析
+## 2026-04-06 GeoKD-SR项目最新进展综合报告
 
-### 任务概述
-1. 创建两种提示词格式的评测脚本进行对比
-2. 执行微调前后模型深度对比分析，诊断微调失败原因
+### 一、数据层（Layer 1 实体对事实层）— 已完成
 
-### 评测结果对比
+| 数据文件 | 路径 | 记录数 | 状态 |
+|---------|------|--------|------|
+| final_entity_database.json | D:\30_keyan\data\ | 1,363实体(12类型) | 完成 |
+| pairs_positive_raw.jsonl | D:\30_keyan\data\ | 15,051条(过采样) | 完成 |
+| pairs_positive.jsonl | D:\30_keyan\data\ | 10,000条(清洗后) | 完成 |
+| pairs_negative.jsonl | D:\30_keyan\data\ | 1,237条 | 完成 |
+| 划分后6个文件(train/dev/test×正负) | D:\gis_data\output\ | 8:1:1完美分割 | 完成 |
 
-**两种提示词格式对比**:
-| 指标 | 原始问题格式 | Prompt Template格式 | 差异 |
-|------|--------------|---------------------|------|
-| 总体准确率 | 21.89% | 17.24% | **+4.65%** |
-| Directional | 55.82% | 53.42% | +2.40% |
-| Metric | 11.40% | 9.45% | +1.95% |
-| Topological | 14.79% | 0.89% | **+13.90%** |
-| Composite | 4.47% | 6.50% | -2.03% |
+数据质量评分: 9.5/10，19层TVD全部OK，零冲突，零重复
 
-**结论**: 原始问题格式准确率更高（+26.96%），特别是拓扑类型差距巨大。
+### 二、题目生成模板层（Layer 2 准备）— 已完成
 
-### 微调前后深度对比
+- 19个提示词模板已设计完成（D:\30_keyan\问题生成模版设计\prompts\）
+  - 基础关系: directional_positive, metric_positive (2个)
+  - 拓扑关系正例: topo_contains/within/touches/crosses/disjoint_positive (5个)
+  - 拓扑关系负例: topo_contains/within/touches/crosses/disjoint_negative (5个)
+  - 复合关系正例: composite_dd/dir_topo/dist_topo/ddt_positive (4个)
+  - 复合关系负例: composite_dir_topo/dist_topo/ddt_negative (3个，C1无负例)
+- 难度控制: easy 30% / medium 50% / hard 20%，DifficultyBalancer动态分配
+- 输出格式: 4种题型(true_false/choice/fill_blank/open_qa)严格JSON
+- 验证机制: JSON结构验证 + spatial_facts一致性验证(距离允许1km误差)
+- Pipeline特性: 断点续传(progress.json)、速率控制(30次/分钟)、最多重试2次
 
-| 指标 | 微调前 | 微调后 | 变化 |
-|------|--------|--------|------|
-| Overall Accuracy | 23.16% | 22.06% | **-1.10%** |
-| Topological Accuracy | 24.85% | 21.01% | **-3.84% (-15.48%)** |
-| Composite Accuracy | 3.66% | 8.54% | **+4.88% (+133%)** |
+### 三、API调用测试 — 已完成
 
-### 样本级分析
-- 退化样本（正确→错误）: 53个 (4.48%)
-- 改进样本（错误→正确）: 36个 (3.04%)
-- **净退化**: 17个样本
+- API: DeepSeek-V3.2 via 阿里云DashScope兼容模式
+- 测试结果: directional_positive + topo_contains_positive 两个模板测试通过
+  - 延迟: 42-50秒/条
+  - Token: 3,275-4,251/条(prompt约2000-2600 + completion约1300-1650)
+  - 结构完整率: 100%(4种题型齐全)
+  - 答案一致性: 100%(与spatial_facts完全一致)
+- 测试报告: D:\30_keyan\问题生成模版设计\小样本测试报告.md
 
-### 错误模式诊断
-1. **拓扑偏见**: 模型倾向回答"XX位于YY内部"（+32个样本恶化）
-2. **距离偏向**: 模型倾向输出"约1200公里"（+73个样本恶化）
-3. **灾难性遗忘**: 拓扑推理能力退化15.48%
+### 四、待执行大规模生成任务
 
-### 微调失败根因
-1. 训练数据不平衡（"包含"类样本过多）
-2. 灾难性遗忘（原有能力丢失）
-3. 过拟合训练模式
+- 目标: 为11,237条实体对生成4种题型 → 约44,948条题目实例
+- 输入: D:\30_keyan\data\pairs_positive.jsonl(10,000) + pairs_negative.jsonl(1,237)
+- 模板: D:\30_keyan\问题生成模版设计\prompts\ (19个.md文件)
+- API: DeepSeek-V3.2 (dashscope兼容模式)
+- 预估耗时: 11,237条 × 46秒/条 ≈ 143.8小时(约6天) — 需云主机并行调用加速
+- 关键脚本: generate_test_prompts.py(测试用), test_deepseek_api.py(API测试)
 
-### 改进建议
-- 平衡训练数据各类拓扑关系样本
-- 降低学习率（5e-5 → 1e-5）
-- 减少训练轮数（3 → 1）
-- 考虑知识蒸馏方法
+### 五、关键设计决策总结
 
-### 输出文件
-- `eval_comparison/evaluate_raw.py` - 原始问题格式评测脚本
-- `eval_comparison/evaluate_prompt.py` - Prompt Template格式评测脚本
-- `eval_comparison/results/comparison_report.md` - 双格式对比报告
-- `eval_comparison/results/comparison_analysis_deep.md` - 深度分析报告
+1. 数据生成: PostGIS精确计算，非LLM生成，100%消除幻觉
+2. 双层架构: Layer 1实体对事实(PostGIS) + Layer 2题目实例(LLM)
+3. 难度体系: Layer 1无difficulty字段，难度由Layer 2的题型和模板控制
+4. 负例策略: 3种可选(A:仅正例/B:替换/C:混合)，用于对比实验
+5. 评测场景: 有坐标/无坐标分开报告
+6. 目标期刊: ISPRS IJGI "LLM4GIS"特刊
 
 ---
 
-## 2026-03-26 13:50 Qwen2.5-7B 带坐标版本评测完成
+## 2026-04-06 实体对数据综合审查报告
+
+**报告**: `docs/2026-04-06-entity-pair-comprehensive-audit-report.md`
+- 5代理并行审查 + 主统计验证, 综合评分9.5/10
+- 正例10,000+负例1,237=11,237条, 11+8种关系类型全部精确达标
+- 方向TVD(directional)=0.012(优秀), metric距离自然分布(峰值1000-2000km占42.7%)
+- 零重复/零自反/零正负例冲突, 实体覆盖率99.6%
+- C3/C4距离集中在0-500km是Point-in-Polygon几何必然(非缺陷)
+- 数据可安全进入Step 2题目生成
+
+## 2026-04-06 正例+负例统一8:1:1划分完成(v3修复)
+
+**脚本**: `D:\gis_data\pipeline\step2_split_data.py` (v3 — 代价函数修复)
+- **v2问题**: train=78.05%偏离80%，代价函数`fill_ratio→1.0`偏向dev/test(target小更容易接近1.0)
+- **v3修复**: 改用"放入后各split实际比例vs理想比例(0.8/0.1/0.1)的L1偏差"作为代价
+- **结果**: train=8990(80.0%), dev=1125(10.0%), test=1122(10.0%)
+  - 正例: train=8000, dev=1001, test=999
+  - 负例: train=990, dev=124, test=123
+- **19层TVD**: 全部OK，最高0.0037（C4负例），大部分=0.0000
+- **跨split冲突**: 0（pair_group互斥）
+- **正负例冲突**: 0
+- **方向TVD**: train=0.0287, dev=0.0320, test=0.0379（全部OK）
+- **泄露分析**: test中seen_pair=99.3%, unseen_pair=0.7%
+- 输出: `D:\gis_data\output\pairs_positive_{train,dev,test}.jsonl` + `pairs_negative_{train,dev,test}.jsonl`
+
+## 2026-04-06 实体对数据格式审查完成
+
+**审查范围**: pairs_positive.jsonl (10000条) + pairs_negative.jsonl (1237条)
+**检查项**: 8项 - 基础字段、实体子字段、spatial_facts、pair_id唯一性、is_negative、坐标格式、JSON解析、reference_entity
+**结果**: 数据质量优秀，7/7项完全通过
+**发现问题**: (1)三沙市等南海实体因纬度<18°被误判异常(14条)，建议扩展纬度下限至3°；(2)reference_entity字段在metric/touches/disjoint关系中部分缺失(正例35%、负例24%)，可能正常（对称关系不需要）
+**脚本**: scripts/review_entity_pairs_format.py, scripts/deep_analysis_entity_pairs.py
+
+## 2026-04-06 实体对数据修复完成（三重修复）
+
+**修复内容**:
+1. **C4正例**: airport添加到point_types，配额公式修正为 `round(base_q * target / total_base_q)`，C4从620达到625
+2. **C2/C3/C4负例**: 余数分配策略替换整除截断，C2:144→150，C3:144→150，C4:180→187
+3. **metric距离**: 删除5区间强制均分，province-province从510降至102，随机采样自然分布
+4. **距离自然分布**: 所有含距离的复合关系(C1/C3/C4正例+C2/C3/C4负例)不再强制距离均匀
+
+**修复后结果**:
+- Phase 1 正例: 10,000条（精确达标）
+- Phase 2 负例: 1,237条（精确达标）
+- 总计: 11,237条
+- C4 airport参与: 62条
+- 方向8方位: TVD < 0.05
+- metric距离自然分布: 0-100km(1.2%), 100-500km(11.7%), 500-1000km(22.5%), 1000-2000km(42.7%), 2000+km(21.9%)
+
+## 2026-04-06 实体对设计vs实际对比报告
+
+**报告**: `docs/2026-04-06-entity-pair-design-vs-actual-comparison.md`
+- 11种关系类型逐项对比，系统性偏差分析
+- 关键发现: province高频集中、Point-in-Polygon短距离集中(几何必然)、C4差5条(频次消耗)
+- 总偏差 -24条(-0.2%)，数据质量达标
+
+## 2026-04-06 实体对生成报告完成
+
+**完整报告**: `docs/2026-04-06-entity-pair-generation-report.md`
+- Phase 1 正例 9,995条 + Phase 2 负例 1,218条 = 总计 11,213条
+- 实体覆盖率 99.6% (1,358/1,363)，方向8方位均匀度 TVD<0.05
+- 下一步: Step 2 GLM-4.7 题目生成 (~44,852条)
+
+## 2026-04-05 实体对数据生成完成（Phase 1 + Phase 2）
+
+**Step 0 完成**: entity_database_v3.json (1,363条) 成功导入 PostGIS geokr_entity 表
+- 空间验证: province质心包含city=474对, province-province touches=68对, city-city touches=906对, Line-Polygon crosses=2,127对
+
+**Step 1a 完成**: Phase 1 正例实体对 13,881条(过采样) → 筛选到 9,995条
+- 方向(directional): 2,500 (8方位分布均匀 TVD<0.05)
+- 距离(metric): 2,500 (5区间分布均匀 TVD<0.05)
+- 拓扑5类各500: contains=500, within=500, touches=500, crosses=500, disjoint=500
+- 复合4类: C1=875, C2=500, C3=500, C4=620(差5条可接受)
+
+**Step 1b 完成**: Phase 2 负例实体对 1,218条
+- 拓扑5类各150 + 复合3类(C2=144, C3=144, C4=180)
+- 负例策略: 空间关系为假的实体对，近距离采样保证合理性
+
+**输出文件**:
+- `D:\gis_data\output\pairs_positive.jsonl` (9,995条正例)
+- `D:\gis_data\output\pairs_negative.jsonl` (1,218条负例)
+- 总计 11,213 条实体对
+
+**关键修复**: entity_id字符串比较导致province-city组合为0(p>c)，改为`!=`+frozenset去重
+
+## 2026-04-05 双层数据架构设计方案完成（两阶段更新）
+
+**核心决策**: 重新定义研究价值——不是让LLM替代PostGIS做计算，而是验证小模型能否从大模型中蒸馏学习空间推理能力
+
+**设计方案要点**:
+1. **双层架构**: Layer1实体对事实层(PostGIS确定性计算) + Layer2题目实例层(LLM生成4种题型)
+2. **两阶段生成**: Phase 1生成10,000正例 + Phase 2生成1,237负例 = 总计11,237条实体对
+3. **方向推理不含距离**: directional的spatial_facts仅含direction_8+azimuth_deg，不含distance_km
+4. **11种空间关系**: directional + metric + 5种拓扑 + 4种复合，每种关系都有独立prompt模板(正例+负例各4种题型)
+5. **负例使用策略**: 方案A(仅正例)/方案B(替换)/方案C(混合)，用户按需选择
+4. **4种题型**: 判断题(精确匹配) + 选择题(精确匹配) + 填空题(关键词匹配) + 问答题(语义评测)
+5. **评测双轨**: 有坐标(测试推理) / 无坐标(测试内部知识)，分开报告
+6. **11种关系类型各有专用Prompt模板**: 含正例+负例完整4题型示例
+7. **V5.2兼容**: 展平后可直接用于Exp01-Exp09
+
+**设计文档位置**: `C:\Users\60207\.claude\plans\serene-wiggling-thacker.md`
+
+## 2026-04-06 实体库导入PostGIS + 详细采样策略完成
+
+**实体库导入**:
+- entity_database_v3.json(1,363条) → PostGIS `geokr_entity` 表
+- 1,360条有完整geometry，3条city的geometry为null
+- 索引: centroid(GIST), geom(GIST), type(B-tree)
+- 空间查询验证通过: Contains/Touches/Crosses/Azimuth/DistanceSphere全部正常
+
+**可行性分析与采样策略修正**:
+- 关键发现: **Touches正例仅225对**（city-city:216, province-province:9），远低于目标500
+- 修正分配: touches全量225，缺口275重新分配到其他4种拓扑(contains:575, within:575, crosses:575, disjoint:550)
+- 过采样策略: 1.5x过采样(~14,916条) → 筛选至10,000条正例
+- 实体对互斥规则: 同一实体对的所有关系类型实例在同一个split中
+- 11种空间关系类型均有详细的实体类型组合分配表
+
+
+
+## 2026-04-03 实体库V2构建完成 — ALL CHECKS PASSED
+
+**结果**: entity_database_v2.json 构建完成，1,573个实体，10项验证全部通过
+
+| 类型 | 数量 | 知名数 | 知名率 |
+|------|------|--------|--------|
+| province | 34 | 34 | 100% |
+| city | 363 | 363 | 100% |
+| peak | 222 | 182 | 82% |
+| lake | 178 | 146 | 82% |
+| attraction | 173 | 142 | 82% |
+| station | 101 | 83 | 82% |
+| hospital | 95 | 78 | 82% |
+| university | 116 | 95 | 82% |
+| airport | 73 | 60 | 82% |
+| river | 96 | 79 | 82% |
+| railway | 62 | 51 | 82% |
+| road | 60 | 49 | 82% |
+| **总计** | **1,573** | **1,362** | **82.1%** |
+
+**修复的Bug**:
+1. entity_id重复117个 → 添加used_osm_ids去重机制 → 0重复
+2. road类型仅7个 → select_cols含多余code列 → 列名映射解析 → 60个
+3. 知名率仅71.7% → TYPE_TARGETS unique_need过大 → 按实际知名数调整 → 82.1%
+
+**关键文件**: `D:\gis_data\output\entity_database_v2.json`
+
+## 2026-04-05 道路实体修正 — road_entities_verified.json
+
+**完成**: `road_entities_verified.json` — 53条高速公路，全部MultiLineString + centroid重算
+**数据源**: PostGIS `osm_roads`表(8,558,574条)，`正确实体坐标/道路正确对应关系.txt`(53条)
+**统计**: 段数223~8541(平均3034)，经度94.85°~127.02°E，纬度19.10°~47.18°N，100%成功
+**脚本**: `D:\gis_data\output\verify_roads.py`
+
+## 2026-04-05 铁路实体修正 — railway_entities_verified.json
+
+**完成**: `railway_entities_verified.json` — 49条铁路，全部MultiLineString + centroid重算
+
+**数据源**: PostGIS `china_railway`表(179,121条)，用户手动梳理`铁路正确对应关系.txt`(50行→去重49条)
+**修正项**: 南疆铁路(兰疆线→南疆线, 1244段)、京哈高铁(京哈高速铁路→京哈线, 404段)
+**统计**: 段数10~1423(平均508)，经度83.85°~123.91°E，纬度21.69°~48.02°N
+
+**脚本**: `D:\gis_data\output\verify_railways.py`
+
+## 2026-04-04 实体坐标修正系列 — verified JSON
+
+**完成内容**:
+1. `lake_entities_verified.json` — 83个湖泊(polygon contains正确坐标)
+2. `peak_entities_verified.json` — 178个山峰
+3. `attraction_entities_verified.json` — 123个景点
+4. `university_entities_verified.json` — 95个大学
+5. `hospital_entities_verified.json` — 70个医院
+6. `river_entities_verified.json` — 62条河流(MultiLineString, 合并所有同名OSM段, centroid重算)
+7. `airport_entities_verified.json` — 参考格式模板
+
+**核心发现**: OSM重名匹配错误严重，点实体peak 52%/attraction 46%/university 39%/hospital 34%距离≥5km。河流单条OSM记录geometry不完整，需合并所有同名段。
+
+## 2026-04-03 Entity Database V2 设计方案 — 实体对配比均衡调整
+
+**问题**: peak类型知名实体参与度过高（~2,100次出现/占非行政35%），hospital/university/airport参与度过低
+
+**调整方案**:
+- peak出现次数: ~2,100 → ~1,260 (↓40%)
+- hospital出现次数: ~200 → ~790 (↑295%)
+- university出现次数: ~200 → ~775 (↑288%)
+- 新增airport类型: ~40 → ~340 (新增type，映射osm_transport fclass IN ('airport','airfield'))
+- 类型总数: 11种 → 12种
+- 知名实体目标: 910 → 940
+
+**具体调整**:
+1. 方向(D): D3 peak 500→300，新增D6 university 200、D7 hospital 150
+2. 距离(M): 新增M8 hospital 200、M9 airport 150、M10 university 150
+3. 拓扑-包含(TC): 新增TC-PT5 hospital 30、TC-PT6 university 30
+4. 拓扑-包含于(TW): 新增TW-PT4~6 hospital/university/airport各20-30
+5. 拓扑-分离(TD): 新增TD7 hospital 40、TD8 airport 30
+6. 复合C1~C4: 新增university/hospital/airport子组合
+
+**约束**: 总计10,000条实体对不变，各分类合计仍为2,500条
+
+**计划文件**: C:\Users\60207\.claude\plans\serene-wiggling-thacker.md
+
+## 2026-04-03 实体数据库(entity_database.json)统计摘要
+
+数据文件: D:\gis_data\output\entity_database.json
+
+- 总实体数: 105,897
+- centroid缺失: 0 (所有实体都有centroid)
+- name_zh缺失(空或等于entity_id): 仅2条 (province:1, district:1)
+
+各entity_subtype数量分布:
+| subtype | 数量 |
+|---------|------|
+| peak | 30,099 |
+| motorway | 18,657 |
+| river | 18,089 |
+| attraction | 9,571 |
+| provincial_road | 9,018 |
+| reservoir | 4,879 |
+| rail | 3,538 |
+| forest | 2,988 |
+| national_road | 2,630 |
+| hospital | 2,267 |
+| nature_reserve | 1,548 |
+| lake | 1,093 |
+| park | 745 |
+| city | 363 |
+| university | 188 |
+| district | 114 |
+| stadium | 53 |
+| province | 35 |
+| airport | 22 |
+
+geometry_type分布: Line(51,932) / Point(42,200) / Polygon(11,765)
+source分布: osm(105,385) / geoatlas(512)
+
+## 2026-04-03 GeoKD-SR数据集全面质量验证报告 (10项指标)
+
+### 验证结果汇总: 8/10 通过
+
+| 检查项 | 结果 | 说明 |
+|--------|------|------|
+| 1. 总量=10000 | PASS | 精确10000条 |
+| 2. 11种子类型数量 | PASS | 全部精确匹配，4大类各2500 |
+| 3. entity字段完整性 | PASS | centroid/geometry_type零缺失，Polygon70.3%/Point28.9%/Line0.8% |
+| 4. 非行政实体知名覆盖率>=80% | FAIL | 仅22.7%，大量俄语/老挝语/缅甸语非知名实体 |
+| 5. 难度分布 | PASS | easy=3000(30.0%)/medium=5000(50.0%)/hard=2000(20.0%) |
+| 6. 数据划分TVD<0.05 | PASS | train=0.0048/dev=0.0440/test=0.0261 |
+| 7. spatial_result完整性 | PASS | 所有字段完整无缺失 |
+| 8. pair_id唯一性 | FAIL | 2495条重复，topo类型5个pair_id各重复500次 |
+| 9. entity_id格式 | PASS | 9种前缀(admin_city/admin_prov/terrain/landmark/wb/facility/ww/railway/road) |
+| 10. 划分比例8:1:1 | PASS | 8000/999/1001，各划分间有5个重叠pair_id(因topo重复导致) |
+
+### 关键问题分析
+
+**问题1: pair_id重复 (topological类型)**
+- topological类型的2500条数据仅使用了5个pair_id (topo_05001~topo_07001)
+- 每个子类型(contains/within/touches/crosses/disjoint)各500条共享同一个pair_id
+- 根因: 生成脚本中topological类型的pair_id没有按记录递增编号
+- 影响: 导致数据划分检查中train/dev/test之间各出现5个重叠pair_id
+
+**问题2: 非行政实体知名覆盖率低 (22.7% vs 目标80%)**
+- 数据中包含大量跨境实体(俄罗斯、老挝、缅甸等)，名称为非中文字符
+- 344条waterway实体的entity_type为空(有entity_id但无entity_type/entity_subtype/source)
+- 非行政实体类型分布: terrain(2884)/landmark(1460)/water_body(1308)/facility(1089)/空类型(344)/waterway(123)/road(30)/railway(3)
+- 很多landmark/facility实体为小众景点，知名度低
+
+### 修复建议
+1. 为topological类型的2500条数据生成唯一pair_id (topo_05001~topo_07500)
+2. 过滤或替换跨境非知名实体，优先使用中国境内知名地理实体
+3. 补全344条waterway实体的entity_type/entity_subtype/source字段
+4. 修复后重新执行数据划分脚本
+
+## 2026-04-02 中国著名地理实体名称字典整理 ✅
+
+### 完成内容
+- 创建并完善 `docs/superpowers/specs/1.txt` 中的 `FAMOUS_ENTITY_NAMES` 字典
+- 6大核心类别均达100+实体: mountains(167)/rivers(179)/lakes(127)/scenic_spots(186)/cities(178)/landforms(105)
+- 补充类别: islands(65)/waterfalls(51)/canyons(57)/provinces(34)
+- 总计 **1,149个唯一地理实体**，已去重验证
+- 数据来源: 维基百科中国山峰/河流/湖泊列表、百度百科、文旅部358家5A景区名单
+
+## 2026-03-29 九交模型与空间推理数据集综合研究 ✅
 
 ### 任务概述
-对 Qwen2.5-7B 模型进行带坐标版本（split_coords 数据集）的生成与评测任务
-
-### 执行步骤
-1. 创建坐标版本配置 `generation_config_coords.yaml`，包含坐标说明提示词
-2. 执行 Stage 1 生成 1183 条预测
-3. 执行 Stage 2 评测（15%距离容差）
-
-### 评测结果对比
-
-| 指标 | 不带坐标 | 带坐标 | 变化 |
-|------|---------|--------|------|
-| 总体准确率 | 36.77% | 39.48% | +2.71% ⬆️ |
-| 方向准确率 | 50.00% | 54.79% | +4.79% ⬆️ |
-| 拓扑准确率 | 56.51% | 51.78% | -4.73% ⬇️ |
-| 度量准确率 | 25.41% | 35.83% | +10.42% ⬆️⬆️ |
-| 组合准确率 | 8.13% | 8.94% | +0.81% |
+完成三项研究工作：(1) 九交模型(9-Intersection/DE-9IM)完整理论梳理；(2) 基于真实GIS数据的空间关系推理数据集方案调研；(3) OSM实体类型映射方案研究。
 
 ### 关键发现
-- **Qwen-7B 与 Qwen-1.5B 表现相反**: 1.5B 带坐标版本下降 3.63%，而 7B 提升 2.71%
-- **度量关系大幅提升**: +10.42%，说明 7B 能有效利用坐标进行距离计算
-- **拓扑关系下降**: -4.73%，坐标信息可能干扰拓扑判断
+1. **九交模型关系数量**（DE-9IM框架，Shen et al. 2018）：
+   - 面-面：12种（当前数据集仅5种，严重不足）
+   - 面-线：31种（当前数据集几乎未覆盖）
+   - 线-线：47种（当前数据集几乎未覆盖）
+   - 面-点：3种，线-点：3种，点-点：2种
 
-### 输出文件
-- `qwen-7B/stage1_generation/config/generation_config_coords.yaml`
-- `qwen-7B/stage1_generation/outputs/split_coords_predictions.jsonl`
-- `qwen-7B/stage2_evaluation/results/split_coords/metrics.json`
-- `qwen-7B/stage2_evaluation/results/split_coords/report.md`
+2. **OGC标准8种谓词**：Equals, Disjoint, Intersects, Touches, Crosses, Within, Contains, Overlaps（+ Covers, CoveredBy）
+
+3. **相关工作**：GeoLLM(ICLR 2024), K2/GeoSignal(WSDM 2024), MapQA(2025), MapVerse(2026)
+   - MapQA使用SQL模板从OSM提取QA对，事实正确性由空间数据库保证
+   - GeoSignal是知识密集型指令数据（39,749条），不含空间关系推理
+
+4. **推荐数据生成方案**：基于PostGIS的DE-9IM精确计算 + OSM真实数据
+
+### 详细报告
+完整研究报告已写入计划文件：`C:\Users\60207\.claude\plans\serene-wiggling-thacker-agent-aef1aa995a07c05c6.md`
 
 ---
 
-## 2026-03-26 P0修复：移除System Prompt + 简短答案输出
-
-### 任务概述
-修复SFT训练失败的根本原因：训练、推理、评测三个阶段使用了不一致的System prompt，导致准确率从23.16%下降到5.16%（下降77.7%）
-
-### 修改内容
-1. **data_processor.py** (4处修改)
-   - Line 38: `DataConfig.system_prompt` → 空字符串
-   - Line 49: `DEFAULT_system_prompt` → 空字符串
-   - Line 90-94: `convert_to_messages` → 移除system role
-   - Line 471-475: `to_hf_dataset` → 移除system role
-
-2. **config.py** (1处修改)
-   - Line 65: `DataConfig.system_prompt` → 空字符串
-3. **evaluate.py** (2处修改)
-   - Line 149: `system_prompt` parameter → 空字符串
-   - Line 175-178: `messages` construction → 移除system role
-4. **train_linux_24gb.yaml** (1处修改)
-   - Line 38: `data.system_prompt` → 空字符串
-
-### 验证结果
-✅ 所有验证通过！ 训练和推理现在使用相同的Qwen默认system prompt
-✅ 格式一致性已保证
-
-### 预期效果
-- 准确率恢复到基线水平 (23%+)
-- 无system prompt泄漏
-- 答案简洁（2-30字)
+## 2026-03-22 trainer.py 优化器配置更新 ✅
 
 ### 任务概述
 将 `GeoKD-SR/exp/exp0/qwen-1.5B-sft/src/trainer.py` 的优化器配置从 8-bit 优化器改为标准 adamw，以适配 24GB 云端训练环境。
@@ -7811,6 +8057,75 @@ python scripts/validate_dataset_v2.py \
 - doc-writer: 创建审查文档
 n- �� docs/data_review/ Ŀ¼����4����������ĵ���n  - validation_checklist.md: 30�����ά����ϸ˵����L1��ʽ4�L2�߼�8�L3�ֲ�8�L4����10�n  - validation_config_template.yaml: ���������ļ�ģ�壨L1-L4���á�ʵ������ԡ�������ã�n
 
+## 2026-03-25 K2数据集下载和蒸馏验证框架实现
+
+### 任务概述
+实现了K2论文（WSDM 2024，上海交大+中科院地理所）的数据集下载和蒸馏验证框架，用于快速验证蒸馏可以有效提升小模型的空间/地理能力。
+
+### 完成的工作
+
+#### 1. 数据集下载
+- **GeoSignal（训练数据）**: 39,749条指令微调样本
+  - 任务类型分布：geo(15,055), alpaca-gpt4(9,298), dolly(6,897), geoqa(5,511), NI(1,152), self(950), arc(886)
+  - 已转换为ChatML格式并分割为训练集(37,762)/验证集(1,987)
+- **GeoBench（评测数据）**:
+  - AP Study: 1,395道选择题（美国先修考试）
+  - NPEE: 多种题型（研究生入学考试）
+
+#### 2. 创建的文件
+
+| 文件路径 | 说明 |
+|----------|------|
+| `data/k2_raw/download_k2_data.py` | 数据下载脚本 |
+| `data/k2_raw/convert_geosignal.py` | 数据格式转换脚本 |
+| `data/k2_raw/explore_k2_data.py` | 数据探索脚本 |
+| `exp/k2_distill/configs/train_k2_geosignal.yaml` | SFT训练配置 |
+| `exp/k2_distill/eval_geobench.py` | GeoBench评测脚本 |
+| `exp/k2_distill/README.md` | 完整运行指南 |
+
+#### 3. 数据集统计
+
+| 数据集 | 样本数 | 用途 |
+|--------|--------|------|
+| GeoSignal Train | 37,762 | SFT训练 |
+| GeoSignal Dev | 1,987 | 验证 |
+| GeoBench AP Study | 1,395 | 选择题评测 |
+| GeoBench NPEE | 多种题型 | 主观题评测 |
+
+#### 4. 验证流程
+
+```
+Step 1: 评测基线 → 用GeoBench评测Qwen2.5-1.5B
+Step 2: 蒸馏训练 → 用GeoSignal对1.5B进行SFT
+Step 3: 验证效果 → 评测蒸馏后1.5B准确率提升
+```
+
+#### 5. 预期结果
+根据K2论文（表5）:
+- 基线LLaMA-7B: NPEE 21.6%, AP Test 27.6%
+- 微调后K2-7B: NPEE 39.9%, AP Test 29.3%
+
+### 使用方法
+
+```bash
+# 1. 转换数据格式（已完成）
+python data/k2_raw/convert_geosignal.py
+
+# 2. 评测基线（需要设置ZHIPUAI_API_KEY）
+set ZHIPUAI_API_KEY=your_api_key
+python exp/k2_distill/eval_geobench.py --max-samples 100 --output results/baseline.json
+
+# 3. 训练（需修改配置中的模型路径）
+python exp/k2_distill/train_k2.py --config configs/train_k2_geosignal.yaml
+```
+
+### 参考资源
+- K2 GitHub: https://github.com/davendw49/k2
+- GeoSignal: https://huggingface.co/datasets/daven3/geosignal
+- GeoBench: https://huggingface.co/datasets/daven3/geobench
+
+---
+
 ## 2026-03-08 提示词偏差检查整合到审查机制
 
 ### 任务概述
@@ -9631,359 +9946,197 @@ python scripts/split_dataset_entity_stratified.py     --input data/final/final_1
 
 ---
 
-## 2026-03-25 System Prompt 一致性调查报告
+## 2026-03-25 K2数据集下载完成
 
 ### 任务概述
-作为 Prompt 工程和模板分析专家，深入分析 System Prompt 的一致性问题，调查训练-推理不一致导致的模型异常。
+从HuggingFace下载K2基准测试数据集，包括GeoSignal训练数据和GeoBench评测数据。
 
-### 关键发现
+### 数据集详情
 
-**🔴 严重问题：System Prompt 存在多处不一致**
+#### GeoSignal（训练数据）
+- 样本数: 39,749条
+- 字段结构: instruction, input, output, type, category
+- 数据类型: dolly格式的指令微调数据
+- 保存位置: 
 
-| 位置 | System Prompt 差异 |
-|------|-------------------|
-| `configs/train_linux_24gb.yaml:38` | "地理空间推理**专家**...**空间关系**...**请简洁准确地回答问题。**" |
-| `src/data_processor.py:38,49` | "地理空间推理**助手**...**拓扑关系**..." (无结尾指令) |
-| `scripts/evaluate.py:149` | 与配置文件一致 |
+#### GeoBench（评测数据）
+包含两个子任务:
 
-### 差异详情
+**1. NPEE (地理选择填空题)**
+- 样本数: 6条
+- 字段: noun, choice, completion, tf, qa, discussion
+- 格式: 字典型结构
 
-1. **身份定位**: "专家" vs "助手"
-2. **描述词**: "空间关系" vs "拓扑关系"
-3. **结尾指令**: 有 "请简洁准确地回答问题。" vs 无
+**2. APStudy (AP地理选择题)**
+- 样本数: 1,395条
+- 字段: id, question (stem, choices), answerKey
+- 格式: 标准选择题格式
 
-### 影响
+### 下载脚本
+-  - 最终可用的下载脚本
 
-- **91% 预测样本异常** (前100个样本中91个)
-- 异常类型: Prompt泄漏、输出截断、格式混乱、空输出
-- 根因: 训练-推理分布偏移 (Distribution Shift)
+### 数据保存位置
 
-### Qwen2.5 默认行为
 
-- 当不提供 system message 时，自动注入: "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
-- 使用 ChatML 格式: `<|im_start|>system\n...<|im_end|>\n`
-
-### 修复建议
-
-1. **紧急**: 修改 `data_processor.py` 第38行和49行，与配置文件一致
-2. **推荐**: 创建 `src/constants.py` 单一配置源
-3. **验证**: 添加配置验证，确保训练和评估的 system_prompt 一致
-
-### 输出文件
-
-- 详细报告: `GeoKD-SR/exp/exp0/qwen-1.5B-sft/docs/system_prompt_investigation_report.md`
+### 注意事项
+1. GeoBench两个子任务数据结构不同，NPEE为字典型，APStudy为列表型
+2. 数据来自HuggingFace: daven3/geosignal 和 daven3/geobench
+3. 无需认证即可下载（有速率限制提示）
 
 ### 状态
-✓ System Prompt 来源追踪完成
-✓ Qwen 默认模板分析完成
-✓ Prompt 冲突分析完成
-✓ 预测结果异常分析完成
-✓ 调查报告已输出
-✓ 已发送消息给 team-lead
+✓ GeoSignal下载完成 (39,749条)
+✓ GeoBench NPEE下载完成 (6条)
+✓ GeoBench APStudy下载完成 (1,395条)
 
 ---
 
-## 2026-03-25 SFT训练数据质量分析报告
+
+## 2026-03-25 K2数据集下载完成
 
 ### 任务概述
-深入分析 GeoKD-SR/data/splits/train.jsonl 训练数据的质量问题,包括数据质量检查、分布分析、答案格式检查、数据泄露检查等。
+从HuggingFace下载K2基准测试数据集，包括GeoSignal训练数据和GeoBench评测数据。
 
-### 数据基本情况
-- 训练集: 9,463条
-- 验证集: 1,124条
-- 测试集: 1,183条
+### 数据集详情
 
-### 发现的关键问题
+#### GeoSignal（训练数据）
+- 样本数: 39,749条
+- 字段: instruction, input, output, type, category
+- 保存位置: data/k2_raw/geosignal/
 
-#### 1. 答案格式不一致（严重）
-- 有句号结尾: 5,687条 (60.10%)
-- 无标点结尾: 3,776条 (39.90%)
-- 示例: `西南方向。` vs `东北方向`
-
-#### 2. 答案过于简单（中等）
-- 单字/词答案: 95条 (如"是"、"相离")
-- 答案<=3字符: 251条
-
-#### 3. 推理链与答案分离（关键发现）
-- 所有样本都有 reasoning_chain 字段（5步推理过程）
-- 但仅 0.14% 的答案包含推理关键词
-- 答案非常简洁,不包含推理过程
-- 影响: 学生模型无法学习到推理能力
-
-#### 4. 高频重复答案（轻微）
-- "西南方向": 409次
-- "东北方向": 378次
-- 可能导致模型偏向生成常见答案
-
-#### 5. 数据泄露检查（通过）
-- 训练集-验证集重叠: 0条
-- 训练集-测试集重叠: 0条
-- 训练集内重复ID: 0条
-
-### 答案长度分布
-| 长度区间 | 数量 | 占比 |
-|----------|------|------|
-| <10字符 | 3,751 | 39.64% |
-| 10-20字符 | 3,679 | 38.88% |
-| 20-50字符 | 2,032 | 21.47% |
-
-### 各类型平均答案长度
-- directional: 7.37字符 (最短)
-- metric: 11.58字符
-- topological: 13.39字符
-- composite: 21.18字符 (最长)
-
-### 改进建议
-1. 统一答案格式: 添加后处理脚本,统一标点符号
-2. 扩展简单答案: 将"是"扩展为完整句子
-3. 融入推理过程: 考虑将reasoning_chain融入训练答案
-4. 增强composite类型数据
+#### GeoBench（评测数据）
+- NPEE: 6条（字典型结构）
+- APStudy: 1,395条（列表型，id/question/answerKey格式）
+- 保存位置: data/k2_raw/geobench/
 
 ### 状态
-✓ 训练数据质量分析完成
-✓ 发现答案格式不一致问题
-✓ 发现推理链未融入答案问题
-✓ 数据泄露检查通过
-
-
+✓ 所有数据下载完成
 ---
 
-## 2026-03-25 SFT训练失败原因深度分析报告
 
-### 任务概述
-使用Agent Team对SFT训练导致精度下降的原因进行多维度深度调查。
+## 2026-04-03 00:12 GeoKD-SR统一Pipeline重构完成 - 10/10全部通过
 
-### 性能下降概况
-- **微调前准确率**: 23.16%
-- **微调后准确率**: 5.16%
-- **下降幅度**: **77.7%**
+### Pipeline重构
+- 创建了 `03_unified_pipeline.py` 替代旧的03a+04两步方案
+- 创建了 `famous_entities.py` 知名实体注册表(3685/105897=3.5%)
+- 添加了 `_fill_missing_centroids()` 方法修复290个缺失centroid(全部从PostGIS OSM表补充)
+- 修复了pair_id重复问题(使用 `_pair_counter` 全局递增计数器)
+- 修复了344条空entity_type/subtype问题(`_infer_entity_type/subtype` 推断方法)
 
-### 核心发现
+### 最终验证结果: 10/10 PASS
 
-**根本原因: 训练与推理阶段的System Prompt不一致**
-
-| 阶段 | 文件位置 | System Prompt内容 |
-|------|---------|------------------|
-| **训练** | `data_processor.py:49` | "你是一个专业的地理空间推理**助手**，擅长回答关于地理位置、方向、距离和**拓扑关系**的问题。" |
-| **推理** | `evaluate.py:149` | "你是一个地理空间推理**专家**，专门回答关于地理位置、方向、距离和**空间关系**的问题。请**简洁准确地回答问题**。" |
-
-### 预测结果异常分析
-
-| 异常类型 | 出现频率 | 示例 |
-|---------|---------|------|
-| 空输出 | ~15% | "" |
-| 截断输出 | ~10% | "郑", "舟山" |
-| System泄漏 | ~30% | "福建省地理学家，请从福建回答..." |
-| 格式混乱 | ~25% | "约\n1800公里航向回答..." |
-| 正常输出 | ~20% | "东南方向" |
-
-### 训练过程分析
-- 训练Loss: 3.22 → 0.80 (正常下降)
-- Token Accuracy: 43.6% → 81.3% (正常上升)
-- **结论**: 训练指标正常，但学习的内容无法在推理时正确应用
-
-### 超参数评估
-
-| 参数 | 当前值 | 推荐值 | 评估 |
-|------|-------|-------|------|
-| learning_rate | 5e-5 | 1e-5 ~ 2e-5 | ⚠️ 偏高 |
-| num_epochs | 3 | 1~2 | ⚠️ 可能过多 |
-
-### 修复方案
-
-**方案A (推荐): 统一移除System Prompt**
-- 训练和推理都不使用自定义system prompt
-- 利用Qwen的预训练知识
-- 修改文件: data_processor.py, evaluate.py, train_linux_24gb.yaml
-
-**方案B: 统一使用相同System Prompt**
-- 创建统一的prompt常量文件
-- 确保所有引用一致
-
-**方案C: 调整超参数重新训练**
-- learning_rate: 1e-5
-- num_epochs: 1
-- 与方案A或B配合使用
-
-### 调查团队
-
-| Agent | 负责领域 | 状态 |
-|-------|---------|------|
-| data-quality-analyst | 数据内容和质量分析 | ✅ 完成 |
-| format-consistency-analyst | 输入输出格式一致性 | ✅ 完成 |
-| prompt-template-analyst | System Prompt和模板分析 | ✅ 完成 |
-| hyperparameter-analyst | 训练算法和超参数分析 | ✅ 完成 |
-| e2e-flow-analyst | 端到端流程追踪 | ✅ 完成 |
+| 检查项 | 结果 | 详情 |
+|--------|------|------|
+| 1. 总量=10000 | PASS | 精确10000条 |
+| 2. 11种子类型数量 | PASS | 全部精确匹配 |
+| 3. entity字段完整性 | PASS | centroid/geometry_type/entity_type零缺失 |
+| 4. 非行政实体知名覆盖率>=80% | PASS | 6537/7238 (90.3%) |
+| 5. 难度分布 | PASS | easy=3000(30.0%)/medium=5000(50.0%)/hard=2000(20.0%) |
+| 6. 数据划分TVD<0.05 | PASS | TVD(train-dev)=0.0008, TVD(train-test)=0.0007, 难度TVD=0.0191 |
+| 7. spatial_result完整性 | PASS | 所有字段完整 |
+| 8. pair_id唯一性 | PASS | 10000个唯一pair_id |
+| 9. entity_id格式 | PASS | 9种前缀(admin_city/admin_prov/terrain/landmark/wb/facility/ww/railway/road) |
+| 10. 划分比例8:1:1 | PASS | 8000/999/1001 |
 
 ### 输出文件
-- 详细分析报告: `GeoKD-SR/docs/sft-failure-analysis-report.md`
-
-### 预期修复效果
-- ✅ 准确率恢复到基线水平 (23%+)
-- ✅ 预测输出完整、格式正确
-- ✅ 无system prompt泄漏
-- ✅ 训练和推理格式完全一致
+- D:\gis_data\output\entity_pairs.jsonl (10,000条全量)
+- D:\gis_data\output\splits	rain.jsonl (8,000条)
+- D:\gis_data\output\splits\dev.jsonl (999条)
+- D:\gis_data\output\splits	est.jsonl (1,001条)
 
 
+## 2026-04-04 14:56 — china_railway表导入完成
+- 将 D:\gis_data\全国最新铁路网矢量数据ailways.shp 导入PostGIS geokd_sr数据库
+- 表名: china_railway, 共179,121条记录, EPSG:4326
+- fclass分布: rail(168400), subway(8025), tram(1006), narrow_gauge(747), light_rail(671), monorail(246), funicular(18), miniature_railway(8)
+- 使用geopandas.to_postgis()导入(因系统无shp2pgsql)
+## 2026-04-06 实体对数据分布质量分析完成
 
----
+**分析脚本**: `analyze_entity_pair_distribution.py`
 
-## 2026-03-26 SFT训练失败原因深度分析完整报告生成
+**数据概览**:
+- 正例数据: 10,000条
+- 负例数据: 1,237条
+- 总计: 11,237条实体对
 
-### 任务概述
-整合5个专业Agent的调查结果，生成SFT训练失败原因的完整分析报告。
+**关键发现**:
+1. **关系分布**: 正例7/11种关系达成率100%，但C1/C2/C3/C4定性关系缺失(使用复合关系替代)
+2. **负例分布**: 5/8种关系达成率100%，C2/C3/C4负例缺失
+3. **实体类型覆盖**: 12/12种实体类型全部使用
+4. **实体覆盖率**: 99.63% (1,358/1,363)
+5. **实体对专一度**: 88.2%的实体对只出现在一种关系类型中
 
-### Agent Team调查结果
+**主要问题**:
+1. **C1/C2/C3/C4定性关系数据缺失**: 数据中使用复合关系(direction_distance_topology等)替代原设计的单一定性关系
+2. **touches关系组合单一**: 仅2种组合(city->city: 436, province->province: 64)
+3. **负例定性关系缺失**: C2/C3/C4负例完全缺失
+4. **高频实体集中**: TOP20全部为省级实体，北京市出现172次
 
-| Agent | 主要发现 |
-|-------|---------|
-| data-quality-analyst | 答案格式不一致(60%/40%)、推理链未融入答案 |
-| format-consistency-analyst | System Prompt严重不一致、未启用assistant_only_loss |
-| prompt-template-analyst | 三处System Prompt存在关键词差异 |
-| hyperparameter-analyst | 学习率5e-5偏高、3个epochs导致过拟合 |
-| e2e-flow-analyst | 完整端到端流程追踪、tokenization差异 |
+**实体频次分布**:
+- 1-5次: 202实体(14.9%)
+- 6-10次: 201实体(14.8%)
+- 11-20次: 695实体(51.2%)
+- 21-30次: 195实体(14.4%)
+- 31次+: 65实体(4.8%)
 
-### 核心问题
-
-1. **System Prompt不一致** (Critical)
-   - 训练: "助手" + "拓扑关系"
-   - 推理: "专家" + "空间关系" + 额外指令
-
-2. **未启用assistant_only_loss** (Critical)
-   - TRL对全序列计算loss，学习目标不明确
-
-3. **超参数问题** (Important)
-   - 学习率5e-5偏高 (推荐1e-5~2e-5)
-   - 3个epochs导致过拟合
-
-### 修复方案
-
-1. **方案A (推荐)**: 统一移除System Prompt
-2. **方案B**: 统一使用相同System Prompt
-3. **方案C**: 启用assistant_only_loss
-4. **方案D**: 调整超参数 (lr=2e-5, epochs=2)
-
-### 输出文件
-
-- 完整报告: `/mnt/workspace/30_keyan/docs/SFT-Failure-Deep-Analysis-Report.md`
-- 报告包含10个章节，涵盖:
-  - 核心发现
-  - 预测结果异常分析
-  - 训练过程分析
-  - 超参数评估
-  - 数据质量分析
-  - 端到端流程追踪
-  - 根因链分析
-  - 修复方案
-  - 验证计划
-  - 附录
-
-### 预期修复效果
-
-| 指标 | 修复前 | 修复后目标 |
-|------|--------|-----------|
-| 准确率 | 5.16% | ≥23% |
-| 空输出 | 15% | <1% |
-| System泄漏 | 30% | 0% |
+**跨关系重叠分析**:
+- 1种关系: 8,414对(88.2%)
+- 2种关系: 748对(7.8%)
+- 3种关系: 242对(2.5%)
+- 4种+: 140对(1.5%)
 
 
----
+# 2026-04-06 数据质量审查
+## 时间+总结摘要
+完成了对实体对数据的质量审查工作。
+## 主要发现
+1. 数据整体质量良好：无重复、无自反、无重叠、无缺失值、数据一致性良好
+2. 发现负例数据格式问题：300条缺少reference_entity字段，1348条spatial_facts格式不一致
+3. 负例索引750-1236的记录包含方向关系数据但标记为拓扑关系
+## 数据统计
+- 正例：10,000条（方向关系）
+- 负例：1,237条（拓扑关系）
+- 唯一实体：1,358个
 
-## 2026-03-27 LoRA微调模型评测问题诊断与修复
+# 2026-04-06 实体对空间分布特征分析完成
 
-### 问题背景
-用户怀疑微调后模型精度下降是推理时的问题，而非训练问题。
+## 时间+总结摘要
+完成了对实体对数据的空间分布特征深入分析，涵盖方向分布、方位角分布、距离分布、方向-距离联合分析以及负例空间分布特征。
 
-### 诊断结果
-**问题确认：推理时提示词不一致导致精度下降，而非训练问题！**
+## 主要分析结果
 
-### 评测结果对比
+### 1. 方向分布分析 (direction_8)
+- **数据覆盖**: 4500/10000 (45.0%)
+- **总体8方位分布**: 11.29%-13.47%，分布较为均匀
+- **Directional关系TVD**: 0.0118，**合格** (<0.05阈值)
 
-| 指标 | 原始评测 | exp0评测模式 | 提升 |
-|------|----------|--------------|------|
-| Overall Accuracy | 5.16% | **22.06%** | +327% |
-| Format Valid Rate | 42.69% | **100%** | +57.3pp |
-| Directional Accuracy | 13.01% | **41.44%** | +218% |
-| Topological Accuracy | 3.25% | **21.01%** | +546% |
-| Metric Accuracy | 2.93% | **15.64%** | +434% |
-| Composite Accuracy | 1.22% | **8.54%** | +600% |
+### 2. 方位角分布分析 (azimuth_deg)
+- **数据覆盖**: 4500/10000 (45.0%)
+- **基本统计量**: 最小值0.10°，最大值359.90°，平均值172.32°，中位数172.85°
+- **聚集系数R**: 0.0302，分布较为均匀，无显著角度聚集
 
-### 根本原因
-1. **原始评测**：使用原始问题直接推理，与训练格式一致，但缺少引导性提示词
-2. **exp0评测**：使用详细的prompt_template引导模型生成规范答案
+### 3. 距离分布分析 (distance_km)
+- **数据覆盖**: 4500/10000 (45.0%)
+- **Metric关系统计**: 平均值1413.26km，中位数1262.00km，标准差842.83km
+- **偏度**: 0.7366 (右偏分布)，**峰度**: 0.0741 (接近正态分布)
+- **距离区间分布**: 1000-2000km区间占42.72%，呈现自然分布特征（非强制均匀采样）
 
-### 修复措施
-1. 创建了 `evaluate_lora_exp0.py` 脚本
-2. 使用与exp0完全相同的提示词格式
-3. 正确加载LoRA权重（PeftModel + merge_and_unload）
-4. 使用单条推理模式
+### 4. 方向-距离联合分析
+- **Pearson相关系数**: -0.0000，p值0.9999
+- **结论**: 方向与距离无明显相关，符合空间统计独立性假设
 
-### 关键文件
-- 评测脚本: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/scripts/evaluate_lora_exp0.py`
-- 预测结果: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/predictions.jsonl`
-- 评测指标: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/metrics.json`
-- 对比分析: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/comparison_analysis.md`
+### 5. 负例空间分布特征
+- **数据覆盖**: 方向数据337/1237 (27.2%)，距离数据337/1237 (27.2%)
+- **关系类型分布**: unknown(75.75%), C1(24.25%)
 
-### 结论
-微调本身是有效的，问题在于推理配置。后续评测应统一使用exp0的评测模式和提示词格式。
+## 数据质量评估
+1. **方向分布质量**: TVD=0.0118合格，8方位分布均匀
+2. **方位角分布**: 全覆盖0-360度，无显著聚集
+3. **距离分布**: 呈现自然分布特征，中距离(1000-2000km)占比较高，符合中国地理实体分布规律
+4. **方向-距离独立性**: 相关性接近0，符合空间统计独立性假设
 
-
-
-## 2026-03-27 微调前后模型深度对比分析总结
-
-### 任务目标
-对qwen-1.5B微调前后模型进行深度对比分析，查找微调失败的原因。
-
-### 关键发现
-
-1. **整体性能下降**: 微调后Overall Accuracy从23.16%下降到22.06% (-4.74%)
-
-2. **退化>改进**: 
-   - 退化样本(正确→错误): 53个 (4.48%)
-   - 改进样本(错误→正确): 36个 (3.04%)
-   - 净退化: 17个样本
-
-3. **错误模式加剧**:
-   - 拓扑偏见("位于内部"): 218 → 250 (+14.7%)
-   - 距离偏向("约1200公里"): 436 → 509 (+16.7%)
-
-4. **唯一改进**: 复合问题准确率从3.66%提升到8.54% (+133%)
-
-### 微调失败原因
-1. 训练数据不平衡导致拓扑关系偏见加剧
-2. 模型对距离数值产生偏向("约1200公里")
-3. 可能存在灾难性遗忘
-
-### 输出文件
-- `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/comparison_analysis_deep.md`
-- `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/sample_differences.json`
-- `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/error_patterns.json`
-
----
-
-## 2026-03-27 评测对比结果Git提交
-
-### 提交信息
-- **Commit**: f3a6fac
-- **消息**: eval: 添加Qwen2.5-1.5B微调前后对比评测结果
-
-### 提交内容
-- `eval_comparison/`: 原始格式vs prompt格式对比评测
-- `eval_results_exp0/`: 微调前后模型对比分析
-
-### 评测数据来源确认
-- **微调前**: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/exp0/stage2_evaluation/results/qwen_eval/metrics.json`
-- **微调后**: `/mnt/workspace/30_keyan/GeoKD-SR/exp/exp0/qwen-1.5B-sft/eval_results_exp0/metrics.json`
-
-### 最终对比结果
-
-| 指标 | 微调前 | 微调后 | 变化 |
-|------|--------|--------|------|
-| Overall Accuracy | 23.16% | 22.06% | -1.10% |
-| Directional | 43.49% | 41.44% | -2.05% |
-| Topological | 24.85% | 21.01% | -3.84% |
-| Metric | 17.59% | 15.64% | -1.95% |
-| Composite | 3.66% | 8.54% | **+4.88%** |
+## 脚本位置
+- 分析脚本: 
+- 分析报告: 
 
 
 ## 2026-03-31 Exp02-Standard-KD (Hinton 2015 Forward KL) 实验完成

@@ -1,0 +1,340 @@
+# 方向+距离复合正例模板（Composite Direction-Distance Positive）
+
+## 系统角色
+
+你是一个地理空间推理数据集生成专家。你的任务是根据PostGIS精确计算的空间事实，为每对地理实体生成4种类型的自然语言题目。
+
+【核心约束】
+1. 你不做任何空间计算。所有事实已由PostGIS精确计算并给出。
+2. answer_structured必须从spatial_facts直接派生，不得修改任何数值。
+3. answer的自然语言表达必须与answer_structured完全一致。
+4. 4道题目的提问风格必须各不相同。
+5. 输出严格为JSON，不要添加任何额外文本。
+
+## 任务描述
+
+根据给定的两个地理实体和它们之间的空间方向与距离事实，生成包含**判断题、选择题、填空题、问答题**各一道的数据集条目。
+
+核心任务：**同时**判断两实体之间的8方位方向关系和直线距离。
+
+## 输入数据
+
+```json
+{
+  "entity_a": {
+    "name_zh": "{{entity_a_name}}",
+    "centroid": {{entity_a_centroid}},
+    "type": "{{entity_a_type}}"
+  },
+  "entity_b": {
+    "name_zh": "{{entity_b_name}}",
+    "centroid": {{entity_b_centroid}},
+    "type": "{{entity_b_type}}"
+  },
+  "spatial_facts": {
+    "direction_8": "{{fact_direction_8}}",
+    "azimuth_deg": {{fact_azimuth_deg}},
+    "distance_km": {{fact_distance_km}}
+  },
+  "difficulty": "{{difficulty}}"
+}
+```
+
+### 占位符说明
+
+| 占位符 | 说明 | 示例 |
+|--------|------|------|
+| `{{entity_a_name}}` | 实体A中文名称 | "武汉市" |
+| `{{entity_a_centroid}}` | 实体A质心坐标 [lng, lat] | [114.305, 30.593] |
+| `{{entity_a_type}}` | 实体A地理类型 | "city" |
+| `{{entity_b_name}}` | 实体B中文名称 | "长沙市" |
+| `{{entity_b_centroid}}` | 实体B质心坐标 [lng, lat] | [112.938, 28.228] |
+| `{{entity_b_type}}` | 实体B地理类型 | "city" |
+| `{{fact_direction_8}}` | A相对于B的8方位方向 | "东北" |
+| `{{fact_azimuth_deg}}` | A相对于B的方位角度数 | 29.7 |
+| `{{fact_distance_km}}` | A与B之间的直线距离（公里） | 296 |
+| `{{difficulty}}` | 难度等级 | "easy" / "medium" / "hard" |
+
+## 输出格式
+
+输出严格为JSON，结构如下：
+
+```json
+{
+  "true_false": {
+    "question": "（判断题题目文本，同时涉及方向和距离）",
+    "answer": "（自然语言答案）",
+    "answer_structured": {
+      "type": "boolean",
+      "value": true,
+      "direction": "东北",
+      "distance_km": 296,
+      "explanation": "..."
+    },
+    "difficulty": "{{difficulty}}"
+  },
+  "choice": {
+    "question": "（选择题题目文本，同时涉及方向和距离）",
+    "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
+    "answer": "（自然语言答案，如'正确答案是B'）",
+    "answer_structured": {
+      "type": "option",
+      "value": "B",
+      "direction": "东北",
+      "distance_km": 296,
+      "explanation": "..."
+    },
+    "difficulty": "{{difficulty}}"
+  },
+  "fill_blank": {
+    "question": "（填空题题目文本，用___表示空白处，需包含方向和距离两个空）",
+    "answer": "（自然语言答案）",
+    "answer_structured": {
+      "type": "keyword",
+      "value": "东北/296",
+      "explanation": "..."
+    },
+    "difficulty": "{{difficulty}}"
+  },
+  "open_qa": {
+    "question": "（问答题题目文本，要求同时回答方向和距离）",
+    "answer": "（自然语言详细答案）",
+    "answer_structured": {
+      "type": "free_text",
+      "direction": "东北",
+      "distance_km": 296,
+      "azimuth_deg": 29.7,
+      "explanation": "..."
+    },
+    "difficulty": "{{difficulty}}"
+  }
+}
+```
+
+## 多样性约束
+
+### 判断题多样性
+
+- **方向+距离同时陈述**：直接说明方向和距离（如"武汉市在长沙市的东北方向，直线距离约为296公里"）
+- **反向陈述**：交换参照点并取反方向（如"长沙市在武汉市的西南方向，直线距离约为296公里"）
+- **部分正确/错误**：方向正确但距离错误，或距离正确但方向错误
+- **近似值陈述**：使用"大约""将近""接近"等表述
+- 判断题的value可以是true（两者都正确）或false（任一信息错误）
+
+### 选择题多样性
+
+- 可嵌入不同场景：
+  - **出行规划场景**："从B出发前往A，需要向哪个方向走？直线距离约为多少？"
+  - **地理描述场景**："关于A和B的相对位置关系，以下哪项描述是正确的？"
+  - **导航场景**："导航仪显示从B到A的信息，以下哪个最准确？"
+  - **知识竞赛场景**："以下关于A和B的位置关系，哪个说法同时给出了正确的方向和距离？"
+
+- 选项设计策略：
+  - 每个选项应同时包含方向和距离两个要素
+  - 干扰项可以：方向正确但距离错误、距离正确但方向错误、两者都错误
+  - 正确答案的选项位置（A/B/C/D）随机
+
+### 填空题多样性
+
+需同时填入方向和距离两个信息：
+- "武汉市位于长沙市的___方向，两地的直线距离约为___公里"
+- "从长沙出发向___方向行进约___公里，可以到达武汉"
+- "长沙与武汉相距约___公里，武汉在长沙的___方位"
+- "以长沙为参照，武汉地处___方向，空中直线距离___公里"
+- "站在长沙望向武汉，方向是___，大约___公里之遥"
+
+### 问答题多样性
+
+要求同时回答方向和距离：
+- **描述型**："请描述A市相对于B市的空间位置关系，包括方向和距离"
+- **导航指引型**："如果你在B市，想去A市，请给出方向和直线距离信息"
+- **综合分析型**："已知A市和B市的地理坐标，请分析两地的方位关系和直线距离"
+- **对比描述型**："请从方向和距离两个维度描述A和B的空间关系，并与另一个你熟悉的案例进行对比"
+
+### 连续生成约束
+
+连续生成同一实体对时，确保每次的题目风格、句式、场景、选项排列都不重复。
+
+## 难度控制
+
+通过 `{{difficulty}}` 占位符控制题目难度：
+
+### easy（简单）
+- 判断题：同时给出精确方向和距离，正向陈述
+- 选择题：选项中方向差异明显，距离差异较大
+- 填空题：基本句式，两个空分别对应方向和距离
+- 问答题：直接问方向和距离
+
+### medium（中等）
+- 判断题：可使用反向陈述或近似值
+- 选择题：嵌入场景，干扰项包含相邻方向或接近的距离值
+- 填空题：结合场景，使用复杂句式
+- 问答题：要求结合场景作答或进行简单推理
+
+### hard（困难）
+- 判断题：需同时判断方向和距离的准确性，可能部分正确
+- 选择题：干扰项的方向和距离都与正确答案接近
+- 填空题：需结合方位角等额外信息
+- 问答题：要求精确描述方位角、方向、距离，进行多步推理或对比分析
+
+---
+
+## 完整示例
+
+### 示例1：武汉-长沙
+
+**输入：**
+
+```json
+{
+  "entity_a": {
+    "name_zh": "武汉市",
+    "centroid": [114.305, 30.593],
+    "type": "city"
+  },
+  "entity_b": {
+    "name_zh": "长沙市",
+    "centroid": [112.938, 28.228],
+    "type": "city"
+  },
+  "spatial_facts": {
+    "direction_8": "东北",
+    "azimuth_deg": 29.7,
+    "distance_km": 296
+  },
+  "difficulty": "easy"
+}
+```
+
+**输出：**
+
+```json
+{
+  "true_false": {
+    "question": "武汉市位于长沙市的东北方向，两地直线距离约为296公里。",
+    "answer": "正确。武汉市位于长沙市的东北方向，直线距离约为296公里。",
+    "answer_structured": {
+      "type": "boolean",
+      "value": true,
+      "direction": "东北",
+      "distance_km": 296,
+      "explanation": "武汉市位于长沙市的东北方向，直线距离约296公里"
+    },
+    "difficulty": "easy"
+  },
+  "choice": {
+    "question": "关于武汉市和长沙市的位置关系，以下哪项描述是正确的？",
+    "options": {"A": "武汉在长沙的西北方向，距离约296公里", "B": "武汉在长沙的东北方向，距离约296公里", "C": "武汉在长沙的东南方向，距离约500公里", "D": "武汉在长沙的西南方向，距离约150公里"},
+    "answer": "正确答案是B。武汉市位于长沙市的东北方向，直线距离约为296公里。",
+    "answer_structured": {
+      "type": "option",
+      "value": "B",
+      "direction": "东北",
+      "distance_km": 296,
+      "explanation": "武汉市位于长沙市的东北方向，直线距离约296公里"
+    },
+    "difficulty": "easy"
+  },
+  "fill_blank": {
+    "question": "武汉市位于长沙市的___方向，两地的直线距离约为___公里。",
+    "answer": "东北，296",
+    "answer_structured": {
+      "type": "keyword",
+      "value": "东北/296",
+      "explanation": "武汉市位于长沙市的东北方向，距离约296公里"
+    },
+    "difficulty": "easy"
+  },
+  "open_qa": {
+    "question": "请描述武汉市相对于长沙市的空间位置关系，包括方向和直线距离。",
+    "answer": "武汉市位于长沙市的东北方向，方位角约为29.7度，两地之间的直线距离约为296公里。武汉地处长江中游，长沙位于其西南方向，两城相距不算太远。",
+    "answer_structured": {
+      "type": "free_text",
+      "direction": "东北",
+      "distance_km": 296,
+      "azimuth_deg": 29.7,
+      "explanation": "武汉市位于长沙市的东北方向，方位角约29.7度，直线距离约296公里"
+    },
+    "difficulty": "easy"
+  }
+}
+```
+
+### 示例2：广州-武汉
+
+**输入：**
+
+```json
+{
+  "entity_a": {
+    "name_zh": "广州市",
+    "centroid": [113.264, 23.129],
+    "type": "city"
+  },
+  "entity_b": {
+    "name_zh": "武汉市",
+    "centroid": [114.305, 30.593],
+    "type": "city"
+  },
+  "spatial_facts": {
+    "direction_8": "南",
+    "azimuth_deg": 195.3,
+    "distance_km": 837
+  },
+  "difficulty": "medium"
+}
+```
+
+**输出：**
+
+```json
+{
+  "true_false": {
+    "question": "从武汉市出发向正南方向行进约837公里，可以到达广州市。",
+    "answer": "正确。广州市位于武汉市的正南方向，直线距离约为837公里。",
+    "answer_structured": {
+      "type": "boolean",
+      "value": true,
+      "direction": "南",
+      "distance_km": 837,
+      "explanation": "广州市位于武汉市的正南方向，直线距离约837公里"
+    },
+    "difficulty": "medium"
+  },
+  "choice": {
+    "question": "一位商务人士需要从武汉前往广州，他想提前了解两地的方位和距离。以下哪项信息是正确的？",
+    "options": {"A": "广州在武汉的东南方向，距离约1200公里", "B": "广州在武汉的西南方向，距离约600公里", "C": "广州在武汉的南方向，距离约837公里", "D": "广州在武汉的西方向，距离约837公里"},
+    "answer": "正确答案是C。广州市位于武汉市的正南方向，直线距离约为837公里。",
+    "answer_structured": {
+      "type": "option",
+      "value": "C",
+      "direction": "南",
+      "distance_km": 837,
+      "explanation": "广州市位于武汉市的正南方向，直线距离约837公里"
+    },
+    "difficulty": "medium"
+  },
+  "fill_blank": {
+    "question": "以武汉为参照，广州地处___方向，空中直线距离约___公里。",
+    "answer": "南，837",
+    "answer_structured": {
+      "type": "keyword",
+      "value": "南/837",
+      "explanation": "广州位于武汉的南方，距离约837公里"
+    },
+    "difficulty": "medium"
+  },
+  "open_qa": {
+    "question": "如果你正在武汉市，计划前往广州市，请从方向和距离两个维度描述广州市相对于武汉市的空间关系，为行程规划提供参考。",
+    "answer": "广州市位于武汉市的正南方向，方位角约为195.3度（略偏西南），两地之间的直线距离约为837公里。从武汉出发前往广州，应向南行进。如果乘坐高铁，实际行程距离会略长于直线距离，通常需要4-5小时；如果乘坐飞机，飞行时间约1.5-2小时。",
+    "answer_structured": {
+      "type": "free_text",
+      "direction": "南",
+      "distance_km": 837,
+      "azimuth_deg": 195.3,
+      "explanation": "广州市位于武汉市的正南方向，方位角约195.3度，直线距离约837公里"
+    },
+    "difficulty": "medium"
+  }
+}
+```

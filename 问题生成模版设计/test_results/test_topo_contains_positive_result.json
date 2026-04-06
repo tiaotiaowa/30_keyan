@@ -1,0 +1,59 @@
+{
+  "test_file": "test_topo_contains_positive.md",
+  "elapsed_seconds": 42.05,
+  "json_valid": true,
+  "structure_valid": true,
+  "missing_keys": [],
+  "usage": {
+    "prompt_tokens": 1961,
+    "completion_tokens": 1314,
+    "total_tokens": 3275
+  },
+  "parsed_json": {
+    "true_false": {
+      "question": "杭州市的行政区域是否完全涵盖了灵隐寺的地理位置？",
+      "answer": "正确。根据PostGIS空间计算，杭州市的行政区域范围完全包含灵隐寺的地理位置点，即灵隐寺位于杭州市内部。",
+      "answer_structured": {
+        "contains": true,
+        "explanation": "杭州市的Polygon几何范围包含灵隐寺的Point几何范围"
+      },
+      "difficulty": "easy"
+    },
+    "choice": {
+      "question": "关于灵隐寺与杭州市的空间拓扑关系，以下哪项描述是正确的？",
+      "options": {
+        "A": "灵隐寺与杭州市的空间范围相互分离",
+        "B": "杭州市的空间范围完全包含灵隐寺",
+        "C": "灵隐寺与杭州市仅边界接触",
+        "D": "灵隐寺的空间范围覆盖了杭州市"
+      },
+      "answer": "B",
+      "answer_structured": {
+        "contains": true,
+        "correct_option": "B",
+        "explanation": "ST_Contains(杭州市, 灵隐寺) = true，表明杭州市几何范围包含灵隐寺几何范围"
+      },
+      "difficulty": "easy"
+    },
+    "fill_blank": {
+      "question": "作为杭州著名的佛教寺院，灵隐寺的空间位置被______市的行政辖区完全包含。",
+      "answer": "杭州",
+      "answer_structured": {
+        "contains": true,
+        "fill_answer": "杭州",
+        "explanation": "杭州市的行政区域多边形完全包含灵隐寺的点位"
+      },
+      "difficulty": "easy"
+    },
+    "open_qa": {
+      "question": "从地理空间包含关系来看，为什么说灵隐寺属于杭州市？",
+      "answer": "因为PostGIS空间计算结果显示杭州市的行政区域几何范围完全包含灵隐寺的几何范围（ST_Contains返回true）。这意味着灵隐寺的所有部分都位于杭州市的边界之内，没有任何部分在外部，因此灵隐寺在空间上隶属于杭州市。",
+      "answer_structured": {
+        "contains": true,
+        "explanation": "杭州市多边形完全包含灵隐寺点，灵隐寺点位于杭州市多边形内部"
+      },
+      "difficulty": "easy"
+    }
+  },
+  "json_error": null
+}

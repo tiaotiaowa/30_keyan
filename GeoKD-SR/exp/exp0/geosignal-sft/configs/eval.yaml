@@ -1,0 +1,56 @@
+# GeoSignal评估配置
+# 用于在GeoBench上评估模型性能
+
+experiment:
+  name: "geosignal-eval"
+  type: "evaluation"
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  # 微调后的模型路径 (评估时指定)
+  checkpoint_path: "exp/exp0/geosignal-sft/outputs/splits/seed_42/final_model"
+  use_lora: true
+
+evaluation:
+  # GeoBench评估配置
+  geobench:
+    enabled: true
+    # 客观任务: 选择题
+    objective_tasks:
+      - "NPEE"      # 全国硕士研究生入学考试 (地质学/地理学)
+      - "AP_Test"   # 美国大学先修课程考试
+    # 主观任务: 开放问答
+    subjective_tasks:
+      - "NPEE_subjective"
+
+  # 评估指标
+  metrics:
+    objective:
+      - "accuracy"  # 准确率
+    subjective:
+      - "perplexity"  # 困惑度
+      - "gpt_score"   # GPTScore
+      - "human_eval"  # 人工评估 (合理性、正确性、一致性)
+
+  # 生成配置
+  generation:
+    max_new_tokens: 512
+    temperature: 0.7
+    top_p: 0.9
+    do_sample: true
+
+output:
+  results_dir: "exp/exp0/geosignal-sft/results"
+  logs_dir: "exp/exp0/geosignal-sft/eval_logs"
+
+# GeoBench统计信息
+# 来源: K2论文
+# 客观任务:
+#   - NPEE选择题: 182道
+#   - AP Test选择题: 1,395道
+# 主观任务:
+#   - NPEE主观题: 939道 (填空150 + 名词解释454 + 论述335)
+geobench_info:
+  objective_samples: 1577
+  subjective_samples: 939
+  source: "K2: A Foundation Language Model for Geoscience"

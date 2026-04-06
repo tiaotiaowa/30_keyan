@@ -1,0 +1,47 @@
+# GeoSignal SFT训练配置 - 6GB显存版本
+# 基于K2论文的GeoSignal数据集，训练Qwen2.5-1.5B地球科学指令遵循能力
+# 适用于低显存环境
+
+experiment:
+  name: "geosignal-sft-6gb"
+  type: "geosignal_sft"
+  description: "基于GeoSignal数据集的地球科学指令微调 (6GB显存优化)"
+  seed: 42
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"
+  use_lora: true
+  lora:
+    r: 8
+    alpha: 16
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+
+training:
+  learning_rate: 1.0e-4
+  batch_size: 1                    # 6GB限制
+  gradient_accumulation_steps: 128  # effective_batch=128
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  lr_scheduler_type: "cosine"
+
+optimization:
+  max_length: 1024                 # 降低以节省显存
+  gradient_checkpointing: true
+  mixed_precision: "fp16"          # 6GB不支持bf16
+
+data:
+  train_file: "data/geosignal/train.jsonl"
+  dev_file: "data/geosignal/dev.jsonl"
+  test_file: "data/geosignal/test.jsonl"
+  system_prompt: "You are an expert in geoscience knowledge, specializing in understanding and answering questions about geology, geography, and earth sciences. Please provide accurate and professional responses."
+
+output:
+  base_dir: "exp/exp0/geosignal-sft/outputs"
+  logging_dir: "exp/exp0/geosignal-sft/logs"
+  checkpoint_dir: "exp/exp0/geosignal-sft/checkpoints"
+  save_strategy: "epoch"
+  save_total_limit: 2

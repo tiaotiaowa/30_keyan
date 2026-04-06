@@ -1,0 +1,7122 @@
+{
+  "positive_duplicates": {
+    "unordered_duplicates": {},
+    "ordered_duplicates": {},
+    "total_duplicates": 0
+  },
+  "negative_duplicates": {
+    "unordered_duplicates": {},
+    "ordered_duplicates": {},
+    "total_duplicates": 0
+  },
+  "positive_reflexive": [],
+  "negative_reflexive": [],
+  "overlap": {
+    "overlaps_by_relation": {},
+    "total_overlaps": 0
+  },
+  "positive_missing": {
+    "name_zh_empty": [],
+    "name_en_empty": [],
+    "geometry_type_empty": [],
+    "centroid_none": []
+  },
+  "negative_missing": {
+    "name_zh_empty": [],
+    "name_en_empty": [],
+    "geometry_type_empty": [],
+    "centroid_none": []
+  },
+  "positive_consistency": {
+    "name_zh": [],
+    "name_en": [],
+    "centroid": [],
+    "type": []
+  },
+  "negative_consistency": {
+    "name_zh": [],
+    "name_en": [],
+    "centroid": [],
+    "type": []
+  },
+  "positive_boundary": {
+    "zero_distance_count": 0,
+    "zero_distance_indices": [],
+    "min_distances": [],
+    "max_distances": [],
+    "same_type_pairs_count": 2592,
+    "same_type_distribution": {
+      "city": 2337,
+      "province": 214,
+      "peak": 41
+    }
+  },
+  "negative_boundary": {
+    "zero_distance_count": 0,
+    "zero_distance_indices": [],
+    "min_distances": [],
+    "max_distances": [],
+    "same_type_pairs_count": 211,
+    "same_type_distribution": {
+      "province": 111,
+      "city": 100
+    }
+  },
+  "negative_specific": {
+    "missing_reference": [
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624,
+      625,
+      626,
+      627,
+      628,
+      629,
+      630,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639,
+      640,
+      641,
+      642,
+      643,
+      644,
+      645,
+      646,
+      647,
+      648,
+      649,
+      650,
+      651,
+      652,
+      653,
+      654,
+      655,
+      656,
+      657,
+      658,
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
+      671,
+      672,
+      673,
+      674,
+      675,
+      676,
+      677,
+      678,
+      679,
+      680,
+      681,
+      682,
+      683,
+      684,
+      685,
+      686,
+      687,
+      688,
+      689,
+      690,
+      691,
+      692,
+      693,
+      694,
+      695,
+      696,
+      697,
+      698,
+      699,
+      700,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715,
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748,
+      749
+    ],
+    "spatial_facts_not_false": [
+      {
+        "index": 750,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 750,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 750,
+        "key": "azimuth_deg",
+        "value": 144.8
+      },
+      {
+        "index": 751,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 751,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 751,
+        "key": "azimuth_deg",
+        "value": 236.0
+      },
+      {
+        "index": 752,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 752,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 752,
+        "key": "azimuth_deg",
+        "value": 17.5
+      },
+      {
+        "index": 753,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 753,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 753,
+        "key": "azimuth_deg",
+        "value": 159.3
+      },
+      {
+        "index": 754,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 754,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 754,
+        "key": "azimuth_deg",
+        "value": 88.9
+      },
+      {
+        "index": 755,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 755,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 755,
+        "key": "azimuth_deg",
+        "value": 234.5
+      },
+      {
+        "index": 756,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 756,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 756,
+        "key": "azimuth_deg",
+        "value": 314.6
+      },
+      {
+        "index": 757,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 757,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 757,
+        "key": "azimuth_deg",
+        "value": 83.6
+      },
+      {
+        "index": 758,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 758,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 758,
+        "key": "azimuth_deg",
+        "value": 322.9
+      },
+      {
+        "index": 759,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 759,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 759,
+        "key": "azimuth_deg",
+        "value": 16.9
+      },
+      {
+        "index": 760,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 760,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 760,
+        "key": "azimuth_deg",
+        "value": 271.1
+      },
+      {
+        "index": 761,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 761,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 761,
+        "key": "azimuth_deg",
+        "value": 287.5
+      },
+      {
+        "index": 762,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 762,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 762,
+        "key": "azimuth_deg",
+        "value": 215.3
+      },
+      {
+        "index": 763,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 763,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 763,
+        "key": "azimuth_deg",
+        "value": 178.3
+      },
+      {
+        "index": 764,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 764,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 764,
+        "key": "azimuth_deg",
+        "value": 57.0
+      },
+      {
+        "index": 765,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 765,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 765,
+        "key": "azimuth_deg",
+        "value": 255.6
+      },
+      {
+        "index": 766,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 766,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 766,
+        "key": "azimuth_deg",
+        "value": 196.0
+      },
+      {
+        "index": 767,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 767,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 767,
+        "key": "azimuth_deg",
+        "value": 129.3
+      },
+      {
+        "index": 768,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 768,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 768,
+        "key": "azimuth_deg",
+        "value": 233.7
+      },
+      {
+        "index": 769,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 769,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 769,
+        "key": "azimuth_deg",
+        "value": 36.0
+      },
+      {
+        "index": 770,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 770,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 770,
+        "key": "azimuth_deg",
+        "value": 315.8
+      },
+      {
+        "index": 771,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 771,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 771,
+        "key": "azimuth_deg",
+        "value": 56.3
+      },
+      {
+        "index": 772,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 772,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 772,
+        "key": "azimuth_deg",
+        "value": 85.7
+      },
+      {
+        "index": 773,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 773,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 773,
+        "key": "azimuth_deg",
+        "value": 265.6
+      },
+      {
+        "index": 774,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 774,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 774,
+        "key": "azimuth_deg",
+        "value": 150.4
+      },
+      {
+        "index": 775,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 775,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 775,
+        "key": "azimuth_deg",
+        "value": 320.3
+      },
+      {
+        "index": 776,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 776,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 776,
+        "key": "azimuth_deg",
+        "value": 60.3
+      },
+      {
+        "index": 777,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 777,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 777,
+        "key": "azimuth_deg",
+        "value": 163.2
+      },
+      {
+        "index": 778,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 778,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 778,
+        "key": "azimuth_deg",
+        "value": 182.1
+      },
+      {
+        "index": 779,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 779,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 779,
+        "key": "azimuth_deg",
+        "value": 170.5
+      },
+      {
+        "index": 780,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 780,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 780,
+        "key": "azimuth_deg",
+        "value": 143.6
+      },
+      {
+        "index": 781,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 781,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 781,
+        "key": "azimuth_deg",
+        "value": 170.3
+      },
+      {
+        "index": 782,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 782,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 782,
+        "key": "azimuth_deg",
+        "value": 22.8
+      },
+      {
+        "index": 783,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 783,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 783,
+        "key": "azimuth_deg",
+        "value": 102.0
+      },
+      {
+        "index": 784,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 784,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 784,
+        "key": "azimuth_deg",
+        "value": 162.8
+      },
+      {
+        "index": 785,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 785,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 785,
+        "key": "azimuth_deg",
+        "value": 114.3
+      },
+      {
+        "index": 786,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 786,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 786,
+        "key": "azimuth_deg",
+        "value": 113.2
+      },
+      {
+        "index": 787,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 787,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 787,
+        "key": "azimuth_deg",
+        "value": 51.4
+      },
+      {
+        "index": 788,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 788,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 788,
+        "key": "azimuth_deg",
+        "value": 251.4
+      },
+      {
+        "index": 789,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 789,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 789,
+        "key": "azimuth_deg",
+        "value": 71.8
+      },
+      {
+        "index": 790,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 790,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 790,
+        "key": "azimuth_deg",
+        "value": 98.9
+      },
+      {
+        "index": 791,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 791,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 791,
+        "key": "azimuth_deg",
+        "value": 311.5
+      },
+      {
+        "index": 792,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 792,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 792,
+        "key": "azimuth_deg",
+        "value": 78.1
+      },
+      {
+        "index": 793,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 793,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 793,
+        "key": "azimuth_deg",
+        "value": 214.0
+      },
+      {
+        "index": 794,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 794,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 794,
+        "key": "azimuth_deg",
+        "value": 33.8
+      },
+      {
+        "index": 795,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 795,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 795,
+        "key": "azimuth_deg",
+        "value": 73.2
+      },
+      {
+        "index": 796,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 796,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 796,
+        "key": "azimuth_deg",
+        "value": 108.8
+      },
+      {
+        "index": 797,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 797,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 797,
+        "key": "azimuth_deg",
+        "value": 356.1
+      },
+      {
+        "index": 798,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 798,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 798,
+        "key": "azimuth_deg",
+        "value": 316.0
+      },
+      {
+        "index": 799,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 799,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 799,
+        "key": "azimuth_deg",
+        "value": 267.4
+      },
+      {
+        "index": 800,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 800,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 800,
+        "key": "azimuth_deg",
+        "value": 131.6
+      },
+      {
+        "index": 801,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 801,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 801,
+        "key": "azimuth_deg",
+        "value": 249.6
+      },
+      {
+        "index": 802,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 802,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 802,
+        "key": "azimuth_deg",
+        "value": 32.7
+      },
+      {
+        "index": 803,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 803,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 803,
+        "key": "azimuth_deg",
+        "value": 97.0
+      },
+      {
+        "index": 804,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 804,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 804,
+        "key": "azimuth_deg",
+        "value": 59.4
+      },
+      {
+        "index": 805,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 805,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 805,
+        "key": "azimuth_deg",
+        "value": 169.7
+      },
+      {
+        "index": 806,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 806,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 806,
+        "key": "azimuth_deg",
+        "value": 278.5
+      },
+      {
+        "index": 807,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 807,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 807,
+        "key": "azimuth_deg",
+        "value": 42.6
+      },
+      {
+        "index": 808,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 808,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 808,
+        "key": "azimuth_deg",
+        "value": 24.5
+      },
+      {
+        "index": 809,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 809,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 809,
+        "key": "azimuth_deg",
+        "value": 15.7
+      },
+      {
+        "index": 810,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 810,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 810,
+        "key": "azimuth_deg",
+        "value": 145.2
+      },
+      {
+        "index": 811,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 811,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 811,
+        "key": "azimuth_deg",
+        "value": 59.8
+      },
+      {
+        "index": 812,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 812,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 812,
+        "key": "azimuth_deg",
+        "value": 309.0
+      },
+      {
+        "index": 813,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 813,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 813,
+        "key": "azimuth_deg",
+        "value": 239.1
+      },
+      {
+        "index": 814,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 814,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 814,
+        "key": "azimuth_deg",
+        "value": 315.2
+      },
+      {
+        "index": 815,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 815,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 815,
+        "key": "azimuth_deg",
+        "value": 80.2
+      },
+      {
+        "index": 816,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 816,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 816,
+        "key": "azimuth_deg",
+        "value": 279.2
+      },
+      {
+        "index": 817,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 817,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 817,
+        "key": "azimuth_deg",
+        "value": 71.1
+      },
+      {
+        "index": 818,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 818,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 818,
+        "key": "azimuth_deg",
+        "value": 236.0
+      },
+      {
+        "index": 819,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 819,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 819,
+        "key": "azimuth_deg",
+        "value": 276.9
+      },
+      {
+        "index": 820,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 820,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 820,
+        "key": "azimuth_deg",
+        "value": 121.3
+      },
+      {
+        "index": 821,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 821,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 821,
+        "key": "azimuth_deg",
+        "value": 308.0
+      },
+      {
+        "index": 822,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 822,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 822,
+        "key": "azimuth_deg",
+        "value": 147.7
+      },
+      {
+        "index": 823,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 823,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 823,
+        "key": "azimuth_deg",
+        "value": 138.5
+      },
+      {
+        "index": 824,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 824,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 824,
+        "key": "azimuth_deg",
+        "value": 93.0
+      },
+      {
+        "index": 825,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 825,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 825,
+        "key": "azimuth_deg",
+        "value": 134.4
+      },
+      {
+        "index": 826,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 826,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 826,
+        "key": "azimuth_deg",
+        "value": 21.2
+      },
+      {
+        "index": 827,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 827,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 827,
+        "key": "azimuth_deg",
+        "value": 349.8
+      },
+      {
+        "index": 828,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 828,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 828,
+        "key": "azimuth_deg",
+        "value": 79.8
+      },
+      {
+        "index": 829,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 829,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 829,
+        "key": "azimuth_deg",
+        "value": 10.5
+      },
+      {
+        "index": 830,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 830,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 830,
+        "key": "azimuth_deg",
+        "value": 243.6
+      },
+      {
+        "index": 831,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 831,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 831,
+        "key": "azimuth_deg",
+        "value": 20.4
+      },
+      {
+        "index": 832,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 832,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 832,
+        "key": "azimuth_deg",
+        "value": 7.6
+      },
+      {
+        "index": 833,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 833,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 833,
+        "key": "azimuth_deg",
+        "value": 170.9
+      },
+      {
+        "index": 834,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 834,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 834,
+        "key": "azimuth_deg",
+        "value": 333.6
+      },
+      {
+        "index": 835,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 835,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 835,
+        "key": "azimuth_deg",
+        "value": 334.9
+      },
+      {
+        "index": 836,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 836,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 836,
+        "key": "azimuth_deg",
+        "value": 198.7
+      },
+      {
+        "index": 837,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 837,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 837,
+        "key": "azimuth_deg",
+        "value": 342.5
+      },
+      {
+        "index": 838,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 838,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 838,
+        "key": "azimuth_deg",
+        "value": 335.5
+      },
+      {
+        "index": 839,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 839,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 839,
+        "key": "azimuth_deg",
+        "value": 238.9
+      },
+      {
+        "index": 840,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 840,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 840,
+        "key": "azimuth_deg",
+        "value": 352.3
+      },
+      {
+        "index": 841,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 841,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 841,
+        "key": "azimuth_deg",
+        "value": 222.6
+      },
+      {
+        "index": 842,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 842,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 842,
+        "key": "azimuth_deg",
+        "value": 72.9
+      },
+      {
+        "index": 843,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 843,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 843,
+        "key": "azimuth_deg",
+        "value": 60.3
+      },
+      {
+        "index": 844,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 844,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 844,
+        "key": "azimuth_deg",
+        "value": 160.2
+      },
+      {
+        "index": 845,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 845,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 845,
+        "key": "azimuth_deg",
+        "value": 288.6
+      },
+      {
+        "index": 846,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 846,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 846,
+        "key": "azimuth_deg",
+        "value": 48.1
+      },
+      {
+        "index": 847,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 847,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 847,
+        "key": "azimuth_deg",
+        "value": 214.2
+      },
+      {
+        "index": 848,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 848,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 848,
+        "key": "azimuth_deg",
+        "value": 53.6
+      },
+      {
+        "index": 849,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 849,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 849,
+        "key": "azimuth_deg",
+        "value": 149.7
+      },
+      {
+        "index": 850,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 850,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 850,
+        "key": "azimuth_deg",
+        "value": 221.6
+      },
+      {
+        "index": 851,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 851,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 851,
+        "key": "azimuth_deg",
+        "value": 108.9
+      },
+      {
+        "index": 852,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 852,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 852,
+        "key": "azimuth_deg",
+        "value": 165.5
+      },
+      {
+        "index": 853,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 853,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 853,
+        "key": "azimuth_deg",
+        "value": 98.7
+      },
+      {
+        "index": 854,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 854,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 854,
+        "key": "azimuth_deg",
+        "value": 136.6
+      },
+      {
+        "index": 855,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 855,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 855,
+        "key": "azimuth_deg",
+        "value": 333.7
+      },
+      {
+        "index": 856,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 856,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 856,
+        "key": "azimuth_deg",
+        "value": 60.5
+      },
+      {
+        "index": 857,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 857,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 857,
+        "key": "azimuth_deg",
+        "value": 327.3
+      },
+      {
+        "index": 858,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 858,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 858,
+        "key": "azimuth_deg",
+        "value": 278.6
+      },
+      {
+        "index": 859,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 859,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 859,
+        "key": "azimuth_deg",
+        "value": 334.0
+      },
+      {
+        "index": 860,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 860,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 860,
+        "key": "azimuth_deg",
+        "value": 154.5
+      },
+      {
+        "index": 861,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 861,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 861,
+        "key": "azimuth_deg",
+        "value": 225.1
+      },
+      {
+        "index": 862,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 862,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 862,
+        "key": "azimuth_deg",
+        "value": 145.7
+      },
+      {
+        "index": 863,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 863,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 863,
+        "key": "azimuth_deg",
+        "value": 281.9
+      },
+      {
+        "index": 864,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 864,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 864,
+        "key": "azimuth_deg",
+        "value": 197.4
+      },
+      {
+        "index": 865,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 865,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 865,
+        "key": "azimuth_deg",
+        "value": 340.1
+      },
+      {
+        "index": 866,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 866,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 866,
+        "key": "azimuth_deg",
+        "value": 153.2
+      },
+      {
+        "index": 867,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 867,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 867,
+        "key": "azimuth_deg",
+        "value": 266.5
+      },
+      {
+        "index": 868,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 868,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 868,
+        "key": "azimuth_deg",
+        "value": 166.1
+      },
+      {
+        "index": 869,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 869,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 869,
+        "key": "azimuth_deg",
+        "value": 238.7
+      },
+      {
+        "index": 870,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 870,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 870,
+        "key": "azimuth_deg",
+        "value": 184.0
+      },
+      {
+        "index": 871,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 871,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 871,
+        "key": "azimuth_deg",
+        "value": 125.7
+      },
+      {
+        "index": 872,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 872,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 872,
+        "key": "azimuth_deg",
+        "value": 243.0
+      },
+      {
+        "index": 873,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 873,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 873,
+        "key": "azimuth_deg",
+        "value": 287.5
+      },
+      {
+        "index": 874,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 874,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 874,
+        "key": "azimuth_deg",
+        "value": 232.1
+      },
+      {
+        "index": 875,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 875,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 875,
+        "key": "azimuth_deg",
+        "value": 48.5
+      },
+      {
+        "index": 876,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 876,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 876,
+        "key": "azimuth_deg",
+        "value": 286.9
+      },
+      {
+        "index": 877,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 877,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 877,
+        "key": "azimuth_deg",
+        "value": 116.4
+      },
+      {
+        "index": 878,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 878,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 878,
+        "key": "azimuth_deg",
+        "value": 40.6
+      },
+      {
+        "index": 879,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 879,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 879,
+        "key": "azimuth_deg",
+        "value": 308.5
+      },
+      {
+        "index": 880,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 880,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 880,
+        "key": "azimuth_deg",
+        "value": 103.5
+      },
+      {
+        "index": 881,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 881,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 881,
+        "key": "azimuth_deg",
+        "value": 147.9
+      },
+      {
+        "index": 882,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 882,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 882,
+        "key": "azimuth_deg",
+        "value": 61.6
+      },
+      {
+        "index": 883,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 883,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 883,
+        "key": "azimuth_deg",
+        "value": 227.5
+      },
+      {
+        "index": 884,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 884,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 884,
+        "key": "azimuth_deg",
+        "value": 0.9
+      },
+      {
+        "index": 885,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 885,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 885,
+        "key": "azimuth_deg",
+        "value": 59.8
+      },
+      {
+        "index": 886,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 886,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 886,
+        "key": "azimuth_deg",
+        "value": 248.2
+      },
+      {
+        "index": 887,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 887,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 887,
+        "key": "azimuth_deg",
+        "value": 128.8
+      },
+      {
+        "index": 888,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 888,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 888,
+        "key": "azimuth_deg",
+        "value": 121.4
+      },
+      {
+        "index": 889,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 889,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 889,
+        "key": "azimuth_deg",
+        "value": 190.0
+      },
+      {
+        "index": 890,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 890,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 890,
+        "key": "azimuth_deg",
+        "value": 142.6
+      },
+      {
+        "index": 891,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 891,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 891,
+        "key": "azimuth_deg",
+        "value": 194.3
+      },
+      {
+        "index": 892,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 892,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 892,
+        "key": "azimuth_deg",
+        "value": 181.6
+      },
+      {
+        "index": 893,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 893,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 893,
+        "key": "azimuth_deg",
+        "value": 222.0
+      },
+      {
+        "index": 894,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 894,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 894,
+        "key": "azimuth_deg",
+        "value": 344.3
+      },
+      {
+        "index": 895,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 895,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 895,
+        "key": "azimuth_deg",
+        "value": 95.0
+      },
+      {
+        "index": 896,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 896,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 896,
+        "key": "azimuth_deg",
+        "value": 331.4
+      },
+      {
+        "index": 897,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 897,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 897,
+        "key": "azimuth_deg",
+        "value": 344.9
+      },
+      {
+        "index": 898,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 898,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 898,
+        "key": "azimuth_deg",
+        "value": 287.9
+      },
+      {
+        "index": 899,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 899,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 899,
+        "key": "azimuth_deg",
+        "value": 285.3
+      },
+      {
+        "index": 900,
+        "key": "distance_km",
+        "value": 310
+      },
+      {
+        "index": 901,
+        "key": "distance_km",
+        "value": 421
+      },
+      {
+        "index": 902,
+        "key": "distance_km",
+        "value": 464
+      },
+      {
+        "index": 903,
+        "key": "distance_km",
+        "value": 382
+      },
+      {
+        "index": 904,
+        "key": "distance_km",
+        "value": 497
+      },
+      {
+        "index": 905,
+        "key": "distance_km",
+        "value": 439
+      },
+      {
+        "index": 906,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 907,
+        "key": "distance_km",
+        "value": 74
+      },
+      {
+        "index": 908,
+        "key": "distance_km",
+        "value": 380
+      },
+      {
+        "index": 909,
+        "key": "distance_km",
+        "value": 449
+      },
+      {
+        "index": 910,
+        "key": "distance_km",
+        "value": 431
+      },
+      {
+        "index": 911,
+        "key": "distance_km",
+        "value": 393
+      },
+      {
+        "index": 912,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 913,
+        "key": "distance_km",
+        "value": 470
+      },
+      {
+        "index": 914,
+        "key": "distance_km",
+        "value": 103
+      },
+      {
+        "index": 915,
+        "key": "distance_km",
+        "value": 192
+      },
+      {
+        "index": 916,
+        "key": "distance_km",
+        "value": 99
+      },
+      {
+        "index": 917,
+        "key": "distance_km",
+        "value": 453
+      },
+      {
+        "index": 918,
+        "key": "distance_km",
+        "value": 294
+      },
+      {
+        "index": 919,
+        "key": "distance_km",
+        "value": 258
+      },
+      {
+        "index": 920,
+        "key": "distance_km",
+        "value": 417
+      },
+      {
+        "index": 921,
+        "key": "distance_km",
+        "value": 346
+      },
+      {
+        "index": 922,
+        "key": "distance_km",
+        "value": 123
+      },
+      {
+        "index": 923,
+        "key": "distance_km",
+        "value": 161
+      },
+      {
+        "index": 924,
+        "key": "distance_km",
+        "value": 207
+      },
+      {
+        "index": 925,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 926,
+        "key": "distance_km",
+        "value": 86
+      },
+      {
+        "index": 927,
+        "key": "distance_km",
+        "value": 336
+      },
+      {
+        "index": 928,
+        "key": "distance_km",
+        "value": 382
+      },
+      {
+        "index": 929,
+        "key": "distance_km",
+        "value": 421
+      },
+      {
+        "index": 930,
+        "key": "distance_km",
+        "value": 422
+      },
+      {
+        "index": 931,
+        "key": "distance_km",
+        "value": 246
+      },
+      {
+        "index": 932,
+        "key": "distance_km",
+        "value": 242
+      },
+      {
+        "index": 933,
+        "key": "distance_km",
+        "value": 323
+      },
+      {
+        "index": 934,
+        "key": "distance_km",
+        "value": 367
+      },
+      {
+        "index": 935,
+        "key": "distance_km",
+        "value": 64
+      },
+      {
+        "index": 936,
+        "key": "distance_km",
+        "value": 287
+      },
+      {
+        "index": 937,
+        "key": "distance_km",
+        "value": 325
+      },
+      {
+        "index": 938,
+        "key": "distance_km",
+        "value": 463
+      },
+      {
+        "index": 939,
+        "key": "distance_km",
+        "value": 19
+      },
+      {
+        "index": 940,
+        "key": "distance_km",
+        "value": 293
+      },
+      {
+        "index": 941,
+        "key": "distance_km",
+        "value": 457
+      },
+      {
+        "index": 942,
+        "key": "distance_km",
+        "value": 437
+      },
+      {
+        "index": 943,
+        "key": "distance_km",
+        "value": 352
+      },
+      {
+        "index": 944,
+        "key": "distance_km",
+        "value": 497
+      },
+      {
+        "index": 945,
+        "key": "distance_km",
+        "value": 393
+      },
+      {
+        "index": 946,
+        "key": "distance_km",
+        "value": 162
+      },
+      {
+        "index": 947,
+        "key": "distance_km",
+        "value": 276
+      },
+      {
+        "index": 948,
+        "key": "distance_km",
+        "value": 314
+      },
+      {
+        "index": 949,
+        "key": "distance_km",
+        "value": 293
+      },
+      {
+        "index": 950,
+        "key": "distance_km",
+        "value": 105
+      },
+      {
+        "index": 951,
+        "key": "distance_km",
+        "value": 184
+      },
+      {
+        "index": 952,
+        "key": "distance_km",
+        "value": 453
+      },
+      {
+        "index": 953,
+        "key": "distance_km",
+        "value": 469
+      },
+      {
+        "index": 954,
+        "key": "distance_km",
+        "value": 462
+      },
+      {
+        "index": 955,
+        "key": "distance_km",
+        "value": 493
+      },
+      {
+        "index": 956,
+        "key": "distance_km",
+        "value": 472
+      },
+      {
+        "index": 957,
+        "key": "distance_km",
+        "value": 290
+      },
+      {
+        "index": 958,
+        "key": "distance_km",
+        "value": 119
+      },
+      {
+        "index": 959,
+        "key": "distance_km",
+        "value": 264
+      },
+      {
+        "index": 960,
+        "key": "distance_km",
+        "value": 319
+      },
+      {
+        "index": 961,
+        "key": "distance_km",
+        "value": 333
+      },
+      {
+        "index": 962,
+        "key": "distance_km",
+        "value": 469
+      },
+      {
+        "index": 963,
+        "key": "distance_km",
+        "value": 56
+      },
+      {
+        "index": 964,
+        "key": "distance_km",
+        "value": 461
+      },
+      {
+        "index": 965,
+        "key": "distance_km",
+        "value": 305
+      },
+      {
+        "index": 966,
+        "key": "distance_km",
+        "value": 377
+      },
+      {
+        "index": 967,
+        "key": "distance_km",
+        "value": 280
+      },
+      {
+        "index": 968,
+        "key": "distance_km",
+        "value": 379
+      },
+      {
+        "index": 969,
+        "key": "distance_km",
+        "value": 182
+      },
+      {
+        "index": 970,
+        "key": "distance_km",
+        "value": 167
+      },
+      {
+        "index": 971,
+        "key": "distance_km",
+        "value": 31
+      },
+      {
+        "index": 972,
+        "key": "distance_km",
+        "value": 11
+      },
+      {
+        "index": 973,
+        "key": "distance_km",
+        "value": 107
+      },
+      {
+        "index": 974,
+        "key": "distance_km",
+        "value": 224
+      },
+      {
+        "index": 975,
+        "key": "distance_km",
+        "value": 414
+      },
+      {
+        "index": 976,
+        "key": "distance_km",
+        "value": 265
+      },
+      {
+        "index": 977,
+        "key": "distance_km",
+        "value": 129
+      },
+      {
+        "index": 978,
+        "key": "distance_km",
+        "value": 357
+      },
+      {
+        "index": 979,
+        "key": "distance_km",
+        "value": 42
+      },
+      {
+        "index": 980,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 981,
+        "key": "distance_km",
+        "value": 491
+      },
+      {
+        "index": 982,
+        "key": "distance_km",
+        "value": 474
+      },
+      {
+        "index": 983,
+        "key": "distance_km",
+        "value": 463
+      },
+      {
+        "index": 984,
+        "key": "distance_km",
+        "value": 471
+      },
+      {
+        "index": 985,
+        "key": "distance_km",
+        "value": 336
+      },
+      {
+        "index": 986,
+        "key": "distance_km",
+        "value": 465
+      },
+      {
+        "index": 987,
+        "key": "distance_km",
+        "value": 410
+      },
+      {
+        "index": 988,
+        "key": "distance_km",
+        "value": 367
+      },
+      {
+        "index": 989,
+        "key": "distance_km",
+        "value": 426
+      },
+      {
+        "index": 990,
+        "key": "distance_km",
+        "value": 220
+      },
+      {
+        "index": 991,
+        "key": "distance_km",
+        "value": 378
+      },
+      {
+        "index": 992,
+        "key": "distance_km",
+        "value": 32
+      },
+      {
+        "index": 993,
+        "key": "distance_km",
+        "value": 94
+      },
+      {
+        "index": 994,
+        "key": "distance_km",
+        "value": 426
+      },
+      {
+        "index": 995,
+        "key": "distance_km",
+        "value": 234
+      },
+      {
+        "index": 996,
+        "key": "distance_km",
+        "value": 15
+      },
+      {
+        "index": 997,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 998,
+        "key": "distance_km",
+        "value": 445
+      },
+      {
+        "index": 999,
+        "key": "distance_km",
+        "value": 247
+      },
+      {
+        "index": 1000,
+        "key": "distance_km",
+        "value": 126
+      },
+      {
+        "index": 1001,
+        "key": "distance_km",
+        "value": 270
+      },
+      {
+        "index": 1002,
+        "key": "distance_km",
+        "value": 441
+      },
+      {
+        "index": 1003,
+        "key": "distance_km",
+        "value": 424
+      },
+      {
+        "index": 1004,
+        "key": "distance_km",
+        "value": 424
+      },
+      {
+        "index": 1005,
+        "key": "distance_km",
+        "value": 411
+      },
+      {
+        "index": 1006,
+        "key": "distance_km",
+        "value": 441
+      },
+      {
+        "index": 1007,
+        "key": "distance_km",
+        "value": 404
+      },
+      {
+        "index": 1008,
+        "key": "distance_km",
+        "value": 292
+      },
+      {
+        "index": 1009,
+        "key": "distance_km",
+        "value": 441
+      },
+      {
+        "index": 1010,
+        "key": "distance_km",
+        "value": 347
+      },
+      {
+        "index": 1011,
+        "key": "distance_km",
+        "value": 45
+      },
+      {
+        "index": 1012,
+        "key": "distance_km",
+        "value": 409
+      },
+      {
+        "index": 1013,
+        "key": "distance_km",
+        "value": 419
+      },
+      {
+        "index": 1014,
+        "key": "distance_km",
+        "value": 385
+      },
+      {
+        "index": 1015,
+        "key": "distance_km",
+        "value": 106
+      },
+      {
+        "index": 1016,
+        "key": "distance_km",
+        "value": 279
+      },
+      {
+        "index": 1017,
+        "key": "distance_km",
+        "value": 327
+      },
+      {
+        "index": 1018,
+        "key": "distance_km",
+        "value": 443
+      },
+      {
+        "index": 1019,
+        "key": "distance_km",
+        "value": 350
+      },
+      {
+        "index": 1020,
+        "key": "distance_km",
+        "value": 345
+      },
+      {
+        "index": 1021,
+        "key": "distance_km",
+        "value": 157
+      },
+      {
+        "index": 1022,
+        "key": "distance_km",
+        "value": 454
+      },
+      {
+        "index": 1023,
+        "key": "distance_km",
+        "value": 143
+      },
+      {
+        "index": 1024,
+        "key": "distance_km",
+        "value": 148
+      },
+      {
+        "index": 1025,
+        "key": "distance_km",
+        "value": 270
+      },
+      {
+        "index": 1026,
+        "key": "distance_km",
+        "value": 474
+      },
+      {
+        "index": 1027,
+        "key": "distance_km",
+        "value": 139
+      },
+      {
+        "index": 1028,
+        "key": "distance_km",
+        "value": 405
+      },
+      {
+        "index": 1029,
+        "key": "distance_km",
+        "value": 463
+      },
+      {
+        "index": 1030,
+        "key": "distance_km",
+        "value": 316
+      },
+      {
+        "index": 1031,
+        "key": "distance_km",
+        "value": 375
+      },
+      {
+        "index": 1032,
+        "key": "distance_km",
+        "value": 464
+      },
+      {
+        "index": 1033,
+        "key": "distance_km",
+        "value": 438
+      },
+      {
+        "index": 1034,
+        "key": "distance_km",
+        "value": 229
+      },
+      {
+        "index": 1035,
+        "key": "distance_km",
+        "value": 428
+      },
+      {
+        "index": 1036,
+        "key": "distance_km",
+        "value": 465
+      },
+      {
+        "index": 1037,
+        "key": "distance_km",
+        "value": 406
+      },
+      {
+        "index": 1038,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 1039,
+        "key": "distance_km",
+        "value": 267
+      },
+      {
+        "index": 1040,
+        "key": "distance_km",
+        "value": 472
+      },
+      {
+        "index": 1041,
+        "key": "distance_km",
+        "value": 217
+      },
+      {
+        "index": 1042,
+        "key": "distance_km",
+        "value": 473
+      },
+      {
+        "index": 1043,
+        "key": "distance_km",
+        "value": 223
+      },
+      {
+        "index": 1044,
+        "key": "distance_km",
+        "value": 444
+      },
+      {
+        "index": 1045,
+        "key": "distance_km",
+        "value": 105
+      },
+      {
+        "index": 1046,
+        "key": "distance_km",
+        "value": 413
+      },
+      {
+        "index": 1047,
+        "key": "distance_km",
+        "value": 356
+      },
+      {
+        "index": 1048,
+        "key": "distance_km",
+        "value": 147
+      },
+      {
+        "index": 1049,
+        "key": "distance_km",
+        "value": 392
+      },
+      {
+        "index": 1050,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1050,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1050,
+        "key": "azimuth_deg",
+        "value": 188.3
+      },
+      {
+        "index": 1050,
+        "key": "distance_km",
+        "value": 335
+      },
+      {
+        "index": 1051,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1051,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1051,
+        "key": "azimuth_deg",
+        "value": 195.9
+      },
+      {
+        "index": 1051,
+        "key": "distance_km",
+        "value": 270
+      },
+      {
+        "index": 1052,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1052,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1052,
+        "key": "azimuth_deg",
+        "value": 249.6
+      },
+      {
+        "index": 1052,
+        "key": "distance_km",
+        "value": 168
+      },
+      {
+        "index": 1053,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1053,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1053,
+        "key": "azimuth_deg",
+        "value": 168.0
+      },
+      {
+        "index": 1053,
+        "key": "distance_km",
+        "value": 475
+      },
+      {
+        "index": 1054,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1054,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1054,
+        "key": "azimuth_deg",
+        "value": 241.2
+      },
+      {
+        "index": 1054,
+        "key": "distance_km",
+        "value": 326
+      },
+      {
+        "index": 1055,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1055,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1055,
+        "key": "azimuth_deg",
+        "value": 109.4
+      },
+      {
+        "index": 1055,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 1056,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1056,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1056,
+        "key": "azimuth_deg",
+        "value": 61.9
+      },
+      {
+        "index": 1056,
+        "key": "distance_km",
+        "value": 252
+      },
+      {
+        "index": 1057,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1057,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1057,
+        "key": "azimuth_deg",
+        "value": 250.8
+      },
+      {
+        "index": 1057,
+        "key": "distance_km",
+        "value": 271
+      },
+      {
+        "index": 1058,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1058,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1058,
+        "key": "azimuth_deg",
+        "value": 282.0
+      },
+      {
+        "index": 1058,
+        "key": "distance_km",
+        "value": 491
+      },
+      {
+        "index": 1059,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1059,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1059,
+        "key": "azimuth_deg",
+        "value": 44.5
+      },
+      {
+        "index": 1059,
+        "key": "distance_km",
+        "value": 361
+      },
+      {
+        "index": 1060,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1060,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1060,
+        "key": "azimuth_deg",
+        "value": 75.0
+      },
+      {
+        "index": 1060,
+        "key": "distance_km",
+        "value": 471
+      },
+      {
+        "index": 1061,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1061,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1061,
+        "key": "azimuth_deg",
+        "value": 275.4
+      },
+      {
+        "index": 1061,
+        "key": "distance_km",
+        "value": 405
+      },
+      {
+        "index": 1062,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1062,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1062,
+        "key": "azimuth_deg",
+        "value": 293.8
+      },
+      {
+        "index": 1062,
+        "key": "distance_km",
+        "value": 471
+      },
+      {
+        "index": 1063,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1063,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1063,
+        "key": "azimuth_deg",
+        "value": 31.0
+      },
+      {
+        "index": 1063,
+        "key": "distance_km",
+        "value": 488
+      },
+      {
+        "index": 1064,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1064,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1064,
+        "key": "azimuth_deg",
+        "value": 34.1
+      },
+      {
+        "index": 1064,
+        "key": "distance_km",
+        "value": 277
+      },
+      {
+        "index": 1065,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1065,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1065,
+        "key": "azimuth_deg",
+        "value": 143.6
+      },
+      {
+        "index": 1065,
+        "key": "distance_km",
+        "value": 161
+      },
+      {
+        "index": 1066,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1066,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1066,
+        "key": "azimuth_deg",
+        "value": 291.7
+      },
+      {
+        "index": 1066,
+        "key": "distance_km",
+        "value": 347
+      },
+      {
+        "index": 1067,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1067,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1067,
+        "key": "azimuth_deg",
+        "value": 63.1
+      },
+      {
+        "index": 1067,
+        "key": "distance_km",
+        "value": 246
+      },
+      {
+        "index": 1068,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1068,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1068,
+        "key": "azimuth_deg",
+        "value": 103.7
+      },
+      {
+        "index": 1068,
+        "key": "distance_km",
+        "value": 379
+      },
+      {
+        "index": 1069,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1069,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1069,
+        "key": "azimuth_deg",
+        "value": 22.2
+      },
+      {
+        "index": 1069,
+        "key": "distance_km",
+        "value": 401
+      },
+      {
+        "index": 1070,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1070,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1070,
+        "key": "azimuth_deg",
+        "value": 60.1
+      },
+      {
+        "index": 1070,
+        "key": "distance_km",
+        "value": 465
+      },
+      {
+        "index": 1071,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1071,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1071,
+        "key": "azimuth_deg",
+        "value": 91.3
+      },
+      {
+        "index": 1071,
+        "key": "distance_km",
+        "value": 161
+      },
+      {
+        "index": 1072,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1072,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1072,
+        "key": "azimuth_deg",
+        "value": 208.7
+      },
+      {
+        "index": 1072,
+        "key": "distance_km",
+        "value": 493
+      },
+      {
+        "index": 1073,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1073,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1073,
+        "key": "azimuth_deg",
+        "value": 311.7
+      },
+      {
+        "index": 1073,
+        "key": "distance_km",
+        "value": 458
+      },
+      {
+        "index": 1074,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1074,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1074,
+        "key": "azimuth_deg",
+        "value": 115.4
+      },
+      {
+        "index": 1074,
+        "key": "distance_km",
+        "value": 165
+      },
+      {
+        "index": 1075,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1075,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1075,
+        "key": "azimuth_deg",
+        "value": 283.6
+      },
+      {
+        "index": 1075,
+        "key": "distance_km",
+        "value": 398
+      },
+      {
+        "index": 1076,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1076,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1076,
+        "key": "azimuth_deg",
+        "value": 198.5
+      },
+      {
+        "index": 1076,
+        "key": "distance_km",
+        "value": 363
+      },
+      {
+        "index": 1077,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1077,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1077,
+        "key": "azimuth_deg",
+        "value": 0.3
+      },
+      {
+        "index": 1077,
+        "key": "distance_km",
+        "value": 312
+      },
+      {
+        "index": 1078,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1078,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1078,
+        "key": "azimuth_deg",
+        "value": 230.1
+      },
+      {
+        "index": 1078,
+        "key": "distance_km",
+        "value": 274
+      },
+      {
+        "index": 1079,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1079,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1079,
+        "key": "azimuth_deg",
+        "value": 196.7
+      },
+      {
+        "index": 1079,
+        "key": "distance_km",
+        "value": 292
+      },
+      {
+        "index": 1080,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1080,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1080,
+        "key": "azimuth_deg",
+        "value": 71.0
+      },
+      {
+        "index": 1080,
+        "key": "distance_km",
+        "value": 476
+      },
+      {
+        "index": 1081,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1081,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1081,
+        "key": "azimuth_deg",
+        "value": 166.5
+      },
+      {
+        "index": 1081,
+        "key": "distance_km",
+        "value": 284
+      },
+      {
+        "index": 1082,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1082,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1082,
+        "key": "azimuth_deg",
+        "value": 256.7
+      },
+      {
+        "index": 1082,
+        "key": "distance_km",
+        "value": 441
+      },
+      {
+        "index": 1083,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1083,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1083,
+        "key": "azimuth_deg",
+        "value": 307.0
+      },
+      {
+        "index": 1083,
+        "key": "distance_km",
+        "value": 108
+      },
+      {
+        "index": 1084,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1084,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1084,
+        "key": "azimuth_deg",
+        "value": 106.5
+      },
+      {
+        "index": 1084,
+        "key": "distance_km",
+        "value": 322
+      },
+      {
+        "index": 1085,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1085,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1085,
+        "key": "azimuth_deg",
+        "value": 240.6
+      },
+      {
+        "index": 1085,
+        "key": "distance_km",
+        "value": 419
+      },
+      {
+        "index": 1086,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1086,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1086,
+        "key": "azimuth_deg",
+        "value": 166.8
+      },
+      {
+        "index": 1086,
+        "key": "distance_km",
+        "value": 306
+      },
+      {
+        "index": 1087,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1087,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1087,
+        "key": "azimuth_deg",
+        "value": 75.5
+      },
+      {
+        "index": 1087,
+        "key": "distance_km",
+        "value": 458
+      },
+      {
+        "index": 1088,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1088,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1088,
+        "key": "azimuth_deg",
+        "value": 358.6
+      },
+      {
+        "index": 1088,
+        "key": "distance_km",
+        "value": 486
+      },
+      {
+        "index": 1089,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1089,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1089,
+        "key": "azimuth_deg",
+        "value": 340.5
+      },
+      {
+        "index": 1089,
+        "key": "distance_km",
+        "value": 455
+      },
+      {
+        "index": 1090,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1090,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1090,
+        "key": "azimuth_deg",
+        "value": 350.1
+      },
+      {
+        "index": 1090,
+        "key": "distance_km",
+        "value": 443
+      },
+      {
+        "index": 1091,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1091,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1091,
+        "key": "azimuth_deg",
+        "value": 76.0
+      },
+      {
+        "index": 1091,
+        "key": "distance_km",
+        "value": 310
+      },
+      {
+        "index": 1092,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1092,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1092,
+        "key": "azimuth_deg",
+        "value": 60.6
+      },
+      {
+        "index": 1092,
+        "key": "distance_km",
+        "value": 440
+      },
+      {
+        "index": 1093,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1093,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1093,
+        "key": "azimuth_deg",
+        "value": 118.0
+      },
+      {
+        "index": 1093,
+        "key": "distance_km",
+        "value": 302
+      },
+      {
+        "index": 1094,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1094,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1094,
+        "key": "azimuth_deg",
+        "value": 99.9
+      },
+      {
+        "index": 1094,
+        "key": "distance_km",
+        "value": 391
+      },
+      {
+        "index": 1095,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1095,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1095,
+        "key": "azimuth_deg",
+        "value": 295.8
+      },
+      {
+        "index": 1095,
+        "key": "distance_km",
+        "value": 218
+      },
+      {
+        "index": 1096,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1096,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1096,
+        "key": "azimuth_deg",
+        "value": 33.4
+      },
+      {
+        "index": 1096,
+        "key": "distance_km",
+        "value": 264
+      },
+      {
+        "index": 1097,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1097,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1097,
+        "key": "azimuth_deg",
+        "value": 205.2
+      },
+      {
+        "index": 1097,
+        "key": "distance_km",
+        "value": 339
+      },
+      {
+        "index": 1098,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1098,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1098,
+        "key": "azimuth_deg",
+        "value": 332.6
+      },
+      {
+        "index": 1098,
+        "key": "distance_km",
+        "value": 425
+      },
+      {
+        "index": 1099,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1099,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1099,
+        "key": "azimuth_deg",
+        "value": 79.5
+      },
+      {
+        "index": 1099,
+        "key": "distance_km",
+        "value": 475
+      },
+      {
+        "index": 1100,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1100,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1100,
+        "key": "azimuth_deg",
+        "value": 270.6
+      },
+      {
+        "index": 1100,
+        "key": "distance_km",
+        "value": 143
+      },
+      {
+        "index": 1101,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1101,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1101,
+        "key": "azimuth_deg",
+        "value": 337.7
+      },
+      {
+        "index": 1101,
+        "key": "distance_km",
+        "value": 405
+      },
+      {
+        "index": 1102,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1102,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1102,
+        "key": "azimuth_deg",
+        "value": 301.5
+      },
+      {
+        "index": 1102,
+        "key": "distance_km",
+        "value": 76
+      },
+      {
+        "index": 1103,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1103,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1103,
+        "key": "azimuth_deg",
+        "value": 288.7
+      },
+      {
+        "index": 1103,
+        "key": "distance_km",
+        "value": 483
+      },
+      {
+        "index": 1104,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1104,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1104,
+        "key": "azimuth_deg",
+        "value": 79.4
+      },
+      {
+        "index": 1104,
+        "key": "distance_km",
+        "value": 485
+      },
+      {
+        "index": 1105,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1105,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1105,
+        "key": "azimuth_deg",
+        "value": 67.3
+      },
+      {
+        "index": 1105,
+        "key": "distance_km",
+        "value": 493
+      },
+      {
+        "index": 1106,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1106,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1106,
+        "key": "azimuth_deg",
+        "value": 97.9
+      },
+      {
+        "index": 1106,
+        "key": "distance_km",
+        "value": 421
+      },
+      {
+        "index": 1107,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1107,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1107,
+        "key": "azimuth_deg",
+        "value": 137.8
+      },
+      {
+        "index": 1107,
+        "key": "distance_km",
+        "value": 248
+      },
+      {
+        "index": 1108,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1108,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1108,
+        "key": "azimuth_deg",
+        "value": 76.1
+      },
+      {
+        "index": 1108,
+        "key": "distance_km",
+        "value": 495
+      },
+      {
+        "index": 1109,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1109,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1109,
+        "key": "azimuth_deg",
+        "value": 73.4
+      },
+      {
+        "index": 1109,
+        "key": "distance_km",
+        "value": 12
+      },
+      {
+        "index": 1110,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1110,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1110,
+        "key": "azimuth_deg",
+        "value": 122.8
+      },
+      {
+        "index": 1110,
+        "key": "distance_km",
+        "value": 281
+      },
+      {
+        "index": 1111,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1111,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1111,
+        "key": "azimuth_deg",
+        "value": 73.6
+      },
+      {
+        "index": 1111,
+        "key": "distance_km",
+        "value": 292
+      },
+      {
+        "index": 1112,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1112,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1112,
+        "key": "azimuth_deg",
+        "value": 130.0
+      },
+      {
+        "index": 1112,
+        "key": "distance_km",
+        "value": 87
+      },
+      {
+        "index": 1113,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1113,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1113,
+        "key": "azimuth_deg",
+        "value": 224.2
+      },
+      {
+        "index": 1113,
+        "key": "distance_km",
+        "value": 230
+      },
+      {
+        "index": 1114,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1114,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1114,
+        "key": "azimuth_deg",
+        "value": 18.2
+      },
+      {
+        "index": 1114,
+        "key": "distance_km",
+        "value": 443
+      },
+      {
+        "index": 1115,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1115,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1115,
+        "key": "azimuth_deg",
+        "value": 157.9
+      },
+      {
+        "index": 1115,
+        "key": "distance_km",
+        "value": 447
+      },
+      {
+        "index": 1116,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1116,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1116,
+        "key": "azimuth_deg",
+        "value": 167.0
+      },
+      {
+        "index": 1116,
+        "key": "distance_km",
+        "value": 381
+      },
+      {
+        "index": 1117,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1117,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1117,
+        "key": "azimuth_deg",
+        "value": 160.5
+      },
+      {
+        "index": 1117,
+        "key": "distance_km",
+        "value": 464
+      },
+      {
+        "index": 1118,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1118,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1118,
+        "key": "azimuth_deg",
+        "value": 245.1
+      },
+      {
+        "index": 1118,
+        "key": "distance_km",
+        "value": 306
+      },
+      {
+        "index": 1119,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1119,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1119,
+        "key": "azimuth_deg",
+        "value": 281.3
+      },
+      {
+        "index": 1119,
+        "key": "distance_km",
+        "value": 282
+      },
+      {
+        "index": 1120,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1120,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1120,
+        "key": "azimuth_deg",
+        "value": 131.0
+      },
+      {
+        "index": 1120,
+        "key": "distance_km",
+        "value": 256
+      },
+      {
+        "index": 1121,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1121,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1121,
+        "key": "azimuth_deg",
+        "value": 95.7
+      },
+      {
+        "index": 1121,
+        "key": "distance_km",
+        "value": 364
+      },
+      {
+        "index": 1122,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1122,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1122,
+        "key": "azimuth_deg",
+        "value": 245.3
+      },
+      {
+        "index": 1122,
+        "key": "distance_km",
+        "value": 485
+      },
+      {
+        "index": 1123,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1123,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1123,
+        "key": "azimuth_deg",
+        "value": 33.2
+      },
+      {
+        "index": 1123,
+        "key": "distance_km",
+        "value": 251
+      },
+      {
+        "index": 1124,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1124,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1124,
+        "key": "azimuth_deg",
+        "value": 98.3
+      },
+      {
+        "index": 1124,
+        "key": "distance_km",
+        "value": 470
+      },
+      {
+        "index": 1125,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1125,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1125,
+        "key": "azimuth_deg",
+        "value": 53.0
+      },
+      {
+        "index": 1125,
+        "key": "distance_km",
+        "value": 406
+      },
+      {
+        "index": 1126,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1126,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1126,
+        "key": "azimuth_deg",
+        "value": 166.8
+      },
+      {
+        "index": 1126,
+        "key": "distance_km",
+        "value": 382
+      },
+      {
+        "index": 1127,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1127,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1127,
+        "key": "azimuth_deg",
+        "value": 167.8
+      },
+      {
+        "index": 1127,
+        "key": "distance_km",
+        "value": 380
+      },
+      {
+        "index": 1128,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1128,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1128,
+        "key": "azimuth_deg",
+        "value": 137.8
+      },
+      {
+        "index": 1128,
+        "key": "distance_km",
+        "value": 418
+      },
+      {
+        "index": 1129,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1129,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1129,
+        "key": "azimuth_deg",
+        "value": 100.6
+      },
+      {
+        "index": 1129,
+        "key": "distance_km",
+        "value": 411
+      },
+      {
+        "index": 1130,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1130,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1130,
+        "key": "azimuth_deg",
+        "value": 276.9
+      },
+      {
+        "index": 1130,
+        "key": "distance_km",
+        "value": 379
+      },
+      {
+        "index": 1131,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1131,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1131,
+        "key": "azimuth_deg",
+        "value": 152.8
+      },
+      {
+        "index": 1131,
+        "key": "distance_km",
+        "value": 157
+      },
+      {
+        "index": 1132,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1132,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1132,
+        "key": "azimuth_deg",
+        "value": 254.2
+      },
+      {
+        "index": 1132,
+        "key": "distance_km",
+        "value": 477
+      },
+      {
+        "index": 1133,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1133,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1133,
+        "key": "azimuth_deg",
+        "value": 117.6
+      },
+      {
+        "index": 1133,
+        "key": "distance_km",
+        "value": 381
+      },
+      {
+        "index": 1134,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1134,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1134,
+        "key": "azimuth_deg",
+        "value": 46.0
+      },
+      {
+        "index": 1134,
+        "key": "distance_km",
+        "value": 102
+      },
+      {
+        "index": 1135,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1135,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1135,
+        "key": "azimuth_deg",
+        "value": 277.6
+      },
+      {
+        "index": 1135,
+        "key": "distance_km",
+        "value": 404
+      },
+      {
+        "index": 1136,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1136,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1136,
+        "key": "azimuth_deg",
+        "value": 127.6
+      },
+      {
+        "index": 1136,
+        "key": "distance_km",
+        "value": 261
+      },
+      {
+        "index": 1137,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1137,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1137,
+        "key": "azimuth_deg",
+        "value": 167.2
+      },
+      {
+        "index": 1137,
+        "key": "distance_km",
+        "value": 189
+      },
+      {
+        "index": 1138,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1138,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1138,
+        "key": "azimuth_deg",
+        "value": 62.1
+      },
+      {
+        "index": 1138,
+        "key": "distance_km",
+        "value": 486
+      },
+      {
+        "index": 1139,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1139,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1139,
+        "key": "azimuth_deg",
+        "value": 231.0
+      },
+      {
+        "index": 1139,
+        "key": "distance_km",
+        "value": 315
+      },
+      {
+        "index": 1140,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1140,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1140,
+        "key": "azimuth_deg",
+        "value": 318.5
+      },
+      {
+        "index": 1140,
+        "key": "distance_km",
+        "value": 106
+      },
+      {
+        "index": 1141,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1141,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1141,
+        "key": "azimuth_deg",
+        "value": 317.5
+      },
+      {
+        "index": 1141,
+        "key": "distance_km",
+        "value": 311
+      },
+      {
+        "index": 1142,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1142,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1142,
+        "key": "azimuth_deg",
+        "value": 296.0
+      },
+      {
+        "index": 1142,
+        "key": "distance_km",
+        "value": 126
+      },
+      {
+        "index": 1143,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1143,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1143,
+        "key": "azimuth_deg",
+        "value": 349.1
+      },
+      {
+        "index": 1143,
+        "key": "distance_km",
+        "value": 473
+      },
+      {
+        "index": 1144,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1144,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1144,
+        "key": "azimuth_deg",
+        "value": 248.1
+      },
+      {
+        "index": 1144,
+        "key": "distance_km",
+        "value": 133
+      },
+      {
+        "index": 1145,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1145,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1145,
+        "key": "azimuth_deg",
+        "value": 189.9
+      },
+      {
+        "index": 1145,
+        "key": "distance_km",
+        "value": 426
+      },
+      {
+        "index": 1146,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1146,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1146,
+        "key": "azimuth_deg",
+        "value": 152.3
+      },
+      {
+        "index": 1146,
+        "key": "distance_km",
+        "value": 340
+      },
+      {
+        "index": 1147,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1147,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1147,
+        "key": "azimuth_deg",
+        "value": 246.6
+      },
+      {
+        "index": 1147,
+        "key": "distance_km",
+        "value": 300
+      },
+      {
+        "index": 1148,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1148,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1148,
+        "key": "azimuth_deg",
+        "value": 226.5
+      },
+      {
+        "index": 1148,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 1149,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1149,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1149,
+        "key": "azimuth_deg",
+        "value": 321.6
+      },
+      {
+        "index": 1149,
+        "key": "distance_km",
+        "value": 412
+      },
+      {
+        "index": 1150,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1150,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1150,
+        "key": "azimuth_deg",
+        "value": 313.6
+      },
+      {
+        "index": 1150,
+        "key": "distance_km",
+        "value": 120
+      },
+      {
+        "index": 1151,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1151,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1151,
+        "key": "azimuth_deg",
+        "value": 94.4
+      },
+      {
+        "index": 1151,
+        "key": "distance_km",
+        "value": 292
+      },
+      {
+        "index": 1152,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1152,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1152,
+        "key": "azimuth_deg",
+        "value": 60.6
+      },
+      {
+        "index": 1152,
+        "key": "distance_km",
+        "value": 442
+      },
+      {
+        "index": 1153,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1153,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1153,
+        "key": "azimuth_deg",
+        "value": 236.2
+      },
+      {
+        "index": 1153,
+        "key": "distance_km",
+        "value": 310
+      },
+      {
+        "index": 1154,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1154,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1154,
+        "key": "azimuth_deg",
+        "value": 118.3
+      },
+      {
+        "index": 1154,
+        "key": "distance_km",
+        "value": 344
+      },
+      {
+        "index": 1155,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1155,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1155,
+        "key": "azimuth_deg",
+        "value": 76.0
+      },
+      {
+        "index": 1155,
+        "key": "distance_km",
+        "value": 415
+      },
+      {
+        "index": 1156,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1156,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1156,
+        "key": "azimuth_deg",
+        "value": 332.2
+      },
+      {
+        "index": 1156,
+        "key": "distance_km",
+        "value": 425
+      },
+      {
+        "index": 1157,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1157,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1157,
+        "key": "azimuth_deg",
+        "value": 242.2
+      },
+      {
+        "index": 1157,
+        "key": "distance_km",
+        "value": 244
+      },
+      {
+        "index": 1158,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1158,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1158,
+        "key": "azimuth_deg",
+        "value": 29.4
+      },
+      {
+        "index": 1158,
+        "key": "distance_km",
+        "value": 42
+      },
+      {
+        "index": 1159,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1159,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1159,
+        "key": "azimuth_deg",
+        "value": 286.0
+      },
+      {
+        "index": 1159,
+        "key": "distance_km",
+        "value": 406
+      },
+      {
+        "index": 1160,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1160,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1160,
+        "key": "azimuth_deg",
+        "value": 55.1
+      },
+      {
+        "index": 1160,
+        "key": "distance_km",
+        "value": 441
+      },
+      {
+        "index": 1161,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1161,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1161,
+        "key": "azimuth_deg",
+        "value": 202.6
+      },
+      {
+        "index": 1161,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 1162,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1162,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1162,
+        "key": "azimuth_deg",
+        "value": 294.9
+      },
+      {
+        "index": 1162,
+        "key": "distance_km",
+        "value": 376
+      },
+      {
+        "index": 1163,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1163,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1163,
+        "key": "azimuth_deg",
+        "value": 261.1
+      },
+      {
+        "index": 1163,
+        "key": "distance_km",
+        "value": 466
+      },
+      {
+        "index": 1164,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1164,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1164,
+        "key": "azimuth_deg",
+        "value": 1.0
+      },
+      {
+        "index": 1164,
+        "key": "distance_km",
+        "value": 169
+      },
+      {
+        "index": 1165,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1165,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1165,
+        "key": "azimuth_deg",
+        "value": 295.7
+      },
+      {
+        "index": 1165,
+        "key": "distance_km",
+        "value": 288
+      },
+      {
+        "index": 1166,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1166,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1166,
+        "key": "azimuth_deg",
+        "value": 2.8
+      },
+      {
+        "index": 1166,
+        "key": "distance_km",
+        "value": 167
+      },
+      {
+        "index": 1167,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1167,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1167,
+        "key": "azimuth_deg",
+        "value": 140.5
+      },
+      {
+        "index": 1167,
+        "key": "distance_km",
+        "value": 471
+      },
+      {
+        "index": 1168,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1168,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1168,
+        "key": "azimuth_deg",
+        "value": 351.7
+      },
+      {
+        "index": 1168,
+        "key": "distance_km",
+        "value": 458
+      },
+      {
+        "index": 1169,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1169,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1169,
+        "key": "azimuth_deg",
+        "value": 165.1
+      },
+      {
+        "index": 1169,
+        "key": "distance_km",
+        "value": 410
+      },
+      {
+        "index": 1170,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1170,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1170,
+        "key": "azimuth_deg",
+        "value": 162.6
+      },
+      {
+        "index": 1170,
+        "key": "distance_km",
+        "value": 294
+      },
+      {
+        "index": 1171,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1171,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1171,
+        "key": "azimuth_deg",
+        "value": 239.3
+      },
+      {
+        "index": 1171,
+        "key": "distance_km",
+        "value": 397
+      },
+      {
+        "index": 1172,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1172,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1172,
+        "key": "azimuth_deg",
+        "value": 109.1
+      },
+      {
+        "index": 1172,
+        "key": "distance_km",
+        "value": 161
+      },
+      {
+        "index": 1173,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1173,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1173,
+        "key": "azimuth_deg",
+        "value": 306.5
+      },
+      {
+        "index": 1173,
+        "key": "distance_km",
+        "value": 72
+      },
+      {
+        "index": 1174,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1174,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1174,
+        "key": "azimuth_deg",
+        "value": 170.7
+      },
+      {
+        "index": 1174,
+        "key": "distance_km",
+        "value": 330
+      },
+      {
+        "index": 1175,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1175,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1175,
+        "key": "azimuth_deg",
+        "value": 191.6
+      },
+      {
+        "index": 1175,
+        "key": "distance_km",
+        "value": 350
+      },
+      {
+        "index": 1176,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1176,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1176,
+        "key": "azimuth_deg",
+        "value": 91.4
+      },
+      {
+        "index": 1176,
+        "key": "distance_km",
+        "value": 375
+      },
+      {
+        "index": 1177,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1177,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1177,
+        "key": "azimuth_deg",
+        "value": 158.6
+      },
+      {
+        "index": 1177,
+        "key": "distance_km",
+        "value": 451
+      },
+      {
+        "index": 1178,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1178,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1178,
+        "key": "azimuth_deg",
+        "value": 353.2
+      },
+      {
+        "index": 1178,
+        "key": "distance_km",
+        "value": 306
+      },
+      {
+        "index": 1179,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1179,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1179,
+        "key": "azimuth_deg",
+        "value": 187.6
+      },
+      {
+        "index": 1179,
+        "key": "distance_km",
+        "value": 304
+      },
+      {
+        "index": 1180,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1180,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1180,
+        "key": "azimuth_deg",
+        "value": 243.4
+      },
+      {
+        "index": 1180,
+        "key": "distance_km",
+        "value": 241
+      },
+      {
+        "index": 1181,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1181,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1181,
+        "key": "azimuth_deg",
+        "value": 36.2
+      },
+      {
+        "index": 1181,
+        "key": "distance_km",
+        "value": 46
+      },
+      {
+        "index": 1182,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1182,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1182,
+        "key": "azimuth_deg",
+        "value": 275.6
+      },
+      {
+        "index": 1182,
+        "key": "distance_km",
+        "value": 434
+      },
+      {
+        "index": 1183,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1183,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1183,
+        "key": "azimuth_deg",
+        "value": 244.6
+      },
+      {
+        "index": 1183,
+        "key": "distance_km",
+        "value": 362
+      },
+      {
+        "index": 1184,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1184,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1184,
+        "key": "azimuth_deg",
+        "value": 303.0
+      },
+      {
+        "index": 1184,
+        "key": "distance_km",
+        "value": 115
+      },
+      {
+        "index": 1185,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1185,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1185,
+        "key": "azimuth_deg",
+        "value": 100.7
+      },
+      {
+        "index": 1185,
+        "key": "distance_km",
+        "value": 439
+      },
+      {
+        "index": 1186,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1186,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1186,
+        "key": "azimuth_deg",
+        "value": 161.2
+      },
+      {
+        "index": 1186,
+        "key": "distance_km",
+        "value": 331
+      },
+      {
+        "index": 1187,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1187,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1187,
+        "key": "azimuth_deg",
+        "value": 169.1
+      },
+      {
+        "index": 1187,
+        "key": "distance_km",
+        "value": 371
+      },
+      {
+        "index": 1188,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1188,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1188,
+        "key": "azimuth_deg",
+        "value": 145.7
+      },
+      {
+        "index": 1188,
+        "key": "distance_km",
+        "value": 139
+      },
+      {
+        "index": 1189,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1189,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1189,
+        "key": "azimuth_deg",
+        "value": 166.5
+      },
+      {
+        "index": 1189,
+        "key": "distance_km",
+        "value": 313
+      },
+      {
+        "index": 1190,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1190,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1190,
+        "key": "azimuth_deg",
+        "value": 28.6
+      },
+      {
+        "index": 1190,
+        "key": "distance_km",
+        "value": 46
+      },
+      {
+        "index": 1191,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1191,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1191,
+        "key": "azimuth_deg",
+        "value": 98.1
+      },
+      {
+        "index": 1191,
+        "key": "distance_km",
+        "value": 407
+      },
+      {
+        "index": 1192,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1192,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1192,
+        "key": "azimuth_deg",
+        "value": 240.5
+      },
+      {
+        "index": 1192,
+        "key": "distance_km",
+        "value": 329
+      },
+      {
+        "index": 1193,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1193,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1193,
+        "key": "azimuth_deg",
+        "value": 281.6
+      },
+      {
+        "index": 1193,
+        "key": "distance_km",
+        "value": 353
+      },
+      {
+        "index": 1194,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1194,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1194,
+        "key": "azimuth_deg",
+        "value": 94.7
+      },
+      {
+        "index": 1194,
+        "key": "distance_km",
+        "value": 45
+      },
+      {
+        "index": 1195,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1195,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1195,
+        "key": "azimuth_deg",
+        "value": 269.6
+      },
+      {
+        "index": 1195,
+        "key": "distance_km",
+        "value": 281
+      },
+      {
+        "index": 1196,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1196,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1196,
+        "key": "azimuth_deg",
+        "value": 358.0
+      },
+      {
+        "index": 1196,
+        "key": "distance_km",
+        "value": 312
+      },
+      {
+        "index": 1197,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1197,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1197,
+        "key": "azimuth_deg",
+        "value": 216.0
+      },
+      {
+        "index": 1197,
+        "key": "distance_km",
+        "value": 13
+      },
+      {
+        "index": 1198,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1198,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1198,
+        "key": "azimuth_deg",
+        "value": 315.5
+      },
+      {
+        "index": 1198,
+        "key": "distance_km",
+        "value": 317
+      },
+      {
+        "index": 1199,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1199,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1199,
+        "key": "azimuth_deg",
+        "value": 185.0
+      },
+      {
+        "index": 1199,
+        "key": "distance_km",
+        "value": 498
+      },
+      {
+        "index": 1200,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1200,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1200,
+        "key": "azimuth_deg",
+        "value": 350.2
+      },
+      {
+        "index": 1200,
+        "key": "distance_km",
+        "value": 442
+      },
+      {
+        "index": 1201,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1201,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1201,
+        "key": "azimuth_deg",
+        "value": 263.0
+      },
+      {
+        "index": 1201,
+        "key": "distance_km",
+        "value": 448
+      },
+      {
+        "index": 1202,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1202,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1202,
+        "key": "azimuth_deg",
+        "value": 217.1
+      },
+      {
+        "index": 1202,
+        "key": "distance_km",
+        "value": 415
+      },
+      {
+        "index": 1203,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1203,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1203,
+        "key": "azimuth_deg",
+        "value": 42.6
+      },
+      {
+        "index": 1203,
+        "key": "distance_km",
+        "value": 164
+      },
+      {
+        "index": 1204,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1204,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1204,
+        "key": "azimuth_deg",
+        "value": 167.8
+      },
+      {
+        "index": 1204,
+        "key": "distance_km",
+        "value": 390
+      },
+      {
+        "index": 1205,
+        "key": "direction_8",
+        "value": "东北"
+      },
+      {
+        "index": 1205,
+        "key": "direction_8_en",
+        "value": "northeast"
+      },
+      {
+        "index": 1205,
+        "key": "azimuth_deg",
+        "value": 56.5
+      },
+      {
+        "index": 1205,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 1206,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1206,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1206,
+        "key": "azimuth_deg",
+        "value": 265.8
+      },
+      {
+        "index": 1206,
+        "key": "distance_km",
+        "value": 93
+      },
+      {
+        "index": 1207,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1207,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1207,
+        "key": "azimuth_deg",
+        "value": 321.5
+      },
+      {
+        "index": 1207,
+        "key": "distance_km",
+        "value": 412
+      },
+      {
+        "index": 1208,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1208,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1208,
+        "key": "azimuth_deg",
+        "value": 334.4
+      },
+      {
+        "index": 1208,
+        "key": "distance_km",
+        "value": 381
+      },
+      {
+        "index": 1209,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1209,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1209,
+        "key": "azimuth_deg",
+        "value": 329.3
+      },
+      {
+        "index": 1209,
+        "key": "distance_km",
+        "value": 277
+      },
+      {
+        "index": 1210,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1210,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1210,
+        "key": "azimuth_deg",
+        "value": 251.9
+      },
+      {
+        "index": 1210,
+        "key": "distance_km",
+        "value": 444
+      },
+      {
+        "index": 1211,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1211,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1211,
+        "key": "azimuth_deg",
+        "value": 286.9
+      },
+      {
+        "index": 1211,
+        "key": "distance_km",
+        "value": 395
+      },
+      {
+        "index": 1212,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1212,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1212,
+        "key": "azimuth_deg",
+        "value": 259.8
+      },
+      {
+        "index": 1212,
+        "key": "distance_km",
+        "value": 376
+      },
+      {
+        "index": 1213,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1213,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1213,
+        "key": "azimuth_deg",
+        "value": 6.6
+      },
+      {
+        "index": 1213,
+        "key": "distance_km",
+        "value": 259
+      },
+      {
+        "index": 1214,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1214,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1214,
+        "key": "azimuth_deg",
+        "value": 310.6
+      },
+      {
+        "index": 1214,
+        "key": "distance_km",
+        "value": 318
+      },
+      {
+        "index": 1215,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1215,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1215,
+        "key": "azimuth_deg",
+        "value": 323.8
+      },
+      {
+        "index": 1215,
+        "key": "distance_km",
+        "value": 363
+      },
+      {
+        "index": 1216,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1216,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1216,
+        "key": "azimuth_deg",
+        "value": 283.0
+      },
+      {
+        "index": 1216,
+        "key": "distance_km",
+        "value": 255
+      },
+      {
+        "index": 1217,
+        "key": "direction_8",
+        "value": "西南"
+      },
+      {
+        "index": 1217,
+        "key": "direction_8_en",
+        "value": "southwest"
+      },
+      {
+        "index": 1217,
+        "key": "azimuth_deg",
+        "value": 234.5
+      },
+      {
+        "index": 1217,
+        "key": "distance_km",
+        "value": 406
+      },
+      {
+        "index": 1218,
+        "key": "direction_8",
+        "value": "北"
+      },
+      {
+        "index": 1218,
+        "key": "direction_8_en",
+        "value": "north"
+      },
+      {
+        "index": 1218,
+        "key": "azimuth_deg",
+        "value": 1.2
+      },
+      {
+        "index": 1218,
+        "key": "distance_km",
+        "value": 216
+      },
+      {
+        "index": 1219,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1219,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1219,
+        "key": "azimuth_deg",
+        "value": 134.5
+      },
+      {
+        "index": 1219,
+        "key": "distance_km",
+        "value": 423
+      },
+      {
+        "index": 1220,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1220,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1220,
+        "key": "azimuth_deg",
+        "value": 72.9
+      },
+      {
+        "index": 1220,
+        "key": "distance_km",
+        "value": 474
+      },
+      {
+        "index": 1221,
+        "key": "direction_8",
+        "value": "南"
+      },
+      {
+        "index": 1221,
+        "key": "direction_8_en",
+        "value": "south"
+      },
+      {
+        "index": 1221,
+        "key": "azimuth_deg",
+        "value": 158.4
+      },
+      {
+        "index": 1221,
+        "key": "distance_km",
+        "value": 314
+      },
+      {
+        "index": 1222,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1222,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1222,
+        "key": "azimuth_deg",
+        "value": 154.9
+      },
+      {
+        "index": 1222,
+        "key": "distance_km",
+        "value": 373
+      },
+      {
+        "index": 1223,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1223,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1223,
+        "key": "azimuth_deg",
+        "value": 74.0
+      },
+      {
+        "index": 1223,
+        "key": "distance_km",
+        "value": 383
+      },
+      {
+        "index": 1224,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1224,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1224,
+        "key": "azimuth_deg",
+        "value": 140.4
+      },
+      {
+        "index": 1224,
+        "key": "distance_km",
+        "value": 255
+      },
+      {
+        "index": 1225,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1225,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1225,
+        "key": "azimuth_deg",
+        "value": 124.2
+      },
+      {
+        "index": 1225,
+        "key": "distance_km",
+        "value": 250
+      },
+      {
+        "index": 1226,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1226,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1226,
+        "key": "azimuth_deg",
+        "value": 328.1
+      },
+      {
+        "index": 1226,
+        "key": "distance_km",
+        "value": 357
+      },
+      {
+        "index": 1227,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1227,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1227,
+        "key": "azimuth_deg",
+        "value": 143.9
+      },
+      {
+        "index": 1227,
+        "key": "distance_km",
+        "value": 135
+      },
+      {
+        "index": 1228,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1228,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1228,
+        "key": "azimuth_deg",
+        "value": 106.5
+      },
+      {
+        "index": 1228,
+        "key": "distance_km",
+        "value": 419
+      },
+      {
+        "index": 1229,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1229,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1229,
+        "key": "azimuth_deg",
+        "value": 134.7
+      },
+      {
+        "index": 1229,
+        "key": "distance_km",
+        "value": 265
+      },
+      {
+        "index": 1230,
+        "key": "direction_8",
+        "value": "西"
+      },
+      {
+        "index": 1230,
+        "key": "direction_8_en",
+        "value": "west"
+      },
+      {
+        "index": 1230,
+        "key": "azimuth_deg",
+        "value": 278.5
+      },
+      {
+        "index": 1230,
+        "key": "distance_km",
+        "value": 298
+      },
+      {
+        "index": 1231,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1231,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1231,
+        "key": "azimuth_deg",
+        "value": 77.3
+      },
+      {
+        "index": 1231,
+        "key": "distance_km",
+        "value": 382
+      },
+      {
+        "index": 1232,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1232,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1232,
+        "key": "azimuth_deg",
+        "value": 320.3
+      },
+      {
+        "index": 1232,
+        "key": "distance_km",
+        "value": 270
+      },
+      {
+        "index": 1233,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1233,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1233,
+        "key": "azimuth_deg",
+        "value": 313.9
+      },
+      {
+        "index": 1233,
+        "key": "distance_km",
+        "value": 429
+      },
+      {
+        "index": 1234,
+        "key": "direction_8",
+        "value": "东南"
+      },
+      {
+        "index": 1234,
+        "key": "direction_8_en",
+        "value": "southeast"
+      },
+      {
+        "index": 1234,
+        "key": "azimuth_deg",
+        "value": 142.2
+      },
+      {
+        "index": 1234,
+        "key": "distance_km",
+        "value": 282
+      },
+      {
+        "index": 1235,
+        "key": "direction_8",
+        "value": "东"
+      },
+      {
+        "index": 1235,
+        "key": "direction_8_en",
+        "value": "east"
+      },
+      {
+        "index": 1235,
+        "key": "azimuth_deg",
+        "value": 76.6
+      },
+      {
+        "index": 1235,
+        "key": "distance_km",
+        "value": 57
+      },
+      {
+        "index": 1236,
+        "key": "direction_8",
+        "value": "西北"
+      },
+      {
+        "index": 1236,
+        "key": "direction_8_en",
+        "value": "northwest"
+      },
+      {
+        "index": 1236,
+        "key": "azimuth_deg",
+        "value": 325.3
+      },
+      {
+        "index": 1236,
+        "key": "distance_km",
+        "value": 499
+      }
+    ],
+    "c4_field_combinations": {}
+  },
+  "stats": {
+    "positive_size_mb": 4.994787216186523,
+    "negative_size_mb": 0.6633405685424805,
+    "positive_count": 10000,
+    "negative_count": 1237,
+    "positive_percentage": 88.99172376968943,
+    "unique_entities": 1358,
+    "avg_positive_size_bytes": 523.7414,
+    "avg_negative_size_bytes": 562.2983023443816
+  }
+}

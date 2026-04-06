@@ -1,0 +1,54 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "geosignal",
+  "dataset_size": 30167484,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/daven3/geosignal@83b0f5685bcdda31b365052cf60e55528bc8a9a4/geosignal.json": {
+      "num_bytes": 32321566,
+      "checksum": null
+    }
+  },
+  "download_size": 32321566,
+  "features": {
+    "instruction": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "input": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "output": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "type": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "category": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 62489050,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 30167484,
+      "num_examples": 39749,
+      "dataset_name": "geosignal"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

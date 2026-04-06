@@ -1,0 +1,53 @@
+{
+  "test_file": "test_directional_positive.md",
+  "elapsed_seconds": 50.47,
+  "json_valid": true,
+  "structure_valid": true,
+  "missing_keys": [],
+  "usage": {
+    "prompt_tokens": 2600,
+    "completion_tokens": 1651,
+    "total_tokens": 4251
+  },
+  "parsed_json": {
+    "true_false": {
+      "question": "吉林省位于江门市的东北方向。",
+      "answer": "正确。吉林省位于江门市的东北方向。",
+      "answer_structured": {
+        "type": "boolean",
+        "value": true,
+        "direction": "东北"
+      },
+      "difficulty": "easy"
+    },
+    "choice": {
+      "question": "小华在江门市，他想去吉林省出差。他应该往哪个方向出发？\nA. 西北方向\nB. 东南方向\nC. 西南方向\nD. 东北方向",
+      "answer": "正确答案是D。从江门市出发前往吉林省应向东北方向走。",
+      "answer_structured": {
+        "type": "option",
+        "value": "D",
+        "correct_answer": "东北方向"
+      },
+      "difficulty": "easy"
+    },
+    "fill_blank": {
+      "question": "在地图上，吉林省位于江门市的___一侧。",
+      "answer": "东北",
+      "answer_structured": {
+        "type": "keyword",
+        "value": "东北"
+      },
+      "difficulty": "easy"
+    },
+    "open_qa": {
+      "question": "吉林省在江门市的什么方向？请简要说明。",
+      "answer": "吉林省位于江门市的东北方向。从方位角来看，吉林省相对江门市的方位角约为32.3度，属于东北方位。",
+      "answer_structured": {
+        "type": "free_text",
+        "direction": "东北"
+      },
+      "difficulty": "easy"
+    }
+  },
+  "json_error": null
+}

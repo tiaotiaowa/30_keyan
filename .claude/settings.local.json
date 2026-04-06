@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-ChildItem -Path 'D:\\\\30_keyan' -Depth 1 -Directory | Select-Object -ExpandProperty FullName\")",
+      "Bash(powershell -Command \"Get-ChildItem -Path 'D:\\\\30_keyan\\\\GeoKD-SR' -Depth 0 | Select-Object Name, Mode\")",
+      "Bash(powershell -Command \"Get-ChildItem -Path 'D:\\\\30_keyan\\\\GeoKD-SR\\\\exp' -Depth 0 -Directory | Select-Object -ExpandProperty Name\")"
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "geobench",
+  "dataset_size": 2916302,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/daven3/geobench@fa6f583ad38f93a7e7f5a3ea1582fe6593437747/geobenchmark_npee.json": {
+      "num_bytes": 2961550,
+      "checksum": null
+    }
+  },
+  "download_size": 2961550,
+  "features": {
+    "noun": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "choice": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "completion": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "tf": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "qa": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "discussion": {
+      "feature": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 5877852,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 2916302,
+      "num_examples": 2,
+      "dataset_name": "geobench"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

@@ -1,0 +1,159 @@
+=== 思考过程 ===
+首先，理解输入数据：实体A是吉林省，实体B是江门市，空间事实显示方向是“东北”，方位角是32.3度，难度是“easy”。
+
+根据任务，生成4种类型的题目：判断题、选择题、填空题、问答题。每个题目都需要有不同的风格，并且答案必须基于给定的spatial_facts。
+
+核心约束：
+- 不做任何空间计算，直接使用给定事实。
+- answer_structured必须从spatial_facts直接派生，不修改数值。
+- answer的自然语言表达必须与answer_structured一致。
+- 4道题目的提问风格必须各不相同。
+- 输出严格为JSON。
+
+输出结构：
+- true_false: 判断题
+- choice: 选择题
+- fill_blank: 填空题
+- open_qa: 问答题
+
+每个部分都有question、answer、answer_structured和difficulty。
+
+对于easy难度：
+- 判断题：直接使用正向陈述，如“A在B的东北方向”。
+- 选择题：直接提问方向，4个选项覆盖差异较大的方位。
+- 填空题：使用基本句式，如“A位于B的___方向”。
+- 问答题：直接问“A在B的什么方向”。
+
+多样性约束：
+- 判断题：可以是正向陈述（直接正确）或反向陈述（方向取反），但这里难度是easy，所以建议直接正向陈述。
+  - 在示例中，easy难度使用正向陈述。
+- 选择题：可以嵌入不同场景，如旅行、出差等。选项顺序随机，正确答案可以是A/B/C/D中的任意一个。干扰项应从8方位中选取，包含相邻方向和非相邻方向。
+- 填空题：变换句式，不局限于一种格式。
+- 问答题：要求不同的作答方式，如描述型、分析型等。
+
+对于这个具体输入：
+- 实体A：吉林省（province）
+- 实体B：江门市（city）
+- 方向：东北
+- 难度：easy
+
+我需要为每个类型生成题目。
+
+1. **判断题**：
+   - 风格：正向陈述，直接说吉林省在江门市的东北方向。
+   - answer_structured：type为boolean，value为true，direction为"东北"。
+   - 答案自然语言：正确。吉林省位于江门市的东北方向。
+
+2. **选择题**：
+   - 风格：可以嵌入场景，如旅行场景。选项随机排列。
+   - 正确答案是"东北方向"。
+   - 生成4个选项：正确答案和三个干扰项。干扰项应包含相邻方向（如北、东）和非相邻方向（如西南）。
+   - 选项顺序：假设随机，比如A. 北方向, B. 东方向, C. 东北方向, D. 西南方向。然后正确答案是C。
+   - question：例如“小明计划从江门市出发前往吉林省旅游，他应该往哪个方向走？”
+   - answer：正确答案是C。从江门市出发前往吉林省应向东北方向走。
+   - answer_structured：type为option，value为"C"，correct_answer为"东北方向"。
+
+3. **填空题**：
+   - 风格：变换句式。例如“从江门市前往吉林省，大致需要向___方向行进。”
+   - answer：东北
+   - answer_structured：type为keyword，value为"东北"。
+
+4. **问答题**：
+   - 风格：描述型，直接问方位关系。
+   - question：例如“请描述吉林省相对于江门市的空间方位关系。”
+   - answer：吉林省位于江门市的东北方向。从方位角来看，吉林省相对江门市的方位角约为32.3度，属于东北方位。
+   - answer_structured：type为free_text，direction为"东北"。注意，在easy难度，问答题可以简单回答方向，但根据示例，也提到了方位角。
+
+在示例中，对于easy难度，问答题的回答包括方向和方位角。所以这里也可以包括。
+
+确保题目风格各不相同：
+- 判断题是直接陈述判断。
+- 选择题是场景式选择。
+- 填空题是完成句子。
+- 问答题是描述分析。
+
+现在，构建输出JSON。
+
+首先，true_false：
+- question: "吉林省位于江门市的东北方向。" 
+- answer: "正确。吉林省位于江门市的东北方向。"
+- answer_structured: {"type": "boolean", "value": true, "direction": "东北"}
+- difficulty: "easy"
+
+然后，choice：
+- 场景：旅行场景。
+- question: "小明计划从江门市出发前往吉林省旅游，他应该往哪个方向走？\nA. 北方向\nB. 东方向\nC. 东北方向\nD. 西南方向"
+- 假设正确答案是C。
+- answer: "正确答案是C。从江门市出发前往吉林省应向东北方向走。"
+- answer_structured: {"type": "option", "value": "C", "correct_answer": "东北方向"}
+- difficulty: "easy"
+
+填空题：
+- 使用不同句式：例如"站在江门市眺望吉林省，你会面朝___方向。"
+- question: "站在江门市眺望吉林省，你会面朝___方向。"
+- answer: "东北"
+- answer_structured: {"type": "keyword", "value": "东北"}
+- difficulty: "easy"
+
+问答题：
+- 风格：描述型。
+- question: "请描述吉林省相对于江门市的空间方位关系。"
+- answer: "吉林省位于江门市的东北方向。从方位角来看，吉林省相对江门市的方位角约为32.3度，属于东北方位。"
+- answer_structured: {"type": "free_text", "direction": "东北"}
+- difficulty: "easy"
+
+在answer_structured中，对于open_qa，示例中只有direction，没有方位角，但answer中提到了。所以保持简单，只放direction。
+
+检查多样性：
+- 判断题：正向陈述
+- 选择题：旅行场景
+- 填空题：眺望句式
+- 问答题：描述关系
+
+都不同，符合要求。
+
+输出为JSON。
+
+=== 生成结果 ===
+```json
+{
+  "true_false": {
+    "question": "吉林省位于江门市的东北方向。",
+    "answer": "正确。吉林省位于江门市的东北方向。",
+    "answer_structured": {
+      "type": "boolean",
+      "value": true,
+      "direction": "东北"
+    },
+    "difficulty": "easy"
+  },
+  "choice": {
+    "question": "小华在江门市，他想去吉林省出差。他应该往哪个方向出发？\nA. 西北方向\nB. 东南方向\nC. 西南方向\nD. 东北方向",
+    "answer": "正确答案是D。从江门市出发前往吉林省应向东北方向走。",
+    "answer_structured": {
+      "type": "option",
+      "value": "D",
+      "correct_answer": "东北方向"
+    },
+    "difficulty": "easy"
+  },
+  "fill_blank": {
+    "question": "在地图上，吉林省位于江门市的___一侧。",
+    "answer": "东北",
+    "answer_structured": {
+      "type": "keyword",
+      "value": "东北"
+    },
+    "difficulty": "easy"
+  },
+  "open_qa": {
+    "question": "吉林省在江门市的什么方向？请简要说明。",
+    "answer": "吉林省位于江门市的东北方向。从方位角来看，吉林省相对江门市的方位角约为32.3度，属于东北方位。",
+    "answer_structured": {
+      "type": "free_text",
+      "direction": "东北"
+    },
+    "difficulty": "easy"
+  }
+}
+```

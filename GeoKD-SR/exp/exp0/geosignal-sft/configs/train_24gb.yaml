@@ -1,0 +1,92 @@
+# GeoSignal SFT训练配置 - 24GB显存版本
+# 基于K2论文的GeoSignal数据集，训练Qwen2.5-1.5B地球科学指令遵循能力
+# 数据来源: K2 (https://github.com/davendw49/k2)
+# 参考: K2: A Foundation Language Model for Geoscience (WSDM 2024)
+
+experiment:
+  name: "geosignal-sft-24gb"
+  type: "geosignal_sft"
+  description: "基于GeoSignal数据集的地球科学指令微调"
+  seeds: [42, 123, 456, 789, 1024]  # 5次实验
+
+model:
+  name: "Qwen2.5-1.5B-Instruct"
+  path: "D:/30_keyan/GeoKD-SR/models/Qwen2.5-1.5B-Instruct"
+  use_lora: true
+  lora:
+    r: 8                    # K2论文验证的配置
+    alpha: 16               # LoRA scaling = alpha/r = 2.0
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+
+training:
+  learning_rate: 1.0e-4     # K2论文SFT阶段使用的学习率
+  batch_size: 8
+  gradient_accumulation_steps: 16   # effective_batch=128
+  num_epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  lr_scheduler_type: "cosine"
+
+optimization:
+  max_length: 2048          # GeoSignal最大长度
+  gradient_checkpointing: true
+  mixed_precision: "bf16"
+
+data:
+  train_file: "data/geosignal/train.jsonl"
+  dev_file: "data/geosignal/dev.jsonl"
+  test_file: "data/geosignal/test.jsonl"
+  # 地球科学专家系统提示
+  system_prompt: "You are an expert in geoscience knowledge, specializing in understanding and answering questions about geology, geography, and earth sciences. Please provide accurate and professional responses."
+
+output:
+  base_dir: "exp/exp0/geosignal-sft/outputs"
+  logging_dir: "exp/exp0/geosignal-sft/logs"
+  checkpoint_dir: "exp/exp0/geosignal-sft/checkpoints"
+  save_strategy: "epoch"
+  save_total_limit: 3
+
+# GeoSignal数据集统计信息
+# 来源: K2论文 Table 4
+# 总计: 39,749条
+# 任务分布:
+#   - 命名实体识别: 2,400
+#   - 推理: 600
+#   - 事实核查: 8,000
+#   - 摘要: 800
+#   - 文本分类: 2,000
+#   - 词语义: 6,400
+#   - 解释: 4,200
+#   - 问答: 15,349
+geosignal_info:
+  total_samples: 39749
+  source: "K2: A Foundation Language Model for Geoscience"
+  paper_url: "https://dl.acm.org/doi/10.1145/3616855.3635772"
+  github_url: "https://github.com/davendw49/k2"
+  task_types:
+    - name: "命名实体识别"
+      count: 2400
+      signal: "G5"
+    - name: "推理"
+      count: 600
+      signal: "G6"
+    - name: "事实核查"
+      count: 8000
+      signal: "G8"
+    - name: "摘要"
+      count: 800
+      signal: "G1,G9"
+    - name: "文本分类"
+      count: 2000
+      signal: "G2"
+    - name: "词语义"
+      count: 6400
+      signal: "G8"
+    - name: "解释"
+      count: 4200
+      signal: "G7"
+    - name: "问答"
+      count: 15349
+      signal: "G10"
