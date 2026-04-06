@@ -39,3 +39,4 @@ Thumbs.db
 
 # Claude相关
 .claude/
+data/final_entity_database.json
